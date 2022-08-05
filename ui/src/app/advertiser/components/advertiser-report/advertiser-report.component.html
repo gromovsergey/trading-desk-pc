@@ -1,0 +1,32 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">{{'report.report' | translate}}</h1>
+
+  <ui-report [meta]="meta"
+             [reportParameters]="reportParameters"
+             [reportService]="reportService"
+             [downloadNamePrefix]="'Report for ' + advertiser.name">
+
+    <div class="radio-group">
+      <label>{{'report.advertiserReport.filter' | translate}}</label>
+      <mat-radio-group class="radio-group" [value]="radioVal" (change)="switchType()">
+        <mat-radio-button class="radio-button" [value]="false">
+          {{'agencyAccount.user.allAdvertisers' | translate}}
+        </mat-radio-button>
+        <mat-radio-button class="radio-button" [value]="true">
+          {{'agencyAccount.user.specificAdvertisers' | translate}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="form-group" *ngIf="radioVal">
+      <ui-option-transfer
+              *ngIf="flightsAvailable.length"
+              [options]="flightsAvailable"
+              [selected]="flightsSelected"
+              (transferChange)="filghtIdsChange($event)"
+              [customSort]="sort">
+      </ui-option-transfer>
+    </div>
+  </ui-report>
+</ng-template>

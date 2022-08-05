@@ -1,0 +1,254 @@
+table.dataView{
+    border-collapse:collapse;
+    clear:both;
+    margin-bottom:30px;
+}
+table.formFields table.dataView{
+    margin-top:0;
+    margin-bottom:4px; /*to preserve margin over lying below input or textarea OUI-9610*/
+}
+tr.bodyZone table.dataView{
+    margin:0;
+}
+
+table.dataView thead{
+    color:#FFF;
+    font-weight: bold;
+    background-color:#666;
+}
+table.dataView th{
+    padding:2px 7px;
+    border:1px solid #666666;
+    border-right-color: #CCC;
+    text-align:center;
+    vertical-align:middle;
+}
+table.dataView th:last-child{
+    border-right-color: #666666;
+}
+
+table.dataView td{
+    vertical-align:top;
+    padding:4px 5px;
+    border:1px solid #CCCCCC;
+}
+table.dataView td.fixed{
+    white-space: nowrap;
+}
+table.dataView td.number, table.dataView td.currency, table.dataView td.date ,table.dataView td.totalText{
+    text-align:right;
+	white-space: nowrap;
+}
+table.dataView td.url{
+	white-space: nowrap;
+}
+table.dataView td.subtotal{
+    background-color: #E0E0E0;
+}
+
+table.dataView td.total{
+    font-weight:bold;
+    padding-top:10px;
+}
+
+/* TODO: Investigate, whether we need class "withInnerButton", or we can replace it with something else */
+table.dataView td.withInnerButton, 
+table.dataView td.radio{
+    text-align:center;
+}
+/* TODO: Investigate, whether we need class "controls" */
+table.dataView td.controls{
+    padding:2px 3px;
+    text-align:center;
+}
+table.dataView .total td{
+    font-weight:bold;
+    padding-top:10px;
+}
+table.dataView th.withButton, 
+table.dataView td.withButton, 
+table.dataView th.withError, 
+table.dataView td.withError{
+    background-color:white;
+    border:none;
+}
+
+table.dataView.collapsing{
+    border-bottom:1px solid #CCCCCC;
+}
+table.dataView.collapsing tbody.parent td, 
+table.dataView.collapsing tr.total td{
+    border-top:1px solid #CCCCCC;
+}
+table.dataView.collapsing .currPendingApproval{
+    margin-top:5px;
+    font-style: italic;
+}
+table.dataView.collapsing td.withCollapsingButton, 
+table.dataView.collapsing th.withCollapsingButton{
+    border-right:none;
+    font-family: monospace;
+}
+table.dataView.collapsing td.withCollapsingButton + td, 
+table.dataView.collapsing th.withCollapsingButton + th{
+    border-left:none;
+}
+table.dataView.collapsing td.withCollapsingButton a, 
+table.dataView.collapsing th.withCollapsingButton a{
+    text-decoration:none;
+    white-space:nowrap;
+}
+table.dataView.collapsing td.withEntryName{
+    border-bottom:none;
+}
+table.dataView.collapsing tbody.child td.withEntryName{
+    border-top:none;
+    border-right:none;
+}
+table.dataView.collapsing tbody.parent td.itemName{
+    border-bottom:none;
+}
+table.dataView.collapsing tbody.child td.itemName{
+    border-top:none;
+    border-bottom:none;
+}
+
+table.dataView td.withDisplayStatus{
+    width:1px;
+    border-right-style: none;
+}
+
+table.dataView th.withDisplayStatus{
+    width:1px;
+    border-right-style: none;
+}
+
+table.dataView td.withDisplayStatus + td{
+    border-left-style: none;
+}
+
+/* TODO: In report results need to chande table class to "summary" */
+table.summary{
+    width:auto;
+    border-collapse:collapse;
+    clear:both;
+}
+table.summary td{
+    vertical-align:top;
+    padding:2px 4px;
+    border:1px solid #CCCCCC;
+}
+table.summary td.paramName{
+    font-weight:bold;
+    white-space:nowrap;
+    padding-right:10px;
+}
+
+/* used in a fileManager's table */
+table.filestable td.delete,
+table.filestable td.download,
+table.filestable td.convert,
+table.filestable td.selectFile{
+    padding-left:auto;
+    padding-right:auto;
+    width:18px;
+}
+table.filestable td.selectFile{
+    border-right:none !important;
+}
+table.filestable td.selectFile + td.delete{
+    border-left:none !important;
+    border-right:none !important;
+}
+table.filestable td.delete + td.download{
+    border-left:none !important;
+    border-right:none !important;
+}
+table.filestable td.download + td.convert{
+    border-left:none !important;
+}
+
+table.dataView th table.grouping td{
+    vertical-align:middle;
+}
+
+table.collapsingTable{
+    border-collapse:collapse;
+    border-bottom: 1px solid #666;
+}
+table.collapsingTable td{
+    padding: 0 3px;
+    border: 1px solid #666;
+}
+table.collapsingTable td.number{
+    text-align:right;
+}
+table.collapsingTable thead th{
+    background-color: #666666;
+    color: #FFF;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    border: none;
+    border-left: 1px solid #CCC;
+}
+table.collapsingTable thead th:first-child{
+    border-left: 1px solid #666666;
+}
+table.collapsingTable thead th:last-child{
+    border-right: 1px solid #666;
+}
+table.collapsingTable .collapsingButton{
+    width: 20px;
+    height: 16px;
+    float: left;
+}
+table.collapsingTable tr.collapsingRow.level1 td.branchTitle{
+    padding-left: 15px;
+}
+table.collapsingTable tr.collapsingRow.level2 td.branchTitle{
+    padding-left: 40px;
+}
+
+.dataViewInnerSection table.dataView{
+    margin-top:0;
+}
+
+table.dataView.sorting th{
+    cursor:pointer;
+    cursor:hand;
+}
+
+th.sort{
+    padding-right:16px !important;
+    background-image: url(/images/sort_desc.gif);
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-color: #999;
+    border-top-color: #999 !important;
+    border-bottom-color: #999 !important;
+}
+th.sort.asc{
+    background-image: url(/images/sort_asc.gif);
+}
+.tablesorter th {
+    cursor:pointer;
+}
+.tablesorter th .icon {
+    padding-right:20px;
+    background-image:url("/images/updown.gif");
+    background-position:center right;
+    background-repeat:no-repeat;
+}
+.tablesorter th.headerSortUp .icon {
+    background-image:url("/images/sort_desc.gif");
+}
+.tablesorter th.headerSortDown .icon {
+    background-image:url("/images/sort_asc.gif");
+}
+.row_selectable tbody tr {
+    cursor: pointer;
+}
+.row_selectable tbody tr.on {
+    background: #f0f0f0;
+}

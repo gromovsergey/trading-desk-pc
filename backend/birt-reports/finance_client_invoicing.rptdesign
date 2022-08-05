@@ -1,0 +1,1090 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.22" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 3.7.1.v20110905 Build &lt;3.7.1.v20110905-1820></property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <parameters>
+        <scalar-parameter name="rp_invoice_status" id="11">
+            <text-property name="promptText">Invoice Status</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">G</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">G</property>
+                    <property name="label">Generated</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_internal_account" id="12">
+            <text-property name="promptText">Foros Internal Account</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="dataSetName">internal_account</property>
+            <expression name="valueExpr">dataSetRow["ACCOUNT_ID"]</expression>
+            <expression name="labelExpr">dataSetRow["NAME"]</expression>
+            <expression name="sortByColumn">dataSetRow["NAME"]</expression>
+            <property name="sortDirection">asc</property>
+            <property name="dataType">decimal</property>
+            <property name="distinct">true</property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">false</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source" id="7">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">oracle.jdbc.OracleDriver</property>
+            <property name="odaURL">jdbc:oracle:thin:@localhost:17215/addbtest.ocslab.com</property>
+            <property name="odaUser">adserver</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">YWRzZXJ2ZXI=</encrypted-property>
+            <property name="odaJndiName">jdbc/adserver</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="invoice" id="9">
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">ds_status</property>
+                    <property name="paramName">rp_invoice_status</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">ds_internal_account</property>
+                    <property name="paramName">rp_internal_account</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">2</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">INVOICE_ID</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">ACCOUNT_TYPE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">ACCOUNT_NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">BILL_TO_USER</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">BILL_ADDRESS</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">LEGAL_ADDRESS</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">CNPJ</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">INVOICE_DATE</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">CAMPAIGN_ID</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">CAMPAIGN_NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">PERIOD_FOR_INVOICING</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">DUE_DATE</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">AMOUNT_NET</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">INVOICE_ID</property>
+                    <property name="nativeName">INVOICE_ID</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">ACCOUNT_TYPE</property>
+                    <property name="nativeName">ACCOUNT_TYPE</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">ACCOUNT_NAME</property>
+                    <property name="nativeName">ACCOUNT_NAME</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">BILL_TO_USER</property>
+                    <property name="nativeName">BILL_TO_USER</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">BILL_ADDRESS</property>
+                    <property name="nativeName">BILL_ADDRESS</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">LEGAL_ADDRESS</property>
+                    <property name="nativeName">LEGAL_ADDRESS</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">CNPJ</property>
+                    <property name="nativeName">CNPJ</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">INVOICE_DATE</property>
+                    <property name="nativeName">INVOICE_DATE</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">CAMPAIGN_ID</property>
+                    <property name="nativeName">CAMPAIGN_ID</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">CAMPAIGN_NAME</property>
+                    <property name="nativeName">CAMPAIGN_NAME</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">PERIOD_FOR_INVOICING</property>
+                    <property name="nativeName">PERIOD_FOR_INVOICING</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">DUE_DATE</property>
+                    <property name="nativeName">DUE_DATE</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">AMOUNT_NET</property>
+                    <property name="nativeName">AMOUNT_NET</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select i.invoice_id
+     ,(case when adv.agency_account_id is null then 'Advertiser' else 'Agency' end) account_type
+      ,(case when adv.agency_account_id is null then adv.name else ag.name end) account_name
+      ,u.first_name||' '||u.last_name bill_to_user
+      ,nvl2(billing_adr.line1, billing_adr.line1||', ', billing_adr.line1)||nvl2(billing_adr.line2,billing_adr.line2||', ',billing_adr.line2)||nvl2(billing_adr.line3,billing_adr.line3||', ',billing_adr.line3)||nvl2(billing_adr.city,billing_adr.city||', ',billing_adr.city)||nvl2(billing_adr.state,billing_adr.state||', ',billing_adr.state)||billing_adr.zip bill_address
+      ,nvl2(legal_adr.line1, legal_adr.line1||', ', legal_adr.line1)||nvl2(legal_adr.line2,legal_adr.line2||', ',legal_adr.line2)||nvl2(legal_adr.line3,legal_adr.line3||', ',legal_adr.line3)||nvl2(legal_adr.city,legal_adr.city||', ',legal_adr.city)||nvl2(legal_adr.state,legal_adr.state||', ',legal_adr.state)||legal_adr.zip legal_address
+      ,case when adv.agency_account_id is null then adv.company_registration_number else ag.company_registration_number end cnpj
+      ,i.invoice_date invoice_date
+      ,i.campaign_id campaign_id
+      ,i.campaign_name
+      ,to_char(start_billing_period, 'dd/mm/yyyy')||' - '||to_char(end_billing_period, 'dd/mm/yyyy') period_for_invoicing
+      ,i.due_date due_date
+      ,round(i.total_amount_net, billing.getAcctPrecision(nvl(adv.agency_account_id, adv.account_id))) amount_net
+  from invoice i
+      ,users u
+      ,account adv
+      ,account ag
+      ,accountaddress billing_adr
+      ,accountaddress legal_adr
+ where i.status = ?
+   and adv.internal_account_id = ?
+   and i.bill_to_user_id = u.user_id
+   and i.adv_account_id = adv.account_id
+   and i.sold_to_user_address_id = legal_adr.address_id (+)
+   and i.bill_to_user_address_id = billing_adr.address_id (+)
+   and adv.agency_account_id = ag.account_id (+)
+order by 1
+]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>INVOICE_ID</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>INVOICE_ID</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>INVOICE_ID</design:label>
+            <design:formattingHints>
+              <design:displaySize>22</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>AGENCY_ACCOUNT_ID</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>AGENCY_ACCOUNT_ID</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>AGENCY_ACCOUNT_ID</design:label>
+            <design:formattingHints>
+              <design:displaySize>22</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>BILL_TO_USER</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>401</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>BILL_TO_USER</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>BILL_TO_USER</design:label>
+            <design:formattingHints>
+              <design:displaySize>401</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ADV_NAME</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>200</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ADV_NAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ADV_NAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>200</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ADV_ADDRESS</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ADV_ADDRESS</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ADV_ADDRESS</design:label>
+            <design:formattingHints>
+              <design:displaySize>0</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ADV_CNPJ</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>50</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ADV_CNPJ</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ADV_CNPJ</design:label>
+            <design:formattingHints>
+              <design:displaySize>50</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>AGENCY_NAME</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>200</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>AGENCY_NAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>AGENCY_NAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>200</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>AGENCY_ADDRESS</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>AGENCY_ADDRESS</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>AGENCY_ADDRESS</design:label>
+            <design:formattingHints>
+              <design:displaySize>0</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>AGENCY_CNPJ</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>50</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>AGENCY_CNPJ</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>AGENCY_CNPJ</design:label>
+            <design:formattingHints>
+              <design:displaySize>50</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>INVOICE_DATE</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>INVOICE_DATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>INVOICE_DATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>7</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CAMPAIGN_ID</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CAMPAIGN_ID</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CAMPAIGN_ID</design:label>
+            <design:formattingHints>
+              <design:displaySize>22</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PURCHASE_ORDER</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>50</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PURCHASE_ORDER</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PURCHASE_ORDER</design:label>
+            <design:formattingHints>
+              <design:displaySize>50</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CAMPAIGN_NAME</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>200</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CAMPAIGN_NAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CAMPAIGN_NAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>200</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>PERIOD_FOR_INVOICING</design:name>
+              <design:position>14</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>PERIOD_FOR_INVOICING</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>PERIOD_FOR_INVOICING</design:label>
+            <design:formattingHints>
+              <design:displaySize>22</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TOTAL_AMOUNT_NET</design:name>
+              <design:position>15</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>-127</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>TOTAL_AMOUNT_NET</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TOTAL_AMOUNT_NET</design:label>
+            <design:formattingHints>
+              <design:displaySize>22</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DUE_DATE</design:name>
+              <design:position>16</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>DUE_DATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DUE_DATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>7</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="internal_account" id="10">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">ACCOUNT_ID</property>
+                    <text-property name="displayName">ACCOUNT_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">NAME</property>
+                    <text-property name="displayName">NAME</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">ACCOUNT_ID</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">ACCOUNT_ID</property>
+                    <property name="nativeName">ACCOUNT_ID</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">NAME</property>
+                    <property name="nativeName">NAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select account_id, name 
+from account 
+where role_id = 0
+]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>1.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>ACCOUNT_ID</design:name>
+            <design:position>1</design:position>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ACCOUNT_ID</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACCOUNT_ID</design:label>
+            <design:formattingHints>
+              <design:displaySize>22</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>NAME</design:name>
+            <design:position>2</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>200</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>NAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>200</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">"Verdana"</property>
+            <property name="fontSize">10pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="6">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="topMargin">0.25in</property>
+            <property name="leftMargin">0.25in</property>
+            <property name="bottomMargin">0.25in</property>
+            <property name="rightMargin">0.25in</property>
+            <page-footer>
+                <text name="7" id="3">
+                    <property name="fontSize">7pt</property>
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="13">
+            <property name="dataSet">invoice</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">INVOICE_ID</property>
+                    <expression name="expression">dataSetRow["INVOICE_ID"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">ACCOUNT_TYPE</property>
+                    <expression name="expression">dataSetRow["ACCOUNT_TYPE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">ACCOUNT_NAME</property>
+                    <expression name="expression">dataSetRow["ACCOUNT_NAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">BILL_TO_USER</property>
+                    <expression name="expression">dataSetRow["BILL_TO_USER"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">BILL_ADDRESS</property>
+                    <expression name="expression">dataSetRow["BILL_ADDRESS"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">LEGAL_ADDRESS</property>
+                    <expression name="expression">dataSetRow["LEGAL_ADDRESS"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">CNPJ</property>
+                    <expression name="expression">dataSetRow["CNPJ"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">INVOICE_DATE</property>
+                    <expression name="expression">dataSetRow["INVOICE_DATE"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">CAMPAIGN_ID</property>
+                    <expression name="expression">dataSetRow["CAMPAIGN_ID"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">CAMPAIGN_NAME</property>
+                    <expression name="expression">dataSetRow["CAMPAIGN_NAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">PERIOD_FOR_INVOICING</property>
+                    <expression name="expression">dataSetRow["PERIOD_FOR_INVOICING"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">DUE_DATE</property>
+                    <expression name="expression">dataSetRow["DUE_DATE"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">AMOUNT_NET</property>
+                    <text-property name="displayName">AMOUNT_NET</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["AMOUNT_NET"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <column id="97"/>
+            <column id="99"/>
+            <column id="100"/>
+            <column id="101"/>
+            <column id="102"/>
+            <column id="103"/>
+            <column id="105"/>
+            <column id="106"/>
+            <column id="107"/>
+            <column id="109"/>
+            <column id="110"/>
+            <column id="122"/>
+            <column id="112"/>
+            <header>
+                <row id="14">
+                    <property name="fontSize">9pt</property>
+                    <property name="fontWeight">bold</property>
+                    <cell id="15">
+                        <property name="style">crosstab</property>
+                        <label id="16">
+                            <text-property name="text">FOROS Invoice ID</text-property>
+                        </label>
+                    </cell>
+                    <cell id="19">
+                        <property name="style">crosstab</property>
+                        <label id="20">
+                            <text-property name="text">Account Type</text-property>
+                        </label>
+                    </cell>
+                    <cell id="21">
+                        <property name="style">crosstab</property>
+                        <label id="22">
+                            <text-property name="text">Client Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="23">
+                        <property name="style">crosstab</property>
+                        <label id="24">
+                            <text-property name="text">Biil To User</text-property>
+                        </label>
+                    </cell>
+                    <cell id="25">
+                        <property name="style">crosstab</property>
+                        <label id="26">
+                            <text-property name="text">Billing address</text-property>
+                        </label>
+                    </cell>
+                    <cell id="27">
+                        <property name="style">crosstab</property>
+                        <label id="28">
+                            <text-property name="text">Legal Address</text-property>
+                        </label>
+                    </cell>
+                    <cell id="31">
+                        <property name="style">crosstab</property>
+                        <label id="32">
+                            <text-property name="text">CNPJ</text-property>
+                        </label>
+                    </cell>
+                    <cell id="33">
+                        <property name="style">crosstab</property>
+                        <label id="34">
+                            <text-property name="text">Date of Invoice</text-property>
+                        </label>
+                    </cell>
+                    <cell id="35">
+                        <property name="style">crosstab</property>
+                        <label id="36">
+                            <text-property name="text">Campaign ID</text-property>
+                        </label>
+                    </cell>
+                    <cell id="39">
+                        <property name="style">crosstab</property>
+                        <label id="40">
+                            <text-property name="text">Campaign Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="41">
+                        <property name="style">crosstab</property>
+                        <label id="42">
+                            <text-property name="text">Period for Invoicing</text-property>
+                        </label>
+                    </cell>
+                    <cell id="119">
+                        <property name="style">crosstab</property>
+                        <label id="123">
+                            <text-property name="text">Net Amount</text-property>
+                        </label>
+                    </cell>
+                    <cell id="45">
+                        <property name="style">crosstab</property>
+                        <label id="46">
+                            <text-property name="text">Due Date</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="47">
+                    <property name="fontSize">8pt</property>
+                    <cell id="48">
+                        <property name="style">crosstab</property>
+                        <data id="49">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">INVOICE_ID</property>
+                        </data>
+                    </cell>
+                    <cell id="52">
+                        <property name="style">crosstab</property>
+                        <data id="113">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">ACCOUNT_TYPE</property>
+                        </data>
+                    </cell>
+                    <cell id="54">
+                        <property name="style">crosstab</property>
+                        <data id="114">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">ACCOUNT_NAME</property>
+                        </data>
+                    </cell>
+                    <cell id="56">
+                        <property name="style">crosstab</property>
+                        <data id="118">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">BILL_TO_USER</property>
+                        </data>
+                    </cell>
+                    <cell id="58">
+                        <property name="style">crosstab</property>
+                        <data id="115">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">BILL_ADDRESS</property>
+                        </data>
+                    </cell>
+                    <cell id="60">
+                        <property name="style">crosstab</property>
+                        <data id="116">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">LEGAL_ADDRESS</property>
+                        </data>
+                    </cell>
+                    <cell id="64">
+                        <property name="style">crosstab</property>
+                        <data id="117">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">CNPJ</property>
+                        </data>
+                    </cell>
+                    <cell id="66">
+                        <property name="style">crosstab</property>
+                        <data id="67">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Custom</property>
+                                <property name="pattern">dd/MM/yyyy</property>
+                            </structure>
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">INVOICE_DATE</property>
+                        </data>
+                    </cell>
+                    <cell id="68">
+                        <property name="style">crosstab</property>
+                        <data id="69">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">CAMPAIGN_ID</property>
+                        </data>
+                    </cell>
+                    <cell id="72">
+                        <property name="style">crosstab</property>
+                        <data id="73">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">CAMPAIGN_NAME</property>
+                        </data>
+                    </cell>
+                    <cell id="74">
+                        <property name="style">crosstab</property>
+                        <data id="75">
+                            <structure name="numberFormat">
+                                <property name="category">Custom</property>
+                                <property name="pattern">###,##0.00</property>
+                            </structure>
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">PERIOD_FOR_INVOICING</property>
+                        </data>
+                    </cell>
+                    <cell id="120">
+                        <property name="style">crosstab</property>
+                        <data id="124">
+                            <structure name="numberFormat">
+                                <property name="category">Unformatted</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">AMOUNT_NET</property>
+                        </data>
+                    </cell>
+                    <cell id="78">
+                        <property name="style">crosstab</property>
+                        <data id="79">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Custom</property>
+                                <property name="pattern">dd/MM/yyyy</property>
+                            </structure>
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">DUE_DATE</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="80">
+                    <cell id="81">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="83">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="84">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="85">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="86">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="87">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="89">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="90">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="91">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="93">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="94">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="121">
+                        <property name="style">crosstab</property>
+                    </cell>
+                    <cell id="96">
+                        <property name="style">crosstab</property>
+                    </cell>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

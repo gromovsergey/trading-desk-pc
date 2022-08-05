@@ -1,0 +1,106 @@
+<ui-loading *ngIf="wait" [overlay]="true"></ui-loading>
+
+<section *ngIf="!wait && !!devices.length">
+    <div class="row" *ngIf="smartphones || tablets">
+        <div class="col-sm-6" *ngIf="smartphones">
+            <h3>
+                <ui-icon [large]="true" [icon]="'mobile'"></ui-icon>&nbsp;&nbsp;_L10N_(devices.smartphones)
+            </h3>
+            <p>_L10N_(flight.notification.whatIsSmartphones)</p>
+            <div class="checkbox">
+                <label><input type="checkbox" (change)="toggleAll($event, smartphones)" [checked]="smartphones.checked">
+                    &nbsp;&nbsp;_L10N_(messages.optionTransfer.select)/_L10N_(messages.optionTransfer.deselect)
+                    _L10N_(messages.optionTransfer.all)
+                </label>
+            </div>
+            <div class="list-group">
+                <a href="#" (click)="checkItem($event, item)" class="list-group-item"
+                   *ngFor="let item of smartphones.children">
+                    <ui-icon [icon]="'square-o'" [fw]="true" *ngIf="!item.checked"></ui-icon>
+                    <ui-icon [icon]="'check-square-o'" [fw]="true" *ngIf="item.checked"></ui-icon>
+                    {{item.name}}
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-6" *ngIf="tablets">
+            <h3>
+                <ui-icon [large]="true" [icon]="'tablet'"></ui-icon>&nbsp;&nbsp;_L10N_(devices.tablets)
+            </h3>
+            <p>_L10N_(flight.notification.whatIsTablets)</p>
+            <div class="checkbox">
+                <label><input type="checkbox" (change)="toggleAll($event, tablets)" [checked]="tablets.checked">
+                    &nbsp;&nbsp;_L10N_(messages.optionTransfer.select)/_L10N_(messages.optionTransfer.deselect)
+                    _L10N_(messages.optionTransfer.all)
+                </label>
+            </div>
+            <div class="list-group">
+                <a href="#" (click)="checkItem($event, item)" class="list-group-item"
+                   *ngFor="let item of tablets.children">
+                    <ui-icon [icon]="'square-o'" [fw]="true" *ngIf="!item.checked"></ui-icon>
+                    <ui-icon [icon]="'check-square-o'" [fw]="true" *ngIf="item.checked"></ui-icon>
+                    {{item.name}}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="devicesApplications">
+        <div class="col-sm-12">
+            <h3>
+                <ui-icon [large]="true" [icon]="'gears'"></ui-icon>&nbsp;&nbsp;_L10N_(flight.blockName.devicesApplications)
+            </h3>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" (click)="toggleApplications($event)" [checked]="isApplicationsSelected">
+                    &nbsp;_L10N_(messages.optionTransfer.select)/_L10N_(messages.optionTransfer.deselect)
+                </label>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!devicesApplications">
+        _L10N_(flight.notification.devicesApplicationsUnavailable)
+    </div>
+
+    <div class="row" *ngIf="devicesNonMobile">
+        <div class="col-sm-12">
+            <h3>
+                <ui-icon [large]="true" [icon]="'desktop'"></ui-icon>&nbsp;&nbsp;_L10N_(devices.nonMobile)
+            </h3>
+            <p>_L10N_(flight.notification.whatIsNonMobile)</p>
+            <div class="checkbox">
+                <label><input type="checkbox" (change)="toggleAll($event, devicesNonMobile)"
+                              [checked]="devicesNonMobile.checked">
+                    &nbsp;_L10N_(messages.optionTransfer.select)/_L10N_(messages.optionTransfer.deselect)
+                    _L10N_(messages.optionTransfer.all)
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="devicesNonMobile && devicesNonMobile.children">
+        <div class="col-sm-6">
+            <div class="list-group">
+                <a href="#" (click)="checkItem($event, item)" class="list-group-item"
+                   *ngFor="let item of devicesNonMobile.children.slice(0, devicesNonMobile.children.length/2 + 1)">
+                    <ui-icon [icon]="'square-o'" [fw]="true" *ngIf="!item.checked"></ui-icon>
+                    <ui-icon [icon]="'check-square-o'" [fw]="true" *ngIf="item.checked"></ui-icon>
+                    {{item.name}}
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="list-group">
+                <a href="#" (click)="checkItem($event, item)" class="list-group-item"
+                   *ngFor="let item of devicesNonMobile.children.slice(devicesNonMobile.children.length/2 + 1)">
+                    <ui-icon [icon]="'square-o'" [fw]="true" *ngIf="!item.checked"></ui-icon>
+                    <ui-icon [icon]="'check-square-o'" [fw]="true" *ngIf="item.checked"></ui-icon>
+                    {{item.name}}
+                </a>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<div *ngIf="!wait && !devices.length">
+    _L10N_(flight.notification.deviceListEmpty)
+</div>

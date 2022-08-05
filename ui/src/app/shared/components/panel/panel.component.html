@@ -1,0 +1,19 @@
+<mat-expansion-panel
+        (expandedChange)="panelToggle.emit($event)"
+        [expanded]="!collapsed"
+        class="panel"
+>
+    <mat-expansion-panel-header >
+        <mat-panel-title class="panel-title" >
+            <i *ngIf="icon" class="material-icons panel-icon">{{icon}}</i>
+            {{title}}
+        </mat-panel-title>
+        <mat-panel-description *ngIf="hint">
+            {{hint}}
+        </mat-panel-description>
+        <button class="panel-button" mat-raised-button *ngIf="showApplyButton?.flight" (click)="onApply($event)">
+            {{'blockName.applyToStrategy' | translate}}
+        </button>
+    </mat-expansion-panel-header>
+    <ng-content></ng-content>
+</mat-expansion-panel>

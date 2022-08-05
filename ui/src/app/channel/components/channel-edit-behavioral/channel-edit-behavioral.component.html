@@ -1,0 +1,73 @@
+<ui-loading *ngIf="wait || waitAccounts, else showContent"></ui-loading>
+
+<ng-template #showContent>
+
+  <h1 class="main-title">
+    {{(mode === 'add' ? 'button.add' : 'button.edit') | translate}}
+    {{'channel.blockName.behavioural' | translate | lowercase}}
+  </h1>
+
+  <form (submit)="submitForm()">
+    <div class="form-container form-container-middle">
+      <ui-info-panel class="width-full" type="danger" *ngIf="errors.actionError">
+        <p *ngFor="let error of errors.actionError">{{error}}</p>
+      </ui-info-panel>
+
+      <mat-form-field class="width-full" *ngIf="accounts">
+        <mat-label>{{'accountSearch.account' | translate}}</mat-label>
+        <mat-select [(ngModel)]="channel.account.id"
+                    name="accountId"
+                    required>
+          <mat-option *ngFor="let item of accounts"
+                      [value]="item.id">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="width-full">
+        <mat-label>{{'blockName.name' | translate}}</mat-label>
+        <input name="name" matInput
+               [(ngModel)]="channel.name"
+               required
+               [errorStateMatcher]="matcher(errors.name)"
+               type="text">
+        <mat-error *ngFor="let error of errors.name">{{error}}</mat-error>
+      </mat-form-field>
+
+      <ui-channel-triggers-edit class="mb-2"
+                                [channel]="channel"
+                                [errors]="errors"
+                                type="P">
+      </ui-channel-triggers-edit>
+
+      <ui-channel-triggers-edit class="mb-2"
+                                [channel]="channel"
+                                [errors]="errors"
+                                type="S">
+      </ui-channel-triggers-edit>
+
+      <ui-channel-triggers-edit class="mb-2"
+                                [channel]="channel"
+                                [errors]="errors"
+                                type="U">
+      </ui-channel-triggers-edit>
+
+      <ui-channel-triggers-edit class="mb-2"
+                                [channel]="channel"
+                                [errors]="errors"
+                                type="R">
+      </ui-channel-triggers-edit>
+
+      <div class="form-footer">
+        <ui-submit-button title="{{(mode === 'add' ? 'button.add' : 'button.save') | translate}}"
+                          [wait]="waitSubmit"></ui-submit-button>
+        <button [disabled]="waitSubmit"
+                mat-flat-button
+                [routerLink]="getBackUrl()">
+          {{'button.cancel' | translate}}
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

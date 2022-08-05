@@ -1,0 +1,38 @@
+<ui-cell *ngIf="showBudget"
+         title="{{'blockName.budget' | translate}}"
+         class="cell-full">
+  <small class="stats-label">
+    {{'blockName.budget.spent' | translate}} /
+    {{'blockName.budget.available' | translate}}:
+  </small>
+  <strong>{{spentBudget | currency:currencyCode:'symbol':'1.2-2'}}
+    / {{agency.prepaidAmount | currency:currencyCode:'symbol':'1.2-2'}}</strong>
+
+  <mat-progress-bar class="budget-progress"
+                    mode="determinate"
+                    [color]="progressColor"
+                    [value]="progressValue"></mat-progress-bar>
+</ui-cell>
+
+<ui-cell class="cell-33 mb-1"
+         title="{{'blockName.status' | translate}}">
+  <i class="material-icons" appDisplayStatus [displayStatus]="agency.displayStatus">lens</i>
+  {{L10nMajorStatuses[agency.displayStatus.split('|')[0]] | translate}}
+</ui-cell>
+<ui-cell class="cell-33 mb-1"
+         title="{{'blockName.country' | translate}}">
+  {{L10nCountries[agency.countryCode] | translate}}
+</ui-cell>
+<ui-cell class="cell-33 mb-1"
+         title="{{'blockName.currency' | translate}}">
+  {{agency.currencyCode | translate}}&nbsp;({{0 | currency:agency.currencyCode:'symbol':'1.0-0' | replace:'&nbsp;':'' | replace:'&nbsp;|[0 ]+':''}})
+</ui-cell>
+<ui-cell class="cell-33 mb-1"
+         title="{{'messages.timeZone' | translate}}">
+  {{L10nTimeZones[agency.timeZone] | translate}}
+</ui-cell>
+<ui-cell *ngIf="agency.selfServiceFlag && showSelfServiceCommission"
+         class="cell-33 mb-1"
+         title="{{'agencyAccount.selfServiceCommission' | translate}}">
+  {{agency.selfServiceCommission}}%
+</ui-cell>

@@ -1,0 +1,24 @@
+@import '~@angular/material/theming';
+
+$gen-font-size: 16px;
+$gen-gap: 10px;
+$gen-gap-half: 5px;
+$gen-spacing: 2 * $gen-gap;
+
+$nav-top-height: 65px;
+$nav-left-width: 280px;
+
+// colors
+$ui-color-primary: #303f9f;
+$ui-color-primary-dark: #1a237e;
+$ui-color-primary-light: #baedff;
+$ui-color-warning: #db8400;
+$ui-color-danger: #a33;
+$ui-color-success: #0c0;
+
+// media
+$gen-xs: 320px;
+$gen-sm: 576px;
+$gen-md: 768px;
+$gen-lg: 992px;
+$gen-xl: 1200px;

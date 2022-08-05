@@ -1,0 +1,49 @@
+{
+    "server": {
+        "address": "0.0.0.0",
+        "port": 9999,
+        "pid": "/u01/bamboo-extension/var/run/server.pid",
+        "ssl": {
+            "certfile": "/opt/bamboo-extension/etc/default.crt",
+            "keyfile": "/opt/bamboo-extension/etc/default.key"
+        }
+    },
+    "bamboo": {
+        "baseurl": "https://bamboo.ocslab.com",
+        "checkpage": "/allPlans.action"
+    },
+    "ldap": {
+	   "host": "ldap.ocslab.com",
+	   "port": 389,
+	   "dn": "uid=%s,ou=Moscow,ou=People,dc=phorm,dc=com",
+	   "filter": "(active=TRUE)",
+	   "displayname": "displayName",
+	   "mail": "mail"
+    },
+    "memcached": {
+        "address": "127.0.0.1:19999",
+        "debug": 0,
+        "pid": "/u01/bamboo-extension/var/run/memcached.pid"
+    },
+    "logging": {
+        "root": {
+            "directory": "/u01/bamboo-extension/var/log/",
+            "name": "common.log",
+            "rotate": {
+                "maxbytes": 500000,
+                "backupcount": 5
+            },
+            "level": "INFO",
+            "format": "%(asctime)-15s: %(levelname)s: %(module)s:%(lineno)d: %(message)s"
+        },
+        "tornado.access": {
+            "name": "access.log"
+        },
+        "tornado.cache": {
+            "name": "cache.log"
+        },
+        "tornado.auth": {
+            "name": "auth.log"
+        }
+    }
+}

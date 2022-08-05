@@ -1,0 +1,2 @@
+"SiteName","SiteID","SiteStatus","SiteURL","TagName","TagID","Size Type","Tag Sizes","TagPricing","TagPassbackType","TagPassback","Accept Expandable Creative"
+"Existing_site",1,"Active","http://some.site.com","Existingtag1",2,"Banner","728x90t_225","default=0;cc=US,ct=all,rt=all,p=2.1RS;cc=AU,ct=all,rt=all,p=10 000CPM","HTML_URL","http://somewhere","N"

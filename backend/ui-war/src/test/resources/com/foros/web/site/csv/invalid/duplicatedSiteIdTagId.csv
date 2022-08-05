@@ -1,0 +1,4 @@
+"SiteName","SiteID","SiteStatus","SiteURL","TagName","TagID","Size Type","Tag Sizes","TagPricing","TagPassbackType","TagPassback","Accept Expandable Creative"
+"SiteName_1",1,"Active","http://some.site.com","newTag-tag1&",3,"Banner","728x90t_225","default=0;US=2.1;AU=0.11","HTML_CODE",,"Y"
+"SiteName_1",1,"Active","http://some.site.com","newTag-tag2&",,"Banner","728x90t_225","default=0;AU=0002.11","HTML_URL","http://fo.com","Y"
+"SiteName_1",1,"Active","http://some.site.com","duplicated",3,"Banner","728x90t_225","default=0;US=2.1;AU=0.11","HTML_CODE",,"Y"

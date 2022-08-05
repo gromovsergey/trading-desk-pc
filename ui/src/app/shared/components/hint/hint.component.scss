@@ -1,0 +1,7 @@
+@import "~src/scss/variables";
+
+.icon {
+  cursor: help;
+  color: lighten($ui-color-primary, 40%);
+  vertical-align: middle;
+}

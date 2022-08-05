@@ -1,0 +1,42 @@
+pkgName='foros-ui'
+specFile='foros-ui.spec'
+jiraKey='OUI'
+vcsModules[$vcsModule]=$modBuild
+vcsModules[unixcommons]=`svnCat "" unixcommons.version "" 1`
+rpmMacros=( "" )
+
+mockConfigDir=$HOME/mock/cfg
+
+function specProcessor {
+  for PROJECT in $notBuild; do
+    FIRST_LINE=
+    SECOND_LINE=
+    for NUM_LINE in `egrep -m1 -A50 -n "pushd[[:print:]].*$PROJECT" $targetDir/ui/RPM/SPECS/foros-ui.spec | egrep -m2 -n "pushd[[:print:]].*$PROJECT|popd" | sed -re 's/.*:([[:digit:]]*)[:-]+.*/\1/'`; do
+      FIRST_LINE=$SECOND_LINE
+      SECOND_LINE=$NUM_LINE
+    done
+    [ -z $FIRST_LINE ] && continue
+
+    let "DIFFERENCE= $SECOND_LINE - $FIRST_LINE"
+
+    sed -e "$FIRST_LINE,+$DIFFERENCE d" -i $targetDir/ui/RPM/SPECS/foros-ui.spec
+
+    sed -e "/$PROJECT/ d" -i $targetDir/ui/RPM/SPECS/foros-ui.spec
+  done
+  sed -e 's/^%{__inst_root}\/lib\/\*$/%defattr(-, uiuser, uiuser)\n%{__inst_root}\/lib/g' -i $targetDir/ui/RPM/SPECS/foros-ui.spec
+}
+
+function copyPackagesToBuildbox {
+  printDBG "invoking $0"
+
+  local _i;
+  for (( _i=2; _i<=${#packageList[@]}; _i+=1 )); do
+    execCmd "scp ${packageList[$_i]} buildbox:/$buildboxStorageDir"
+  done
+}
+
+stage[32]='specProcessor'
+if [ -n "$buildboxStorageDir" ]; then
+  stage[71]='copyPackagesToBuildbox'
+fi
+

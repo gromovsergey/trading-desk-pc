@@ -1,0 +1,12 @@
+<ui-nav-top></ui-nav-top>
+
+<div class="error-wrapper">
+  <div class="error-container">
+    <h1>{{'messages.error' | translate}} {{code}}</h1>
+    <h2 *ngIf="message">{{message | translate}}</h2>
+    <div class="error-buttons">
+      <button mat-flat-button color="primary" routerLink="/">{{'button.mainPage' | translate}}</button>
+    </div>
+  </div>
+</div>
+

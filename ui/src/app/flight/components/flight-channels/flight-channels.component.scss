@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.table-container {
+  height: 100%;
+  flex-grow: 1;
+  overflow-y: auto !important;
+}

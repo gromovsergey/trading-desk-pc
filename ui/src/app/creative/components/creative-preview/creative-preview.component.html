@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>{{'creative.blockName.creativePreview' | translate}}</h2>
+
+<mat-dialog-content class="mat-typography">
+  <ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+  <ng-template #showContent>
+    <div class="text-center" *ngIf="creative && previewData, else showError">
+      <div class="table-responsive">
+        <iframe #frame class="e2e-trusted-url c-frame"
+                [src]="previewData.secureUrl"
+                [width]="previewData.width"
+                [height]="previewData.height"></iframe>
+      </div>
+      <div>
+        {{creative.name}}<br>
+        <strong>{{previewData.width}}x{{previewData.height}}</strong>, {{creative.templateName}}
+      </div>
+    </div>
+
+    <ng-template #showError>
+      <ui-info-panel type="danger">
+        Can't show preview
+      </ui-info-panel>
+    </ng-template>
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{'button.close' | translate}}</button>
+</mat-dialog-actions>

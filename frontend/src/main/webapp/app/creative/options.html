@@ -1,0 +1,54 @@
+<div class="form-group" *ngIf="showOption" [ngClass]="{'has-error': errors}">
+    <label>
+        {{option.defaultName}}
+        <ui-hint *ngIf="option.defaultLabel" [text]="option.defaultLabel"></ui-hint>:
+        <ui-icon-required *ngIf="option.required"></ui-icon-required>
+    </label>
+    
+    <div *ngIf="option.type.toUpperCase() === 'STRING' || option.type.toUpperCase() === 'URL' || option.type.toUpperCase() === 'URL_WITHOUT_PROTOCOL'">
+        <input type="text" placeholder="{{option.defaultName}}" [(ngModel)]="option.value" (change)="changed($event)"
+               maxlength="2000" class="form-control">
+    </div>
+
+    <div *ngIf="option.type.toUpperCase() === 'INTEGER'">
+        <input type="text" placeholder="{{option.defaultName}}" [(ngModel)]="option.value" 
+               maxlength="14" class="form-control" (change)="changed($event)">
+    </div>
+
+    <div *ngIf="option.type.toUpperCase() === 'TEXT'">
+        <textarea placeholder="{{option.defaultName}}" [(ngModel)]="option.value" 
+                  class="form-control" rows="10" (change)="changed($event)"></textarea>
+    </div>
+
+    <div *ngIf="option.type.toUpperCase() === 'HTML'">
+        <textarea placeholder="{{option.defaultName}}" [(ngModel)]="option.value" 
+                  class="form-control" rows="10" (change)="changed($event)"></textarea>
+    </div>
+
+    <div *ngIf="option.type.toUpperCase() === 'FILE' || option.type.toUpperCase() === 'DYNAMIC_FILE'">
+        <ui-file-upload [accountId]="accountId" [value]="option.value"
+                        (onUpload)="fileUploaded($event)"
+                        [title]="'_L10N_(button.upload)'" [clearBtnTitle]="'_L10N_(button.clear)'"></ui-file-upload>
+    </div>
+
+    <div *ngIf="option.type.toUpperCase() === 'FILE_URL'">
+        <ui-file-upload [accountId]="accountId" [value]="option.value"
+                        (onUpload)="fileUploaded($event)"
+                        [title]="'_L10N_(button.upload)'" [clearBtnTitle]="'_L10N_(button.clear)'"></ui-file-upload>
+    </div>
+
+    <div *ngIf="option.type.toUpperCase() === 'ENUM'">
+        <select class="form-control" [(ngModel)]="option.value" (change)="changed($event)">
+            <option *ngFor="let enum of option.enumValues" [value]="enum.value">{{enum.name}}</option>
+        </select>
+    </div>
+
+    <div class="form-inline">
+        <div *ngIf="option.type.toUpperCase() === 'COLOR'" #option class="input-group colorpicker-component">
+            <input type="text" placeholder="{{option.defaultName}}" maxlength="7" size="10" class="form-control">
+            <span class="input-group-addon"><i></i></span>
+        </div>
+    </div>
+    
+    <p *ngFor="let err of errors" class="help-block">{{err}}</p>
+</div>

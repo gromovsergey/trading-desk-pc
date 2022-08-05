@@ -1,0 +1,32 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">
+    {{'accountSearch.account' | translate}}
+    <button mat-raised-button
+            type="button"
+            (click)="showDocuments()">
+      {{'account.documents' | translate}}
+    </button>
+  </h1>
+  <h2 class="main-title">
+    <i class="material-icons" appDisplayStatus [displayStatus]="agency.displayStatus">lens</i>
+    {{agency.name}}
+  </h2>
+
+  <ui-panel class="settings-panel"
+            title="{{'blockName.generalProperties' | translate}}">
+    <ui-agency-properties [showSelfServiceCommission]="financeViewAllowed"
+                          [agencyId]="agency.id"></ui-agency-properties>
+  </ui-panel>
+
+  <h1 class="main-title">
+    <i class="material-icons">group</i>
+    {{'agencyAccount.users' | translate}}
+    <button *ngIf="canCreateUser"
+            mat-raised-button
+            routerLink="/agency/{{agency.id}}/user/add">{{'button.createNew' | translate}}</button>
+  </h1>
+  <ui-user-list [accountId]="agency.id"
+                [showAdvertisers]="true"></ui-user-list>
+</ng-template>

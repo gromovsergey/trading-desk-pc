@@ -1,0 +1,249 @@
+<ui-loading *ngIf="waitStats, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">
+    {{title}}
+  </h1>
+
+  <h2>
+    <strong>{{'agentReport.status' | translate}}:</strong>
+    {{L10nReportStatuses[status] | translate}}
+  </h2>
+
+  <form *ngIf="monthlyStats?.data?.length" (submit)="doSubmit($event)">
+
+    <mat-form-field>
+      <mat-label>{{'report.advertiserReport.filter' | translate}}</mat-label>
+      <input matInput autocomplete="off" (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+
+    <div class="table-container report-table">
+      <table mat-table [dataSource]="monthlyStats">
+
+        <ng-container matColumnDef="advertiser" sticky>
+          <th mat-header-cell class="name-cell" *matHeaderCellDef>{{'agentReport.monthly.advertiser' | translate}}</th>
+          <td mat-cell class="name-cell" *matCellDef="let stat">
+            <span class="long-name-wrap">{{stat.advertiserName}}</span>
+          </td>
+          <td mat-footer-cell class="name-cell" *matFooterCellDef>
+            <strong>{{'agentReport.monthly.total' | translate}}</strong>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="contractNumber">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.contractNumber' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.contractNumber}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="client">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.client' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">
+            <span class="long-name-wrap">{{stat.clientName}}</span>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="campaign">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.campaign' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">
+            <span class="long-name-wrap">{{stat.campaignName}}</span>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="rateType">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.rateType' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.rateType}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="rateValue">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.rateValue' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.rateValue}}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="inventory">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.inventory' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.inventoryAmount}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{total.inventoryAmount}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="inventoryConfirmed">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.inventoryConfirmed' | translate}}</th>
+          <td mat-cell *matCellDef="let stat, let i = index">
+            <mat-form-field *ngIf="editable, else inventoryAmountConfirmed" floatLabel="never">
+              <input [(ngModel)]="stat.inventoryAmountConfirmed"
+                     [ngModelOptions]="{standalone: true}"
+                     placeholder="{{'messages.notSet' | translate}}"
+                     [errorStateMatcher]="matcher(hasError(i, 'inventoryAmountConfirmed'))"
+                     matInput type="text">
+              <mat-error *ngIf="hasError(i, 'inventoryAmountConfirmed')">
+                {{errors?.rows[i]?.inventoryAmountConfirmed}}
+              </mat-error>
+            </mat-form-field>
+            <ng-template #inventoryAmountConfirmed>
+              {{stat.inventoryAmountConfirmed}}
+            </ng-template>
+          </td>
+          <td mat-footer-cell *matFooterCellDef>{{total.inventoryAmountConfirmed}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="inventoryComment">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.inventoryComment' | translate}}</th>
+          <td mat-cell *matCellDef="let stat, let i = index">
+            <mat-form-field *ngIf="editable, else inventoryAmountComment" floatLabel="never">
+              <textarea [(ngModel)]="stat.inventoryAmountComment"
+                     [ngModelOptions]="{standalone: true}"
+                     placeholder="{{'messages.notSet' | translate}}"
+                     [errorStateMatcher]="matcher(hasError(i, 'inventoryAmountComment'))"
+                     rows="3" matInput></textarea>
+              <mat-error *ngIf="hasError(i, 'inventoryAmountComment')">
+                {{errors?.rows[i]?.inventoryAmountComment}}
+              </mat-error>
+            </mat-form-field>
+            <ng-template #inventoryAmountComment>
+              {{stat.inventoryAmountComment}}
+            </ng-template>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="invoiceNumber">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.invoiceNumber' | translate}}</th>
+          <td mat-cell *matCellDef="let stat, let i = index">
+            <mat-form-field *ngIf="editable, else invoiceNumber" floatLabel="never">
+              <input [(ngModel)]="stat.invoiceNumber"
+                     [ngModelOptions]="{standalone: true}"
+                     placeholder="{{'messages.notSet' | translate}}"
+                     [errorStateMatcher]="matcher(hasError(i, 'invoiceNumber'))"
+                     matInput type="text">
+              <mat-error *ngIf="hasError(i, 'invoiceNumber')">
+                {{errors?.rows[i]?.invoiceNumber}}
+              </mat-error>
+            </mat-form-field>
+            <ng-template #invoiceNumber>
+              {{stat.invoiceNumber}}
+            </ng-template>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalAmount">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.totalAmount' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.totalAmount}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{total.totalAmount}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalAmountConfirmed">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.totalAmountConfirmed' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.totalAmountConfirmed}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{total.totalAmountConfirmed}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="pubAmount">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.pubAmount' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.pubAmount}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{total.pubAmount}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="pubAmountConfirmed">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.pubAmountConfirmed' | translate}}</th>
+          <td mat-cell *matCellDef="let stat, let i = index">
+            <mat-form-field *ngIf="editable, else pubAmountConfirmed" floatLabel="never">
+              <input [(ngModel)]="stat.pubAmountConfirmed"
+                     [ngModelOptions]="{standalone: true}"
+                     placeholder="{{'messages.notSet' | translate}}"
+                     [errorStateMatcher]="matcher(hasError(i, 'pubAmountConfirmed'))"
+                     matInput type="text">
+              <mat-error *ngIf="hasError(i, 'pubAmountConfirmed')">
+                {{errors?.rows[i]?.pubAmountConfirmed}}
+              </mat-error>
+            </mat-form-field>
+            <ng-template #pubAmountConfirmed>
+              {{stat.pubAmountConfirmed}}
+            </ng-template>
+          </td>
+          <td mat-footer-cell *matFooterCellDef>{{total.pubAmountConfirmed}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="pubAmountComment">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.pubAmountComment' | translate}}</th>
+          <td mat-cell *matCellDef="let stat, let i = index">
+            <mat-form-field *ngIf="editable, else pubAmountComment" floatLabel="never">
+              <textarea [(ngModel)]="stat.pubAmountComment"
+                        [ngModelOptions]="{standalone: true}"
+                        placeholder="{{'messages.notSet' | translate}}"
+                        [errorStateMatcher]="matcher(hasError(i, 'pubAmountComment'))"
+                        rows="3" matInput></textarea>
+              <mat-error *ngIf="hasError(i, 'pubAmountComment')">
+                {{errors?.rows[i]?.pubAmountComment}}
+              </mat-error>
+            </mat-form-field>
+            <ng-template #pubAmountComment>
+              {{stat.pubAmountComment}}
+            </ng-template>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="agentAmount">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.agentAmount' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.agentAmount}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{total.agentAmount}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="principalAmount">
+          <th mat-header-cell *matHeaderCellDef>{{'agentReport.monthly.principalAmount' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.principalAmount}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{total.principalAmount}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+      </table>
+    </div>
+
+    <div class="form-footer">
+
+      <ui-info-panel type="danger" *ngIf="actionErrors">
+        <p *ngFor="let error of actionErrors" class="text-danger">{{error}}</p>
+      </ui-info-panel>
+
+      <button *ngIf="editable"
+              mat-flat-button
+              color="primary"
+              [disabled]="waitSubmit"
+              type="submit">
+        <mat-spinner *ngIf="waitSubmit" class="button-spinner" color="accent" [diameter]="20"></mat-spinner>
+        {{'button.save' | translate}}
+      </button>
+
+      <button *ngIf="editable"
+              mat-flat-button
+              color="primary"
+              (click)="closePeriod($event)">
+        <mat-spinner *ngIf="waitSubmit" class="button-spinner" color="accent" [diameter]="20"></mat-spinner>
+        {{'agentReport.monthly.closeButton' | translate}}
+      </button>
+
+      <button *ngIf="status === 'CLOSED'"
+              mat-flat-button
+              color="primary"
+              (click)="downloadFile($event)">
+        <mat-spinner *ngIf="waitDl" class="button-spinner" color="accent" [diameter]="20"></mat-spinner>
+        {{'agentReport.total.report' | translate}}
+      </button>
+
+      <button *ngIf="!waitSubmit"
+              mat-flat-button
+              [routerLink]="backUrl">
+        {{'button.cancel' | translate}}
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<a class="hidden" #downloadBtn [href]="downloadUrl" [download]="downloadName"></a>

@@ -1,0 +1,163 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package abstract="true" name="behavioralChannels" extends="foros-default">
+        <global-results>
+            <result name="version" type="chain">
+                <param name="actionName">BehavioralChannel/view</param>
+            </result>
+        </global-results>
+
+        <action name="BehavioralChannel/view" class="com.foros.action.channel.behavioral.ViewBehavioralChannelAction" method="view">
+            <result name="success" type="tiles">channel.BehavioralChannel.view</result>
+        </action>
+
+        <action name="BehavioralChannel/edit" class="com.foros.action.channel.behavioral.EditBehavioralChannelAction" method="edit">
+            <result name="success" type="tiles">channel.BehavioralChannel.edit</result>
+        </action>
+
+        <action name="BehavioralChannel/new" class="com.foros.action.channel.behavioral.CreateBehavioralChannelAction" method="create">
+            <result name="success" type="tiles">channel.BehavioralChannel.new</result>
+        </action>
+
+        <action name="BehavioralChannel/createCopy" class="com.foros.action.channel.behavioral.CreateCopyBehavioralChannelAction" method="copy">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">BehavioralChannel/edit</param>
+                <param name="id">${copyId}</param>
+            </result>
+            <result name="input" type="chain">
+                <param name="actionName">BehavioralChannel/view</param>
+            </result>
+        </action>
+
+        <action name="BehavioralChannel/create" class="com.foros.action.channel.behavioral.SaveBehavioralChannelAction" method="create">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+            <result name="input" type="tiles">channel.BehavioralChannel.new</result>
+        </action>
+
+        <action name="BehavioralChannel/update" class="com.foros.action.channel.behavioral.SaveBehavioralChannelAction" method="update">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+            <result name="input" type="tiles">channel.BehavioralChannel.edit</result>
+            <result name="version" type="clearContextDispatch">
+                <param name="location">edit.action</param>
+            </result>
+        </action>
+
+        <action name="BehavioralChannel/makePublic" class="com.foros.action.channel.behavioral.MakePublicBehavioralChannelAction" method="makePublic">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+        </action>
+
+        <action name="BehavioralChannel/makePrivate" class="com.foros.action.channel.behavioral.MakePublicBehavioralChannelAction" method="makePrivate">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+        </action>
+
+        <action name="BehavioralChannel/activate" class="com.foros.action.channel.behavioral.StatusBehavioralChannelAction" method="activate">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">view</param>
+            </result>
+        </action>
+
+        <action name="BehavioralChannel/inactivate" class="com.foros.action.channel.behavioral.StatusBehavioralChannelAction" method="inactivate">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">view</param>
+            </result>
+        </action>
+
+        <action name="BehavioralChannel/delete" class="com.foros.action.channel.behavioral.StatusBehavioralChannelAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="internal" type="chain">
+                <param name="actionName">view</param>
+            </result>
+            <result name="external" type="redirectAction">
+                <param name="actionName">contextMain</param>
+            </result>
+        </action>
+
+        <action name="BehavioralChannel/undelete" class="com.foros.action.channel.behavioral.StatusBehavioralChannelAction" method="undelete">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">view</param>
+            </result>
+            <result name="input" type="chain">
+                <param name="actionName">BehavioralChannel/view</param>
+            </result>
+        </action>
+
+        <action name="BehavioralChannel/submitCmp" class="com.foros.action.channel.behavioral.EditBehavioralChannelAction" method="submitCmp">
+            <result name="success" type="tiles">channel.advertising.submitCmp</result>
+        </action>
+
+        <action name="BehavioralChannel/saveSubmitCmp" class="com.foros.action.channel.behavioral.SaveBehavioralChannelAction" method="submitToCmp">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+            <result name="input" type="tiles">channel.advertising.submitCmp</result>
+            <result name="version" type="chain">
+                <param name="actionName">BehavioralChannel/submitCmp</param>
+            </result>
+        </action>
+
+        <action name="BehavioralChannel/editCmp" class="com.foros.action.channel.behavioral.EditBehavioralChannelAction" method="editCmp">
+            <result name="success" type="tiles">channel.advertising.editCmp</result>
+        </action>
+
+        <action name="BehavioralChannel/saveEditCmp" class="com.foros.action.channel.behavioral.SaveBehavioralChannelAction" method="updateCmp">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+            <result name="input" type="tiles">channel.advertising.editCmp</result>
+            <result name="version" type="chain">
+                <param name="actionName">BehavioralChannel/editCmp</param>
+            </result>
+        </action>
+
+        <action name="BehavioralChannel/loadTriggersPage" class="com.foros.action.channel.ViewChannelTriggersAction" method="loadTriggersPage">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/channel/loadTriggersPage.jsp</result>
+        </action>
+
+        <action name="BehavioralChannel/logChecksPopup" class="com.foros.action.regularchecks.ChannelLogCheckAction" method="edit">
+            <result name="success">/regularchecks/logChecksPopup.jsp</result>
+        </action>
+
+        <action name="BehavioralChannel/logChecks" class="com.foros.action.regularchecks.ChannelLogCheckAction" method="updateCheck">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/regularchecks/logChecksPopup.jsp</result>
+            <result name="input">/regularchecks/logChecksPopup.jsp</result>
+        </action>
+
+    </package>
+
+    <package namespace="/admin/channel" name="internalBehavioralChannels" extends="behavioralChannels"/>
+    <package namespace="/advertiser/channel" name="advertisingBehavioralChannels" extends="behavioralChannels"/>
+    <package namespace="/cmp/channel" name="cmpBehavioralChannels" extends="behavioralChannels"/>
+</struts>

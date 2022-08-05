@@ -1,0 +1,2 @@
+include bamboo_extension/data/html/*
+include bamboo_extension/data/static/*

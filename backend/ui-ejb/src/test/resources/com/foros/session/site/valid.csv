@@ -1,0 +1,2 @@
+SiteName,SiteID,SiteStatus,SiteURL,TagName,TagID,TagSize,TagTrackingURL,TagPricing,TagPassbackType,TagPassback,Accept Expandable Creative
+"SiteA",3,Active,http://a,newTag_tag1,,728x90t_225,,default=0;US=2.1;AU=0002.11,HTML_URL,,N

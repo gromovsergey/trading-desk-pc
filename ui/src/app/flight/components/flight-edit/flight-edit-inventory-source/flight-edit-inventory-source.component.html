@@ -1,0 +1,21 @@
+<mat-radio-group class="radio-group"
+                 [value]="showTransfer"
+                 (change)="showTransferChange($event.value)">
+  <mat-radio-button class="radio-button" [value]="false">
+    {{'flight.blockName.allSites' | translate}}
+  </mat-radio-button>
+  <mat-radio-button class="radio-button" [value]="true">
+    {{'flight.blockName.specificSites' | translate}}
+  </mat-radio-button>
+</mat-radio-group>
+
+<div class="form-group" [hidden]="!showTransfer" *ngIf="loadingSites">
+  <ui-option-transfer [options]="sites"
+                      [selected]="selected"
+                      [customSort]="sort"
+                      (transferChange)="onSiteListChange($event)"
+                      #optionTransfer>
+  </ui-option-transfer>
+</div>
+
+<ui-loading [overlay]="true" *ngIf="wait"></ui-loading>

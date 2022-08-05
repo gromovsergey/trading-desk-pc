@@ -1,0 +1,91 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="AdopsDashboard" extends="foros-default" namespace="/">
+
+        <action name="admin/AdopsDashboard/main" class="com.foros.action.admin.AdopsDashboardAction" method="main">
+            <result name="success" type="tiles">AdopsDashboard.main</result>
+        </action>
+
+        <action name="admin/AdopsDashboard/lookup" class="com.foros.action.admin.LookupAdopsDashboardAction"
+                method="lookup">
+            <result name="success" type="tiles">AdopsDashboard.main</result>
+            <result name="account" type="redirectAction">
+                <param name="actionName">admin/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="campaign_creative" type="redirectAction">
+                <param name="actionName">admin/campaign/group/creative/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="campaign" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="channel" type="redirectAction">
+                <param name="actionName">admin/channel/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="colocation" type="redirectAction">
+                <param name="actionName">admin/colocation/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="creative" type="redirectAction">
+                <param name="actionName">admin/creative/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="text" type="redirectAction">
+                <param name="actionName">admin/campaign/group/TextAd/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="creative_group" type="redirectAction">
+                <param name="actionName">admin/campaign/group/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="discover_tag" type="redirectAction">
+                <param name="actionName">admin/site/WDTag/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="site" type="redirectAction">
+                <param name="actionName">admin/site/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="tag" type="redirectAction">
+                <param name="actionName">admin/tag/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="*" type="httperror">
+                <param name="errorCode">404</param>
+            </result>
+        </action>
+
+        <action name="admin/AdopsDashboard/creativeList" class="com.foros.action.admin.CreativesAdopsDashboardAction"
+                method="showPendingCreatives">
+            <interceptor-ref name="i18n"/>
+            <result name="success" type="tiles">AdopsDashboard.creatives</result>
+        </action>
+
+        <action name="admin/AdopsDashboard/searchCreativeList" class="com.foros.action.admin.CreativesAdopsDashboardAction"
+                method="searchPendingCreatives">
+            <interceptor-ref name="i18n"/>
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">AdopsDashboard.creativesList</result>
+            <result name="input" type="redirect">admin/AdopsDashboard/searchCreativeList.action</result>
+        </action>
+
+        <action name="admin/AdopsDashboard/regularReview" class="com.foros.action.admin.RegularReviewDashboardAction" method="main">
+            <result name="success" type="tiles">AdopsDashboard.regularReview.main</result>
+        </action>
+        <action name="admin/AdopsDashboard/regularReviewSearch" class="com.foros.action.admin.RegularReviewDashboardAction" method="search">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">AdopsDashboard.regularReview.list</result>
+            <result name="input" type="redirect">admin/AdopsDashboard/regularReviewSearch.action</result>
+        </action>
+
+    </package>
+</struts>

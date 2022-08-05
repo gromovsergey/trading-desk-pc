@@ -1,0 +1,42 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [fw]="true" [displayStatus]="advertiser.displayStatus"></ui-icon> {{title}}
+        </h2>
+    </div>
+    <ui-report [meta]="meta"
+               [reportParameters]="reportParameters"
+               [reportService]="reportService"
+               [downloadNamePrefix]="'Report for ' + advertiser.name">
+        <div #params>
+
+            <div class="form-group">
+                <label>_L10N_(report.advertiserReport.filter)</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" (change)="switchType($event)" [checked]="!radioVal">
+                        _L10N_(report.advertiserReport.allCampaigns)
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" (change)="switchType($event)" [checked]="radioVal">
+                        _L10N_(report.advertiserReport.specificCampaigns)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" *ngIf="radioVal">
+                <ui-option-transfer [options]="flightsAvailable" [selected]="flightsSelected"
+                                    (onChange)="filghtIdsChange($event)" [customSort]="sort"
+                                    [availableMsg]="'_L10N_(messages.optionTransfer.available)'"
+                                    [selectedMsg]="'_L10N_(messages.optionTransfer.selected)'"
+                                    [selectAllMsg]="'_L10N_(messages.optionTransfer.selectAll)'"
+                                    [deselectAllMsg]="'_L10N_(messages.optionTransfer.deselectAll)'">
+                </ui-option-transfer>
+            </div>
+
+        </div>
+    </ui-report>
+</section>

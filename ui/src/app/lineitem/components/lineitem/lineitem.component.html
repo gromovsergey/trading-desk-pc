@@ -1,0 +1,103 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<ng-container *ngIf="!wait">
+  <h1>
+    {{'lineItem.object' | translate}}
+  </h1>
+
+  <h2 class="main-title">
+    <i class="material-icons" appDisplayStatus [displayStatus]="lineItem.displayStatus">lens</i>
+    {{lineItem.name}}
+    <button *ngIf="canEditLineItem"
+            mat-raised-button
+            [routerLink]="['/lineitem', lineItem.id, 'edit']">
+      {{'button.edit' | translate}}
+    </button>
+    <button *ngIf="canEditLineItem && flight.displayStatus !== 'DELETED'"
+            mat-raised-button
+            (click)="makeCopy()">
+      {{'flight.button.makeCopy' | translate}}
+      <span class="material-icons">content_copy</span>
+    </button>
+  </h2>
+
+  <ui-flight-tabs [canCreate]="canCreateLineItem"
+                  [flightId]="lineItem.flightId"
+                  [lineItems]="lineItems"
+                  [lineItemId]="lineItem.id"></ui-flight-tabs>
+
+  <ui-panel title="{{'blockName.summary' | translate}}" icon="list">
+    <ui-flight-summary [statusChangeable]="canEditLineItem"
+                       [lineItem]="lineItem"
+                       (statusChange)="statusChange()"></ui-flight-summary>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ui-panel title="{{'blockName.blackList' | translate}}" class="form-panel" [collapsed]="true">
+    <p
+            class="width-full"
+            style="white-space: pre-line"
+    >
+      {{lineItem.blackList}}
+    </p>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ui-panel title="{{'blockName.whiteList' | translate}}" class="form-panel" [collapsed]="true">
+    <p
+            class="width-full"
+            style="white-space: pre-line"
+    >
+      {{lineItem.whiteList}}
+    </p>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ui-panel title="{{'flight.blockName.geotarget' | translate}}" class="form-panel" [collapsed]="true">
+    <ui-flight-geo [flightId]="lineItem.id"
+                   [geoChannelIds]="lineItem.geoChannelIds"
+                   [excludedGeoChannelIds]="lineItem.excludedGeoChannelIds"
+    ></ui-flight-geo>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ui-panel title="{{'blockName.chart' | translate}}" icon="insights">
+    <ui-chart [lineItemId]="lineItem.id"></ui-chart>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ui-panel title="{{'flight.blockName.channels' | translate}}" icon="gps_fixed">
+    <ui-flight-channels (statusChange)="statusChange()"
+                        (error)="errorProcessing()"
+                        [lineItemId]="lineItem.id"
+                        [readonly]="!canEditLineItem"
+                        [specialChannelId]="lineItem.specialChannelId"
+                        [linkSpecialChannelFlag]="lineItem.specialChannelLinked">
+    </ui-flight-channels>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ui-panel title="{{'flight.blockName.sites' | translate}}" icon="desktop_mac">
+    <ui-flight-sites [lineItemId]="lineItem.id"
+                     [readonly]="!canEditLineItem"></ui-flight-sites>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ui-panel title="{{'flight.blockName.creatives' | translate}}" icon="photo">
+    <ui-flight-creatives (statusChange)="statusChange()"
+                         (error)="errorProcessing()"
+                         [lineItemId]="lineItem.id"
+                         [readonly]="!canEditLineItem"></ui-flight-creatives>
+  </ui-panel>
+
+  <ui-flight-lineitems class="hidden"
+                       (liLoad)="lineItemsOnLoad($event)"
+                       [flightId]="lineItem.flightId"></ui-flight-lineitems>
+</ng-container>

@@ -1,0 +1,13 @@
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <definition name="creativesApproval.main" extends=".mainLayout">
+        <put-attribute name="body" value="/site/creativesApprovalMain.jsp"/>
+        <put-attribute name="titleProperty" value="site.creativesApproval"/>
+        <put-attribute name="moduleName" value="site/creativesApproval"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.sites"/>
+    </definition>
+
+</tiles-definitions>

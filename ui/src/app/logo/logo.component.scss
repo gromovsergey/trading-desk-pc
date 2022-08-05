@@ -1,0 +1,26 @@
+@import "~src/scss/variables";
+
+$size: 340px;
+
+.logo {
+  padding-left: $gen-spacing;
+  padding-bottom: $gen-spacing;
+  margin: 0 auto;
+  width: $size;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  & > .logo-img {
+    width: 60px;
+  }
+  & > .logo-genius {
+    width: 300px;
+  }
+  & > .logo-pharmatic{
+    width: 300px;
+  }
+  & > h1 {
+    margin-left: $gen-spacing;
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,25 @@
+<div class="form-group">
+    <div class="radio">
+        <label>
+            <input type="radio" (change)="switchType($event)" [checked]="!radioVal">
+            _L10N_(flight.blockName.allSites)
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" (change)="switchType($event)" [checked]="radioVal">
+            _L10N_(flight.blockName.specificSites)
+        </label>
+    </div>
+</div>
+<div class="form-group" *ngIf="!wait && radioVal">
+    <ui-option-transfer [options]="sitesAvailable" [selected]="sitesSelected"
+                        (onChange)="onSiteListChange($event)" [customSort]="sort"
+                        [availableMsg]="'_L10N_(messages.optionTransfer.available)'"
+                        [selectedMsg]="'_L10N_(messages.optionTransfer.selected)'"
+                        [selectAllMsg]="'_L10N_(messages.optionTransfer.selectAll)'"
+                        [deselectAllMsg]="'_L10N_(messages.optionTransfer.deselectAll)'">
+    </ui-option-transfer>
+</div>
+
+<ui-loading [overlay]="true" *ngIf="wait"></ui-loading>

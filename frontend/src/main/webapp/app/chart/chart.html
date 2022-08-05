@@ -1,0 +1,48 @@
+<ui-loading [overlay]="true" *ngIf="wait"></ui-loading>
+
+<p *ngIf="!wait && loadFailed" class="c-chart__empty">_L10N_(chart.noPlotData)</p>
+
+<div class="table-responsive c-chart__container" [ngClass]="{'hidden': loadFailed}">
+    <div [id]="chartId" class="c-chart" #chart></div>
+</div>
+
+<div class="form-horizontal" (change)="onParamsChange($event)">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">_L10N_(chart.object)</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="params.chartObject">
+                        <option *ngFor="let object of chartObjects"[value]="object">{{L10nChartObjects[object]}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">_L10N_(chart.metrics)</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="params.chartMetric">
+                        <option *ngFor="let metric of chartMetrics" [value]="metric">{{L10nChartMetrics[metric]}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">_L10N_(chart.period)</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="selectedPeriod">
+                        <option *ngFor="let period of chartPeriods" [value]="period">{{L10nChartPeriods[period]}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">_L10N_(chart.type)</label>
+                <div class="col-sm-6">
+                    <select class="form-control" [(ngModel)]="params.chartType">
+                        <option *ngFor="let type of chartTypes" [value]="type">{{L10nChartTypes[type]}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

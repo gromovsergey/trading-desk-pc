@@ -1,0 +1,97 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="internalAccount" extends="foros-default" namespace="/">
+
+        <action name="admin/internal/account/list" class="com.foros.action.account.ListInternalAccountAction" method="list">
+            <result name="success" type="tiles">admin.internal.main</result>
+        </action>
+
+        <action name="admin/internal/account/view" class="com.foros.action.account.ViewInternalAccountAction" method="view">
+            <result name="success" type="tiles">admin.internal.view</result>
+        </action>
+
+        <action name="admin/internal/account/edit" class="com.foros.action.account.EditInternalAccountAction" method="edit">
+            <result name="success" type="tiles">admin.internal.edit</result>
+        </action>
+
+        <action name="admin/internal/account/new" class="com.foros.action.account.EditInternalAccountAction" method="create">
+            <result name="success" type="tiles">admin.internal.new</result>
+        </action>
+
+        <action name="admin/internal/account/changeCountry" class="com.foros.action.account.EditInternalAccountAction" method="changeCountry">
+            <result name="success">/account/addressEditSection.jsp</result>
+        </action>
+
+        <action name="admin/internal/account/update" class="com.foros.action.account.SaveInternalAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/internal/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.internal.edit</result>
+            <result name="version">
+                <param name="location">/admin/internal/account/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/internal/account/create" class="com.foros.action.account.SaveInternalAccountAction" method="create">
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/internal/account/view</param>
+            <param name="id">${id}</param>
+          </result>
+          <result name="input" type="tiles">admin.internal.new</result>
+        </action>
+
+        <action name="admin/internal/account/activate" class="com.foros.action.account.StatusAccountAction" method="activate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/internal/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/internal/account/inactivate" class="com.foros.action.account.StatusAccountAction" method="inactivate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/internal/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/internal/account/delete" class="com.foros.action.account.StatusAccountAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/internal/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/internal/account/undelete" class="com.foros.action.account.StatusAccountAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/internal/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/internal/account/viewAuctionSettings" class="com.foros.action.account.ViewAccountAuctionSettingsAction" method="view">
+            <result name="success" type="tiles">admin.internal.auctionSettings.view</result>
+        </action>
+
+        <action name="admin/internal/account/editAuctionSettings" class="com.foros.action.account.EditAccountAuctionSettingsAction" method="edit">
+            <result name="success" type="tiles">admin.internal.auctionSettings.edit</result>
+        </action>
+        <action name="admin/internal/account/updateAuctionSettings" class="com.foros.action.account.SaveAccountAuctionSettingsAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/internal/account/viewAuctionSettings</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.internal.auctionSettings.edit</result>
+            <result name="version">
+                <param name="location">/admin/internal/account/editAuctionSettings.action</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

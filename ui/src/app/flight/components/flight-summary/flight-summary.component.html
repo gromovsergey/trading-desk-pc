@@ -1,0 +1,132 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+
+  <ui-cell title="{{'blockName.budget' | translate}}"
+           class="cell-full">
+    <small class="stats-label">
+      {{'blockName.budget.spent' | translate}} /
+      {{'blockName.budget.available' | translate}}:
+    </small>
+    <strong>{{stats.spentBudget | currency:currencyCode:'symbol':'1.2-2'}}
+      / {{stats.budget | currency:currencyCode:'symbol':'1.2-2'}}</strong>
+
+    <mat-progress-bar class="budget-progress"
+                      mode="determinate"
+                      [color]="progressColor"
+                      [value]="progressValue"></mat-progress-bar>
+  </ui-cell>
+
+  <!-- first row -->
+
+  <ui-cell class="cell-25" title="{{'blockName.status' | translate}}">
+    <mat-spinner *ngIf="statusWait, else showStatus" [diameter]="30"></mat-spinner>
+    <ng-template #showStatus>
+      <ui-display-status-toggle *ngIf="statusChangeable"
+                                (statusChange)="changeStatus($event)"
+                                [status]="stats.displayStatus"
+                                [statusObject]="stats"></ui-display-status-toggle>
+      <i *ngIf="!statusChangeable" class="material-icons" appDisplayStatus
+         [displayStatus]="stats.displayStatus">lens</i>
+      {{L10nMajorStatuses[stats.displayStatus.split('|')[0]] | translate}}
+    </ng-template>
+  </ui-cell>
+
+  <ui-cell class="cell-25" title="{{'blockName.dates' | translate}}">
+    <span class="text-nowrap" *ngIf="dateStart">
+      {{dateStart}} &ndash; {{dateEnd ? dateEnd : ('flight.message.unlimited' | translate)}}
+    </span>
+    <span class="text-nowrap" *ngIf="!dateStart">
+      {{'flight.notification.startDateNotSet' | translate}}
+    </span>
+  </ui-cell>
+
+  <ui-cell class="cell-25" title="{{'flight.blockName.deliveryPacing' | translate}}">
+    <span *ngIf="entity.deliveryPacing === 'F'">
+      {{'flight.blockName.deliveryPacing.fixed' | translate}}
+      {{entity.dailyBudget | currency:currencyCode:'symbol':'1.2-2'}}
+    </span>
+    <span *ngIf="entity.deliveryPacing === 'D'">
+      {{'flight.blockName.deliveryPacing.dynamic' | translate}}
+      {{getDynamicBudget() | currency:currencyCode:'symbol':'1.2-2'}}
+    </span>
+    <span *ngIf="entity.deliveryPacing === 'U'">
+      {{'flight.blockName.deliveryPacing.unrestricted' | translate}}
+    </span>
+  </ui-cell>
+
+  <ui-cell class="cell-25" title="{{L10nFlightRateTypes[entity.rateType] | translate}}">
+    {{entity.rateValue | currency:currencyCode:'symbol':'1.2-2'}}
+  </ui-cell>
+
+  <div class="clearfix cell-full"></div>
+
+  <!-- second row -->
+
+  <ui-cell class="cell-25" title="{{'blockName.frequencyCaps' | translate}}">
+    <span *ngIf="!frequencyCap, else showFrequencyCap">{{'messages.notSet' | translate}}</span>
+    <ng-template #showFrequencyCap>
+      <span class="h-comma" *ngIf="frequencyCap.period && frequencyCap.period.value > 0">
+        1 {{'messages.per' | translate}} {{frequencyCap.period.value}} {{L10nTimeUnits[frequencyCap.period.unit] | translate}}
+      </span>
+      <span class="h-comma" *ngIf="frequencyCap.lifeCount">
+        {{frequencyCap.lifeCount}} {{'messages.lifeTotal' | translate}}
+      </span>
+      <span class="h-comma" *ngIf="frequencyCap.windowCount && frequencyCap.windowLength.value">
+        {{'messages.maximum' | translate}}
+        {{frequencyCap.windowCount}}
+        {{'messages.per' | translate}}
+        {{frequencyCap.windowLength.value}}
+        {{L10nTimeUnits[frequencyCap.windowLength.unit] | translate}}
+      </span>
+    </ng-template>
+  </ui-cell>
+
+  <ui-cell class="cell-25" title="{{'blockName.imps' | translate}}">
+    {{stats.impressions}}
+  </ui-cell>
+
+  <ui-cell class="cell-25" title="{{'blockName.clicks' | translate}} ({{'blockName.ctr' | translate}})">
+    {{stats.clicks}} ({{stats.ctr.toFixed(2)}}%)
+  </ui-cell>
+
+  <ui-cell class="cell-25" title="{{'blockName.ecpm' | translate}}">
+    {{stats.ecpm | currency:currencyCode:'symbol':'1.2-2'}}
+  </ui-cell>
+
+  <div class="clearfix cell-full"></div>
+
+  <!-- last row -->
+
+  <ui-cell class="cell-25" title="{{'blockName.postImpConv' | translate}}">
+    {{stats.postImpConv}}
+  </ui-cell>
+
+  <ui-cell class="cell-25" title="{{'blockName.postClickConv' | translate}}">
+    {{stats.postClickConv}}
+  </ui-cell>
+
+  <ui-cell class="cell-25" title="{{'blockName.maximiseReach' | translate}}">
+    {{entity.bidStrategy.split('_').join(' ')}}
+  </ui-cell>
+
+  <ui-cell *ngIf="entity.impressionsDailyLimit" class="cell-25" title="{{'flight.blockName.impressionsLimits' | translate}}">
+    {{entity.impressionsDailyLimit || 0}}
+  </ui-cell>
+
+  <ui-cell *ngIf="entity.impressionsTotalLimit" class="cell-25" title="{{'flight.blockName.impressionsTotalLimit' | translate}}">
+    {{entity.impressionsTotalLimit || 0}}
+  </ui-cell>
+
+  <ui-cell *ngIf="entity.clicksDailyLimit" class="cell-25" title="{{'flight.blockName.clicksLimits' | translate}}">
+    {{entity.clicksDailyLimit}}
+  </ui-cell>
+
+  <ui-cell *ngIf="entity.clicksTotalLimit" class="cell-25" title="{{'flight.blockName.clicksTotalLimit' | translate}}">
+    {{entity.clicksTotalLimit}}
+  </ui-cell>
+
+  <ui-cell *ngIf="entity.clicksTotalLimit" class="cell-25" title="{{'flight.blockName.clicksTotalLimit' | translate}}">
+    {{entity.clicksTotalLimit}}
+  </ui-cell>
+</ng-template>

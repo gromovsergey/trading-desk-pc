@@ -1,0 +1,46 @@
+<%@ taglib uri="/ad/serverUI" prefix="ad"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:if test="${ad:isInternal()}">
+    <div class="withDisplayStatus">
+        <c:if test="${not empty account.displayStatus}">
+            <c:set var="accDispStatusVar"><ui:colorStatus displayStatus="${account.displayStatus}"/></c:set>
+        </c:if>
+    	<c:choose>
+    		<c:when test="${ad:isPermitted('Account.view', account)}">
+    			<c:choose>
+    				<c:when test="${account.role == 'CMP'}">
+                        <c:set var="pageLink" value="/admin/cmp/account/view.action"/>
+    				</c:when>
+    				<c:when test="${account.role == 'AGENCY'}">
+                        <c:set var="pageLink" value="/admin/advertiser/account/advertiserView.action"/>
+    				</c:when>
+    				<c:when test="${account.role == 'ADVERTISER'}">
+                        <c:set var="pageLink" value="/admin/advertiser/account/advertiserView.action"/>
+    				</c:when>
+    				<c:when test="${account.role == 'PUBLISHER'}">
+                        <c:set var="pageLink" value="/admin/publisher/account/view.action"/>
+    				</c:when>
+    				<c:when test="${account.role == 'ISP'}">
+                        <c:set var="pageLink" value="/admin/isp/account/view.action"/>
+    				</c:when>
+    				<c:when test="${account.role == 'INTERNAL'}">
+                        <c:set var="pageLink" value="/admin/internal/account/view.action"/>
+    				</c:when>
+                    <c:otherwise>
+                        <c:set var="pageLink" value="/admin/account/view.action"/>
+                    </c:otherwise>
+    			</c:choose>
+
+                ${accDispStatusVar}<a href="${pageLink}?id=${account.id}"><c:out value="${account.name}"/></a>
+    		</c:when>
+
+    		<c:otherwise>
+    	       <c:out value="${account.name}"/>
+    	  </c:otherwise>
+    	</c:choose>
+	</div>
+</c:if>
+<c:if test="${!ad:isInternal()}">
+  <c:out value="${account.name}"/>
+</c:if>

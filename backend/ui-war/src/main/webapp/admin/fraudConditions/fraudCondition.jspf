@@ -1,0 +1,20 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="/ad/serverUI" prefix="ad" %>
+
+<c:set var="textVal">
+    <fmt:message key="fraudCondition.moreThan"/>
+    ${fraudCondition.limit}
+    <c:choose>
+        <c:when test="${fraudCondition.limit > 1}">
+            <fmt:message key="fraudCondition.${fraudCondition.type}.plural"/>
+        </c:when>
+        <c:otherwise>
+            <fmt:message key="fraudCondition.${fraudCondition.type}.one"/>
+        </c:otherwise>
+    </c:choose>
+    <fmt:message key="fraudCondition.fromSameUIDDuring"/>
+    ${ad:formatTimeIntervalLong(fraudCondition.periodInSeconds * 1000)}
+    <fmt:message key="fraudCondition.regardlessOfTIDOrCCID"/>
+</c:set>
+<ui:text text="${pageScope.textVal}"/>

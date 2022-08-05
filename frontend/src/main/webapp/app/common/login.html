@@ -1,0 +1,38 @@
+<div class="c-login middle-box text-center loginscreen fadeInDown">
+    <img class="c-login__logo" src="/img/programmatic.png">
+
+    <form id="login_form" autocomplete="false">
+
+        <div class="text-left text-danger" [ngClass]="{hidden: !hasError}">
+            <p>_L10N_(login.error.loginFailed)</p>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="email" #inp_email placeholder="E-mail" class="form-control" [(ngModel)]="email" name="email"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="password" #inp_pass placeholder="_L10N_(login.blockName.password)" class="form-control" [(ngModel)]="password" name="password"/>
+            </div>
+        </div>
+
+        <div class="checkbox text-left">
+            <label>
+                <input type="checkbox" [(ngModel)]="saveMail" name="saveMail"/>
+                _L10N_(login.blockName.rememberEmail)
+            </label>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <button [disabled]="onSubmit" (click)="login()" class="btn btn-primary block full-width m-b">
+                    <ui-icon [fw]="true" [icon]="'spinner'" [spin]="true" [ngClass]="{'hidden':!onSubmit}"></ui-icon>
+                    _L10N_(login.blockName.login)
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

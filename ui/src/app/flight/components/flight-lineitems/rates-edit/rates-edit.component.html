@@ -1,0 +1,32 @@
+<ui-info-panel
+        *ngIf="operationDone"
+        [type]="operationResult"
+        (close)="destroyInfoPanel()">
+    {{operationText | translate}}
+</ui-info-panel>
+
+<section class="main-content_container">
+    <div class="render-wrapper">
+        <div class="flex-row">
+            <mat-form-field>
+                <mat-label>{{L10nFlightRateTypes[flight.rateType] | translate}}</mat-label>
+                <input type="number" matInput maxlength="20" name="rateValueCpc" [(ngModel)]="flight.rateValue">
+            </mat-form-field>
+            <div class="cpc-cpm-toggle">
+                <mat-form-field>
+                    <mat-label>CPC/CPM</mat-label>
+                    <mat-select [(value)]="flight.rateType">
+                        <mat-option value="CPC">CPC</mat-option>
+                        <mat-option value="CPM">CPM</mat-option>
+                        <mat-option value="MCPM">Max CPM</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="custom-style f-wrapper">
+    <button mat-stroked-button (click)="onClose()" class="m5-right">{{'button.close' | translate}}</button>
+    <button mat-stroked-button [disabled]="disabled" (click)="onSubmit()" color="primary" class="m5-left submit-button">{{'button.save' | translate}}</button>
+</footer>

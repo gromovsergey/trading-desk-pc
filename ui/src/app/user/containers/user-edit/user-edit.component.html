@@ -1,0 +1,81 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1>{{('agencyAccount.user.' + (this.mode === 'add' ? 'createNew' : 'edit')) | translate}}</h1>
+
+  <form (submit)="doSubmit($event)">
+    <div class="form-container form-container-compact">
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'agencyAccount.user.firstName' | translate}}</mat-label>
+        <input autofocus="autofocus" matInput
+               [errorStateMatcher]="matcher(!user.firstName === '' || errors?.firstName)"
+               [(ngModel)]="user.firstName" required
+               type="text" name="firstName" autocomplete="off">
+        <mat-error *ngFor="let error of errors?.firstName">
+          {{error}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'agencyAccount.user.lastName' | translate}}</mat-label>
+        <input autofocus="autofocus" matInput
+               [errorStateMatcher]="matcher(!user.lastName === '' || errors?.lastName)"
+               [(ngModel)]="user.lastName" required
+               type="text" name="lastName" autocomplete="off">
+        <mat-error *ngFor="let error of errors?.lastName">
+          {{error}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'agencyAccount.user.email' | translate}}</mat-label>
+        <input autofocus="autofocus" matInput
+               [errorStateMatcher]="matcher(!user.email === '' || errors?.email)"
+               [(ngModel)]="user.email" required
+               type="email" name="email" autocomplete="off">
+        <mat-error *ngFor="let error of errors?.email">
+          {{error}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'agencyAccount.user.role' | translate}}</mat-label>
+        <mat-select [(ngModel)]="user.roleId" name="roleId"
+                    (ngModelChange)="onUserRoleChange($event)">
+          <mat-option *ngFor="let item of roles"
+                      [value]="item.id">{{L10nUserRoles[item.name.split(' ').join('')] | translate}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <ng-container *ngIf="advLevelAccessAvailable">
+        <label>{{'agencyAccount.user.advertisersAccess' | translate}}</label>
+        <mat-radio-group class="radio-group" [value]="radioVal" (change)="radioVal = $event.value">
+          <mat-radio-button class="radio-button" [value]="false">
+            {{'agencyAccount.user.allAdvertisers' | translate}}
+          </mat-radio-button>
+          <mat-radio-button class="radio-button" [value]="true">
+            {{'agencyAccount.user.specificAdvertisers' | translate}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </ng-container>
+
+      <ng-container *ngIf="!wait && radioVal && advertisersAvailable.length">
+        <ui-option-transfer [options]="advertisersAvailable"
+                            [selected]="advertisersSelected"
+                            [customSort]="sort"
+                            (transferChange)="onAdvertisersListChange($event)">
+        </ui-option-transfer>
+        <p *ngFor="let error of errors?.advertiserIds" class="help-block">{{error}}</p>
+      </ng-container>
+
+
+      <div class="form-footer">
+        <ui-submit-button [title]="mode === 'add' ? 'button.add' : 'button.save'"
+                          [wait]="wait"></ui-submit-button>
+        <button *ngIf="!waitSubmit"
+                mat-flat-button
+                [routerLink]="backUrl">{{'button.cancel' | translate}}</button>
+      </div>
+    </div>
+  </form>
+</ng-template>

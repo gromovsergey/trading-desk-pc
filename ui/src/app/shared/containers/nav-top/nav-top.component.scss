@@ -1,0 +1,116 @@
+@import "~src/scss/variables";
+
+.nav-bar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: $nav-top-height;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.4);
+
+  .nav-bar-spacer {
+    display: flex;
+    flex: 1 1 auto;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+
+    .logo-img {
+      width: 2.25rem;
+      margin-right: $gen-gap;
+    }
+  }
+
+  .search-form {
+    position: relative;
+
+    .search-input {
+      margin-right: $gen-gap / 2;
+      border: none;
+      font-size: 1.5rem;
+      width: 0;
+      padding: 0;
+      color: #000;
+      height: 1.5 * $gen-spacing;
+      border-radius: $gen-spacing;
+      outline: none;
+      opacity: 0;
+      font-weight: normal;
+      transition: width 0.3s ease-in, opacity 0.3s ease-in;
+    }
+    .search-toggle-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    &.search-visible {
+      .search-input {
+        width: 250px;
+        opacity: 1;
+        padding-left: 15px;
+        padding-right: 35px;
+      }
+      .search-toggle-btn {
+        color: #000;
+        top: -2px;
+      }
+    }
+    .quick-search-menu {
+      color: #000;
+      border-radius: 4px;
+      overflow-y: auto;
+      box-shadow: 1px 1px 6px 4px rgba(0,0,0,.15);
+      position: absolute;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      width: 550px;
+      font-size: 14px;
+      max-height: 80vh;
+      .quick-search-row {
+        display: flex;
+        flex-direction: row;
+        .quick-search-title {
+          padding: $gen-gap-half $gen-gap;
+          background: #f0f0f0;
+          text-align: right;
+          width: 150px;
+          border-right: 1px solid #ccc;
+          border-bottom: 1px solid #ccc;
+          font-weight: 500;
+          font-size: 16px;
+        }
+        .quick-search-items {
+          display: flex;
+          flex-direction: column;
+        }
+        .quick-search-link {
+          display: inline-block;
+          padding: $gen-gap-half $gen-gap;
+          width: 400px;
+          word-wrap: break-word;
+          overflow: hidden;
+          border-bottom: 1px solid #ccc;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+
+.Default {
+  background: #303f9f !important;
+}
+
+.Pharmatic {
+  background: #303f9f !important;
+}
+
+.Genius {
+  background: #172e56 !important;
+}

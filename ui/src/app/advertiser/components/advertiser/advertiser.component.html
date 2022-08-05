@@ -1,0 +1,35 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">
+    {{'advertiserAccount.advertiserAccount' | translate}}
+
+    <ng-container *ngIf="documentsViewAllowed">
+      <button mat-raised-button (click)="showDocuments($event)">
+        {{'account.documents' | translate}}
+      </button>
+    </ng-container>
+  </h1>
+  <h2 *ngIf="advertiser">
+    <i class="material-icons" appDisplayStatus [displayStatus]="advertiser.displayStatus">lens</i>
+    {{advertiser.name}}
+  </h2>
+
+  <ui-panel title="{{'blockName.generalProperties' | translate}}">
+      <ui-advertiser-properties [statusChangeable]="canUpdate"
+                                [accountId]="advertiser.id"
+                                [canViewFinance]="canViewFinance"></ui-advertiser-properties>
+  </ui-panel>
+
+  <ng-container *ngIf="showUserList">
+    <h2 class="mt-2 main-title">
+      <i class="material-icons">group</i>
+      {{'agencyAccount.users' | translate}}
+      <a *ngIf="canCreateUser"
+         class="btn btn-default"
+         [routerLink]="['/advertiser', advertiser.id, 'user/add']">{{'button.createNew' | translate}}</a>
+    </h2>
+    <ui-user-list [accountId]="advertiser.id"
+                  [showAdvertisers]="false"></ui-user-list>
+  </ng-container>
+</ng-template>

@@ -1,0 +1,23 @@
+<div class="modal" [ngClass]="{'show': visible}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" [ngClass]="{'modal-lg': options.size && options.size === 'lg'}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="_hide($event)"><span aria-hidden="true">&times;</span></button>
+                <h4 *ngIf="options.title" class="modal-title">
+                    <ui-icon *ngIf="options.icon" [icon]="options.icon"></ui-icon>
+                    {{options.title}}
+                    <ui-hint *ngIf="options.hint" [text]="options.hint"></ui-hint>
+                </h4>
+            </div>
+            <div class="modal-body" #modal></div>
+            <div class="modal-footer">
+                <button *ngIf="options.btnTitle !== ''" type="button" class="btn btn-primary" (click)="_save($event)" [disabled]="options.btnIconDisabled || blocked">
+                    <ui-icon [icon]="options.btnIcon" *ngIf="options.btnIcon"></ui-icon>
+                    {{options.btnTitle}}
+                </button>
+                <button type="button" class="btn btn-default" (click)="_hide($event)" [disabled]="blocked">{{closeBtnTitle}}</button>
+            </div>
+        </div>
+        <ui-loading [overlay]="true" *ngIf="blocked"></ui-loading>
+    </div>
+</div>

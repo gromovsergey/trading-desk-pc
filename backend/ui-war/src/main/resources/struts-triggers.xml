@@ -1,0 +1,57 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="triggers" extends="foros-default" namespace="/">
+
+        <action name="admin/Triggers/search" class="com.foros.action.admin.triggerQA.ViewTriggersAction" method="search">
+          <interceptor-ref name="roles">
+            <param name="allowedRoles">INTERNAL</param>
+          </interceptor-ref>
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="tiles">Triggers.list</result>
+          <result name="input" type="redirect">admin/Triggers/search.action</result>
+        </action>
+
+        <action name="admin/Triggers/update" class="com.foros.action.admin.triggerQA.SaveTriggersAction" method="update">
+          <interceptor-ref name="roles">
+            <param name="allowedRoles">INTERNAL</param>
+          </interceptor-ref>
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/Triggers/search</param>
+            <param name="searchParams.triggerType">${searchParams.triggerType}</param>
+            <param name="searchParams.filterBy">${searchParams.filterBy}</param>
+            <param name="searchParams.criteria">${searchParams.criteria}</param>
+            <param name="searchParams.approval">${searchParams.approval}</param>
+            <param name="searchParams.roleName">${searchParams.roleName}</param>
+            <param name="searchParams.ccgAccountId">${searchParams.ccgAccountId}</param>
+            <param name="searchParams.channelAccountId">${searchParams.channelAccountId}</param>
+            <param name="searchParams.visibility">${searchParams.visibility}</param>
+            <param name="searchParams.displayStatusId">${searchParams.displayStatusId}</param>
+            <param name="searchParams.channelId">${searchParams.channelId}</param>
+            <param name="searchParams.page">${searchParams.page}</param>
+            <param name="searchParams.countryCode">${searchParams.countryCode}</param>
+            <param name="searchParams.type">${searchParams.type}</param>
+            <param name="searchParams.advertiserId">${searchParams.advertiserId}</param>
+            <param name="searchParams.campaignId">${searchParams.campaignId}</param>
+            <param name="searchParams.ccgId">${searchParams.ccgId}</param>
+            <param name="searchParams.discoverAccountId">${searchParams.discoverAccountId}</param>
+            <param name="searchParams.discoverDisplayStatusId">${searchParams.discoverDisplayStatusId}</param>
+            <param name="searchParams.discoverChannelListId">${searchParams.discoverChannelListId}</param>
+            <param name="searchParams.discoverChannelId">${searchParams.discoverChannelId}</param>
+            <param name="searchParams.orderBy">${searchParams.orderBy}</param>
+            <param name="saved">${true}</param>
+          </result>
+          <result name="input" type="tiles">Triggers.list</result>
+        </action>
+
+
+
+        <action name="admin/Triggers/main" class="com.foros.action.admin.triggerQA.ViewTriggersAction" method="list">
+            <result name="success" type="tiles">Triggers.main</result>
+        </action>
+
+    </package>
+</struts>

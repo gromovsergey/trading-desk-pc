@@ -1,0 +1,149 @@
+form{
+    margin:0;
+    padding:0;
+    clear:both;
+}
+
+table.formFields form, 
+table.dataViewSection form{
+    margin-bottom: 0;
+}
+
+div#localizer_popup_area{
+    top: 140px !important;
+    left: 50% !important;
+    margin-left: -310px;
+}
+
+input[type="radio"], input[type="checkbox"]{
+    border:none;
+}
+input[type="text"], 
+input[type="password"]{
+    padding:auto 0;
+    height:16px;
+}
+input:not([type="hidden"]){
+    display:inline;
+}
+input.hide{
+    display: none;
+}
+
+input.date, select.date, input.time, select.time{
+    width:80px;
+}
+input.smallLengthNumber, select.smallLengthNumber{
+    width:25px;
+}
+input.middleLengthNumber, select.middleLengthNumber{
+    width:70px;
+}
+input.middleLengthNumber1, select.middleLengthNumber1{
+    width:100px;
+}
+input.smallLengthText, select.smallLengthText, textarea.smallLengthText{
+    width:80px;
+}
+textarea.smallLengthText{
+    height:60px;
+}
+input.smallLengthText1, select.smallLengthText1, textarea.smallLengthText1{
+    width:150px;
+}
+textarea.smallLengthText1{
+    height:60px;
+}
+input.smallLengthText2, select.smallLengthText2, textarea.smallLengthText2{
+    width:220px;
+}
+textarea.smallLengthText2{
+    height:100px;
+}
+input.middleLengthText, select.middleLengthText, textarea.middleLengthText{
+    width:300px;
+}
+input.middleLengthText[type="file"]{
+    width:auto; /* in FF4 file input not resizeble (OUI-15626)*/
+}
+textarea.middleLengthText{
+    height:200px;
+}
+select[multiple].middleLengthText{
+    height:200px;
+}
+input.middleLengthText1, select.middleLengthText1, textarea.middleLengthText1{
+    width:450px;
+}
+textarea.middleLengthText1{
+    height:250px;
+}
+textarea.middleLengthTextList{
+    height: 60px;
+    width: 500px;
+}
+select[multiple].middleLengthText1{
+    height:250px;
+}
+input.bigLengthText, select.bigLengthText, textarea.bigLengthText{
+    width:600px;
+}
+textarea.bigLengthText{
+    height:300px;
+}
+select[multiple].bigLengthText{
+    height:300px;
+}
+
+label input{
+    margin-left:0;
+}
+
+table.formFields td.control > input{
+    margin-left:0;
+    margin-right:0;
+}
+
+td.field form{
+    float:left;
+}
+
+td.withField {
+    overflow: hidden;
+}
+td.withField > .cell {
+    float:left;
+    padding: 4px 3px 0 0;
+}
+td.withField > .cell.withInput {
+    padding: 0 3px 0 0;
+}
+
+table.buttonsContainer input[type="button"]{
+    display: block;
+    margin:1px 1px 2px;
+    width: 3em;
+    padding:0;
+}
+
+label.withInput input, 
+label.withInput textarea, 
+label.withInput select{
+    position:relative;
+    top:1px !important;
+}
+
+table.grouping.optionTransfer label ~ select[multiple]{
+    float:none;
+    display:block;
+}
+
+.ui-datepicker select.ui-datepicker-month {
+    width:82px !important;
+}
+.ui-datepicker select.ui-datepicker-year {
+    width:62px !important;
+}
+.ui-datepicker .ui-datepicker-title {
+    height: 1.8em !important;
+}

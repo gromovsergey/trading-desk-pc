@@ -1,0 +1,80 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package abstract="true" name="audienceChannels" extends="foros-default">
+
+        <action name="AudienceChannel/view" class="com.foros.action.channel.audience.ViewAudienceChannelAction" method="view">
+            <result name="success" type="tiles">channel.AudienceChannel.view</result>
+        </action>
+
+        <action name="AudienceChannel/makePublic" class="com.foros.action.channel.audience.MakePublicAudienceChannelAction" method="makePublic">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+        </action>
+
+        <action name="AudienceChannel/makePrivate" class="com.foros.action.channel.audience.MakePublicAudienceChannelAction" method="makePrivate">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+        </action>
+
+        <action name="AudienceChannel/activate" class="com.foros.action.channel.audience.StatusAudienceChannelAction" method="activate">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">view</param>
+            </result>
+        </action>
+
+        <action name="AudienceChannel/inactivate" class="com.foros.action.channel.audience.StatusAudienceChannelAction" method="inactivate">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">view</param>
+            </result>
+        </action>
+
+        <action name="AudienceChannel/delete" class="com.foros.action.channel.audience.StatusAudienceChannelAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="internal" type="chain">
+                <param name="actionName">view</param>
+            </result>
+            <result name="external" type="redirectAction">
+                <param name="actionName">contextMain</param>
+            </result>
+        </action>
+
+        <action name="AudienceChannel/undelete" class="com.foros.action.channel.audience.StatusAudienceChannelAction" method="undelete">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">view</param>
+            </result>
+            <result name="input" type="chain">
+                <param name="actionName">AudienceChannel/view</param>
+            </result>
+        </action>
+
+        <action name="AudienceChannel/logChecksPopup" class="com.foros.action.regularchecks.ChannelLogCheckAction" method="edit">
+            <result name="success">/regularchecks/logChecksPopup.jsp</result>
+        </action>
+
+        <action name="AudienceChannel/logChecks" class="com.foros.action.regularchecks.ChannelLogCheckAction" method="updateCheck">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/regularchecks/logChecksPopup.jsp</result>
+            <result name="input">/regularchecks/logChecksPopup.jsp</result>
+        </action>
+
+    </package>
+
+    <package namespace="/admin/channel" name="internalAudienceChannels" extends="audienceChannels"/>
+    <package namespace="/advertiser/channel" name="advertisingAudienceChannels" extends="audienceChannels"/>
+</struts>

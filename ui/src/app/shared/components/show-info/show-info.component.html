@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="container__wrapper" [ngClass]="{
+      'warning': message.type === 'warning',
+      'info' : message.type === 'info',
+      'error' : message.type === 'error',
+      'check_circle' : message.type === 'check_circle'
+      }">
+        <i class="icon material-icons mr-1">{{message.type}}</i>
+        <div class="container__wrapper-options">
+            <span style="font-weight: bold" class="base">{{message.text}}</span>
+            <i class="material-icons dismiss" (click)="onClose()" title="Закрыть" style="cursor: pointer; margin-left: 10px">clear</i>
+        </div>
+    </div>
+</div>

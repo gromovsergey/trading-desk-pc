@@ -1,0 +1,197 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h2 *ngIf="flight">
+    <i class="material-icons" appDisplayStatus [displayStatus]="flight.displayStatus">lens</i>
+    {{'flight.object' | translate}}:
+    {{flight.name}}
+
+    <button *ngIf="canEditFlight && flight.displayStatus !== 'DELETED'"
+            class="mr-1"
+            mat-raised-button
+            (click)="editFlight(flight.id, 'edit')">
+      {{'button.edit' | translate}}
+    </button>
+    <button *ngIf="canCreateLineItem && flight.displayStatus !== 'DELETED' && lineItems && lineItems.length === 1"
+            class="mr-1"
+            mat-raised-button
+            [routerLink]="['/flight', flight.id, 'lineitem', 'add']">
+      {{'flight.button.createLineItem' | translate}}
+    </button>
+    <button mat-raised-button
+            class="mr-1"
+            (click)="showScanIo()">
+      {{'flight.button.scanIo' | translate}}
+    </button>
+    <button *ngIf="canEditFlight && flight.displayStatus !== 'DELETED'"
+            mat-raised-button
+            (click)="makeCopy()">
+      {{'flight.button.makeCopy' | translate}}
+      <span class="material-icons">content_copy</span>
+    </button>
+  </h2>
+
+  <ui-flight-tabs [canCreate]="canCreateLineItem"
+                  [flightId]="flight.id"
+                  [lineItems]="lineItems"></ui-flight-tabs>
+
+  <ui-panel
+          title="{{'blockName.summary' | translate}}"
+          icon="list"
+          [showApplyButton]="{enum: 'GENERAL', flight: flight}"
+          (apply)="onApplyToStrategies($event)">
+    <ui-flight-summary [statusChangeable]="canChangeStatusFlight"
+                       [flight]="flight"
+                       (statusChange)="refreshStatus()"></ui-flight-summary>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ui-panel
+          title="{{'blockName.blackList' | translate}}"
+          class="form-panel"
+          [collapsed]="true"
+          [showApplyButton]="{enum: 'BLACK_LIST', flight: flight}"
+          (apply)="onApplyToStrategies($event)">
+    <p
+            class="width-full"
+            style="white-space: pre-line"
+    >
+      {{flight.blackList}}
+    </p>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ui-panel
+          title="{{'blockName.whiteList' | translate}}"
+          class="form-panel"
+          [collapsed]="true"
+          [showApplyButton]="{enum: 'WHILE_LIST', flight: flight}"
+          (apply)="onApplyToStrategies($event)">
+    <p
+            class="width-full"
+            style="white-space: pre-line"
+    >
+      {{flight.whiteList}}
+    </p>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ui-panel
+          title="{{'flight.blockName.geotarget' | translate}}"
+          class="form-panel"
+          [collapsed]="true"
+          [showApplyButton]="{enum: 'GEO', flight: flight}"
+          (apply)="onApplyToStrategies($event)">
+    <ui-flight-geo [flightId]="flight.id"
+                   [geoChannelIds]="flight.geoChannelIds"
+                   [excludedGeoChannelIds]="flight.excludedGeoChannelIds"
+    ></ui-flight-geo>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ui-panel title="{{'blockName.chart' | translate}}" icon="insights">
+    <ui-chart [flightId]="flight.id"></ui-chart>
+  </ui-panel>
+
+  <div class="mb-2"></div>
+
+  <ng-container *ngIf="lineItems && lineItems.length === 1, else lineItemList">
+    <ui-panel title="{{'flight.blockName.channels' | translate}}" icon="gps_fixed">
+      <ui-flight-channels *ngIf="!waitSpecialChannelLoad"
+                          (statusChange)="refreshStatus()"
+                          [flightId]="flight.id"
+                          [readonly]="!canEditFlight"
+                          [specialChannelId]="specialChannelId"
+                          [linkSpecialChannelFlag]="flight.specialChannelLinked">
+      </ui-flight-channels>
+    </ui-panel>
+
+    <div class="mb-2"></div>
+
+    <ui-panel title="{{'flight.blockName.sites' | translate}}" icon="desktop_mac">
+      <ui-flight-sites [flightId]="flight.id"
+                       [readonly]="!canEditFlight"></ui-flight-sites>
+    </ui-panel>
+
+    <div class="mb-2"></div>
+
+    <ui-panel title="{{'flight.blockName.creatives' | translate}}" icon="photo">
+      <ui-flight-creatives (statusChange)="refreshStatus()"
+                           [flightId]="flight.id"
+                           [readonly]="!canEditFlight"></ui-flight-creatives>
+    </ui-panel>
+
+    <div class="mb-2"></div>
+  </ng-container>
+
+  <ng-template #lineItemList>
+    <ui-panel title="{{'blockName.defaultSettings' | translate}}"
+              icon="settings"
+              [collapsed]="false"
+              [showApplyButton]="{enum: 'DEFAULT_SETTING', flight: flight}"
+              (apply)="onApplyToStrategies($event)">
+
+      <ui-panel
+              [collapsed]="true"
+              title="{{'flight.blockName.channels' | translate}}"
+              icon="gps_fixed"
+              [showApplyButton]="{enum: 'AUDIT_SEGMENT', flight: flight}"
+              (apply)="onApplyToStrategies($event)">
+        <ui-flight-channels *ngIf="!waitSpecialChannelLoad"
+                            (statusChange)="refreshStatus()"
+                            [short]="true"
+                            [readonly]="!canEditFlight"
+                            [flightId]="flight.id"
+                            [specialChannelId]="specialChannelId"
+                            [linkSpecialChannelFlag]="flight.specialChannelLinked">
+          <ui-info-panel type="warning" *ngIf="flight.specialChannelLinked">
+            <ui-hint text="{{'flight.notification.specialChannelCheckedHint' | translate}}"></ui-hint>&nbsp;
+            {{'flight.notification.specialChannelChecked' | translate}}
+          </ui-info-panel>
+        </ui-flight-channels>
+      </ui-panel>
+
+      <div class="mb-2"></div>
+
+      <ui-panel
+              [collapsed]="true"
+              title="{{'flight.blockName.sites' | translate}}"
+              icon="desktop_mac"
+              [showApplyButton]="{enum: 'SSP', flight: flight}"
+              (apply)="onApplyToStrategies($event)">
+        <ui-flight-sites [readonly]="!canEditFlight"
+                         [flightId]="flight.id"
+                         [short]="true"></ui-flight-sites>
+      </ui-panel>
+
+      <div class="mb-2"></div>
+
+      <ui-panel
+              [collapsed]="true"
+              title="{{'flight.blockName.creatives' | translate}}"
+              icon="photo"
+              [showApplyButton]="{enum: 'CREATIVE', flight: flight}"
+              (apply)="onApplyToStrategies($event)">
+        <ui-flight-creatives (statusChange)="refreshStatus()"
+                             [short]="true"
+                             [readonly]="!canEditFlight"
+                             [flightId]="flight.id"></ui-flight-creatives>
+      </ui-panel>
+
+    </ui-panel>
+
+    <div class="mb-2"></div>
+
+    <ui-flight-lineitems (liLoad)="lineItemsOnLoad($event)"
+                         (liStatusChange)="refreshStatus($event)"
+                         (error)="errorProcessing()"
+                         [canCreate]="canCreateLineItem"
+                         [flightId]="flight.id"></ui-flight-lineitems>
+  </ng-template>
+
+  <div class="mb-2"></div>
+</ng-template>

@@ -1,0 +1,44 @@
+<div class="row" *ngIf="showBudget">
+    <div class="col-xs-12">
+        <small class="stats-label">_L10N_(blockName.budget) _L10N_(blockName.budget.spent) / _L10N_(blockName.budget.available):</small>
+        <strong>{{spentBudget | currency:currencyCode:'symbol':'1.2-2'}} / {{advertiser.prepaidAmount | currency:currencyCode:'symbol':'1.2-2'}}</strong>
+        <h4>
+            <div class="progress">
+                <div class="progress-bar" #budgetBar></div>
+            </div>
+        </h4>
+    </div>
+</div>
+
+<div class="row">
+    <ui-cell title="_L10N_(blockName.status)">
+        <div #body>
+            <ui-display-status-btn *ngIf="statusChangeable && advertiser.displayStatus.split('|')[0] !== 'DELETED'"
+                                   [status]="advertiser.displayStatus" (statusChange)="statusChange($event)"></ui-display-status-btn>
+            <span *ngIf="!(statusChangeable && advertiser.displayStatus.split('|')[0] !== 'DELETED')">
+                <ui-icon [fw]="true" [displayStatus]="advertiser.displayStatus"></ui-icon>
+                {{L10nMajorStatuses[advertiser.displayStatus.split('|')[0]]}}
+            </span>
+        </div>
+    </ui-cell>
+    <ui-cell title="_L10N_(blockName.country)">
+        <div #body>
+            {{L10nCountries[advertiser.countryCode]}}
+        </div>
+    </ui-cell>
+    <ui-cell title="_L10N_(blockName.currency)">
+        <div #body>
+            {{currencyCode}}&nbsp;({{0 | currency:currencyCode:'symbol':'1.0-0' | replace:'&nbsp;':'' | replace:'&nbsp;|[0 ]+':''}})
+        </div>
+    </ui-cell>
+    <ui-cell title="_L10N_(messages.timeZone)">
+        <div #body>
+            {{L10nTimeZones[advertiser.timeZone]}}
+        </div>
+    </ui-cell>
+    <ui-cell *ngIf="advertiser.financialFieldsFlag && advertiser.selfServiceFlag && canViewFinance" title="_L10N_(advertiserAccount.commission)">
+        <div #body>
+            {{advertiser.commission}}%
+        </div>
+    </ui-cell>
+</div>

@@ -1,0 +1,1424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.22" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 3.7.1.v20110905 Build &lt;3.7.1.v20110905-1820></property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <parameters>
+        <scalar-parameter name="rp_StartDate" id="10">
+            <text-property name="promptText">Start Date</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="dataSetName">ds_Date</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["available_date"]</expression>
+            <expression name="labelExpr" type="javascript">dataSetRow["available_date"]</expression>
+            <property name="dataType">date</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">BirtDateTime.year( BirtDateTime.addDay(BirtDateTime.today(),-30) )+"-"&#13;
++BirtDateTime.month( BirtDateTime.addDay(BirtDateTime.today(),-30) )+"-"&#13;
++BirtDateTime.day( BirtDateTime.addDay(BirtDateTime.today(),-30) )</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_EndDate" id="11">
+            <text-property name="promptText">End Date</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="dataSetName">ds_Date</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["available_date"]</expression>
+            <expression name="labelExpr" type="javascript">dataSetRow["available_date"]</expression>
+            <property name="dataType">date</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">BirtDateTime.year( BirtDateTime.addDay(BirtDateTime.today(),-1) )+"-"&#13;
++BirtDateTime.month( BirtDateTime.addDay(BirtDateTime.today(),-1) )+"-"&#13;
++BirtDateTime.day( BirtDateTime.addDay(BirtDateTime.today(),-1) )</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <cascading-parameter-group name="rp_CountryISP" id="253">
+            <property name="dataSet">Country</property>
+            <property name="dataSetMode">multiple</property>
+            <parameters>
+                <scalar-parameter name="rp_Country" id="254">
+                    <text-property name="promptText">Country</text-property>
+                    <property name="valueType">dynamic</property>
+                    <property name="isRequired">true</property>
+                    <property name="dataSetName">Country</property>
+                    <expression name="valueExpr">row["country_code"]</expression>
+                    <expression name="labelExpr">row["country_name"]</expression>
+                    <property name="dataType">string</property>
+                    <simple-property-list name="defaultValue">
+                        <value type="constant">00</value>
+                    </simple-property-list>
+                    <property name="paramType">simple</property>
+                    <property name="controlType">list-box</property>
+                    <property name="mustMatch">true</property>
+                    <property name="fixedOrder">true</property>
+                    <structure name="format">
+                        <property name="category">Unformatted</property>
+                    </structure>
+                </scalar-parameter>
+                <scalar-parameter name="rp_isp_id" id="257">
+                    <text-property name="promptText">ISP</text-property>
+                    <property name="valueType">dynamic</property>
+                    <property name="isRequired">true</property>
+                    <property name="dataSetName">ISP</property>
+                    <expression name="valueExpr">row["account_id"]</expression>
+                    <expression name="labelExpr">row["name"]</expression>
+                    <property name="dataType">integer</property>
+                    <simple-property-list name="defaultValue">
+                        <value type="constant">0</value>
+                    </simple-property-list>
+                    <property name="paramType">simple</property>
+                    <property name="controlType">list-box</property>
+                    <property name="mustMatch">true</property>
+                    <property name="fixedOrder">true</property>
+                    <structure name="format">
+                        <property name="category">Unformatted</property>
+                    </structure>
+                </scalar-parameter>
+            </parameters>
+        </cascading-parameter-group>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source" id="7">
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://localhost:25432/stat</property>
+            <property name="odaUser">ui</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">SEpnMjZGaWFNTWFIM3NX</encrypted-property>
+            <property name="odaJndiName">jdbc/birt</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Country" id="252">
+            <property name="nullsOrdering">nulls lowest</property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">country_code</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">country_code</text-property>
+                    <text-property name="heading">country_code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_name</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">country_name</text-property>
+                    <text-property name="heading">country_name</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">country_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">country_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">country_code</property>
+                    <property name="nativeName">country_code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">country_name</property>
+                    <property name="nativeName">country_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select '00' country_code, 'Not Specified' country_name
+union all
+select * from (select code country_code, en country_name
+from (
+    select 'AD' code, 'Andorra' en union
+    select 'AE' code, 'United Arab Emirates' en union
+    select 'AF' code, 'Afghanistan' en union
+    select 'AG' code, 'Antigua and Barbuda' en union
+    select 'AI' code, 'Anguilla' en union
+    select 'AL' code, 'Albania' en union
+    select 'AM' code, 'Armenia' en union
+    select 'AN' code, 'Netherlands Antilles' en union
+    select 'AO' code, 'Angola' en union
+    select 'AQ' code, 'Antarctica' en union
+    select 'AR' code, 'Argentina' en union
+    select 'AS' code, 'American Samoa' en union
+    select 'AT' code, 'Austria' en union
+    select 'AU' code, 'Australia' en union
+    select 'AW' code, 'Aruba' en union
+    select 'AX' code, 'Aland Islands' en union
+    select 'AZ' code, 'Azerbaijan' en union
+    select 'BA' code, 'Bosnia and Herzegovina' en union
+    select 'BB' code, 'Barbados' en union
+    select 'BD' code, 'Bangladesh' en union
+    select 'BE' code, 'Belgium' en union
+    select 'BF' code, 'Burkina Faso' en union
+    select 'BG' code, 'Bulgaria' en union
+    select 'BH' code, 'Bahrain' en union
+    select 'BI' code, 'Burundi' en union
+    select 'BJ' code, 'Benin' en union
+    select 'BM' code, 'Bermuda' en union
+    select 'BN' code, 'Brunei' en union
+    select 'BO' code, 'Bolivia' en union
+    select 'BR' code, 'Brazil' en union
+    select 'BS' code, 'Bahamas' en union
+    select 'BT' code, 'Bhutan' en union
+    select 'BV' code, 'Bouvet Island' en union
+    select 'BW' code, 'Botswana' en union
+    select 'BY' code, 'Belarus' en union
+    select 'BZ' code, 'Belize' en union
+    select 'CA' code, 'Canada' en union
+    select 'CC' code, 'Cocos Islands' en union
+    select 'CD' code, 'The Democratic Republic Of Congo' en union
+    select 'CF' code, 'Central African Republic' en union
+    select 'CG' code, 'Congo' en union
+    select 'CH' code, 'Switzerland' en union
+    select 'CI' code, 'Cote d''Ivoire' en union
+    select 'CK' code, 'Cook Islands' en union
+    select 'CL' code, 'Chile' en union
+    select 'CM' code, 'Cameroon' en union
+    select 'CN' code, 'China' en union
+    select 'CO' code, 'Colombia' en union
+    select 'CR' code, 'Costa Rica' en union
+    select 'CS' code, 'Serbia and Montenegro' en union
+    select 'CU' code, 'Cuba' en union
+    select 'CV' code, 'Cape Verde' en union
+    select 'CX' code, 'Christmas Island' en union
+    select 'CY' code, 'Cyprus' en union
+    select 'CZ' code, 'Czech Republic' en union
+    select 'DE' code, 'Germany' en union
+    select 'DJ' code, 'Djibouti' en union
+    select 'DK' code, 'Denmark' en union
+    select 'DM' code, 'Dominica' en union
+    select 'DO' code, 'Dominican Republic' en union
+    select 'DZ' code, 'Algeria' en union
+    select 'EC' code, 'Ecuador' en union
+    select 'EE' code, 'Estonia' en union
+    select 'EG' code, 'Egypt' en union
+    select 'EH' code, 'Western Sahara' en union
+    select 'ER' code, 'Eritrea' en union
+    select 'ES' code, 'Spain' en union
+    select 'ET' code, 'Ethiopia' en union
+    select 'FI' code, 'Finland' en union
+    select 'FJ' code, 'Fiji' en union
+    select 'FK' code, 'Falkland Islands' en union
+    select 'FM' code, 'Micronesia' en union
+    select 'FO' code, 'Faroe Islands' en union
+    select 'FR' code, 'France' en union
+    select 'GA' code, 'Gabon' en union
+    select 'GB' code, 'United Kingdom' en union
+    select 'GD' code, 'Grenada' en union
+    select 'GE' code, 'Georgia' en union
+    select 'GF' code, 'French Guiana' en union
+    select 'GG' code, 'North Gabon' en union
+    select 'GH' code, 'Ghana' en union
+    select 'GI' code, 'Gibraltar' en union
+    select 'GL' code, 'Greenland' en union
+    select 'GM' code, 'Gambia' en union
+    select 'GN' code, 'Guinea' en union
+    select 'GP' code, 'Guadeloupe' en union
+    select 'GQ' code, 'Equatorial Guinea' en union
+    select 'GR' code, 'Greece' en union
+    select 'GS' code, 'South Georgia And The South Sandwich Islands' en union
+    select 'GT' code, 'Guatemala' en union
+    select 'GU' code, 'Guam' en union
+    select 'GW' code, 'Guinea-Bissau' en union
+    select 'GY' code, 'Guyana' en union
+    select 'HK' code, 'Hong Kong' en union
+    select 'HM' code, 'Heard Island And McDonald Islands' en union
+    select 'HN' code, 'Honduras' en union
+    select 'HR' code, 'Croatia' en union
+    select 'HT' code, 'Haiti' en union
+    select 'HU' code, 'Hungary' en union
+    select 'ID' code, 'Indonesia' en union
+    select 'IE' code, 'Ireland' en union
+    select 'IL' code, 'Israel' en union
+    select 'IN' code, 'India' en union
+    select 'IO' code, 'British Indian Ocean Territory' en union
+    select 'IQ' code, 'Iraq' en union
+    select 'IR' code, 'Iran' en union
+    select 'IS' code, 'Iceland' en union
+    select 'IT' code, 'Italy' en union
+    select 'JM' code, 'Jamaica' en union
+    select 'JO' code, 'Jordan' en union
+    select 'JP' code, 'Japan' en union
+    select 'KE' code, 'Kenya' en union
+    select 'KG' code, 'Kyrgyzstan' en union
+    select 'KH' code, 'Cambodia' en union
+    select 'KI' code, 'Kiribati' en union
+    select 'KM' code, 'Comoros' en union
+    select 'KN' code, 'Saint Kitts And Nevis' en union
+    select 'KP' code, 'North Korea' en union
+    select 'KR' code, 'South Korea' en union
+    select 'KW' code, 'Kuwait' en union
+    select 'KY' code, 'Cayman Islands' en union
+    select 'KZ' code, 'Kazakhstan' en union
+    select 'LA' code, 'Laos' en union
+    select 'LB' code, 'Lebanon' en union
+    select 'LC' code, 'Saint Lucia' en union
+    select 'LI' code, 'Liechtenstein' en union
+    select 'LK' code, 'Sri Lanka' en union
+    select 'LR' code, 'Liberia' en union
+    select 'LS' code, 'Lesotho' en union
+    select 'LT' code, 'Lithuania' en union
+    select 'LU' code, 'Luxembourg' en union
+    select 'LV' code, 'Latvia' en union
+    select 'LY' code, 'Libya' en union
+    select 'MA' code, 'Morocco' en union
+    select 'MC' code, 'Monaco' en union
+    select 'MD' code, 'Moldova' en union
+    select 'MG' code, 'Madagascar' en union
+    select 'MH' code, 'Marshall Islands' en union
+    select 'MK' code, 'Macedonia' en union
+    select 'ML' code, 'Mali' en union
+    select 'MM' code, 'Myanmar' en union
+    select 'MN' code, 'Mongolia' en union
+    select 'MO' code, 'Macao' en union
+    select 'MP' code, 'Northern Mariana Islands' en union
+    select 'MQ' code, 'Martinique' en union
+    select 'MR' code, 'Mauritania' en union
+    select 'MS' code, 'Montserrat' en union
+    select 'MT' code, 'Malta' en union
+    select 'MU' code, 'Mauritius' en union
+    select 'MV' code, 'Maldives' en union
+    select 'MW' code, 'Malawi' en union
+    select 'MX' code, 'Mexico' en union
+    select 'MY' code, 'Malaysia' en union
+    select 'MZ' code, 'Mozambique' en union
+    select 'NA' code, 'Namibia' en union
+    select 'NC' code, 'New Caledonia' en union
+    select 'NE' code, 'Niger' en union
+    select 'NF' code, 'Norfolk Island' en union
+    select 'NG' code, 'Nigeria' en union
+    select 'NI' code, 'Nicaragua' en union
+    select 'NL' code, 'Netherlands' en union
+    select 'NO' code, 'Norway' en union
+    select 'NP' code, 'Nepal' en union
+    select 'NR' code, 'Nauru' en union
+    select 'NU' code, 'Niue' en union
+    select 'NZ' code, 'New Zealand' en union
+    select 'OM' code, 'Oman' en union
+    select 'PA' code, 'Panama' en union
+    select 'PE' code, 'Peru' en union
+    select 'PF' code, 'French Polynesia' en union
+    select 'PG' code, 'Papua New Guinea' en union
+    select 'PH' code, 'Philippines' en union
+    select 'PK' code, 'Pakistan' en union
+    select 'PL' code, 'Poland' en union
+    select 'PM' code, 'Saint Pierre And Miquelon' en union
+    select 'PN' code, 'Pitcairn' en union
+    select 'PR' code, 'Puerto Rico' en union
+    select 'PS' code, 'Palestine' en union
+    select 'PT' code, 'Portugal' en union
+    select 'PW' code, 'Palau' en union
+    select 'PY' code, 'Paraguay' en union
+    select 'QA' code, 'Qatar' en union
+    select 'RE' code, 'Reunion' en union
+    select 'RO' code, 'Romania' en union
+    select 'RU' code, 'Russia' en union
+    select 'RW' code, 'Rwanda' en union
+    select 'SA' code, 'Saudi Arabia' en union
+    select 'SB' code, 'Solomon Islands' en union
+    select 'SC' code, 'Seychelles' en union
+    select 'SD' code, 'Sudan' en union
+    select 'SE' code, 'Sweden' en union
+    select 'SG' code, 'Singapore' en union
+    select 'SH' code, 'Saint Helena' en union
+    select 'SI' code, 'Slovenia' en union
+    select 'SJ' code, 'Svalbard And Jan Mayen' en union
+    select 'SK' code, 'Slovakia' en union
+    select 'SL' code, 'Sierra Leone' en union
+    select 'SM' code, 'San Marino' en union
+    select 'SN' code, 'Senegal' en union
+    select 'SO' code, 'Somalia' en union
+    select 'SR' code, 'Suriname' en union
+    select 'ST' code, 'Sao Tome And Principe' en union
+    select 'SV' code, 'El Salvador' en union
+    select 'SY' code, 'Syria' en union
+    select 'SZ' code, 'Swaziland' en union
+    select 'TC' code, 'Turks And Caicos Islands' en union
+    select 'TD' code, 'Chad' en union
+    select 'TF' code, 'French Southern Territories' en union
+    select 'TG' code, 'Togo' en union
+    select 'TH' code, 'Thailand' en union
+    select 'TJ' code, 'Tajikistan' en union
+    select 'TK' code, 'Tokelau' en union
+    select 'TL' code, 'Timor-Leste' en union
+    select 'TM' code, 'Turkmenistan' en union
+    select 'TN' code, 'Tunisia' en union
+    select 'TO' code, 'Tonga' en union
+    select 'TR' code, 'Turkey' en union
+    select 'TT' code, 'Trinidad and Tobago' en union
+    select 'TV' code, 'Tuvalu' en union
+    select 'TW' code, 'Taiwan' en union
+    select 'TZ' code, 'Tanzania' en union
+    select 'UA' code, 'Ukraine' en union
+    select 'UG' code, 'Uganda' en union
+    select 'UM' code, 'United States Minor Outlying Islands' en union
+    select 'US' code, 'United States' en union
+    select 'UY' code, 'Uruguay' en union
+    select 'UZ' code, 'Uzbekistan' en union
+    select 'VA' code, 'Vatican' en union
+    select 'VC' code, 'Saint Vincent And The Grenadines' en union
+    select 'VE' code, 'Venezuela' en union
+    select 'VG' code, 'British Virgin Islands' en union
+    select 'VI' code, 'U.S. Virgin Islands' en union
+    select 'VN' code, 'Vietnam' en union
+    select 'VU' code, 'Vanuatu' en union
+    select 'WF' code, 'Wallis And Futuna' en union
+    select 'WS' code, 'Samoa' en union
+    select 'YE' code, 'Yemen' en union
+    select 'YT' code, 'Mayotte' en union
+    select 'ZA' code, 'South Africa' en union
+    select 'ZM' code, 'Zambia' en union
+    select 'ZW' code, 'Zimbabwe' en
+) foo 
+order by 2) foo1
+]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>COUNTRY_CODE</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>COUNTRY_CODE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>COUNTRY_CODE</design:label>
+            <design:formattingHints>
+              <design:displaySize>2</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>COUNTRY_NAME</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>44</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>COUNTRY_NAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>COUNTRY_NAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>44</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ISP" id="256">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">account_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">account_id</text-property>
+                    <text-property name="heading">account_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">name</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">name</text-property>
+                    <text-property name="heading">name</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">dsp_Country</property>
+                    <property name="paramName">rp_Country</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">account_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">account_id</property>
+                    <property name="nativeName">account_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">name</property>
+                    <property name="nativeName">name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select 0 account_id, 'All ISPs' as name
+union all
+select * 
+  from (select account_id, name from account where role_id = 3 and country_code = ?
+        order by 2
+       ) foo]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Data Set" id="258">
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">dsp_StartDate1</property>
+                    <property name="paramName">rp_StartDate</property>
+                    <property name="dataType">date</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_EndDate1</property>
+                    <property name="paramName">rp_EndDate</property>
+                    <property name="dataType">date</property>
+                    <property name="position">2</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_isp_id1</property>
+                    <property name="paramName">rp_isp_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">3</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_country1</property>
+                    <property name="paramName">rp_Country</property>
+                    <property name="dataType">string</property>
+                    <property name="position">4</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_CountryName2</property>
+                    <property name="dataType">string</property>
+                    <property name="position">5</property>
+                    <expression name="defaultValue">params["rp_Country"].displayText</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">isp_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">isp_id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">sdate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">invitations</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">optins</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">mth_unique_users</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">dly_unique_users</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">pub_reach_per</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">publishers</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">passback</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">util_perc</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">imps</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">adv_rpm</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">pub_cpm</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">foros_rev</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">active_cmp</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">isp_name</property>
+                    <property name="nativeName">isp_name</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">isp_id</property>
+                    <property name="nativeName">isp_id</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">sdate</property>
+                    <property name="nativeName">sdate</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">invitations</property>
+                    <property name="nativeName">invitations</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">optins</property>
+                    <property name="nativeName">optins</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">mth_unique_users</property>
+                    <property name="nativeName">mth_unique_users</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">dly_unique_users</property>
+                    <property name="nativeName">dly_unique_users</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">pub_reach_per</property>
+                    <property name="nativeName">pub_reach_per</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">publishers</property>
+                    <property name="nativeName">publishers</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">passback</property>
+                    <property name="nativeName">passback</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">util_perc</property>
+                    <property name="nativeName">util_perc</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">imps</property>
+                    <property name="nativeName">imps</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">adv_rpm</property>
+                    <property name="nativeName">adv_rpm</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">pub_cpm</property>
+                    <property name="nativeName">pub_cpm</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">foros_rev</property>
+                    <property name="nativeName">foros_rev</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">active_cmp</property>
+                    <property name="nativeName">active_cmp</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[with param_ as (
+select ?::date /*dsp_StartDate*/ as startdate,
+       ?::date + 1 /*dsp_EndDate*/ as enddate,
+       ?::int /*dsp_isp_id1*/ isp_id,
+       ?::varchar /*dsp_country1*/ country_id,
+       ?::varchar /*dsp_country1*/ country_name
+)
+select  max(isp_name) isp_name,
+    isp_id,
+    sdate,
+    sum(invitations) invitations,
+    sum(optins) optins,
+    sum(mth_unique_users) mth_unique_users,
+    sum(dly_unique_users) dly_unique_users,
+    sum(pub_reach_per) pub_reach_per,
+    sum(publishers) publishers,
+    sum(passback) passback,
+    sum(util_perc) util_perc,
+    sum(imps) imps,
+    sum(adv_rpm) adv_rpm,
+    sum(pub_cpm) pub_cpm,
+    sum(foros_rev) foros_rev,
+    sum(active_cmp) active_cmp
+from (
+    select acc.name isp_name,
+            acc.account_id isp_id,
+            date_trunc('day', oos.isp_sdate) sdate,
+            oos.count / 2 invitations,
+            case when oos.operation ='I' then oos.count else 0 end optins,
+            0 mth_unique_users,
+            0 dly_unique_users,
+            0 pub_reach_per,
+            0 publishers,
+            0 passback,
+            0 util_perc,
+            0 imps,
+            0 adv_rpm,
+            0 pub_cpm,
+            0 foros_rev,
+            0 active_cmp
+     from optoutstats oos,
+          colocation clo,
+          account acc,
+          param_
+     where (oos.status in (10,11)
+            or
+            (oos.status = 2 and oos.operation  = 'O')
+           )
+       and oos.test <> 'Y'
+       and oos.isp_sdate >= param_.startdate
+       and oos.isp_sdate < param_.enddate
+       and oos.colo_id = clo.colo_id
+       and clo.account_id = acc.account_id
+       and param_.isp_id in (0, acc.account_id)
+       and acc.country_code = param_.country_id
+     union all
+     select acc.name isp_name,
+            acc.account_id isp_id,
+            chi.sdate sdate,
+            0 invitations,
+            0 optins,
+            chi.total_user_count mth_unique_users,
+            0 dly_unique_users,
+            0 pub_reach_per,
+            0 publishers,
+            0 passback,
+            0 util_perc,
+            0 imps,
+            0 adv_rpm,
+            0 pub_cpm,
+            0 foros_rev,
+            0 active_cmp
+       from top100urls chi,
+            channel ch,
+            colocation clo,
+            account acc,
+            param_
+     where chi.channel_id = ch.channel_id
+        and ch.name = param_.country_name ||'_Top100URLs(month)'
+        and chi.sdate >= param_.startdate
+        and chi.sdate < param_.enddate
+        and chi.colo_id = clo.colo_id
+        and clo.account_id = acc.account_id
+        and param_.isp_id in (0, acc.account_id)
+        and acc.country_code = param_.country_id
+     union all
+     select acc.name isp_name,
+            acc.account_id isp_id,
+            clu.isp_sdate sdate,
+            0 invitations,
+            0 optins,
+            0 mth_unique_users,
+            clu.unique_users dly_unique_users,
+            0 pub_reach_per,
+            0 publishers,
+            0 passback,
+            0 util_perc,
+            0 imps,
+            0 adv_rpm,
+            0 pub_cpm,
+            0 foros_rev,
+            0 active_cmp
+     from colouserstats clu,
+          colocation clo,
+          account acc,
+          param_
+     where clu.isp_sdate >= param_.startdate
+       and clu.isp_sdate < param_.enddate
+       and clu.colo_id = clo.colo_id
+       and clo.status  = 'A'
+       and clo.account_id = acc.account_id
+       and param_.isp_id in (0, acc.account_id)
+       and acc.country_code = param_.country_id
+     union all
+     select max(acc.name) isp_name,
+            acc.account_id isp_id,
+            cii.sdate sdate,
+            0 invitations,
+            0 optins,
+            0 mth_unique_users,
+            0 dly_unique_users,
+            case when sum(cii.active_user_count) = 0 then 0 else sum(cii.impops_user_count_d+cii.impops_user_count_t) / sum(cii.active_user_count) end pub_reach_per,
+            0 publishers,
+            0 passback,
+            case when sum(cii.impops_user_count_d+cii.impops_user_count_t) = 0 then 0 else sum(cii.imps_other_user_count_d+cii.imps_other_user_count_t) / sum(cii.impops_user_count_d+cii.impops_user_count_t) end util_perc,
+            0 imps,
+            0 adv_rpm,
+            0 pub_cpm,
+            0 foros_rev,
+            0 active_cmp
+     from top100urls cii,
+          channel ch,
+          colocation clo,
+          account acc,
+          param_
+     where cii.channel_id = ch.channel_id
+        and ch.name = param_.country_name ||'_Top100URLs(month)'
+        and cii.sdate >= param_.startdate
+        and cii.sdate < param_.enddate
+        and cii.colo_id = clo.colo_id
+        and clo.account_id = acc.account_id
+        and param_.isp_id in (0, acc.account_id)
+        and acc.country_code = param_.country_id
+     group by
+        acc.account_id,
+        cii.sdate
+     union all
+     select max(acc.name) isp_name,
+            acc.account_id isp_id,
+            gsd.isp_sdate sdate,
+            0 invitations,
+            0 optins,
+            0 mth_unique_users,
+            0 dly_unique_users,
+            0 pub_reach_per,
+            count(distinct gsd.pub_account_id) publishers,
+            1-case when coalesce(sum(gsd.requests), 0) = 0 then 0 else coalesce(sum(gsd.imps), 0)/sum(gsd.requests) end passback,
+            0 util_perc,
+            coalesce(sum(gsd.imps), 0) imps,
+            case when coalesce(sum(gsd.imps), 0) = 0 then 0 else (coalesce(sum(gsd.adv_amount_global), 0) + coalesce(sum(gsd.adv_comm_amount_global), 0)) *1000/(sum(gsd.imps)) end adv_rpm,
+            case when coalesce(sum(gsd.imps), 0) = 0 then 0 else (coalesce(sum(gsd.pub_amount_global), 0) + coalesce(sum(gsd.pub_comm_amount_global), 0)) *1000/(sum(gsd.imps)) end pub_cpm,
+            (coalesce(sum(gsd.adv_amount_global), 0) + coalesce(sum(gsd.adv_comm_amount_global), 0)) foros_rev,
+            count(distinct gsd.campaign_id) active_cmp
+     from requeststatsDailyISP gsd,
+          account acc,
+          param_
+     where gsd.isp_sdate >= param_.startdate
+       and gsd.isp_sdate < param_.enddate
+       and gsd.isp_account_id = acc.account_id
+       and param_.isp_id in (0, acc.account_id)
+       and acc.country_code = param_.country_id
+     group by
+        acc.account_id,
+        gsd.isp_sdate
+) foo
+group by
+    isp_id,
+    sdate
+order by 1,3
+]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ds_Date" id="359">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">available_date</property>
+                    <text-property name="displayName">available_date</text-property>
+                    <text-property name="heading">available_date</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">available_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">available_date</property>
+                    <property name="nativeName">available_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select current_date - generate_series(0, 180) as available_date]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>available_date</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>91</design:nativeDataTypeCode>
+            <design:precision>13</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>available_date</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>available_date</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">"Verdana"</property>
+            <property name="fontSize">10pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="6">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">custom</property>
+            <property name="height">8.5in</property>
+            <property name="width">17in</property>
+            <property name="orientation">landscape</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="259">
+            <property name="width">15.916666666666666in</property>
+            <property name="dataSet">Data Set</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">isp_name</property>
+                    <text-property name="displayName">isp_name</text-property>
+                    <expression name="expression">dataSetRow["isp_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">isp_id</property>
+                    <text-property name="displayName">isp_id</text-property>
+                    <expression name="expression">dataSetRow["isp_id"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">sdate</property>
+                    <text-property name="displayName">sdate</text-property>
+                    <expression name="expression">dataSetRow["sdate"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">invitations</property>
+                    <text-property name="displayName">invitations</text-property>
+                    <expression name="expression">dataSetRow["invitations"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">optins</property>
+                    <text-property name="displayName">optins</text-property>
+                    <expression name="expression">dataSetRow["optins"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">mth_unique_users</property>
+                    <text-property name="displayName">mth_unique_users</text-property>
+                    <expression name="expression">dataSetRow["mth_unique_users"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">dly_unique_users</property>
+                    <text-property name="displayName">dly_unique_users</text-property>
+                    <expression name="expression">dataSetRow["dly_unique_users"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">pub_reach_per</property>
+                    <text-property name="displayName">pub_reach_per</text-property>
+                    <expression name="expression">dataSetRow["pub_reach_per"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">publishers</property>
+                    <text-property name="displayName">publishers</text-property>
+                    <expression name="expression">dataSetRow["publishers"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">passback</property>
+                    <text-property name="displayName">passback</text-property>
+                    <expression name="expression">dataSetRow["passback"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">util_perc</property>
+                    <text-property name="displayName">util_perc</text-property>
+                    <expression name="expression">dataSetRow["util_perc"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">imps</property>
+                    <text-property name="displayName">imps</text-property>
+                    <expression name="expression">dataSetRow["imps"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">adv_rpm</property>
+                    <text-property name="displayName">adv_rpm</text-property>
+                    <expression name="expression">dataSetRow["adv_rpm"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">pub_cpm</property>
+                    <text-property name="displayName">pub_cpm</text-property>
+                    <expression name="expression">dataSetRow["pub_cpm"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">foros_rev</property>
+                    <text-property name="displayName">foros_rev</text-property>
+                    <expression name="expression">dataSetRow["foros_rev"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">active_cmp</property>
+                    <text-property name="displayName">active_cmp</text-property>
+                    <expression name="expression">dataSetRow["active_cmp"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <column id="343">
+                <property name="width">2in</property>
+                <property name="textAlign">left</property>
+            </column>
+            <column id="345">
+                <property name="width">1.1041666666666667in</property>
+                <property name="textAlign">left</property>
+            </column>
+            <column id="346">
+                <property name="width">1.0208333333333333in</property>
+            </column>
+            <column id="347">
+                <property name="width">0.8229166666666666in</property>
+            </column>
+            <column id="348">
+                <property name="width">0.8645833333333334in</property>
+            </column>
+            <column id="349">
+                <property name="width">0.8333333333333334in</property>
+            </column>
+            <column id="350">
+                <property name="width">0.9166666666666666in</property>
+            </column>
+            <column id="351">
+                <property name="width">1.09375in</property>
+            </column>
+            <column id="352">
+                <property name="width">1.09375in</property>
+            </column>
+            <column id="353">
+                <property name="width">1.09375in</property>
+            </column>
+            <column id="354">
+                <property name="width">1.09375in</property>
+            </column>
+            <column id="355">
+                <property name="width">1.09375in</property>
+            </column>
+            <column id="356">
+                <property name="width">0.90625in</property>
+            </column>
+            <column id="357">
+                <property name="width">0.8854166666666666in</property>
+            </column>
+            <column id="358">
+                <property name="width">1.09375in</property>
+            </column>
+            <header>
+                <row id="260">
+                    <property name="fontWeight">bold</property>
+                    <property name="textAlign">right</property>
+                    <cell id="261">
+                        <label id="262">
+                            <text-property name="text">ISP</text-property>
+                        </label>
+                    </cell>
+                    <cell id="265">
+                        <label id="266">
+                            <text-property name="text">Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="267">
+                        <label id="268">
+                            <text-property name="text">Invitations by day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="269">
+                        <label id="270">
+                            <text-property name="text">Opt-ins per day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="271">
+                        <label id="272">
+                            <text-property name="text">Monthly unique users per day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="273">
+                        <label id="274">
+                            <text-property name="text">Daily unique users per day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="275">
+                        <label id="276">
+                            <text-property name="text">Publisher reach % per day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="277">
+                        <label id="278">
+                            <text-property name="text">Number of publishers per day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="279">
+                        <label id="280">
+                            <text-property name="text">Passback % per day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="281">
+                        <label id="282">
+                            <text-property name="text">Relevant impressions utilised % per day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="283">
+                        <label id="284">
+                            <text-property name="text">Impressions advserved per day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="285">
+                        <label id="286">
+                            <text-property name="text">Average Advertiser RPM per day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="287">
+                        <label id="288">
+                            <text-property name="text">Average Publisher CPM per day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="289">
+                        <label id="290">
+                            <text-property name="text">Total Foros Revenue per day</text-property>
+                        </label>
+                    </cell>
+                    <cell id="291">
+                        <label id="292">
+                            <text-property name="text">Number of active campaigns per day</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="293">
+                    <property name="fontSize">8pt</property>
+                    <property name="textAlign">right</property>
+                    <cell id="294">
+                        <data id="295">
+                            <property name="resultSetColumn">isp_name</property>
+                        </data>
+                    </cell>
+                    <cell id="298">
+                        <data id="299">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Medium Date</property>
+                                <property name="pattern">Medium Date</property>
+                            </structure>
+                            <property name="resultSetColumn">sdate</property>
+                        </data>
+                    </cell>
+                    <cell id="300">
+                        <data id="301">
+                            <structure name="numberFormat">
+                                <property name="category">General Number</property>
+                                <property name="pattern">General Number</property>
+                            </structure>
+                            <property name="resultSetColumn">invitations</property>
+                        </data>
+                    </cell>
+                    <cell id="302">
+                        <data id="303">
+                            <structure name="numberFormat">
+                                <property name="category">General Number</property>
+                                <property name="pattern">General Number</property>
+                            </structure>
+                            <property name="resultSetColumn">optins</property>
+                        </data>
+                    </cell>
+                    <cell id="304">
+                        <data id="305">
+                            <structure name="numberFormat">
+                                <property name="category">General Number</property>
+                                <property name="pattern">General Number</property>
+                            </structure>
+                            <property name="resultSetColumn">mth_unique_users</property>
+                        </data>
+                    </cell>
+                    <cell id="306">
+                        <data id="307">
+                            <structure name="numberFormat">
+                                <property name="category">General Number</property>
+                                <property name="pattern">General Number</property>
+                            </structure>
+                            <property name="resultSetColumn">dly_unique_users</property>
+                        </data>
+                    </cell>
+                    <cell id="308">
+                        <data id="309">
+                            <structure name="numberFormat">
+                                <property name="category">Percent</property>
+                                <property name="pattern">Percent</property>
+                            </structure>
+                            <property name="resultSetColumn">pub_reach_per</property>
+                        </data>
+                    </cell>
+                    <cell id="310">
+                        <data id="311">
+                            <structure name="numberFormat">
+                                <property name="category">General Number</property>
+                                <property name="pattern">General Number</property>
+                            </structure>
+                            <property name="resultSetColumn">publishers</property>
+                        </data>
+                    </cell>
+                    <cell id="312">
+                        <data id="313">
+                            <structure name="numberFormat">
+                                <property name="category">Percent</property>
+                                <property name="pattern">Percent</property>
+                            </structure>
+                            <property name="resultSetColumn">passback</property>
+                        </data>
+                    </cell>
+                    <cell id="314">
+                        <data id="315">
+                            <structure name="numberFormat">
+                                <property name="category">Percent</property>
+                                <property name="pattern">Percent</property>
+                            </structure>
+                            <property name="resultSetColumn">util_perc</property>
+                        </data>
+                    </cell>
+                    <cell id="316">
+                        <data id="317">
+                            <structure name="numberFormat">
+                                <property name="category">General Number</property>
+                                <property name="pattern">General Number</property>
+                            </structure>
+                            <property name="resultSetColumn">imps</property>
+                        </data>
+                    </cell>
+                    <cell id="318">
+                        <data id="319">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00</property>
+                            </structure>
+                            <property name="resultSetColumn">adv_rpm</property>
+                        </data>
+                    </cell>
+                    <cell id="320">
+                        <data id="321">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00</property>
+                            </structure>
+                            <property name="resultSetColumn">pub_cpm</property>
+                        </data>
+                    </cell>
+                    <cell id="322">
+                        <data id="323">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00</property>
+                            </structure>
+                            <property name="resultSetColumn">foros_rev</property>
+                        </data>
+                    </cell>
+                    <cell id="324">
+                        <data id="325">
+                            <structure name="numberFormat">
+                                <property name="category">General Number</property>
+                                <property name="pattern">General Number</property>
+                            </structure>
+                            <property name="resultSetColumn">active_cmp</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="326">
+                    <cell id="327"/>
+                    <cell id="329"/>
+                    <cell id="330"/>
+                    <cell id="331"/>
+                    <cell id="332"/>
+                    <cell id="333"/>
+                    <cell id="334"/>
+                    <cell id="335"/>
+                    <cell id="336"/>
+                    <cell id="337"/>
+                    <cell id="338"/>
+                    <cell id="339"/>
+                    <cell id="340"/>
+                    <cell id="341"/>
+                    <cell id="342"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

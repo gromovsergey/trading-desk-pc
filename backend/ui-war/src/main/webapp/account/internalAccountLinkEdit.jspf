@@ -1,0 +1,28 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="ui" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
+<s:if test="id == null">
+		<ui:field id="intAccountTr" labelKey="account.intAccountId" labelForId="intAccountId" required="true" errors="internalAccount">
+            <s:select name="internalAccount.id" id="intAccountId" cssClass="middleLengthText"
+                      headerValue="%{getText('form.select.pleaseSelect')}" headerKey=""
+                      list="internalAccounts"
+                      listKey="id" listValue="name" value="internalAccount.id"
+                      onchange="getAccMngrList();">
+            </s:select>
+		</ui:field>
+</s:if>
+<s:else>
+    <s:hidden name="internalAccount.id"/>
+    <c:choose>
+        <c:when test="${ad:isPermitted('Account.view', existingAccount.internalAccount)}">
+            <ui:field labelKey="account.intAccountId">
+                <a href="/admin/internal/account/view.action?id=${existingAccount.internalAccount.id}">
+                    <c:out value="${existingAccount.internalAccount.name}"/></a>
+            </ui:field>
+        </c:when>
+        <c:otherwise>
+            <ui:simpleField labelKey="account.intAccountId" value="${existingAccount.internalAccount.name}"/>
+        </c:otherwise>
+    </c:choose>
+</s:else>

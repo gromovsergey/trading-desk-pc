@@ -1,0 +1,40 @@
+<button *ngIf="!inline, else showInline"
+        mat-raised-button
+        appDisplayStatus
+        displayStatusType="bg"
+        [disabled]="disabled"
+        [displayStatus]="status"
+        [matMenuTriggerFor]="materialMenu"
+        (click)="$event.stopPropagation()"
+        type="button"
+>
+  <i *ngIf="icon" class="material-icons" [style.color]="icon.color">{{icon.type}}</i>
+  {{title | translate}}
+  <i class="material-icons">arrow_drop_down</i>
+</button>
+
+<ng-template #showInline>
+  <button mat-icon-button
+          (click)="$event.stopPropagation()"
+          [disabled]="disabled"
+          [matMenuTriggerFor]="materialMenu"
+          type="button"
+  >
+    <i class="material-icons">arrow_drop_down</i>
+  </button>
+</ng-template>
+
+<mat-menu #materialMenu="matMenu">
+  <ng-container *ngFor="let item of menu">
+    <button *ngIf="item.link"
+            mat-menu-item
+            [routerLink]="item.link">
+      {{item.text | translate}}
+    </button>
+    <button *ngIf="!item.link"
+            mat-menu-item
+            (click)="menuClick($event, item)">
+      {{item.text | translate}}
+    </button>
+  </ng-container>
+</mat-menu>

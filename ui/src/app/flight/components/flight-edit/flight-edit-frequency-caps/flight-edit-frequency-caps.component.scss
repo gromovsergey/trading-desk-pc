@@ -1,0 +1,23 @@
+@import "~src/scss/variables";
+
+:host {
+  display: block;
+  width: auto;
+
+  .mat-form-field-max {
+    width: 100%;
+  }
+  .input-number {
+    max-width: 120px;
+  }
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+
+  & > * {
+    padding-right: $gen-spacing;
+  }
+}

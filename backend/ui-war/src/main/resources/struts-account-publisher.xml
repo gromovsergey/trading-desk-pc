@@ -1,0 +1,187 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="publisherAccount" extends="foros-default" namespace="/">
+        <action name="admin/publisher/account/view" class="com.foros.action.account.ViewPublisherAccountAction" method="view">
+            <result name="success" type="tiles">admin.publisher.view</result>
+        </action>
+
+        <action name="admin/publisher/account/edit" class="com.foros.action.account.EditPublisherAccountAction" method="edit">
+            <result name="success" type="tiles">admin.publisher.edit</result>
+        </action>
+
+        <action name="admin/publisher/account/new" class="com.foros.action.account.EditPublisherAccountAction" method="create">
+            <result name="success" type="tiles">admin.publisher.new</result>
+        </action>
+
+        <action name="admin/publisher/account/changeCountry" class="com.foros.action.account.EditPublisherAccountAction" method="changeCountry">
+            <result name="success">/account/addressEditSection.jsp</result>
+        </action>
+
+        <action name="admin/publisher/account/update" class="com.foros.action.account.SavePublisherAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/publisher/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.publisher.edit</result>
+            <result name="version">
+                <param name="location">/admin/publisher/account/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/publisher/account/create" class="com.foros.action.account.SavePublisherAccountAction" method="create">
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/publisher/account/view</param>
+            <param name="id">${id}</param>
+          </result>
+          <result name="input" type="tiles">admin.publisher.new</result>
+        </action>
+
+        <action name="admin/publisher/account/activate" class="com.foros.action.account.StatusAccountAction" method="activate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/publisher/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/publisher/account/inactivate" class="com.foros.action.account.StatusAccountAction" method="inactivate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/publisher/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/publisher/account/delete" class="com.foros.action.account.StatusAccountAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/publisher/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/publisher/account/undelete" class="com.foros.action.account.StatusAccountAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/publisher/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/publisher/account/terms/add" class="com.foros.action.account.terms.AddAccountTermsAction" method="edit">
+            <result name="success" type="tiles">admin.publisher.terms.add</result>
+        </action>
+
+        <action name="admin/publisher/account/terms/save" class="com.foros.action.account.terms.AddAccountTermsAction" method="save">
+          <interceptor-ref name="fileUpload">
+            <param name="allowedTypes">image/jpeg,image/pjpeg,image/png,image/x-png,image/gif,application/pdf,image/tiff,image/tiff-fx</param>
+          </interceptor-ref>
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/publisher/account/view</param>
+            <param name="id">${id}</param>
+          </result>
+            <result name="input" type="tiles">admin.publisher.terms.add</result>
+        </action>
+
+        <action name="admin/publisher/account/editFinance" class="com.foros.action.account.EditAccountsPayableFinanceAction" method="edit">
+            <result name="success" type="tiles">admin.publisherFinance.edit</result>
+        </action>
+
+        <action name="admin/publisher/account/updateFinance" class="com.foros.action.account.SaveAccountsPayableFinanceAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/publisher/account/view</param>
+                <param name="id">${accountId}</param>
+            </result>
+            <result name="input" type="tiles">admin.publisherFinance.edit</result>
+            <result name="version">
+                <param name="location">/admin/publisher/account/editFinance.action</param>
+            </result>
+        </action>
+
+        <action name="admin/publisher/account/main" class="com.foros.action.account.SwitchContextPublisherAction"
+                        method="main">
+                    <interceptor-ref name="roles">
+                        <param name="allowedRoles">INTERNAL</param>
+                    </interceptor-ref>
+                    <interceptor-ref name="defaultForosStack"/>
+                    <result name="success.site" type="redirect">
+                        <param name="location">admin/site/main.action?accountId=${accountId}</param>
+                    </result>
+                    <result name="success.account" type="redirect">
+                        <param name="location">admin/publisher/account/view.action?id=${accountId}</param>
+                    </result>
+                    <result name="input" type="tiles">admin.publisher.main</result>
+                </action>
+
+        <action name="admin/publisher/account/search" class="com.foros.action.account.SwitchContextPublisherAction"
+                method="search">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.publisher.main</result>
+            <result name="input" type="tiles">admin.publisher.main</result>
+        </action>
+
+        <action name="admin/publisher/account/selectAccount"
+                class="com.foros.action.account.SwitchContextPublisherAction" method="selectAccount">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success.site" type="redirect">
+                <param name="location">admin/site/main.action?accountId=${accountId}</param>
+            </result>
+            <result name="success.account" type="redirect">
+                <param name="location">admin/publisher/account/view.action?id=${accountId}</param>
+            </result>
+        </action>
+
+        <action name="admin/publisher/account/switch" class="com.foros.action.account.SwitchContextPublisherAction"
+                method="switchContext">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.publisher.main</result>
+        </action>
+
+        <action name="publisher/myAccount/myAccountView" class="com.foros.action.account.ViewMyPublisherAccountAction" method="view">
+            <result name="success" type="tiles">publisher.myAccount.view</result>
+        </action>
+
+        <action name="publisher/myAccount/myAccountEdit" class="com.foros.action.account.EditMyPublisherAccountAction" method="edit">
+            <result name="success" type="tiles">publisher.myAccount.edit</result>
+        </action>
+
+        <action name="publisher/myAccount/myAccountUpdate" class="com.foros.action.account.SaveMyPublisherAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">publisher/myAccount/myAccountView</param>
+            </result>
+            <result name="input" type="tiles">publisher.myAccount.edit</result>
+            <result name="version">
+                <param name="location">/publisher/myAccount/myAccountEdit.action</param>
+            </result>
+        </action>
+
+        <action name="publisher/myAccount/editFinance" class="com.foros.action.account.EditAccountsPayableFinanceAction" method="edit">
+            <result name="success" type="tiles">publisher.publisherFinance.edit</result>
+        </action>
+
+        <action name="publisher/myAccount/updateFinance" class="com.foros.action.account.SaveAccountsPayableFinanceAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">publisher/myAccount/myAccountView</param>
+            </result>
+            <result name="input" type="tiles">publisher.publisherFinance.edit</result>
+            <result name="version">
+                <param name="location">/publisher/myAccount/editFinance.action</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

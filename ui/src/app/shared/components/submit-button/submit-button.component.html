@@ -1,0 +1,5 @@
+<button class="mr-1" type="submit" [disabled]="disabled" mat-flat-button color="primary">
+  <mat-spinner color="accent" *ngIf="wait" class="button-spinner" [diameter]="20"></mat-spinner>
+  <i *ngIf="icon && !wait" class="material-icons">{{icon}}</i>
+  {{(title || 'blockName.search') | translate}}
+</button>

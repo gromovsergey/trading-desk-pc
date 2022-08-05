@@ -1,0 +1,64 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">
+    {{'report.segmentsReport' | translate}}
+  </h1>
+
+  <ui-report [meta]="meta"
+             [reportParameters]="reportParameters"
+             [reportService]="reportService"
+             [downloadNamePrefix]="'Report for ' + advertiser.name">
+
+    <label>{{'report.segmentsReport.flight' | translate}}</label>
+    <mat-radio-group class="radio-group"
+                     [value]="flightRadio"
+                     (change)="switchFlightSelectType()">
+      <mat-radio-button class="radio-button" [value]="false">
+        {{'report.segmentsReport.flight.chooseSingle' | translate}}
+      </mat-radio-button>
+
+      <div class="form-group" *ngIf="!flightRadio">
+        <mat-form-field class="width-full">
+          <mat-select (valueChange)="onFlightChange($event)">
+            <mat-option [value]="-1">{{'report.segmentsReport.flight.all' | translate}}</mat-option>
+            <mat-option *ngFor="let item of flights" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-radio-button class="radio-button" [value]="true">
+        {{'report.segmentsReport.flight.chooseGroup' | translate}}
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <div class="form-group" *ngIf="flightRadio">
+      <ui-option-transfer [options]="flightsAvailable"
+                          [selected]="flightsSelected"
+                          (transferChange)="onFlightListChange($event)"
+                          [customSort]="sort">
+      </ui-option-transfer>
+    </div>
+
+    <div class="form-group" *ngIf="flightId">
+      <label>{{'report.segmentsReport.lineItems' | translate}}</label>
+      <mat-radio-group class="radio-group"
+                       [value]="lineItemRadio"
+                       (change)="switchLineItemType()">
+        <mat-radio-button class="radio-button" [value]="false">
+          {{'report.segmentsReport.lineItems.all' | translate}}
+        </mat-radio-button>
+        <mat-radio-button class="radio-button" [value]="true">
+          {{'report.segmentsReport.lineItems.specific' | translate}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="form-group" *ngIf="lineItemRadio && flightId">
+      <ui-option-transfer [options]="lineItemsAvailable"
+                          [selected]="lineItemsSelected"
+                          (transferChange)="onLineItemsChange($event)"
+                          [customSort]="sort">
+      </ui-option-transfer>
+    </div>
+  </ui-report>
+</ng-template>

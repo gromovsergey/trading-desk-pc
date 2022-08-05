@@ -1,0 +1,4 @@
+pkgName='foros-spa-ui'
+specFile='RPM/SPECS/foros-spa-ui.spec'
+vcsModules[$vcsModule]=$modBuild
+distCheckout='True'

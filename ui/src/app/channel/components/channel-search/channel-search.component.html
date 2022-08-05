@@ -1,0 +1,69 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">
+    {{'channel.blockName.channels' | translate}}
+
+    <button mat-raised-button [matMenuTriggerFor]="menuCreate">
+      {{'button.createNew' | translate}}
+      <i class="material-icons">arrow_drop_down</i>
+    </button>
+    <mat-menu #menuCreate="matMenu">
+      <button mat-menu-item routerLink="/channel/behavioral/add">{{'channel.blockName.behavioural' | translate}}</button>
+      <button mat-menu-item routerLink="/channel/expression/add">{{'channel.blockName.expression' | translate}}</button>
+    </mat-menu>
+    <ui-channel-report-upload></ui-channel-report-upload>
+  </h1>
+
+
+  <form class="search-form form-horizontal" (submit)="search()">
+    <div class="form-container form-container-compact">
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'blockName.name' | translate}}</mat-label>
+        <input autofocus="autofocus"
+               matInput type="text"
+               name="channelName"
+               autocomplete="off"
+               [(ngModel)]="searchModel.name">
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'accountSearch.account' | translate}}</mat-label>
+        <select matNativeControl [(ngModel)]="searchModel.accountId" name="accountId">
+          <option [value]="defaultValue">{{'messages.optionTransfer.all' | translate}}</option>
+          <option *ngFor="let item of accounts" [value]="item.id">{{item.name}}</option>
+        </select>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'channel.blockName.channelType' | translate}}</mat-label>
+        <select matNativeControl [(ngModel)]="searchModel.channelType" name="channelType">
+          <option [value]="defaultValue">{{'messages.optionTransfer.all' | translate}}</option>
+          <option value="B">{{'channel.blockName.type.BehavioralChannel' | translate}}</option>
+          <option value="E">{{'channel.blockName.type.ExpressionChannel' | translate}}</option>
+        </select>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'channel.blockName.visibility' | translate}}</mat-label>
+        <select matNativeControl [(ngModel)]="searchModel.visibility" name="visibility">
+          <option [value]="defaultValue">{{'messages.optionTransfer.all' | translate}}</option>
+          <option value="PRI">{{'channel.blockName.visibility.private' | translate}}</option>
+          <option value="PUB">{{'channel.blockName.visibility.public' | translate}}</option>
+        </select>
+      </mat-form-field>
+
+      <div class="form-footer">
+        <ui-submit-button [icon]="'search'" [wait]="wait"></ui-submit-button>
+      </div>
+    </div>
+  </form>
+
+  <ui-channel-list *ngIf="channels"
+                   [channels]="channels"
+                   [canUpdateChannels]="canUpdateChannels"
+                   [canLocalize]="canLocalize"
+                   [waitChannels]="waitChannels"
+                   [truncated]="truncated">
+  </ui-channel-list>
+</ng-template>

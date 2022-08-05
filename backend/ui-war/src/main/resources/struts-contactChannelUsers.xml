@@ -1,0 +1,31 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package abstract="true" name="contactChannelUsers" extends="foros-default">
+
+        <action name="contactChannelUsers" class="com.foros.action.channel.ContactChannelUsersAction" method="editMessage">
+            <result name="success" type="tiles">channel.contactChannelUsers</result>
+            <result name="input" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="id">${id}</param>
+                <param name="exceedsLimit">true</param>
+            </result>
+        </action>
+
+        <action name="sendMessage" class="com.foros.action.channel.ContactChannelUsersAction" method="sendMessage">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="id">${id}</param>
+                <param name="sentSuccessfully">${messageSent}</param>
+                <param name="sentSuccessfullyToMe">${messageSentToMe}</param>
+            </result>
+            <result name="input" type="tiles">channel.contactChannelUsers</result>
+        </action>
+    </package>
+
+    <package name="cmpContactChannelUsers" extends="contactChannelUsers" namespace="/cmp/channel"/>
+    <package name="adminContactChannelUsers" extends="contactChannelUsers" namespace="/admin/channel"/>
+</struts>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+  <!--
+       CUSTOM TILES DEFENITION
+  -->
+  <definition name=".systemLayout">
+    <put-attribute name="systemTitle" value="FOROS"/>
+    <put-attribute name="rootTitle" value="Main"/>
+    <put-attribute name="isViewPage" value="false"/>
+  </definition>
+
+  <definition name=".taskParams" extends=".systemLayout">
+    <put-attribute name="title" value="/templates/titleTemplate2.jsp"/> <!--type="definition"-->
+    <put-attribute name="taskTitle" value="page.title.errorPage"/>
+    <put-attribute name="titleProperty" value=""/>
+    <put-attribute name="moduleName" value="error"/>
+    <put-attribute name="path" value="Error Page" type="string"/>
+  </definition>
+
+  <definition name=".mainLayout" preparer="com.foros.framework.CustomViewPreparer" template="/templates/mainTemplateTiles2.jsp" extends=".taskParams">
+      <put-attribute name="path" value="/breadcrumbs/breadcrumbs.jsp"/>
+  </definition>
+
+  <definition name=".unauthorizedLayout" template="/templates/unauthorizedTemplate.jsp">
+      <put-attribute name="title" value="/admin/password/passwordTitle.jsp"/>
+  </definition>
+
+  <definition name=".errorLayout" extends=".mainLayout">
+    <put-attribute name="taskTitle" value="page.title.errorPage" type="string"/>
+    <put-attribute name="titleProperty" value="page.title.errorPage"/>
+  </definition>
+
+  <definition name="commonError" extends=".errorLayout">
+    <put-attribute name="body" value="/errors/commonErrorPage.jsp"/>
+  </definition>
+
+  <definition name="statusError" extends=".errorLayout">
+    <put-attribute name="body" value="/errors/commonStatusErrorPage.jsp"/>
+  </definition>
+
+ </tiles-definitions>

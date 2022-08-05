@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name=".WalledGarden" extends=".Admin">
+        <put-attribute name="entityName" value="WalledGarden"/>
+        <put-attribute name="titleProperty" value="WalledGarden.plural"/>
+    </definition>
+
+    <definition name="walledGarden.edit" extends=".WalledGarden">
+        <put-attribute name="body" value="/admin/walledGarden/walledGardenEdit.jsp"/>
+    </definition>
+
+    <definition name="walledGarden.create" extends=".WalledGarden">
+        <put-attribute name="body" value="/admin/walledGarden/walledGardenCreate.jsp"/>
+    </definition>
+
+    <definition name="walledGarden.main" extends=".WalledGarden">
+        <put-attribute name="bodyHeader" value="/templates/mainHeaderAboveTable.jsp"/>
+        <put-attribute name="body" value="/admin/walledGarden/walledGardenMain.jsp"/>
+    </definition>
+</tiles-definitions>

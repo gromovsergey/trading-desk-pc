@@ -1,0 +1,93 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="discoverChannel" extends="foros-default" namespace="/admin/DiscoverChannel">
+
+        <action name="main" class="com.foros.action.admin.discoverChannel.SearchDiscoverChannelsAction" method="main">
+            <result name="success" type="tiles">admin.discoverChannel.main</result>
+        </action>
+
+        <action name="search" class="com.foros.action.admin.discoverChannel.SearchDiscoverChannelsAction" method="search">
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.discoverChannel.list</result>
+            <result name="input" type="redirectAction">
+                <param name="actionName">search</param>
+            </result>
+        </action>
+
+        <action name="view" class="com.foros.action.admin.discoverChannel.ViewDiscoverChannelAction" method="view">
+            <result name="success" type="tiles">admin.discoverChannel.view</result>
+        </action>
+
+        <action name="loadTriggersPage" class="com.foros.action.channel.ViewChannelTriggersAction" method="loadTriggersPage">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/channel/loadTriggersPage.jsp</result>
+        </action>
+
+        <action name="createCopy" class="com.foros.action.admin.discoverChannel.EditDiscoverChannelAction" method="createCopy">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">edit</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="chain">
+                <param name="actionName">view</param>
+            </result>
+        </action>
+
+        <action name="create" class="com.foros.action.admin.discoverChannel.EditDiscoverChannelAction" method="create">
+            <result name="success" type="tiles">admin.discoverChannel.edit</result>
+        </action>
+
+        <action name="edit" class="com.foros.action.admin.discoverChannel.EditDiscoverChannelAction" method="edit">
+            <result name="success" type="tiles">admin.discoverChannel.edit</result>
+        </action>
+
+        <action name="save" class="com.foros.action.admin.discoverChannel.SaveDiscoverChannelAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.discoverChannel.edit</result>
+            <result name="version" type="chain">
+                <param name="actionName">edit</param>
+            </result>
+        </action>
+
+        <action name="unlink" class="com.foros.action.admin.discoverChannel.UnlinkDiscoverChannelAction" method="unlink">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="chain">
+                <param name="actionName">view</param>
+            </result>
+        </action>
+
+        <action name="linkDiscoverChannelPopup" class="com.foros.action.admin.discoverChannel.LinkDiscoverChannelAction" method="edit">
+            <result name="success">/channel/discoverChannelPopupToLink.jsp</result>
+        </action>
+
+        <action name="linkDiscoverChannel" class="com.foros.action.admin.discoverChannel.LinkDiscoverChannelAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/channel/discoverChannelPopupToLink.jsp</result>
+            <result name="input">/channel/discoverChannelPopupToLink.jsp</result>
+        </action>
+
+        <action name="*" class="com.foros.action.admin.discoverChannel.StatusDiscoverChannelAction" method="{1}">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="chain">
+                <param name="actionName">view</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

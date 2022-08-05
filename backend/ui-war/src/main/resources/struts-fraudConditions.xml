@@ -1,0 +1,31 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="fraudConditions" extends="foros-default" namespace="/">
+
+        <action name="admin/FraudConditions/main" class="com.foros.action.admin.fraudConditions.ViewFraudConditionAction"
+                method="view">
+            <result name="success" type="tiles">FraudConditions.main</result>
+        </action>
+
+        <action name="admin/FraudConditions/edit" class="com.foros.action.admin.fraudConditions.EditFraudConditionAction"
+                method="edit">
+            <result name="success" type="tiles">FraudConditions.edit</result>
+        </action>
+
+        <action name="admin/FraudConditions/save" class="com.foros.action.admin.fraudConditions.SaveFraudConditionAction"
+                method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/FraudConditions/main</param>
+            </result>
+            <result name="input" type="tiles">FraudConditions.edit</result>
+            <result name="version">
+                <param name="location">/admin/FraudConditions/edit.action</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

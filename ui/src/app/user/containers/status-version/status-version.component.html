@@ -1,0 +1,8 @@
+<!--<ui-loading *ngIf="wait, else showContent"></ui-loading>-->
+
+<!--<ng-template>-->
+<h1 style="text-align: center">Список версий</h1>
+<div *ngFor="let item of data">
+  <span>Версия: {{item.version}} ({{item.comment}})</span>
+</div>
+<!--</ng-template>-->

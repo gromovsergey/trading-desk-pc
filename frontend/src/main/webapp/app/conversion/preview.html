@@ -1,0 +1,10 @@
+<ui-popup [blocked]="wait" [visible]="show" [options]="popupOptions" (close)="onPopupClose(true)" [closeBtnTitle]="closeBtnTitle">
+    <div #modal>
+        <div class="text-center" *ngIf="!wait && conversion && previewData">
+            <pre class="pre-scrollable text-left">{{previewData.pixelCode}}</pre>
+        </div>
+        <div class="text-danger" *ngIf="!wait && !(conversion && previewData)">
+            {{absencePreviewMsg}}
+        </div>
+    </div>
+</ui-popup>

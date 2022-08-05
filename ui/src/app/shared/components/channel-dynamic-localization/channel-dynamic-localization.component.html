@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>{{'channel.blockName.channel.localization' | translate}}</h2>
+<mat-dialog-content class="mat-typography">
+  <ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+  <ng-template #showContent>
+    <mat-form-field class="width-full" *ngFor="let lang of languages">
+      <mat-label>{{L10nLanguages[lang] | translate}}</mat-label>
+      <input matInput
+             [ngModel]="getLocalization(lang)"
+             (ngModelChange)="setLocalization(lang, $event)"
+             type="text">
+    </mat-form-field>
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="onSave()">{{'button.save' | translate}}</button>
+  <button mat-button mat-dialog-close>{{'button.close' | translate}}</button>
+</mat-dialog-actions>

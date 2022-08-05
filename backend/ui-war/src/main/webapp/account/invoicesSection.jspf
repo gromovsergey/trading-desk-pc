@@ -1,0 +1,47 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="ad" uri="/ad/serverUI"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="ui" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net/el"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
+<s:if test="role.name == 'Advertiser'">
+    <h2><fmt:message key="account.headers.invoices" /></h2>
+
+    <display:table name="invoices" class="dataView" id="invoice">
+        <display:setProperty name="basic.msg.empty_list">
+            <div class="wrapper"><fmt:message key="account.noInvoices" /></div>
+        </display:setProperty>
+        <display:column titleKey="account.invoice.invoiceId" class="number">
+            <a href="invoiceView.action?id=${invoice.id}">${invoice.id}</a>
+        </display:column>
+        <display:column titleKey="account.invoice.invoiceNumber"
+            class="number"><c:out value="${invoice.invoiceLegalNumber}"/></display:column>
+        <display:column titleKey="account.table.title.date" class="date">
+            <fmt:formatDate value="${invoice.invoiceDate}" type="date" dateStyle="short"/>
+        </display:column>
+        <s:if test="accountType.perCampaignInvoicingFlag">
+            <display:column titleKey="account.campaign">
+                <c:if test="${invoice.campaign != null}">
+                    <c:set var="campaignName" value="${ad:appendStatus(invoice.campaign.name, invoice.campaign.status)}"/>
+                    <c:choose>
+                        <c:when test="${ad:isPermitted0('AdvertiserEntity.view') and (ad:isInternal() or invoice.campaign.status != 'DELETED')}">
+                            <a class="preText" href="${_context}/campaign/view.action?id=${invoice.campaign.id}"><c:out value="${campaignName}"/></a>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="preText"><c:out value="${campaignName}"/></span>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
+            </display:column>
+        </s:if>
+        <display:column titleKey="account.table.title.status">
+            <fmt:message key="enums.FinanceStatus.${invoice.status}" />
+        </display:column>
+        <display:column titleKey="account.table.title.dueDate" class="date">
+            <fmt:formatDate value="${invoice.dueDate}" type="date" dateStyle="short"/>
+        </display:column>
+        <display:column titleKey="account.table.title.totalAmountPayable"
+            class="number">${ad:formatCurrency(invoice.totalAmountDue, invoice.account.currency.currencyCode)}</display:column>
+    </display:table>
+</s:if>

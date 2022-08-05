@@ -1,0 +1,42 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="categoryChannel" extends="foros-default" namespace="/">
+        <action name="admin/CategoryChannel/main" class="com.foros.action.admin.categoryChannel.MainCategoryChannelAction"
+                method="main">
+            <result name="input" type="tiles">CategoryChannel.main</result>
+        </action>
+        <action name="admin/CategoryChannel/view" class="com.foros.action.admin.categoryChannel.ViewCategoryChannelAction"
+                method="view">
+            <result name="input" type="tiles">CategoryChannel.view</result>
+        </action>
+        <action name="admin/CategoryChannel/edit" class="com.foros.action.admin.categoryChannel.EditCategoryChannelAction"
+                method="edit">
+            <result name="input" type="tiles">CategoryChannel.edit</result>
+        </action>
+        <action name="admin/CategoryChannel/update" class="com.foros.action.admin.categoryChannel.SaveCategoryChannelAction"
+                method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CategoryChannel/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">CategoryChannel.edit</result>
+            <result name="version">
+                <param name="location">/admin/CategoryChannel/edit.action</param>
+            </result>
+        </action>
+        <action name="admin/CategoryChannel/*" class="com.foros.action.admin.categoryChannel.StatusCategoryChannelAction"
+                method="{1}">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CategoryChannel/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="chain">
+                <param name="actionName">admin/CategoryChannel/view</param>
+            </result>
+        </action>
+    </package>
+</struts>

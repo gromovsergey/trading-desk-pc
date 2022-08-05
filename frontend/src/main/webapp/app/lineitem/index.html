@@ -1,0 +1,74 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<ng-template [ngIf]="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [displayStatus]="lineItem.displayStatus"></ui-icon>
+            {{title}}
+            <div class="btn-group" *ngIf="canEditLineItem">
+                <button class="btn btn-default" [routerLink]="['/lineitem/'+lineItem.id+'/edit']">_L10N_(button.edit)</button>
+            </div>
+        </h2>
+    </div>
+
+    <ui-flight-tabs [canCreate]="canCreateLineItem" [flightId]="lineItem.flightId" [lineItems]="lineItems"
+                    [lineItemId]="lineItem.id"></ui-flight-tabs>
+
+    <div class="row">
+        <div class="col-xs-12 h-margin-td">
+            <ui-panel title="_L10N_(blockName.summary)" [icon]="'list'">
+                <div #body>
+                    <ui-flight-summary [statusChangeable]="canEditLineItem" [lineItem]="lineItem"
+                                       (onStatusChange)="onStatusChange()"></ui-flight-summary>
+                </div>
+            </ui-panel>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 h-margin-td">
+            <ui-panel [title]="'_L10N_(blockName.chart)'" [icon]="'line-chart'">
+                <div #body>
+                    <ui-chart [lineItemId]="lineItem.id"></ui-chart>
+                </div>
+            </ui-panel>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 h-margin-td">
+            <ui-panel [title]="'_L10N_(flight.blockName.channels)'" [icon]="'crosshairs'">
+                <div #body>
+                    <ui-flight-channels (onStatusChange)="onStatusChange()"
+                                        [lineItemId]="lineItem.id"
+                                        [readonly]="!canEditLineItem"
+                                        [specialChannelId]="lineItem.specialChannelId"
+                                        [linkSpecialChannelFlag]="lineItem.specialChannelLinked">
+                    </ui-flight-channels>
+                </div>
+            </ui-panel>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 h-margin-td">
+            <ui-panel [title]="'_L10N_(flight.blockName.sites)'" [icon]="'desktop'">
+                <div #body>
+                    <ui-flight-sites [lineItemId]="lineItem.id" [readonly]="!canEditLineItem"></ui-flight-sites>
+                </div>
+            </ui-panel>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 h-margin-td">
+            <ui-panel [title]="'_L10N_(flight.blockName.creatives)'" [icon]="'photo'">
+                <div #body>
+                    <ui-flight-creatives (onStatusChange)="onStatusChange()" [lineItemId]="lineItem.id"
+                                         [readonly]="!canEditLineItem"></ui-flight-creatives>
+                </div>
+            </ui-panel>
+        </div>
+    </div>
+
+    <ui-flight-lineitems [ngClass]="{hidden: true}" (onLoad)="lineItemsOnLoad($event)" [flightId]="lineItem.flightId"></ui-flight-lineitems>
+</ng-template>

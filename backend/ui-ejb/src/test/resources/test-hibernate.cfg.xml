@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.use_query_cache">false</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">false</property>
+        <property name="hibernate.ejb.interceptor.session_scoped">com.foros.persistence.hibernate.HibernateInterceptor</property>
+        <property name="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
+        <property name="hibernate.generate_statistics">false</property>
+
+        <property name="hibernate.jdbc.batch_size">1000</property>
+        <property name="hibernate.jdbc.batch_versioned_data">true</property>
+
+        <property name="hibernate.order_inserts">true</property>
+        <property name="hibernate.order_updates">true</property>
+
+<!-- Common entities -->
+
+        <class-cache class="com.foros.model.ClobParam" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.Country" usage="nonstrict-read-write"/>
+        <class-cache class="com.foros.model.Timezone" usage="nonstrict-read-write"/>
+        <class-cache class="com.foros.model.currency.Currency" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.security.AccountType" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.security.AccountType.templates" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.security.AccountType.creativeSizes" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.security.AccountType.ccgTypes" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.security.AccountTypeCCGType" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.creative.CreativeSize" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.creative.CreativeSize.optionGroups" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.template.ApplicationFormat" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.template.Template" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.template.Template.optionGroups" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.template.CreativeTemplate.categories" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.template.Template.templateFiles" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.template.TemplateFile" usage="nonstrict-read-write"/>
+
+        <!-- Major entities -->
+
+        <class-cache class="com.foros.model.account.Account" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.account.Account.users" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.security.AccountAddress" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.security.User" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.security.UserRole" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.account.AccountFinancialSettings" usage="nonstrict-read-write" region="financialSettings"/>
+        <class-cache class="com.foros.model.finance.Invoice" usage="nonstrict-read-write" region="financialSettings"/>
+        <!-- Advertiser entities -->
+
+        <!-- used in CreativeTemplate.categories (EAGER) -->
+        <class-cache class="com.foros.model.creative.CreativeCategory" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.campaign.Campaign" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.campaign.Campaign.creativeGroups" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.campaign.Campaign.invoices" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.campaign.CampaignCreativeGroup" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.campaign.CampaignCreativeGroup.sites" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.campaign.CampaignCreativeGroup.ccgSchedules" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.campaign.CampaignCreativeGroup.campaignCreatives" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.campaign.CampaignCreativeGroup.actions" usage="nonstrict-read-write"/>
+
+
+        <class-cache class="com.foros.model.creative.Creative" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.creative.Creative.categories" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.creative.Creative.options" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.creative.CreativeOptionValue" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.campaign.CampaignCreative" usage="nonstrict-read-write"/>
+        <class-cache class="com.foros.model.campaign.CcgRate" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.channel.Channel" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.action.Action" usage="nonstrict-read-write"/>
+        <class-cache class="com.foros.model.FrequencyCap" usage="nonstrict-read-write"/>
+
+
+        <!-- Publisher entities -->
+
+        <class-cache class="com.foros.model.site.Site" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.site.Site.categoryExclusions" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.site.Site.tags" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.site.SiteCreativeCategoryExclusion" usage="nonstrict-read-write"/>
+        <class-cache class="com.foros.model.site.TagPricing" usage="nonstrict-read-write"/>
+
+        <class-cache class="com.foros.model.site.Tag" usage="nonstrict-read-write"/>
+        <collection-cache collection="com.foros.model.site.Tag.tagPricings" usage="nonstrict-read-write"/>
+
+        <!-- ISP entities -->
+
+        <class-cache class="com.foros.model.isp.Colocation" usage="nonstrict-read-write"/>
+        <class-cache class="com.foros.model.isp.ColocationRate" usage="nonstrict-read-write"/>
+
+        <event type="flush-entity">
+            <listener class="org.hibernate.event.def.DefaultFlushEntityEventListener"/>
+        </event>
+
+        <event type="flush">
+            <listener class="com.foros.persistence.hibernate.ExceptionManagementFlushEventListener"/>
+            <listener class="com.foros.persistence.hibernate.MockTransactionCompleteListener"/>
+        </event>
+
+        <event type="lock">
+            <listener class="org.hibernate.event.def.DefaultLockEventListener"/>
+        </event>
+
+        <event type="merge">
+            <listener class="com.foros.persistence.hibernate.ChangesMergeEventListener"/>
+        </event>
+        <event type="create">
+            <listener class="org.hibernate.ejb.event.EJB3PersistEventListener"/>
+            <listener class="com.foros.persistence.hibernate.CreatedEntityListener"/>
+        </event>
+
+    </session-factory>
+
+</hibernate-configuration>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name=".MyPreferences" extends=".mainLayout">
+        <put-attribute name="title" value="/account/userTitle.jsp" />
+        <put-attribute name="entityName" value="User"/>
+        <put-attribute name="taskTitle" value="page.title.mySettings"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.settings"/>
+    </definition>
+
+    <!-- Internals -->
+    <definition name=".MyPreferencesInternal" extends=".MyPreferences">
+        <put-attribute name="moduleName" value="admin/myPreferences"/>
+    </definition>
+
+    <definition name="admin.myPreferences.view" extends=".MyPreferencesInternal">
+        <put-attribute name="body" value="/myPreferences/viewMyPreferences.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.myPreferences.edit" extends=".MyPreferencesInternal">
+        <put-attribute name="body" value="/myPreferences/editMyPreferences.jsp"/>
+    </definition>
+
+    <definition name="admin.myPreferences.changePassword" extends=".MyPreferencesInternal">
+        <put-attribute name="body" value="/account/changeUserPassw.jsp"/>
+        <put-attribute name="titleProperty" value="user.changePassword"/>
+    </definition>
+
+    <!-- Advertisers -->
+    <definition name=".MyPreferencesAdvertiser" extends=".MyPreferences">
+        <put-attribute name="moduleName" value="advertiser/myPreferences"/>
+    </definition>
+
+    <definition name="advertiser.myPreferences.view" extends=".MyPreferencesAdvertiser">
+        <put-attribute name="body" value="/myPreferences/viewMyPreferences.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="advertiser.myPreferences.edit" extends=".MyPreferencesAdvertiser">
+        <put-attribute name="body" value="/myPreferences/editMyPreferences.jsp"/>
+    </definition>
+
+    <definition name="advertiser.myPreferences.changePassword" extends=".MyPreferencesAdvertiser">
+        <put-attribute name="body" value="/account/changeUserPassw.jsp"/>
+        <put-attribute name="titleProperty" value="user.changePassword"/>
+    </definition>
+
+    <!-- ISPs -->
+    <definition name=".MyPreferencesISP" extends=".MyPreferences">
+        <put-attribute name="moduleName" value="isp/myPreferences"/>
+    </definition>
+
+    <definition name="isp.myPreferences.view" extends=".MyPreferencesISP">
+        <put-attribute name="body" value="/myPreferences/viewMyPreferences.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="isp.myPreferences.edit" extends=".MyPreferencesISP">
+        <put-attribute name="body" value="/myPreferences/editMyPreferences.jsp"/>
+    </definition>
+
+    <definition name="isp.myPreferences.changePassword" extends=".MyPreferencesISP">
+        <put-attribute name="body" value="/account/changeUserPassw.jsp"/>
+        <put-attribute name="titleProperty" value="user.changePassword"/>
+    </definition>
+
+    <!-- Publishers -->
+    <definition name=".MyPreferencesPublisher" extends=".MyPreferences">
+        <put-attribute name="moduleName" value="publisher/myPreferences"/>
+    </definition>
+
+    <definition name="publisher.myPreferences.view" extends=".MyPreferencesPublisher">
+        <put-attribute name="body" value="/myPreferences/viewMyPreferences.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="publisher.myPreferences.edit" extends=".MyPreferencesPublisher">
+        <put-attribute name="body" value="/myPreferences/editMyPreferences.jsp"/>
+    </definition>
+
+    <definition name="publisher.myPreferences.changePassword" extends=".MyPreferencesPublisher">
+        <put-attribute name="body" value="/account/changeUserPassw.jsp"/>
+        <put-attribute name="titleProperty" value="user.changePassword"/>
+    </definition>
+
+    <!-- CMPs -->
+    <definition name="MyPreferencesCMP" extends=".MyPreferences">
+        <put-attribute name="moduleName" value="cmp/myPreferences"/>
+    </definition>
+
+    <definition name="cmp.myPreferences.view" extends="MyPreferencesCMP">
+        <put-attribute name="body" value="/myPreferences/viewMyPreferences.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="cmp.myPreferences.edit" extends="MyPreferencesCMP">
+        <put-attribute name="body" value="/myPreferences/editMyPreferences.jsp"/>
+    </definition>
+
+    <definition name="cmp.myPreferences.changePassword" extends="MyPreferencesCMP">
+        <put-attribute name="body" value="/account/changeUserPassw.jsp"/>
+        <put-attribute name="titleProperty" value="user.changePassword"/>
+    </definition>
+
+</tiles-definitions>

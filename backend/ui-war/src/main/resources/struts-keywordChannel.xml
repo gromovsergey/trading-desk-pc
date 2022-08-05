@@ -1,0 +1,90 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <package name="keywordChannel" extends="foros-default" namespace="/">
+
+        <action name="admin/KeywordChannel/main"
+                class="com.foros.action.admin.keywordChannel.MainKeywordChannelAction"
+                method="main">
+            <result name="input" type="tiles">KeywordChannel.main</result>
+        </action>
+
+        <action name="admin/KeywordChannel/search"
+                class="com.foros.action.admin.keywordChannel.MainKeywordChannelAction"
+                method="search">
+            <result name="success" type="tiles">KeywordChannel.list</result>
+        </action>
+
+        <action name="admin/KeywordChannel/download"
+                class="com.foros.action.admin.keywordChannel.MainKeywordChannelAction"
+                method="download">
+            <result name="error" type="tiles">KeywordChannel.main</result>
+        </action>
+
+        <action name="admin/KeywordChannel/upload"
+                class="com.foros.action.admin.keywordChannel.UploadKeywordChannelAction"
+                method="upload">
+            <result name="success" type="tiles">KeywordChannel.upload</result>
+        </action>
+
+        <action name="admin/KeywordChannel/doUpload"
+                class="com.foros.action.admin.keywordChannel.UploadKeywordChannelAction"
+                method="doUpload">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">31457280</param>
+            </interceptor-ref>
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">KeywordChannel.upload</result>
+        </action>
+
+        <action name="admin/KeywordChannel/view"
+                class="com.foros.action.admin.keywordChannel.ViewKeywordChannelAction"
+                method="view">
+            <result name="success" type="tiles">KeywordChannel.view</result>
+        </action>
+
+        <action name="admin/KeywordChannel/edit"
+                class="com.foros.action.admin.keywordChannel.EditKeywordChannelAction"
+                method="edit">
+            <result name="success" type="tiles">KeywordChannel.edit</result>
+        </action>
+
+        <action name="admin/KeywordChannel/save"
+                class="com.foros.action.admin.keywordChannel.EditKeywordChannelAction"
+                method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/KeywordChannel/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">KeywordChannel.edit</result>
+            <result name="version" type="clearContextDispatch">
+                <param name="location">/admin/KeywordChannel/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/KeywordChannel/editDefaultSettings"
+                class="com.foros.action.admin.keywordChannel.DefaultKeywordSettingsAction"
+                method="edit">
+            <result name="success" type="tiles">KeywordChannel.editDefaultSettings</result>
+        </action>
+
+        <action name="admin/KeywordChannel/saveDefaultSettings"
+                class="com.foros.action.admin.keywordChannel.DefaultKeywordSettingsAction"
+                method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/KeywordChannel/main</param>
+            </result>
+            <result name="input" type="tiles">KeywordChannel.editDefaultSettings</result>
+            <result name="version" type="clearContextDispatch">
+                <param name="location">/admin/KeywordChannel/editDefaultSettings.action</param>
+            </result>
+        </action>
+
+    </package>
+
+</struts>

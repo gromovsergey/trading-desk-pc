@@ -1,0 +1,160 @@
+<ui-loading *ngIf="wait || waitAccounts, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">
+    {{(mode === 'add' ? 'button.add' : 'button.edit') | translate}}
+    {{'channel.blockName.expression' | translate}}
+  </h1>
+
+  <form (submit)="submitForm()">
+    <div class="form-container form-container-middle">
+
+      <ui-info-panel type="danger" *ngIf="errors.actionError">
+        <p *ngFor="let error of errors.actionError">{{error}}</p>
+      </ui-info-panel>
+
+      <mat-form-field class="width-full" *ngIf="accounts">
+        <mat-label>{{'accountSearch.account' | translate}}</mat-label>
+        <mat-select required [(ngModel)]="channel.accountId" name="accountId">
+          <mat-option *ngFor="let item of accounts" [value]="item.id">{{item.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="width-full">
+        <mat-label>{{'blockName.name' | translate}}</mat-label>
+        <input name="name" matInput
+               [(ngModel)]="channel.name"
+               [errorStateMatcher]="matcher(errors.name)"
+               required type="text">
+        <mat-error *ngFor="let error of errors.name">{{error}}</mat-error>
+      </mat-form-field>
+
+      <ui-panel class="width-full mb-2" title="{{'blockName.expression' | translate}}">
+        <ui-info-panel type="danger"
+                       *ngIf="(!channel.includedChannels || channel.includedChannels.length === 0) && (!channel.excludedChannels || channel.excludedChannels.length === 0)">
+          {{'channel.expression.notification.noAudienceAdded' | translate}}
+        </ui-info-panel>
+
+        <div *ngIf="channel.includedChannels && channel.includedChannels.length > 0">
+          <div *ngFor="let audience of channel.includedChannels; let i = index">
+
+            <div class="flex-row">
+              <i class="material-icons mr-1">add_circle_outline</i>
+              <span>
+                {{'channel.expression.includeAudience' | translate}}
+              </span>
+              <button mat-icon-button
+                      type="button"
+                      title="{{'button.edit' | translate}}"
+                      (click)="editAudience(i)">
+                <i class="material-icons">edit</i>
+              </button>
+              <button mat-icon-button
+                      type="button"
+                      title="{{'button.delete' | translate}}"
+                      (click)="deleteAudience(i)">
+                <i class="material-icons">delete</i>
+              </button>
+            </div>
+
+            <div *ngIf="audience && audience.length" class="list">
+              <div class="list-item" *ngFor="let item of audience">
+                <i class="material-icons" appDisplayStatus [displayStatus]="item.displayStatus">lens</i>
+                {{getChannelName(item)}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="channel.excludedChannels && channel.excludedChannels.length > 0">
+          <div *ngFor="let audience of channel.excludedChannels; let i = index">
+
+            <div class="flex-row">
+              <i class="material-icons mr-1">remove_circle_outline</i>
+              <span>
+                {{'channel.expression.excludeAudience' | translate}}
+              </span>
+              <button mat-icon-button
+                      type="button"
+                      title="{{'button.edit' | translate}}"
+                      (click)="editExcludedAudience(i)">
+                <i class="material-icons">edit</i>
+              </button>
+              <button mat-icon-button
+                      type="button"
+                      title="{{'button.delete' | translate}}"
+                      (click)="deleteExcludedAudience(i)">
+                <i class="material-icons">delete</i>
+              </button>
+            </div>
+
+            <div *ngIf="audience && audience.length" class="list">
+              <div class="list-item" *ngFor="let item of audience">
+                <i class="material-icons" appDisplayStatus [displayStatus]="item.displayStatus">lens</i>
+                {{getChannelName(item)}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button mat-flat-button class="mr-1"
+                type="button"
+                (click)="addAudience()">{{'channel.expression.includeAudience' | translate}}</button>
+        <button mat-flat-button
+                type="button"
+                (click)="addExcludedAudience()">{{'channel.expression.excludeAudience' | translate}}</button>
+
+        <ui-info-panel type="danger" *ngFor="let error of errors.expression">
+          <p>{{error}}</p>
+        </ui-info-panel>
+      </ui-panel>
+
+      <div class="form-footer">
+        <ui-submit-button title="{{(mode === 'add' ? 'button.add' : 'button.save') | translate}}"
+                          [wait]="waitSubmit"></ui-submit-button>
+        <button mat-flat-button
+                [disabled]="waitSubmit"
+                [routerLink]="getBackUrl()">
+          {{'button.cancel' | translate}}
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<!--<ui-popup [visible]="popupVisible"-->
+<!--          [blocked]="popupWait"-->
+<!--          (close)="popupHide()"-->
+<!--          (save)="popupSave()"-->
+<!--          [options]="popupOptions"-->
+<!--          closeBtnTitle="{{'button.close' | translate}}">-->
+
+<!--  <div class="dropdown" #modal>-->
+<!--    <div class="form-control dropdown form-control-div clearfix">-->
+<!--      <div class="form-control-container" *ngIf="channelsLink && channelsLink.length">-->
+<!--        <div title="{{item.name}}" *ngFor="let item of channelsLink" class="badge badge-channel">{{item.name}}-->
+<!--          <div class="badge-channel__buttons">-->
+<!--            <i title="{{'button.remove' | translate}}" (click)="removeChannel($event, item.id)" class="fa fa-times"></i>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <textarea #textInput [disabled]="popupWait" (click)="hideAutocomplete()" (keyup)="textInputChange()"-->
+<!--                (paste)="textInputChange()" class="form-control-clear"></textarea>-->
+<!--      <ul class="dropdown-menu dropdown-menu-autocomplete show" *ngIf="autocomplete && autocomplete.length">-->
+<!--        <li *ngFor="let item of autocomplete"><a (click)="addChannel(item)">{{item.name}}</a></li>-->
+<!--      </ul>-->
+<!--      <ul class="dropdown-menu dropdown-menu-autocomplete show" *ngIf="autocomplete && autocomplete.length === 0">-->
+<!--        <li><a (click)="hideAutocomplete()"><i>{{'messages.nothingFound' | translate}}</i></a></li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</ui-popup>-->
+
+<!--<ui-channel-tree *ngIf="showChannelTreeFlag"-->
+<!--                 [accountId]="accountId"-->
+<!--                 [sources]="getChannelSources()"-->
+<!--                 [selectedChannelsInput]="getSelectedChannelIdNames()"-->
+<!--                 (treeClose)="onChannelTreeClose()"-->
+<!--                 (save)="onChannelTreeSave($event)">-->
+<!--</ui-channel-tree>-->
+

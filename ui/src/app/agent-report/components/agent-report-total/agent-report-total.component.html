@@ -1,0 +1,74 @@
+<ng-template #showPreloader>
+  <ui-loading></ui-loading>
+</ng-template>
+
+<h1>{{'agentReport.total.title' | translate}}</h1>
+
+<ng-container *ngIf="totalStats$ | async as totalStats, else showPreloader">
+  <ng-template #listEmpty>
+    <ui-info-panel type="info">
+      {{'agentReport.total.listIsEmpty' | translate}}
+    </ui-info-panel>
+  </ng-template>
+
+  <div *ngIf="totalStats.length, else listEmpty" class="table-container">
+    <table mat-table [dataSource]="totalStats">
+
+      <ng-container matColumnDef="month">
+        <th mat-header-cell *matHeaderCellDef>{{'agentReport.total.month' | translate}}</th>
+        <td mat-cell *matCellDef="let stat">
+          <span *ngIf="stat.status === 'READY', else showLink">
+            {{L10nMonths[stat.month]| translate}}&nbsp;{{stat.year}}
+          </span>
+          <ng-template #showLink>
+            <a [routerLink]="['/agent-report/monthly', stat.year, stat.month]">
+              {{L10nMonths[stat.month]| translate}}&nbsp;{{stat.year}}
+            </a>
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="invoiceAmount">
+        <th mat-header-cell class="td-number" *matHeaderCellDef>{{'agentReport.total.invoiceAmount' | translate}}</th>
+        <td mat-cell class="td-number" *matCellDef="let stat">{{stat.invoiceAmount}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="publisherAmount">
+        <th mat-header-cell class="td-number" *matHeaderCellDef>{{'agentReport.total.publisherAmount' | translate}}</th>
+        <td mat-cell class="td-number" *matCellDef="let stat">{{stat.publisherAmount}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="agencyAmount">
+        <th mat-header-cell class="td-number" *matHeaderCellDef>{{'agentReport.total.agencyAmount' | translate}}</th>
+        <td mat-cell class="td-number" *matCellDef="let stat">{{stat.agencyAmount}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="principalAmount">
+        <th mat-header-cell class="td-number" *matHeaderCellDef>{{'agentReport.total.principalAmount' | translate}}</th>
+        <td mat-cell class="td-number" *matCellDef="let stat">{{stat.principalAmount}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>{{'agentReport.total.status' | translate}}</th>
+        <td mat-cell *matCellDef="let stat">{{L10nReportStatuses[stat.status] | translate}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="download">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let stat, let i = index">
+          <button *ngIf="stat.status === 'CLOSED'"
+                  mat-raised-button
+                  color="accent"
+                  (click)="downloadFile($event, stat.year, stat.month)">
+            {{'agentReport.total.report' | translate}}
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <a class="hidden" #downloadBtn [href]="downloadUrl" [download]="downloadName"></a>
+</ng-container>

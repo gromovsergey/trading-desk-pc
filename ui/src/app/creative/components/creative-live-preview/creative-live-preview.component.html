@@ -1,0 +1,20 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <div class="text-left" *ngIf="preview?.url, else noPreview">
+    <div class="table-responsive">
+      <iframe [src]="preview.secureUrl"
+              [width]="preview.width"
+              [height]="preview.height"></iframe>
+    </div>
+  </div>
+
+  <ng-template #noPreview>
+    <ui-info-panel type="warning">
+      {{'advertiserAccount.conversion.cantShowPreview' | translate}}
+    </ui-info-panel>
+  </ng-template>
+</ng-template>
+
+
+

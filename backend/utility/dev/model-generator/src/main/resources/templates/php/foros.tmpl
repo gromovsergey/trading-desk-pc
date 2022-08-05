@@ -1,0 +1,30 @@
+<?php
+<%services.each { service -> %>
+require_once('service/${service.name}.php');<%}%>
+require_once('service/ReportService.php');
+require_once('rsclient/RsConfiguration.php');
+
+
+class Foros {
+
+    private \$configuration;
+
+    private function __construct(RsConfiguration \$configuration) {
+        \$this->configuration = \$configuration;
+    }
+
+    public static function create(\$baseUrl, \$token, \$key, \$proxy = null) {
+        \$configuration = new RsConfiguration(\$baseUrl.'/rs', new RsSecurityInfo(\$token, \$key), \$proxy);
+        return new Foros(\$configuration);
+    }
+
+    <%services.each { service -> %>
+    public function get${service.name}() {
+	    return new ${service.name}(\$this->configuration);
+    }
+    <%}%>
+
+    public function getReportService() {
+        return new ReportService(\$this->configuration);
+    }
+}

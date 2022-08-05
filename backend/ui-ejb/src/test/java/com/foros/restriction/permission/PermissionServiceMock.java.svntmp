@@ -1,0 +1,31 @@
+package com.phorm.oix.restriction.permission;
+
+import com.phorm.oix.restriction.registry.PermissionDescriptor;
+
+import java.util.Map;
+
+public class PermissionServiceMock implements PermissionService {
+    @Override
+    public boolean isGranted(String objectType, String action) {
+        return true;
+    }
+
+    @Override
+    public boolean isGranted(String objectType, String action, String parameter) {
+        return true;
+    }
+
+    @Override
+    public void removePolicyCache(Long userRoleId) {
+    }
+
+    @Override
+    public void removePolicyCache() {
+    }
+
+    @Override
+    public Map<PermissionDescriptor, Map<String, Long>> getPolicy(Long userRoleId) {
+        throw new UnsupportedOperationException();
+    }
+
+}

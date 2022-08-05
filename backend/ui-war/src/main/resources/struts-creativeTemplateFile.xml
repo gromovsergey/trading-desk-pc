@@ -1,0 +1,63 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="creativeTemplateFile" extends="foros-default" namespace="/">
+
+        <action name="admin/CreativeTemplateFile/new" class="com.foros.action.admin.template.file.EditCreativeTemplateFileAction"
+                method="create">
+            <result name="success" type="tiles">CreativeTemplateFile.edit</result>
+        </action>
+
+        <action name="admin/CreativeTemplateFile/edit" class="com.foros.action.admin.template.file.EditCreativeTemplateFileAction"
+                method="edit">
+            <result name="success" type="tiles">CreativeTemplateFile.edit</result>
+        </action>
+
+        <action name="admin/CreativeTemplateFile/delete" class="com.foros.action.admin.template.file.DeleteCreativeTemplateFileAction"
+                method="delete">
+            <interceptor-ref name="defaultForosStack"/>
+            <interceptor-ref name="businessError"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeTemplate/view</param>
+                <param name="id">${template.id}</param>
+            </result>
+            <result name="version" type="forosChain">
+                <param name="actionName">admin/CreativeTemplate/view</param>
+                <param name="parameters">id=${template.id}</param>
+                <param name="clearPreviousParameters">true</param>
+            </result>
+            <result name="input_error" type="redirectAction">
+                <param name="actionName">admin/CreativeTemplate/view</param>
+                <param name="id">${template.id}</param>
+                <param name="deleteError">true</param>
+                <param name="templateFileId">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/CreativeTemplateFile/create" class="com.foros.action.admin.template.file.SaveCreativeTemplateFileAction"
+                method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeTemplate/view</param>
+                <param name="id">${template.id}</param>
+            </result>
+            <result name="input" type="tiles">CreativeTemplateFile.edit</result>
+        </action>
+
+        <action name="admin/CreativeTemplateFile/update" class="com.foros.action.admin.template.file.SaveCreativeTemplateFileAction"
+                method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeTemplate/view</param>
+                <param name="id">${template.id}</param>
+            </result>
+            <result name="input" type="tiles">CreativeTemplateFile.edit</result>
+            <result name="version">
+                <param name="location">/admin/CreativeTemplateFile/edit.action</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

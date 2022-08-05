@@ -1,0 +1,20 @@
+@import "~src/scss/variables";
+
+:host {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .cell-full {
+    flex-grow: 1;
+    width: 100%;
+  }
+  .cell-33 {
+    min-width: 100px;
+    width: 33%;
+  }
+  .budget-progress {
+    margin: $gen-gap 0 $gen-spacing 0;
+    height: 15px;
+  }
+}

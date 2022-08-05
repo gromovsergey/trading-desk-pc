@@ -1,0 +1,94 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+
+  <h1>{{(mode === 'add' ? 'advertiserAccount.conversion.addConversion' : 'advertiserAccount.conversion.editConversion') | translate}}</h1>
+
+  <form (submit)="submitForm()">
+
+    <div class="form-container form-container-compact">
+
+      <ui-info-panel type="danger" *ngIf="errors.actionError">
+        <p *ngFor="let error of errors.actionError">{{error}}</p>
+      </ui-info-panel>
+
+      <mat-form-field class="mat-form-field-max"
+                      appearance="standard">
+        <mat-label>{{'blockName.name' | translate}}</mat-label>
+        <input name="conversion.name"
+               [(ngModel)]="conversion.conversion.name"
+               [errorStateMatcher]="matcher(!!errors.conversion?.name)"
+               required matInput
+               type="text">
+        <mat-error>{{errors?.conversion?.name}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max"
+                      appearance="standard">
+        <mat-label>{{'advertiserAccount.conversion.category' | translate}}</mat-label>
+        <mat-select required
+                    name="conversion.conversionCategory"
+                    [(ngModel)]="conversion.conversion.conversionCategory"
+                    [errorStateMatcher]="matcher(!!errors.conversion?.conversionCategory)">
+          <mat-option value="PURCHASE">{{'advertiserAccount.conversion.type.PURCHASE' | translate}}</mat-option>
+          <mat-option value="ADD_TO_CART">{{'advertiserAccount.conversion.type.ADD_TO_CART' | translate}}</mat-option>
+          <mat-option
+            value="KEY_PAGE_VIEW">{{'advertiserAccount.conversion.type.KEY_PAGE_VIEW' | translate}}</mat-option>
+          <mat-option
+            value="LANDING_PAGE_VIEW">{{'advertiserAccount.conversion.type.LANDING_PAGE_VIEW' | translate}}</mat-option>
+          <mat-option value="SIGNUP">{{'advertiserAccount.conversion.type.SIGNUP' | translate}}</mat-option>
+          <mat-option value="LEAD">{{'advertiserAccount.conversion.type.LEAD' | translate}}</mat-option>
+          <mat-option value="OTHER">{{'advertiserAccount.conversion.type.OTHER' | translate}}</mat-option>
+        </mat-select>
+        <mat-error>{{errors?.conversion?.conversionCategory}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max"
+                      appearance="standard">
+        <mat-label>{{'advertiserAccount.conversion.pageURL' | translate}}</mat-label>
+        <input name="conversion.url"
+               [(ngModel)]="conversion.conversion.url"
+               [errorStateMatcher]="matcher(!!errors.conversion?.url)"
+               matInput
+               type="text">
+        <mat-error>{{errors?.conversion?.url}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max"
+                      appearance="standard">
+        <mat-label>{{'advertiserAccount.conversion.postImpressionConversionWindow' | translate}}</mat-label>
+        <input name="conversion.impWindow"
+               [(ngModel)]="conversion.conversion.impWindow"
+               [errorStateMatcher]="matcher(!!errors.conversion?.impWindow)"
+               matInput required
+               type="text">
+        <mat-error>{{errors?.conversion?.impWindow}}</mat-error>
+        <ui-hint matSuffix
+                 text="{{'advertiserAccount.conversion.postImpressionConversionWindow.hint' | translate}}"></ui-hint>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max"
+                      appearance="standard">
+        <mat-label>{{'advertiserAccount.conversion.postClickConversionWindow' | translate}}</mat-label>
+        <input name="conversion.clickWindow"
+               [(ngModel)]="conversion.conversion.clickWindow"
+               [errorStateMatcher]="matcher(!!errors.conversion?.clickWindow)"
+               matInput required
+               type="text">
+        <mat-error>{{errors?.conversion?.clickWindow}}</mat-error>
+        <ui-hint matSuffix
+                 text="{{'advertiserAccount.conversion.postClickConversionWindow.hint' | translate}}"></ui-hint>
+      </mat-form-field>
+
+      <div class="form-footer">
+        <ui-submit-button [wait]="waitSubmit"
+                          title="{{ (mode === 'add' ? 'button.add' : 'button.save') | translate}}"></ui-submit-button>
+
+        <button type="button"
+                mat-flat-button
+                *ngIf="!waitSubmit"
+                [routerLink]="backUrl">{{'button.cancel' | translate}}</button>
+      </div>
+    </div>
+  </form>
+</ng-template>

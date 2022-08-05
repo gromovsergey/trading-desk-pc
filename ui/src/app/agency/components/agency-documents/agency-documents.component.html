@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>{{'account.documents.for' | translate}} {{data?.accountName}}</h2>
+<mat-dialog-content class="mat-typography">
+  <ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+  <ng-template #showContent>
+    <div *ngIf="canUpdate">
+      <ui-account-document-upload [accountId]="data.accountId"
+                                  (beginUpload)="loadList()"
+                                  title="{{'scanIo.button.upoaldAttachment' | translate}}"
+                                  hint="{{'scanIo.notification.allowedFileTypes' | translate}}">
+      </ui-account-document-upload>
+      <p>&nbsp;</p>
+      <ui-info-panel type="danger" *ngIf="errors">
+        <p *ngFor="let error of errors">{{error}}</p>
+      </ui-info-panel>
+    </div>
+
+    <div class="form-group" *ngIf="documents && documents.length">
+      <div>{{'scanIo.notification.listOfAttachments' | translate}}</div>
+
+      <div class="list">
+        <div class="list-item" *ngFor="let item of documents">
+          <div>{{item}}</div>
+          <div>
+            <button mat-icon-button
+                    type="button"
+                    color="accent"
+                    title="{{'button.download' | translate}}"
+                    (click)="downloadItem(item)">
+              <i class="material-icons">get_app</i>
+            </button>
+            <button title="{{'button.delete' | translate}}"
+                    mat-icon-button
+                    type="button"
+                    *ngIf="canUpdate"
+                    (click)="deleteItem(item)">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ui-info-panel type="info" *ngIf="!documents?.length">
+      {{'flight.notification.attachmentListEmpty' | translate}}
+    </ui-info-panel>
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{'button.close' | translate}}</button>
+</mat-dialog-actions>
+
+<a class="hidden" #downloadBtn [href]="downloadUrl" target="_blank" [download]="downloadName"></a>

@@ -1,0 +1,42 @@
+@import "~src/scss/variables";
+
+:host {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.nav-menu {
+  .mat-list-item {
+    height: 2rem;
+    font-size: 0.9rem;
+    &.active {
+      font-weight: 500;
+      background: $ui-color-primary;
+      color: #fff;
+    }
+    &.active-genius {
+      font-weight: 500;
+      background: #172e56;
+      color: #fff;
+    }
+  }
+
+  .item-highlighted {
+    height: 50px;
+    font-size: 1rem;
+    font-weight: 500;
+    background: #eee;
+
+    &.active {
+      background: $ui-color-primary;
+      color: #fff;
+    }
+  }
+}
+
+.nav-list-title{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

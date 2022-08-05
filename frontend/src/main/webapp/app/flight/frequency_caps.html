@@ -1,0 +1,72 @@
+<div class="form-group">
+    <div class="form-inline">
+        <div class="form-group">
+            _L10N_(flight.blockName.period)
+        </div>
+        <div class="form-group" [ngClass]="{'has-error':errors.frequencyCap && errors.frequencyCap.period}">
+            <input type="text" class="form-control" size="5" maxlength="5" name="fcPeriodValue" (input)="inputChange('frequencyCap.period')" [(ngModel)]="_fc.period.value">
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="fcPeriodUnit" [(ngModel)]="_fc.period.unit">
+                <option value="SECOND">_L10N_(messages.SECOND)</option>
+                <option value="MINUTE">_L10N_(messages.MINUTE)</option>
+                <option value="HOUR">_L10N_(messages.HOUR)</option>
+                <option value="DAY">_L10N_(messages.DAY)</option>
+                <option value="WEEK">_L10N_(messages.WEEK)</option>
+            </select>
+        </div>
+    </div>
+    <div *ngIf="errors.frequencyCap && errors.frequencyCap.period && !errors.frequencyCap.period.value" class="has-error">
+        <p *ngFor="let error of errors.frequencyCap.period" class="help-block">{{error}}</p>
+    </div>
+    <div *ngIf="errors.frequencyCap && errors.frequencyCap.period && errors.frequencyCap.period.value" class="has-error">
+        <p *ngFor="let error of errors.frequencyCap.period.value" class="help-block">{{error}}</p>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-inline">
+        <div class="form-group">
+            _L10N_(flight.blockName.windowLimit.1)
+        </div>
+        <div class="form-group" [ngClass]="{'has-error':errors.frequencyCap && errors.frequencyCap.windowCount}">
+            <input type="text" class="form-control" size="5" maxlength="5" name="fcWindowCount" (input)="inputChange('frequencyCap.windowCount')" [(ngModel)]="_fc.windowCount">
+        </div>
+        <div class="form-group">
+            _L10N_(flight.blockName.windowLimit.2)
+        </div>
+        <div class="form-group" [ngClass]="{'has-error':errors.frequencyCap && errors.frequencyCap.windowLength}">
+            <input type="text" class="form-control" size="5" maxlength="5" name="fcWindowValue" (input)="inputChange('frequencyCap.windowLength')" [(ngModel)]="_fc.windowLength.value">
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="fcWindowUnit" [(ngModel)]="_fc.windowLength.unit">
+                <option value="SECOND">_L10N_(messages.SECOND)</option>
+                <option value="MINUTE">_L10N_(messages.MINUTE)</option>
+                <option value="HOUR">_L10N_(messages.HOUR)</option>
+                <option value="DAY">_L10N_(messages.DAY)</option>
+                <option value="WEEK">_L10N_(messages.WEEK)</option>
+            </select>
+        </div>
+    </div>
+    <div *ngIf="errors.frequencyCap && errors.frequencyCap.windowCount" class="has-error">
+        <p *ngFor="let error of errors.frequencyCap.windowCount" class="help-block">{{error}}</p>
+    </div>
+    <div *ngIf="errors.frequencyCap && errors.frequencyCap.windowLength && !errors.frequencyCap.windowLength.value" class="has-error">
+        <p *ngFor="let error of errors.frequencyCap.windowLength" class="help-block">{{error}}</p>
+    </div>
+    <div *ngIf="errors.frequencyCap && errors.frequencyCap.windowLength && errors.frequencyCap.windowLength.value" class="has-error">
+        <p *ngFor="let error of errors.frequencyCap.windowLength.value" class="help-block">{{error}}</p>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-inline">
+        <div class="form-group">
+            _L10N_(flight.blockName.lifeLimit)
+        </div>
+        <div class="form-group" [ngClass]="{'has-error':errors.frequencyCap && errors.frequencyCap.lifeCount}">
+            <input type="text" size="5" maxlength="5" class="form-control" (input)="inputChange('frequencyCap.lifeCount')" name="fcLifeCount" [(ngModel)]="_fc.lifeCount">
+        </div>
+    </div>
+    <div *ngIf="errors.frequencyCap && errors.frequencyCap.lifeCount" class="has-error">
+        <p *ngFor="let error of errors.frequencyCap.lifeCount" class="help-block">{{error}}</p>
+    </div>
+</div>

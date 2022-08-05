@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="
+             http://www.springframework.org/schema/beans
+	         http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	         http://www.springframework.org/schema/security
+	         http://www.springframework.org/schema/security/spring-security-3.2.xsd
+	         ">
+
+    <http security="none" pattern="/styles/**"/>
+    <http security="none" pattern="/scripts/**"/>
+    <http security="none" pattern="/images/**"/>
+    <http security="none" pattern="/thirdparty/**"/>
+
+    <http security="none" pattern="/excel/**"/>
+    <http security="none" pattern="/dcreative.action**"/>
+    <http security="none" pattern="/generateCreativePreview.action**"/>
+    <http security="none" pattern="/liveCreativePreviewGet.action**"/>
+    <http security="none" pattern="/clickTracking.action**"/>
+
+    <http auto-config="false" use-expressions="true"
+          authentication-manager-ref="authenticationManager"
+          entry-point-ref="entryPoint" once-per-request="true"
+          security-context-repository-ref="securityContextRepository"
+          pattern="/forgotPassword/**"
+          create-session="always">
+
+        <anonymous enabled="false"/>
+        <custom-filter position="ANONYMOUS_FILTER" ref="anonymousAuthenticationFilter"/>
+
+    </http>
+
+    <http auto-config="false"
+          authentication-manager-ref="authenticationManager"
+          entry-point-ref="entryPoint"
+          once-per-request="true"
+          security-context-repository-ref="securityContextRepository"
+          create-session="never"
+          request-matcher-ref="errorRequestMatcher">
+
+        <anonymous enabled="false"/>
+        <custom-filter position="ANONYMOUS_FILTER" ref="anonymousAuthenticationFilter"/>
+
+    </http>
+
+    <http auto-config="false" use-expressions="true"
+          authentication-manager-ref="authenticationManager"
+          entry-point-ref="entryPoint" once-per-request="true"
+          security-context-repository-ref="securityContextRepository"
+          create-session="always">
+
+        <custom-filter position="PRE_AUTH_FILTER" ref="tokenAuthenticationFilter"/>
+        <custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="principalValidationAuthenticationFilter"/>
+
+        <anonymous enabled="false"/>
+
+        <intercept-url pattern="/admin/**" access="hasAnyRole('INTERNAL')"/>
+        <intercept-url pattern="/advertiser/**" access="hasAnyRole('AGENCY', 'ADVERTISER')"/>
+        <intercept-url pattern="/publisher/**" access="hasAnyRole('PUBLISHER')"/>
+        <intercept-url pattern="/isp/**" access="hasAnyRole('ISP')"/>
+        <intercept-url pattern="/cmp/**" access="hasAnyRole('CMP')"/>
+        <intercept-url pattern="/**" access="isFullyAuthenticated()"/>
+
+        <access-denied-handler ref="accessDeniedHandler"/>
+
+    </http>
+
+</beans:beans>

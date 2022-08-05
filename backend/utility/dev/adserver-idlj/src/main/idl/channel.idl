@@ -1,0 +1,104 @@
+/**
+ * @file ChannelSearchService.idl
+ * @author Alexander Kashkirov <alex.kashkirov@inbox.ru>
+ *
+ * $Id: ChannelSearchService.idl,v 1.2 2008-01-24 10:40:00 jurij_kuznecov Exp $
+ */
+
+module AdServer
+{
+  module ChannelSearchSvcs
+  {
+
+    struct ChannelSearchResult
+    {
+      unsigned long long channel_id;
+      unsigned long reuse;
+    };
+
+    typedef sequence<ChannelSearchResult> ChannelSearchResultSeq;
+
+    // match structs
+    typedef sequence<unsigned long long > CCGIdSeq;
+
+    typedef sequence<unsigned long long > TrChIdSeq;
+
+    struct ChannelMatchInfo
+    {
+      unsigned long long channel_id;
+      TrChIdSeq triggers;
+      CCGIdSeq ccgs;
+    };
+
+    typedef sequence<ChannelMatchInfo> ChannelMatchSeq;
+
+    struct NewsItemInfo
+    {
+      string news_id;
+      string title;
+      string link;
+    };
+
+    typedef sequence<NewsItemInfo> NewsItemSeq;
+
+    struct DiscoverChannelMatchInfo
+    {
+      unsigned long long channel_id;
+      TrChIdSeq triggers;
+      NewsItemSeq news_items;
+    };
+
+    typedef sequence<DiscoverChannelMatchInfo> DiscoverChannelMatchSeq;
+
+    struct MatchInfo
+    {
+      ChannelMatchSeq channels;
+      DiscoverChannelMatchSeq discover_channels;
+    };
+
+    struct WNewsItemInfo
+    {
+      wstring news_id;
+      wstring title;
+      wstring link;
+    };
+
+    typedef sequence<WNewsItemInfo> WNewsItemSeq;
+
+    struct WDiscoverChannelMatchInfo
+    {
+      unsigned long long channel_id;
+      TrChIdSeq triggers;
+      WNewsItemSeq news_items;
+    };
+
+    typedef sequence<WDiscoverChannelMatchInfo> WDiscoverChannelMatchSeq;
+
+    struct WMatchInfo
+    {
+      ChannelMatchSeq channels;
+      WDiscoverChannelMatchSeq discover_channels;
+    };
+
+    interface ChannelSearch
+    {
+      exception ImplementationException
+      {
+        string description;
+      };
+
+      ChannelSearchResultSeq search(in string phrase)
+        raises(ImplementationException);
+
+      ChannelSearchResultSeq wsearch(in wstring phrase)
+        raises(ImplementationException);
+
+      MatchInfo match(in string url, in string phrase, in long channelsCount)
+        raises(ImplementationException);
+
+      WMatchInfo wmatch(in wstring url, in wstring phrase, in long channelsCount )
+        raises(ImplementationException);
+    };
+
+  }; // module ChannelSearchSvcs
+}; // module AdServer

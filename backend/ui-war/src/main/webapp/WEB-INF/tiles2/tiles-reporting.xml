@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name=".reporting" extends=".mainLayout">
+        <put-attribute name="activeMenuItemKey" value="global.menu.reports"/>
+        <put-attribute name="title" value="/report/reportStandartTitle.jsp"/>
+    </definition>
+    
+    <definition name="reporting.cancellable" extends=".reporting">
+         <put-attribute name="body" value="/reporting/cancellable.jsp"/>
+         <put-attribute name="taskTitle"  expression="${param.taskTitle}"/>
+         <put-attribute name="isReport" value="true"/>
+    </definition>
+    
+
+    <!-- Referrer Report -->
+    <definition name="reporting.Referrer.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.referrerReport" type="string"/>
+        <put-attribute name="body" value="/reporting/referrer/referrer.jsp"/>
+    </definition>
+
+    <!-- Channel Triggers Report -->
+    <definition name="reporting.ChannelTriggers.view" extends=".reporting">
+        <put-attribute name="body" value="/reporting/channelTriggers/channelTriggers.jsp"/>
+        <put-attribute name="taskTitle" value="reports.channelTriggersReport" type="string"/>
+    </definition>
+
+    <!-- Custom Report -->
+    <definition name="reporting.Custom.view" extends=".reporting">
+        <put-attribute name="body" value="/reporting/custom/olapCustomView.jsp"/>
+        <put-attribute name="taskTitle" value="reports.customReport" type="string"/>
+    </definition>
+
+    <!-- Display Advertiser Report-->
+    <definition name="reporting.DisplayAdvertiser.view" extends=".reporting">
+        <put-attribute name="body" value="/reporting/advertiser/olapAdvertiser.jsp"/>
+        <put-attribute name="columnsPage" value="/reporting/advertiser/olapDisplayColumns.jsp" cascade="true"/>
+        <put-attribute name="taskTitle" value="reports.displayAdvertisingReports" type="string"/>
+        <put-attribute name="isDisplay" value="true" cascade="true"/>
+    </definition>
+
+    <definition name="reporting.DisplayAdvertiser.manageColumns" template="/reporting/advertiser/manageColumns.jsp">
+        <put-attribute name="columnsPage" value="/reporting/advertiser/olapDisplayColumns.jsp" cascade="true"/>
+        <put-attribute name="isDisplay" value="true" cascade="true"/>
+    </definition>
+
+    <!-- Olap Video Advertiser Report-->
+    <definition name="reporting.VideoAdvertiser.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.olapVideoAdvertisingReports" type="string"/>
+        <put-attribute name="isDisplay" value="true" cascade="true"/>
+        <put-attribute name="body" value="/reporting/advertiser/olapAdvertiser.jsp"/>
+        <put-attribute name="columnsPage" value="/reporting/advertiser/olapVideoColumns.jsp" cascade="true"/>
+    </definition>
+
+    <definition name="reporting.VideoAdvertiser.manageColumns" template="/reporting/advertiser/manageColumns.jsp">
+        <put-attribute name="columnsPage" value="/reporting/advertiser/olapVideoColumns.jsp" cascade="true"/>
+        <put-attribute name="isDisplay" value="true" cascade="true"/>
+    </definition>
+
+    <!-- Text Advertiser Report-->
+    <definition name="reporting.TextAdvertiser.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.textAdvertisingReports" type="string"/>
+        <put-attribute name="body" value="/reporting/advertiser/olapAdvertiser.jsp"/>
+        <put-attribute name="columnsPage" value="/reporting/advertiser/olapTextColumns.jsp" cascade="true"/>
+    </definition>
+
+    <definition name="reporting.TextAdvertiser.manageColumns" template="/reporting/advertiser/manageColumns.jsp">
+        <put-attribute name="columnsPage" value="/reporting/advertiser/olapTextColumns.jsp" cascade="true"/>
+    </definition>
+
+    <!-- General Advertiser Report-->
+    <definition name="reporting.GeneralAdvertiser.view" extends=".reporting">
+        <put-attribute name="body" value="/reporting/advertiser/olapAdvertiser.jsp"/>
+        <put-attribute name="columnsPage" value="/reporting/advertiser/olapGeneralColumns.jsp" cascade="true"/>
+        <put-attribute name="taskTitle" value="reports.generalAdvertisingReport" type="string"/>
+        <put-attribute name="isDisplay" value="true" cascade="true"/>
+    </definition>
+
+    <definition name="reporting.GeneralAdvertiser.manageColumns" template="/reporting/advertiser/manageColumns.jsp">
+        <put-attribute name="columnsPage" value="/reporting/advertiser/olapGeneralColumns.jsp" cascade="true"/>
+        <put-attribute name="isDisplay" value="true" cascade="true"/>
+    </definition>
+
+    <!-- Publisher Report -->
+    <definition name="reporting.Publisher.view" extends=".reporting">
+        <put-attribute name="body" value="/reporting/publisher/publisher.jsp"/>
+        <put-attribute name="taskTitle" value="reports.publisherReport" type="string"/>
+    </definition>
+    
+    <!-- Site Channels Report -->
+    <definition name="reporting.SiteChannels.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.siteChannelsReport" type="string"/>
+        <put-attribute name="body" value="/reporting/siteChannels/siteChannels.jsp"/>
+    </definition>
+
+    <!-- Channel Sites Report -->
+    <definition name="reporting.ChannelSites.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.channelSitesReport" type="string"/>
+        <put-attribute name="body" value="/reporting/channelSites/channelSites.jsp"/>
+    </definition>
+
+    <!-- Channel Usage report -->
+    <definition name="reporting.ChannelUsage.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.channelUsageReport" type="string"/>
+        <put-attribute name="body" value="/reporting/channelUsage/channelUsage.jsp"/>
+    </definition>
+
+    <!-- Channel Inventory Forecast Report -->
+    <definition name="reporting.ChannelInventory.view" extends=".reporting">
+        <put-attribute name="title" value="/reporting/channelInventory/channelInventoryTitle.jsp"/>
+        <put-attribute name="taskTitle" value="reports.channelInventoryReport" type="string"/>
+        <put-attribute name="body" value="/reporting/channelInventory/channelInventory.jsp"/>
+    </definition>
+
+    <definition name="reporting.ChannelInventory.cancellable" extends="reporting.cancellable">
+        <put-attribute name="title" value="/reporting/channelInventory/channelInventoryTitle.jsp"/>
+    </definition>
+
+    <!-- Campaign Allocation History Report -->
+    <definition name="reporting.CampaignAllocationHistory.cancellable" extends="reporting.cancellable">
+        <put-attribute name="title" value="/reporting/campaignAllocationHistory/campaignAllocationHistoryTitle.jsp"/>
+    </definition>
+
+    <!-- User Agents Report -->
+    <definition name="reporting.userAgents.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.userAgentsReport" type="string"/>
+        <put-attribute name="body" value="/reporting/userAgents/userAgents.jsp"/>
+    </definition>
+
+    <!-- Advanced Action Report -->
+    <definition name="reporting.conversions.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.conversionsReport" type="string"/>
+        <put-attribute name="body" value="/reporting/conversions/conversions.jsp"/>
+    </definition>
+
+    <!-- Conversion Pixels Report -->
+    <definition name="reporting.conversionPixels.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.conversionPixelsReport" type="string"/>
+        <put-attribute name="body" value="/reporting/conversionPixels/conversionPixels.jsp"/>
+    </definition>
+
+    <!-- ISP Report -->
+    <definition name="reporting.isp.view" extends=".reporting">
+        <put-attribute name="body" value="/reporting/isp/isp.jsp"/>
+        <put-attribute name="taskTitle" value="reports.ISPReport" type="string"/>
+    </definition>
+
+    <!-- ISP Invitations Report -->
+    <definition name="reporting.invitations.view" extends=".reporting">
+        <put-attribute name="body" value="/reporting/invitations/invitations.jsp"/>
+        <put-attribute name="taskTitle" value="reports.invitationsReport" type="string"/>
+    </definition>
+
+    <!-- Channel Report -->
+    <definition name="reporting.channel.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.channelReport" type="string"/>
+        <put-attribute name="body" value="/reporting/channel/channel.jsp"/>
+    </definition>
+
+    <!-- Webwise Report -->
+    <definition name="reporting.webwise.view" extends=".reporting">
+        <put-attribute name="body" value="/reporting/webwise/webwise.jsp"/>
+        <put-attribute name="taskTitle" value="reports.webwiseReport" type="string"/>
+    </definition>
+
+    <!-- InventoryEstimation Report -->
+    <definition name="reporting.inventoryEstimation.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.inventoryEstimationReport" type="string"/>
+        <put-attribute name="body" value="/reporting/inventoryEstimation/inventoryEstimation.jsp"/>
+    </definition>
+
+    <!-- Active Advertisers Report -->
+    <definition name="reporting.activeAdvertisers.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.activeAdvertisers" type="string"/>
+        <put-attribute name="body" value="/reporting/activeAdvertisers/activeAdvertisers.jsp"/>
+    </definition>
+
+    <!-- Campaign Overview Report -->
+    <definition name="reporting.campaignOverview.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.campaignOverview" type="string"/>
+        <put-attribute name="body" value="/reporting/campaignOverview/campaignOverview.jsp"/>
+    </definition>
+
+    <!-- Publisher Overview Report -->
+    <definition name="reporting.publisherOverview.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.publisherOverview" type="string"/>
+        <put-attribute name="body" value="/reporting/publisherOverview/publisherOverview.jsp"/>
+    </definition>
+
+    <!-- Profiling Report -->
+    <definition name="reporting.profiling.view" extends=".reporting">
+        <put-attribute name="taskTitle" value="reports.profiling" type="string"/>
+        <put-attribute name="body" value="/reporting/profiling/profiling.jsp"/>
+    </definition>
+
+    <!-- Waterfall Report -->
+    <definition name="reporting.waterfall.cancellable" extends="reporting.cancellable">
+        <put-attribute name="taskTitle" value="reports.waterfallReport" type="string"/>
+        <put-attribute name="isReport" value="false"/>
+    </definition>
+
+    <!-- Selection Failures Report -->
+    <definition name="reporting.selectionFailures.cancellable" extends="reporting.cancellable">
+        <put-attribute name="taskTitle" value="reports.selectionFailuresReport" type="string"/>
+        <put-attribute name="isReport" value="false"/>
+    </definition>
+
+    <!-- Selection Failures Trend Report -->
+    <definition name="reporting.selectionFailuresTrend.cancellable" extends="reporting.cancellable">
+        <put-attribute name="taskTitle" value="reports.selectionFailuresTrendReport" type="string"/>
+        <put-attribute name="isReport" value="false"/>
+    </definition>
+    
+    <!-- Publisher Advertising Report -->
+    <definition name="reporting.pubAdvertising.view" extends=".reporting">
+        <put-attribute name="body" value="/reporting/pubAdvertising/pubAdvertising.jsp"/>
+        <put-attribute name="taskTitle" value="reports.pubAdvertising" type="string"/>
+    </definition>
+</tiles-definitions>

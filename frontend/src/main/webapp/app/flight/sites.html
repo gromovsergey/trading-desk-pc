@@ -1,0 +1,93 @@
+<ui-loading *ngIf="wait" [overlay]="true"></ui-loading>
+
+<div class="btn-group h-margin-td" *ngIf="!readonly">
+    <ui-dropdown-btn [class]="'pull-left br-right-none'" title="_L10N_(button.bulk)" [menu]="bulkMenu" *ngIf="sites && sites.length > 0"></ui-dropdown-btn>
+    <button class="btn btn-default" (click)="showPopup($event)">_L10N_(button.link)</button>
+</div>
+<div class="table-responsive" [ngClass]="{'table-limited-height': siteTableLimited}" *ngIf="sites && sites.length > 0">
+    <p *ngIf="errors.unchekedAll" class="text-danger">
+        _L10N_(site.notification.cantUnlinkAll)
+    </p>
+    <table class="table table-hover table-striped" (change)="onTableChange($event)">
+        <thead>
+        <tr>
+            <th class="h-td__chbx" *ngIf="!readonly">
+                <input type="checkbox" #checkAll (change)="chbxCancelBubling($event)" (click)="toggleCheckedAll($event);">
+            </th>
+            <th>
+                _L10N_(blockName.name)
+            </th>
+            <th *ngIf="!short">
+                _L10N_(blockName.imps)
+            </th>
+            <th *ngIf="!short">
+                _L10N_(blockName.clicks)
+            </th>
+            <th *ngIf="!short">
+                _L10N_(blockName.ctr)
+            </th>
+            <th>
+                _L10N_(blockName.uniqueUsers)
+            </th>
+            <th *ngIf="!readonly"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let site of sites">
+            <td *ngIf="!readonly"><input type="checkbox" [(ngModel)]="site.checked"></td>
+            <td><ui-icon [fw]="true" [displayStatus]="site.displayStatus"></ui-icon>&nbsp;{{site.name}}</td>
+            <td *ngIf="!short">{{site.imps}}</td>
+            <td *ngIf="!short">{{site.clicks}}</td>
+            <td *ngIf="!short">{{site.ctr.toFixed(2)}}%</td>
+            <td>{{site.uniqueUsers}}</td>
+            <td class="text-right" *ngIf="!readonly">
+                <button [disabled]="sites.length === 1" (click)="deleteSites($event, site.siteId)" class="btn btn-default" title="_L10N_(button.unlink)"><ui-icon [icon]="'chain-broken'"></ui-icon></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="table-limited-height-caret" *ngIf="siteTableLimited">
+        <span class="label label-default" (click)="showFullTable($event)">
+            <ui-icon [icon]="'chevron-down'"></ui-icon> _L10N_(button.showAll)
+        </span>
+    </div>
+</div>
+<p *ngIf="!sites || sites.length === 0">
+    _L10N_(flight.notification.sourceListEmpty)
+</p>
+
+<ui-popup [visible]="popupVisible" (close)="popupHide($event)" (save)="popupSave($event)" [options]="popupOptions" [closeBtnTitle]="'_L10N_(button.close)'">
+    <div #modal class="modal-body-scroll">
+        <ui-loading *ngIf="waitPopup"></ui-loading>
+
+        <div class="table-responsive" *ngIf="!waitPopup && sitesLink && sitesLink.length > 0">
+            <p *ngIf="errors.popupUnchekedAll" class="text-danger">
+                _L10N_(site.notification.atLestOneRowMandatory)
+            </p>
+            <table class="table table-hover table-striped" (change)="onTableChange($event, 'popup')">
+                <thead>
+                <tr>
+                    <th class="h-td__chbx">
+                        <input type="checkbox" #checkAllLink (change)="chbxCancelBubling($event)" (click)="toggleCheckedAll($event, 'popup');">
+                    </th>
+                    <th>_L10N_(blockName.name)</th>
+                    <th>
+                        _L10N_(blockName.uniqueUsers)
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let site of sitesLink">
+                    <td><input type="checkbox" [(ngModel)]="site.checked"></td>
+                    <td><ui-icon [fw]="true" [displayStatus]="site.displayStatus"></ui-icon>&nbsp;<a>{{site.name}}</a></td>
+                    <td>{{site.uniqueUsers}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p *ngIf="!waitPopup && sitesLink.length === 0">
+            _L10N_(site.notification.noSourcesAvailable)
+        </p>
+    </div>
+</ui-popup>

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Dependency tree{% end %}
+
+{% block head %}
+    <link href="static/dtree.css" rel="stylesheet" type="text/css" />
+    <script src="static/dtree.js" charset="utf-8"></script>
+{% end %}
+
+{% block nav %}
+    <li class="active"><a style="text-decoration: underline;" href="/dtree" onclick="$('#modal').modal('show'); return false;">Dependency Tree</a></li>
+    <li><a style="text-decoration: underline;" href="/gantt">Gantt Diagram</a></li>
+{% end %}
+
+{% block body %}
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Select build plan</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <form role="form" action="javascript: return false;">
+                <div class="form-group col-sm-12">
+                  <label class="sr-only" for="left">Available</label>
+                  <select id="left" class="form-control"  size="16">
+                  </select>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a class="btn" data-dismiss="modal">Close</button>
+            <a id="render" href="#" class="btn btn-primary">Render</a>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+{% end %}

@@ -1,0 +1,214 @@
+#
+# Errors' patterns for server.log
+# https://confluence.ocslab.com/display/TDOC/FOROS+UI+Error+Codes
+#
+
+{
+# To be raised by NOC
+  "SEVERE": [
+    { "code":"[FOROSUI-0001]",
+      "subj":"[UI]: OutOfMemoryError",
+      "pattern":"java.lang.OutOfMemoryError"
+    },
+    { "code":"[FOROSUI-0002]",
+      "subj":"[UI]: TooManyOpenFiles",
+      "pattern":"java.net.SocketException: Too many open files"
+    }
+  ],
+
+# To be sent on UI developers' e-mails through ZenOSS
+  "WARNING": [
+    { "code":"[FOROSUI-d001]",
+      "subj":"Authentication failed",
+      "pattern":"Login failed"
+    },
+    { "code":"[FOROSUI-d002]",
+      "subj":"NullPointerException",
+      "pattern":"java.lang.NullPointerException"
+    },
+    { "code":"[FOROSUI-d003]",
+      "subj":"BusinessException",
+      "pattern":"java.net.ConnectException"
+    },
+    { "code":"[FOROSUI-d004]",
+      "subj":"BusinessException",
+      "pattern":"BusinessExceptionInterceptor"
+    },
+    { "code":"[FOROSUI-d005]",
+      "subj":"ArrayIndexOutOfBoundsException",
+      "pattern":"ArrayIndexOutOfBoundsException"
+    },
+    { "code":"[FOROSUI-d006]",
+      "subj":"IllegalArgumentException",
+      "pattern":"IllegalArgumentException"
+    },
+    { "code":"[FOROSUI-d007]",
+      "subj":"IllegalStateException",
+      "pattern":"IllegalStateException"
+    },
+    { "code":"[FOROSUI-d008]",
+      "subj":"ClassCastException",
+      "pattern":"ClassCastException"
+    },
+    { "code":"[FOROSUI-d009]",
+      "subj":"PoolingException",
+      "pattern":"PoolingException"
+    },
+    { "code":"[FOROSUI-d010]",
+      "subj":"SystemException",
+      "pattern":"SystemException"
+    },
+    { "code":"[FOROSUI-d011]",
+      "subj":"EJBException",
+      "pattern":"EJBException"
+    },
+    { "code":"[FOROSUI-d012]",
+      "subj":"Throwable",
+      "pattern":"Throwable"
+    },
+    { "code":"[FOROSUI-d013]",
+      "subj":"LDAP",
+      "pattern":"LDAP"
+    },
+    { "code":"[FOROSUI-d014]",
+      "subj":"Failed to register remote service",
+      "pattern":"Failed to register remote service"
+    },
+    { "code":"[FOROSUI-d015]",
+      "subj":"No configuration found for the specified action",
+      "pattern":"No configuration found for the specified action"
+    },
+    { "code":"[FOROSUI-d016]",
+      "subj":"UncategorizedSQLException",
+      "pattern":"org.springframework.jdbc.UncategorizedSQLException"
+    },
+    { "code":"[FOROSUI-d017]",
+      "subj":"the database system is in recovery mode",
+      "pattern":"the database system is in recovery mode"
+    },
+    { "code":"[FOROSUI-d018]",
+      "subj":"StatsPool",
+      "pattern":"StatsPool"
+    },
+    { "code":"[FOROSUI-d019]",
+      "subj":"PSQLException",
+      "pattern":"PSQLException"
+    },
+    { "code":"[FOROSUI-d020]",
+      "subj":"QueryException",
+      "pattern":"QueryException"
+    },
+    { "code":"[FOROSUI-d021]",
+      "subj":"Method with passed parameters not found",
+      "pattern":"Method with passed parameters not found"
+    },
+    { "code":"[FOROSUI-d022]",
+      "subj":"Unable to enlist the resource in transaction",
+      "pattern":"Unable to enlist the resource in transaction"
+    },
+    { "code":"[FOROSUI-d023]",
+      "subj":"Can't find persistent class for table",
+      "pattern":"Can't find persistent class for table"
+    },
+    { "code":"[FOROSUI-d024]",
+      "subj":"Bean is not initialized properly",
+      "pattern":"Bean is not initialized properly"
+    },
+    { "code":"[FOROSUI-d025]",
+      "subj":"Unsatisfied dependency of type",
+      "pattern":"Unsatisfied dependency of type"
+    },
+    { "code":"[FOROSUI-d026]",
+      "subj":"Unexpected exception while registering component",
+      "pattern":"Unexpected exception while registering component"
+    },
+    { "code":"[FOROSUI-d027]",
+      "subj":"threadpool",
+      "pattern":"threadpool"
+    },
+
+# All other cases (did not caught by SEVERE or IGNORE patterns
+# (pattern is empty)
+    { "code":"[FOROSUI-d999]",
+      "subj":"Unsorted exception"
+    }
+  ],
+
+# Silently ignored
+  "IGNORE": [
+    { "pattern":".*?Broken pipe" },
+    { "pattern":"java.net.SocketException: Socket is closed" },
+    { "pattern":"java.lang.NumberFormatException" },
+    { "pattern":"java.io.IOException" },
+    { "pattern":"java.io.EOFException" },
+    { "pattern":"java.io.FileNotFoundException" },
+    { "pattern":"java.sql.SQLException" },
+    { "pattern":"java.net.SocketTimeoutException" },
+    { "pattern":"javax.xml.transform.TransformerException" },
+    { "pattern":"javax.servlet.ServletException" },
+    { "pattern":"javax.servlet.jsp.JspException" },
+    { "pattern":"javax.resource.ResourceException" },
+    { "pattern":"org.eclipse.birt.report.exception.ViewerException" },
+    { "pattern":"org.xml.sax.SAXParseException" },
+    { "pattern":"javax.persistence.EntityNotFoundException" },
+    { "pattern":"com.foros.session.TooManyRowsException" },
+    { "pattern":".PreviewException" },
+    { "pattern":"IncorrectReportUrlException" },
+    { "pattern":"javax.persistence.OptimisticLockException" },
+    { "pattern":"java.security.AccessControlException" },
+    { "pattern":"javax.ejb.AccessLocalException: Client not authorized for this invocation\\." },
+    { "pattern":"INFO net.spy.memcached.MemcachedConnection:" },
+    { "pattern":"org.jboss.cache.lock.TimeoutException: Unable to acquire lock on" },
+    { "pattern":"java.util.ConcurrentModificationException: The file is already being modified." },
+    { "pattern":"javax.persistence.NoResultException: No entity found for query" },
+    { "pattern":"org.hibernate.StaleObjectStateException: Row was updated or deleted by another transaction" },
+
+    { "pattern":"PWC4011" },
+    { "pattern":"PWC3991" },
+    { "pattern":"PWC3999" },
+    { "pattern":"RAR8068" },
+    { "pattern":"WEB0121" },
+    { "pattern":"JTS5020" },
+    { "pattern":"JTS5031" },
+    { "pattern":"EJB5184" },
+    { "pattern":"NAKACK" },
+    { "pattern":"SLF4J" },
+    { "pattern":"GMBAL603" },
+    { "pattern":"ORBTPOOL00007" },
+
+    { "pattern":"No more data to read from socket" },
+    { "pattern":"Going to buffer response body of large or unknown size." },
+    { "pattern":"Invalid path was requested" },
+    { "pattern":"Login failed: Failed to get user details from db for login .*?: No entity found for query" },
+    { "pattern":"Login failed: password for user .*? is empty" },
+    { "pattern":"Input stream has been finalized or forced closed without being explicitly closed. stream instantiation reported in following stack trace" },
+    { "pattern":"processCallbacks status 2" },
+    { "pattern":"ERROR 2 : ILLEGAL TOKEN VALUE" },
+    { "pattern":"com\\.foros\\.session\\.report\\.ReportServiceBean\\.generateReport.*throws com\\.foros\\.session\\.TooManyRowsException" },
+    { "pattern":"\\(Location of error unknown\\)Stylesheet directed termination" },
+    { "pattern":"SystemId Unknown" },
+    { "pattern":"Error in getting update component list, cannot get image." },
+    { "pattern":"Cannot create Update Center Image" },
+    { "pattern":"the request was rejected because its size.*exceeds the configured maximum" },
+    { "pattern":"Client's transaction aborted" },
+    { "pattern":"Login failed: user or account for login .* is not active" },
+    { "pattern":"Normalized keyword should not be empty" },
+    { "pattern":"Couldn't normalize url" },
+    { "pattern":"Failed to execute KWM Tool" },
+    { "pattern":"A potential connection leak detected for connection pool" },
+    { "pattern":"Invalid PWS Token" },
+    { "pattern":"Incorrect HTTP method, expected = POST" },
+    { "pattern":"More than the maximum number of request parameters .GET plus POST. for a single request .*? were detected" },
+    
+# Glassfish-related issues
+    { "pattern":"Can't find persistent class for table:" },
+    { "pattern":"Not registering AMX MBean against old MBean.*?due to malformed composite WebModule name" },
+    { "pattern":"Unknown JCDI-enabled managed bean" },
+    { "pattern":"There should be only 1 primordial module but 0 primordial modules were found" },
+    { "pattern":"at com.sun.enterprise.v3.server.HK2Dispatcher.dispath" },
+    { "pattern":"JK configuration file /opt/foros/ui/var/domains/domain1/config/glassfish-jk.properties is not found" },
+    { "pattern":"MX MBeanServer instances exist, we will use the server at index" },
+    { "pattern":"Unprocessed event : UnprocessedChangeEvent" },
+    { "pattern":"Failed to analyze annotation for resource" }
+  ]
+}

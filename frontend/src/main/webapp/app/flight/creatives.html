@@ -1,0 +1,111 @@
+<ui-loading [overlay]="true" *ngIf="wait"></ui-loading>
+
+<div class="btn-group h-margin-td" *ngIf="!readonly">
+    <ui-dropdown-btn *ngIf="creatives && creatives.length > 0" [class]="'pull-left br-right-none'" title="_L10N_(button.bulk)" [menu]="bulkMenu"></ui-dropdown-btn>
+    <button class="btn btn-default" (click)="showPopup($event)">_L10N_(button.link)</button>
+</div>
+<div class="table-responsive" *ngIf="creatives && creatives.length > 0">
+    <table class="table table-hover table-striped" (change)="onTableChange($event)">
+        <thead>
+        <tr>
+            <th *ngIf="!readonly" class="h-td__chbx">
+                <input type="checkbox" #checkAll (change)="chbxCancelBubling($event)" (click)="toggleCheckedAll($event);">
+            </th>
+            <th>
+                _L10N_(blockName.name)
+            </th>
+            <th>
+                _L10N_(creative.blockName.size)
+            </th>
+            <th>
+                _L10N_(creative.blockName.template)
+            </th>
+            <th *ngIf="!short">
+                _L10N_(blockName.imps)
+            </th>
+            <th *ngIf="!short">
+                _L10N_(blockName.clicks)
+            </th>
+            <th *ngIf="!short">
+                _L10N_(blockName.ctr)
+            </th>
+            <th>
+                _L10N_(blockName.uniqueUsers)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let creative of creatives">
+            <td *ngIf="!readonly"><input type="checkbox" [(ngModel)]="creative.checked"></td>
+            <td><ui-icon [fw]="true" [displayStatus]="creative.displayStatus"></ui-icon>&nbsp;{{creative.creativeName}}</td>
+            <td>{{creative.sizeName}}</td>
+            <td>{{creative.templateName}}</td>
+            <td *ngIf="!short">{{creative.imps}}</td>
+            <td *ngIf="!short">{{creative.clicks}}</td>
+            <td *ngIf="!short">{{creative.ctr.toFixed(2)}}%</td>
+            <td>{{creative.uniqueUsers || 0}}</td>
+            <td class="text-right">
+                <ui-display-status-toggle *ngIf="!short && canUpdate && creative.creativeDisplayStatus !== 'DELETED'"
+                                          (onStatusChange)="changeStatus($event)"
+                                          [status]="creative.displayStatus"
+                                          [statusObject]="creative"></ui-display-status-toggle>
+                <button *ngIf="canUpdate" [disabled]="creative.creativeDisplayStatus === 'DELETED'"
+                        class="btn btn-default" title="_L10N_(button.edit)"
+                        [routerLink]="['/advertiser/'+advertiser.id+'/creative/'+creative.creativeId+'/edit']">
+                    <ui-icon [icon]="'pencil-square-o'"></ui-icon>
+                </button>
+                <button class="btn btn-default" title="_L10N_(button.preview)" (click)="preview($event, creative)">
+                    <ui-icon [icon]="'search-plus'"></ui-icon>
+                </button>
+                <button *ngIf="!readonly && creative.creativeDisplayStatus !== 'DELETED'" class="btn btn-default" title="_L10N_(button.unlink)"
+                        (click)="deleteCreatives($event, creative.creativeId)">
+                    <ui-icon [icon]="'chain-broken'"></ui-icon>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive" *ngIf="!creatives || creatives.length === 0">
+    _L10N_(flight.notification.creativeListEmpty)
+</div>
+
+<ui-popup [visible]="popupVisible" (close)="popupHide($event)" (save)="popupSave($event)" [options]="popupOptions" [closeBtnTitle]="'_L10N_(button.close)'">
+    <div #modal class="modal-body-scroll">
+        <ui-loading *ngIf="waitPopup"></ui-loading>
+
+        <div class="table-responsive" *ngIf="!waitPopup && creativesLink && creativesLink.length > 0">
+            <table class="table table-hover table-striped" (change)="onTableChange($event, 'popup')">
+                <thead>
+                <tr>
+                    <th class="h-td__chbx">
+                        <input type="checkbox" #checkAllLink (change)="chbxCancelBubling($event)" (click)="toggleCheckedAll($event, 'popup');">
+                    </th>
+                    <th>_L10N_(blockName.name)</th>
+                    <th>
+                        _L10N_(creative.blockName.size)
+                    </th>
+                    <th>
+                        _L10N_(creative.blockName.template)
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let creative of creativesLink">
+                    <td><input type="checkbox" [(ngModel)]="creative.checked"></td>
+                    <td><ui-icon [fw]="true" [displayStatus]="creative.displayStatus"></ui-icon>&nbsp;{{creative.name}}</td>
+                    <td>{{creative.sizeName}}</td>
+                    <td>{{creative.templateName}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p *ngIf="!waitPopup && creativesLink.length === 0">
+            _L10N_(creative.notification.noCreativesAvailable)
+        </p>
+    </div>
+</ui-popup>
+
+<ui-creative-preview [creative]="creativePreview" [show]="(creativePreview)" (onClose)="onPreviewClose()"></ui-creative-preview>

@@ -1,0 +1,33 @@
+<mat-radio-group class="radio-column mb-2"
+                 (change)="typeChange($event)"
+                 [value]="radio">
+  <mat-radio-button class="mt-1" [value]="0">{{'flight.notification.schedule24x7serving' | translate}}</mat-radio-button>
+  <mat-radio-button class="mt-1" [value]="1">{{'flight.notification.scheduleSelect' | translate}}</mat-radio-button>
+</mat-radio-group>
+
+
+<div *ngIf="radio === 1">
+  <ui-info-panel type="info">
+    {{'flight.notification.scheduleSelectHint' | translate}}
+  </ui-info-panel>
+
+  <div class="timeRange" (mousedown)="mDown($event)" (mouseup)="mUp($event)">
+    <div class="c-ds__phases">
+      <div *ngFor="let phase of phases; let e = even" class="c-ds__phase"
+           [ngClass]="{'c-ds__phase-even': e}">{{phase}}</div>
+    </div>
+    <div class="c-ds__rows" *ngFor="let day of days; let i = index">
+      <div class="c-ds__weekday">{{day}}</div>
+      <div class="c-ds__slots" *ngFor="let slot of phases; let e = even; let j = index">
+        <div class="c-ds__slot" [ngClass]="{'c-ds__slot-even': e, 'on': slots.indexOf(2*(i*phases.length+j)) !== -1}"
+             (mouseleave)="bindPhase($event, 2*(i*phases.length+j))"
+             (mouseenter)="bindPhase($event, 2*(i*phases.length+j))"
+             (click)="bindPhase($event, 2*(i*phases.length+j), true)"></div>
+        <div class="c-ds__slot" [ngClass]="{'c-ds__slot-even': e, 'on': slots.indexOf(2*(i*phases.length+j)+1) !== -1}"
+             (mouseleave)="bindPhase($event, 2*(i*phases.length+j)+1)"
+             (mouseenter)="bindPhase($event, 2*(i*phases.length+j)+1)"
+             (click)="bindPhase($event, 2*(i*phases.length+j)+1, true)"></div>
+      </div>
+    </div>
+  </div>
+</div>

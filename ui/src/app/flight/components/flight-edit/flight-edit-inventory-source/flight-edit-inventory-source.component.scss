@@ -1,0 +1,7 @@
+@import "~src/scss/variables";
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $gen-spacing;
+}

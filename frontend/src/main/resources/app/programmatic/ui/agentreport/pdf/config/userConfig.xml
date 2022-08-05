@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<fop version="1.0">
+
+  <!-- Base URL for resolving relative URLs -->
+  <base>/opt/foros/spa-ui/lib/resources/</base>
+
+    <renderers>
+        <renderer mime="application/pdf">
+            <filterList>
+                <value>flate</value>
+            </filterList>
+            <fonts>
+                <font kerning="yes"
+                      metrics-url="/opt/foros/spa-ui/lib/resources/fonts/arial.xml"
+                      embed-url="/opt/foros/spa-ui/lib/resources/fonts/Arial.ttf">
+                    <font-triplet name="Arial" style="normal" weight="normal"/>
+                </font>
+                <font kerning="yes"
+                      metrics-url="/opt/foros/spa-ui/lib/resources/fonts/arialb.xml"
+                      embed-url="/opt/foros/spa-ui/lib/resources/fonts/Arialb.ttf">
+                    <font-triplet name="Arial" style="normal" weight="bold"/>
+                </font>
+                <font kerning="yes"
+                      metrics-url="/opt/foros/spa-ui/lib/resources/fonts/timesnewroman.xml"
+                      embed-url="/opt/foros/spa-ui/lib/resources/fonts/TimesNewRoman.ttf">
+                    <font-triplet name="Times New Roman" style="normal" weight="normal"/>
+                </font>
+                <font kerning="yes"
+                      metrics-url="/opt/foros/spa-ui/lib/resources/fonts/timesnewromanb.xml"
+                      embed-url="/opt/foros/spa-ui/lib/resources/fonts/TimesNewRomanb.ttf">
+                    <font-triplet name="Times New Roman" style="normal" weight="bold"/>
+                </font>
+            </fonts>
+        </renderer>
+    </renderers>
+
+  <!-- Font Base URL for resolving relative font URLs -->
+  <font-base>/opt/foros/spa-ui/lib/resources/fonts/</font-base>
+
+</fop>

@@ -1,0 +1,26 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="switchContext" extends="foros-default" namespace="/">
+
+        <action name="*/switchContextError" class="com.foros.action.context.SwitchContextErrorAction" method="list">
+            <!--<interceptor-ref name="roles">
+                <param name="allowedRoles">ADVERTISER,AGENCY,CMP,ISP,PUBLISHER</param>
+            </interceptor-ref>-->
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success">/context/switchContextError.jsp</result>
+        </action>
+
+        <action name="*/switchContext" class="com.foros.action.context.SwitchContextAction" method="execute">
+            <!--<interceptor-ref name="roles">
+                <param name="allowedRoles">ADVERTISER,AGENCY,CMP,ISP,PUBLISHER</param>
+            </interceptor-ref>-->
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="redirect">${requestedURL}</result>
+            <result name="input" type="redirect">/</result>
+        </action>
+
+    </package>
+</struts>

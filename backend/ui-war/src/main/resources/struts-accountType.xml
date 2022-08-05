@@ -1,0 +1,46 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="accountType" extends="foros-default" namespace="/">
+        <action name="admin/AccountType/main" class="com.foros.action.admin.accountType.ListAccountTypeAction" method="list">
+            <result name="success" type="tiles">AccountType.main</result>
+        </action>
+
+        <action name="admin/AccountType/edit" class="com.foros.action.admin.accountType.EditAccountTypeAction" method="edit">
+            <result name="success" type="tiles">AccountType.edit</result>
+        </action>
+
+        <action name="admin/AccountType/new" class="com.foros.action.admin.accountType.EditAccountTypeAction" method="create">
+            <interceptor-ref name="defaultForosStack"/>
+            <interceptor-ref name="validation"/>
+            <result name="success" type="tiles">AccountType.create</result>
+        </action>
+
+        <action name="admin/AccountType/create" class="com.foros.action.admin.accountType.SaveAccountTypeAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+              <param name="actionName">admin/AccountType/view</param>
+              <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">AccountType.create</result>
+        </action>
+
+        <action name="admin/AccountType/update" class="com.foros.action.admin.accountType.SaveAccountTypeAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/AccountType/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">AccountType.edit</result>
+            <result name="version">
+                <param name="location">/admin/AccountType/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/AccountType/view" class="com.foros.action.admin.accountType.ViewAccountTypeAction" method="view">
+            <result name="success" type="tiles">AccountType.view</result>
+        </action>
+    </package>
+</struts>

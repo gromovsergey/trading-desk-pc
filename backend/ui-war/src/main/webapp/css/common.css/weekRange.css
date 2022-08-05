@@ -1,0 +1,116 @@
+.timeRange_outer{
+    font-family: Verdana,Arial,sans-serif;
+    font-size:12px;
+    background-color:white;
+    border: 1px solid #478cd1;
+    float:left;
+    margin-top:5px;
+}
+
+.timeRange{
+    padding: 10px;
+    float:left;
+    background-color:white;
+    font-family: Verdana,Arial,sans-serif;
+    font-size:12px;
+}
+
+.timeRange .cell{
+    float:left;
+    width:15px;
+    height:30px;
+    margin-right:1px;
+    border-top:3px solid white;
+}
+.timeRange .cell.empty{
+    background-color:#EBF1F8;
+}
+.timeRange .cell.empty.evenZone{
+    background-color:#DFEAF5;
+}
+.timeRange .cell.occupied{
+    background-color:#7FADDF;
+}
+.timeRange .cell.empty.readonly{
+    background-color:#E2DADB;
+}
+.timeRange .cell.readonly.evenZone{
+    background-color:#DDD3D4;
+}
+.timeRange .cell.occupied.readonly{
+    background-color:#B29E9F;
+}
+.timeRange .cell.conflicted{
+    background-image: url(/images/conflictedCell.gif);
+    background-attachment: fixed;
+}
+
+.timeRange .cellsRow{
+    height:33px;
+    overflow:hidden;
+}
+
+.timeRange .cellsRow .rowLabel{
+    float:left;
+    font-weight:bold;
+    width:40px;
+    line-height:30px;
+    text-align:right;
+    margin-right:5px;
+}
+
+.timeRange .phases{
+    padding-left:45px;
+}
+.timeRange .phases .phase{
+    height:18px;
+    float:left;
+    text-align:center;
+    line-height:18px;
+    background-color:#DFEAF5;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+.timeRange .phases .phase.evenZone{
+    background-color:#fff;
+}
+
+.timeRange .fixing{
+    width:0;
+    height:0;
+    font-size: 0;
+    clear:both;
+    border-right-width:0 !important;
+}
+.timeRange_outer .typesContainer{
+    float:left;
+    padding: 0 10px 0 55px;
+    margin-bottom:10px;
+}
+.timeRange_outer .typesContainer .type{
+    float:left;
+    margin-right: 20px;
+}
+.timeRange_outer .typesContainer .type .icon{
+    float:left;
+    margin-right: 10px;
+    height: 30px;
+    width: 15px;
+}
+.timeRange_outer .type.running .icon{
+    background-color: #7FADDF;
+}
+.timeRange_outer .type.notRunning .icon{
+    background-color: #E2DADB;
+}
+.timeRange_outer .type.available .icon{
+    background-color: #EBF1F8;
+}
+.timeRange_outer .type.occupied .icon{
+    background-color:#B29E9F;
+}
+.timeRange_outer .type.conflicted .icon{
+    background-color:#B29E9F;
+    background-image: url(/images/conflictedCell.gif);
+    background-attachment: fixed;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="sizeType" extends="foros-default" namespace="/admin/SizeType">
+
+        <action name="main" class="com.foros.action.admin.creativeSize.ListSizeTypeAction" method="list">
+            <result name="success" type="tiles">SizeType.main</result>
+        </action>
+
+        <action name="view" class="com.foros.action.admin.creativeSize.ViewSizeTypeAction" method="view">
+            <result name="success" type="tiles">SizeType.view</result>
+        </action>
+
+        <action name="edit" class="com.foros.action.admin.creativeSize.EditSizeTypeAction" method="edit">
+            <result name="success" type="tiles">SizeType.edit</result>
+        </action>
+
+        <action name="new" class="com.foros.action.admin.creativeSize.EditSizeTypeAction" method="create">
+            <result name="success" type="tiles">SizeType.create</result>
+        </action>
+
+        <action name="update" class="com.foros.action.admin.creativeSize.SaveSizeTypeAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">SizeType.edit</result>
+            <result name="version">
+                <param name="location">edit.action</param>
+            </result>
+        </action>
+
+        <action name="create" class="com.foros.action.admin.creativeSize.SaveSizeTypeAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">SizeType.create</result>
+        </action>
+
+    </package>
+</struts>

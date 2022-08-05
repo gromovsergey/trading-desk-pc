@@ -1,0 +1,13 @@
+<section class="cinemagoers">
+  <h1>{{category.description}}</h1>
+  <div *ngFor="let item of charts; index as i" class="cinemagoers-container">
+    <ui-cinemagoers-chart *ngFor="let item of charts[i]" [chartName]="item">
+    </ui-cinemagoers-chart>
+  </div>
+  <button *ngIf="!!allCharts.length" class="btn btn-primary center-block" (click)="nextPage()">
+    Еще графики
+  </button>
+  <a routerLink="../" class="cinemagoers-chart-nav cinemagoers-back-link" title="Вернуться в меню">
+    <i class="fa fa-bars" aria-hidden="true"></i>
+  </a>
+</section>

@@ -1,0 +1,64 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<ng-template [ngIf]="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [fw]="true" [displayStatus]="agency.displayStatus"></ui-icon> {{title}}
+            <div class="btn-group" *ngIf="canCreateAdvertiser">
+                <a class="btn btn-default" [routerLink]="['/advertiser/add']">_L10N_(agencyAccount.createAdvertiser)</a>
+            </div>
+        </h2>
+    </div>
+
+    <ui-loading *ngIf="!advertiserList"></ui-loading>
+
+    <p *ngIf="advertiserList && advertiserList.length === 0">
+        _L10N_(agencyAccount.advertiserListIsEmpty)
+    </p>
+
+    <div *ngIf="advertiserList && advertiserList.length > 0" class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>_L10N_(advertiserAccount.advertiser)</th>
+                <th>
+                    <span class="hidden-xs">_L10N_(blockName.imps)</span>
+                    <span class="visible-xs">_L10N_(blockName.impsShort)</span>
+                </th>
+                <th>_L10N_(blockName.clicks)</th>
+                <th>_L10N_(blockName.ctr)</th>
+                <th>_L10N_(blockName.totalCost)</th>
+                <th>_L10N_(blockName.ecpm)</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let advertiser of advertiserList">
+                <td>
+                    <ui-icon [fw]="true" [displayStatus]="advertiser.displayStatus"></ui-icon>
+                    <a [routerLink]="['/advertiser/'+advertiser.advertiserId+'/flights']">{{advertiser.advertiserName}}</a>
+                </td>
+                <td>{{advertiser.imps}}</td>
+                <td>{{advertiser.clicks}}</td>
+                <td>{{advertiser.ctr.toFixed(2)}}%</td>
+                <td>{{advertiser.totalCost | currency:agency.currencyCode:'symbol':'1.2-2'}}</td>
+                <td>{{advertiser.ecpm | currency:agency.currencyCode:'symbol':'1.2-2'}}</td>
+                <td class="text-right" *ngIf="canUpdateAdvertisers">
+                    <ui-display-status-toggle (onStatusChange)="changeStatus($event)"
+                                              [status]="advertiser.displayStatus" [statusObject]="advertiser"></ui-display-status-toggle>
+
+                    <a class="btn btn-default" title="_L10N_(button.edit)"
+                        [routerLink]="['/advertiser/'+advertiser.advertiserId+'/edit']">
+                            <ui-icon [icon]="'pencil-square-o'"></ui-icon>
+                    </a>
+
+                    <button class="btn btn-default" title="_L10N_(button.delete)"
+                            (click)="deleteAdvertiser($event, advertiser)">
+                        <ui-icon [icon]="'trash'"></ui-icon>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>

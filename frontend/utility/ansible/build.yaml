@@ -1,0 +1,38 @@
+- hosts: buildserver
+#  gather_facts: false
+  vars:
+    build_dir: /home/maint/new-ui-{{ buildstamp }}
+    archive_name: archive.zip
+
+  tasks:
+
+  - name: checkout latest new-ui
+    git: repo=git@gitlab.ocslab.com:ui/frontend.git dest={{ build_dir }} version={{ git_branch }}
+
+  - name: run maven clean package
+    command: mvn -U -f {{ build_dir }}/pom.xml clean package -P rebuildAngular
+
+  - name: prepare files
+    shell: chdir={{ build_dir }} {{ item }}
+    with_items:
+    - mkdir target/lib
+    - cp target/frontend-1.0-SNAPSHOT.jar target/lib
+    - mkdir target/lib/resources
+    - cp -rf target/classes/app/programmatic/ui/agentreport/pdf/fonts target/lib/resources
+    - mkdir target/bin
+    - cp utility/bin/start.sh utility/bin/stop.sh target/bin
+    - mkdir target/etc
+    - cp src/main/resources/application*.properties target/etc
+    - mkdir -p target/var/log
+
+  - name: archive files
+    command: zip -r {{ archive_name }} bin lib etc var
+    args:
+      chdir: "{{ build_dir }}/target"
+
+
+  - name: copy package from build box to control host
+    fetch: src={{ build_dir }}/target/{{ archive_name }} dest=/home/maint/{{ archive_name }} flat=true
+
+  - name: cleanup
+    file: state=absent path={{ build_dir }}

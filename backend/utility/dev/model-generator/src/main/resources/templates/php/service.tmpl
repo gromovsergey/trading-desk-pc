@@ -1,0 +1,29 @@
+<?php
+
+<%if(type.documentation) {%>/**
+ <%type.documentation.eachLine { line -> %>* ${line}<%}%>
+ */<%}%>
+class ${type.name} {
+
+    private \$configuration;
+
+    public function __construct(RsConfiguration \$configuration) {
+        \$this->configuration = \$configuration;
+    }
+<%type.methods.each{ def method ->
+    def methodName = util.makeVariable(method.name)%>
+    <%if(method.documentation) {%>/**
+     <%method.documentation.eachLine { line -> %>* ${line}<%}%>
+     */<%}%>
+    public function ${methodName} (<% method.parameters.eachWithIndex { parameter, index -> %>${util.resolveTypeName(parameter.type)}\$${parameter.name}${index+1==method.parameters.size()?"":","}<%}%>) {
+        \$client = \$this->configuration->createClient();
+        \$parameters = null;
+        \$data = null;
+    <% method.parameters.eachWithIndex { parameter, index -> %>
+        <%if(util.resolveTypeName(parameter.type).equals("array ")) {%>\$parameters = \$${parameter.name};<%}%>
+        <%if(util.resolveTypeName(parameter.type).equals("")) {%>\$data = \$${parameter.name};<%}%>
+    <%}%>
+        return \$client
+                ->request("${method.httpMethod}" ,"${type.url}", \$parameters, \$data);
+    }<%}%>
+}

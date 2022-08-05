@@ -1,0 +1,111 @@
+<ui-loading *ngIf="wait, else showContent" [overlay]="true"></ui-loading>
+
+<ng-template #showContent>
+  <div class="device-row" *ngIf="smartphones || tablets">
+    <div class="device-info">
+      <h3 class="device-title">
+        <i class="material-icons mr-1">phone_iphone</i>
+        <span class="mr-1">{{'devices.smartphones' | translate}}</span>
+        <ui-hint text="{{'flight.notification.whatIsSmartphones' | translate}}"></ui-hint>
+      </h3>
+      <mat-checkbox [checked]="smartphones.checked"
+                    [indeterminate]="someComplete(smartphones)"
+                    (change)="toggleAll($event, smartphones)">
+        {{'messages.optionTransfer.select' | translate}} / {{'messages.optionTransfer.deselect' | translate}}
+        {{'messages.optionTransfer.all' | translate}}
+      </mat-checkbox>
+
+      <mat-selection-list (selectionChange)="checkItem($event)">
+        <mat-list-option *ngFor="let child of smartphones.children"
+                         [value]="child"
+                         [selected]="child.checked">
+          {{child.name}}
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+    <div class="device-info">
+      <h3 class="device-title">
+        <i class="material-icons mr-1">tablet_mac</i>
+        <span class="mr-1">{{'devices.tablets' | translate}}</span>
+        <ui-hint text="{{'flight.notification.whatIsTablets' | translate}}"></ui-hint>
+      </h3>
+
+      <mat-checkbox [checked]="tablets.checked"
+                    [indeterminate]="someComplete(tablets)"
+                    (change)="toggleAll($event, tablets)">
+        {{'messages.optionTransfer.select' | translate}} / {{'messages.optionTransfer.deselect' | translate}}
+        {{'messages.optionTransfer.all' | translate}}
+      </mat-checkbox>
+
+      <mat-selection-list (selectionChange)="checkItem($event)">
+        <mat-list-option *ngFor="let child of tablets.children"
+                         [value]="child"
+                         [selected]="child.checked">
+          {{child.name}}
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+  </div>
+
+  <hr class="delimiter" />
+
+  <div class="device-row" *ngIf="devicesApplications">
+    <div class="device-info">
+      <h3 class="device-title">
+        <i class="material-icons mr-1">app_settings_alt</i>
+        <span class="mr-1">{{'flight.blockName.devicesApplications' | translate}}</span>
+      </h3>
+      <mat-checkbox (change)="toggleApplications($event)"
+                    [checked]="isApplicationsSelected">
+        {{'messages.optionTransfer.select' | translate}} / {{'messages.optionTransfer.deselect' | translate}}
+        {{'messages.optionTransfer.all' | translate}}
+      </mat-checkbox>
+    </div>
+  </div>
+  <ui-info-panel type="info" class="mb-2" *ngIf="!devicesApplications">
+    {{'flight.notification.devicesApplicationsUnavailable' | translate}}
+  </ui-info-panel>
+
+  <hr class="delimiter" />
+
+  <div class="device-row" *ngIf="devicesNonMobile">
+    <div class="device-info">
+      <h3 class="device-title">
+        <i class="material-icons mr-1">laptop_mac</i>
+        <span class="mr-1">{{'devices.nonMobile' | translate}}</span>
+        <ui-hint text="{{'flight.notification.whatIsNonMobile' | translate}}"></ui-hint>
+      </h3>
+      <mat-checkbox [checked]="devicesNonMobile.checked"
+                    [indeterminate]="someComplete(devicesNonMobile)"
+                    (change)="toggleAll($event, devicesNonMobile)">
+        {{'messages.optionTransfer.select' | translate}} / {{'messages.optionTransfer.deselect' | translate}}
+        {{'messages.optionTransfer.all' | translate}}
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <div class="device-row">
+    <div class="device-info">
+      <mat-selection-list (selectionChange)="checkItem($event)">
+        <mat-list-option *ngFor="let child of devicesNonMobile.children.slice(0, devicesNonMobile.children.length/2 + 1)"
+                         [value]="child"
+                         [selected]="child.checked">
+          {{child.name}}
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+    <div class="device-info">
+      <mat-selection-list (selectionChange)="checkItem($event)">
+        <mat-list-option *ngFor="let child of devicesNonMobile.children.slice(devicesNonMobile.children.length/2 + 1)"
+                         [value]="child"
+                         [selected]="child.checked">
+          {{child.name}}
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+  </div>
+</ng-template>
+
+<ui-info-panel type="info" *ngIf="!wait && !devices.length">
+  {{'flight.notification.deviceListEmpty' | translate}}
+</ui-info-panel>

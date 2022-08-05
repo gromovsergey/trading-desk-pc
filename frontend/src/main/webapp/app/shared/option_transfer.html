@@ -1,0 +1,28 @@
+<div class="c-opttransf">
+    <div class="row">
+        <div class="col-xs-6">
+            <a href="#" class="pull-right" (click)="selectAll($event)">{{selectAllMsg}} <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+            {{availableMsg}}:
+        </div>
+        <div class="col-xs-6">
+            <a href="#" class="pull-right" (click)="deselectAll($event)"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{deselectAllMsg}}</a>
+            {{selectedMsg}}:
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="list-group c-opttransf__opts">
+                <a class="list-group-item c-opttransf__item" *ngFor="let item of options" (click)="selectItem($event, item)">
+                    {{item.name}}
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="list-group c-opttransf__opts">
+                <a class="list-group-item c-opttransf__item" *ngFor="let item of selected" (click)="deselectItem($event, item)">
+                    {{item.name}}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+"SiteName","SiteID","SiteStatus","SiteURL","TagName","TagID","Size Type","Tag Sizes","TagPricing","TagPassbackType","TagPassback","Accept Expandable Creative"
+"SiteName_1",1,"Active","http://some.site.com","newTag-tag1",3,"Banner","728x90t_225","default=0;US=2,1;AU=0,11",,,"n"
+"SiteName","SiteID","SiteStatus","SiteURL","TagName","TagID","Size Type","Tag Sizes","TagPricing","TagPassbackType","TagPassback","Accept Expandable Creative"
+"SiteName_1",1,"Active","http://some.site.com","newTag-tag1",3,"Banner","728x90t_225","default=0;US=2,1;AU=0,11",,,"n"

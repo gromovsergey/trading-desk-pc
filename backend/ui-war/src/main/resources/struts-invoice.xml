@@ -1,0 +1,91 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="invoice" extends="foros-default" namespace="/">
+
+        <action name="admin/advertiser/account/invoiceView" class="com.foros.action.finance.ViewInvoiceAction" method="view">
+            <result name="success" type="tiles">admin.account.invoice.view</result>
+        </action>
+
+        <action name="admin/campaign/invoiceView" class="com.foros.action.finance.ViewInvoiceAction" method="view">
+            <result name="success" type="tiles">admin.campaign.invoice.view</result>
+        </action>
+
+        <action name="advertiser/campaign/invoiceView" class="com.foros.action.finance.ViewInvoiceAction" method="view">
+            <result name="success" type="tiles">advertiser.campaign.invoice.view</result>
+        </action>
+
+        <action name="advertiser/myAccount/invoiceView" class="com.foros.action.finance.ViewInvoiceAction" method="view">
+            <result name="success" type="tiles">advertiser.invoice.view</result>
+        </action>
+
+        <action name="admin/advertiser/account/invoiceEdit" class="com.foros.action.finance.EditInvoiceAction" method="edit">
+            <param name="campaignContext">false</param>
+            <result name="success" type="tiles">admin.account.invoice.edit</result>
+        </action>
+
+        <action name="admin/campaign/invoiceEdit" class="com.foros.action.finance.EditInvoiceAction" method="edit">
+            <param name="campaignContext">true</param>
+            <result name="success" type="tiles">admin.campaign.invoice.edit</result>
+        </action>
+
+        <action name="admin/advertiser/account/invoiceUpdate" class="com.foros.action.finance.SaveInvoiceAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <param name="campaignContext">false</param>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/invoiceView</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.account.invoice.edit</result>
+            <result name="version">
+                <param name="location">/admin/advertiser/account/invoiceEdit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/invoiceUpdate" class="com.foros.action.finance.SaveInvoiceAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <param name="campaignContext">true</param>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/invoiceView</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.campaign.invoice.edit</result>
+            <result name="version">
+                <param name="location">/admin/campaign/invoiceEdit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/generatePrintableInvoice" class="com.foros.action.finance.GeneratePrintableInvoiceAction" method="generate">
+            <result name="success" type="httpheader"/>
+        </action>
+
+        <action name="admin/campaign/generatePrintableInvoice" class="com.foros.action.finance.GeneratePrintableInvoiceAction" method="generate">
+            <result name="success" type="httpheader"/>
+        </action>
+
+        <action name="advertiser/myAccount/generatePrintableInvoice" class="com.foros.action.finance.GeneratePrintableInvoiceAction" method="generate">
+            <result name="success" type="httpheader"/>
+        </action>
+
+        <action name="advertiser/campaign/generatePrintableInvoice" class="com.foros.action.finance.GeneratePrintableInvoiceAction" method="generate">
+            <result name="success" type="httpheader"/>
+        </action>
+
+        <action name="admin/advertiser/account/generateInvoice" class="com.foros.action.finance.GenerateInvoiceAction" method="generate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/invoiceView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/generateInvoice" class="com.foros.action.finance.GenerateInvoiceAction" method="generate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/invoiceView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

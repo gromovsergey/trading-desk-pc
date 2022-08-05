@@ -1,0 +1,36 @@
+select.date{
+    width:82px;
+}
+select.smallLengthNumber{
+    width:27px;
+}
+select.middleLengthNumber{
+    width:72px;
+}
+select.smallLengthText{
+    width:82px;
+}
+select.smallLengthText1{
+    width:152px;
+}
+select.smallLengthText2{
+    width:222px;
+}
+select.middleLengthText{
+    width:302px;
+}
+select.middleLengthText1{
+    width:452px;
+}
+select.bigLengthText{
+    width:602px;
+}
+
+.dataViewInnerSection .dataView{
+    margin-left:1px;
+}
+
+table.dataView.collapsing{
+    border-right:1px solid #CCCCCC; /* fixing bug with disappearing right border (OUI-10823) */
+}
+

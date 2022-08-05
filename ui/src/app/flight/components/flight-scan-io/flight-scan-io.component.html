@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>{{'flight.button.scanIo' | translate}}</h2>
+<mat-dialog-content class="mat-typography">
+  <ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+  <ng-template #showContent>
+    <ui-flight-attachment-upload *ngIf="!data.readonly"
+                                 [flightId]="data.flightId"
+                                 (beginUpload)="loadList()"
+                                 title="{{'scanIo.button.upoaldAttachment' | translate}}"
+                                 hint="{{'scanIo.notification.allowedFileTypes' | translate}}"></ui-flight-attachment-upload>
+    <div class="mb-2"></div>
+
+    <ui-info-panel type="danger" class="mb-2" *ngIf="errors">
+      <p *ngFor="let error of errors">{{error}}</p>
+    </ui-info-panel>
+
+    <div class="form-group" *ngIf="attachments && attachments.length">
+      <label>{{'scanIo.notification.listOfAttachments' | translate}}</label>
+
+      <div class="list">
+        <div class="list-item" *ngFor="let item of attachments">
+          <div>{{item}}</div>
+          <div>
+            <button mat-icon-button
+                    type="button"
+                    color="accent"
+                    title="{{'button.download' | translate}}"
+                    (click)="downloadItem(item)">
+              <i class="material-icons">get_app</i>
+            </button>
+            <button title="{{'button.delete' | translate}}"
+                    mat-icon-button
+                    type="button"
+                    *ngIf="!data.readonly"
+                    (click)="deleteItem(item)">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ui-info-panel type="info" *ngIf="!attachments?.length">
+      {{'flight.notification.attachmentListEmpty' | translate}}
+    </ui-info-panel>
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{'button.close' | translate}}</button>
+</mat-dialog-actions>
+
+<a class="hidden" #downloadBtn [href]="downloadUrl" target="_blank" [download]="downloadName">{{downloadName}}</a>

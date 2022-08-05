@@ -1,0 +1,72 @@
+package ${packageName};
+
+import java.util.Arrays;
+import java.util.Collection;
+import com.foros.rs.schema.ModelNode.UserRole;
+import com.foros.session.bulk.OperationType;
+import static com.foros.rs.schema.ModelNode.UserRole.*;
+import static com.foros.session.bulk.OperationType.*;
+
+public class ${type.name} implements ModelBuilder {
+
+    @Override
+    public ModelNode build() {
+        ModelNode model = ModelNode.root();<%
+schema.aliases.values().each { alias -> %>
+        append${alias.type.name}(model,"${alias.name}", null, null);<%
+}%>
+        return model;
+    }
+
+<%schema.complexTypes.values().grep{ !it.meta["isAbstract"] }.each { type -> %>
+    private void append${type.name}(ModelNode parent, String name,
+                Collection<UserRole> userRoles, Collection<OperationType> operationTypes) {
+        parent = parent.addChild(name, "${type.name}", userRoles, operationTypes);
+     <%util.getAllFields(type).each { field -> addField("parent", field)}%>
+    }
+<%}%>
+
+    private Collection<UserRole> userRoles(UserRole... userRole) {
+        return Arrays.asList(userRole);
+    }
+
+    private Collection<OperationType> operationTypes(OperationType... operationType) {
+        return Arrays.asList(operationType);
+    }
+}
+
+<% void addField(parentVar, field) {
+     def type = field.type;
+     def name = field.name;
+     def userRoles = field.meta?.get("userRoles")
+     String roles;
+     if (userRoles == null || userRoles.toString() == "[null]") {
+        roles = null;
+     } else {
+        roles = "userRoles(" + userRoles.toString().replace("[","").replace("]","") + ")"
+     }
+
+     def operationTypes = field.meta?.get("operationTypes")
+     String types;
+     if (operationTypes == null || operationTypes.toString() == "[null]") {
+         types = null;
+     } else if (operationTypes.size() == 1 && operationTypes[0] == "NONE") {
+         types = "operationTypes()"
+     } else {
+        types = "operationTypes(" + operationTypes.toString().replace("[","").replace("]","") + ")"
+     }
+
+     if(util.isComplex(type)) {
+        %>   append${type.name}(${parentVar}, "${name}", ${roles}, ${types});
+     <%} else if (util.isArray(type)) {
+           if (field.meta["wrapperElement"]) {
+        %>   ModelNode ${name} = ${parentVar}.addChild("${name}", "${type.name}", ${roles}, ${types});
+     <%addField(name, [name: util.getRealName(field), type: util.getRealType(field.type)])
+           } else {
+        %>   ModelNode ${name} = ${parentVar}.addChild(null, "${type.name}", ${roles}, ${types});
+     <%addField(name, [name: util.getRealName(field), type: util.getRealType(field.type), meta: [operationTypes : operationTypes, userRoles : userRoles]])
+           }
+     } else {
+        %>   ${parentVar}.addChild("${name}", "${type.name}", ${roles}, ${types});
+     <%}
+}%>

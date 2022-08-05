@@ -1,0 +1,376 @@
+#root{
+    border:none;
+    border-collapse:collapse;
+    width:100%;
+}
+tr#header, tr#content, tr#footer{
+    padding:0;
+}
+
+tr#header td.rootCell{
+    height:60px;
+    vertical-align:top;
+    padding:0;
+}
+
+tr#content td.rootCell{
+    padding:16px 10px;
+}
+body.doubleLevelMenu tr#content td.rootCell{
+    padding:0;
+}
+
+#headContainer{
+    float:left;
+    width:100%;
+    border-bottom: 5px solid #0066CC;
+}
+
+#applicationLogo{
+    width:150px;
+    height:40px;
+}
+/* for IE7 (forgotPassword/main.action) */
+a #applicationLogo{
+    cursor:hand;
+}
+
+/* tabs in header */
+#header table.categories{
+    margin:15px 0 0 3px;
+    border-collapse:collapse;
+}
+#header table.categories td{
+    padding:0;
+    background-color: #666666;
+    background-image: url(/images/categorie_right_top.gif);
+    background-position: right top;
+    background-repeat: no-repeat;
+    border-right: 1px solid #FFF;
+}
+#header table.categories td.current{
+    background-color: #0066CC;
+    background-image: url(/images/categorie_curr_right_top.gif);
+}
+#header table.categories a{
+    display:block;
+    color:white;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform:uppercase;
+    line-height:25px;
+    padding:0 14px;
+    background-image: url(/images/categorie_left_top.gif);
+    background-position: left top;
+    background-repeat: no-repeat;
+    white-space:nowrap;
+}
+#header table.categories td.current a{
+    background-image: url(/images/categorie_curr_left_top.gif);
+}
+#header table.categories a:hover{
+    text-decoration: underline;
+}
+#header .categoriesZone{
+    float:left;
+}
+
+#loginZone{
+    float:right;
+    text-align:right;
+    margin-top:-43px;
+}
+#loginZone #userLogin, #loginZone #logout{
+    display:inline;
+}
+tr#breadCrumbs td.rootCell{
+    padding:3px 4px 0;
+}
+body.doubleLevelMenu tr#breadCrumbs td{
+    padding:0;
+}
+body.doubleLevelMenu tr#breadCrumbs .contentBody{
+    margin:0 7px 0 14px;
+    padding:8px 6px 0 13px;
+    border: 1px solid #E6E6E6;
+    border-style: none solid;
+}
+
+tr#content .contentBody{
+    display:block;
+    *display:inline-block;
+    padding:0;
+}
+
+.dialog > :first-child, 
+.dialog > form > :first-child{
+    margin-top:0;
+}
+
+span.infos + *{ 
+    margin-top:5px !important;
+}
+
+body.doubleLevelMenu tr#content .contentBody{
+    margin: 0 7px 10px 14px;
+    border: 1px solid #E6E6E6;
+    border-top:none;
+    padding:10px 6px 6px 13px;
+}
+
+/* TODO: investigate necessity of this entry */
+body.doubleLevelMenu tr#content .contentBody:after{
+    content:'';
+    height:0;
+    margin:0;
+    padding:0;
+    display:block;
+    clear:both;
+}
+
+#footer td{
+    clear:both;
+    background-color: #F0F0F0;
+    height:50px;
+    border-top: 1px solid #C0C0C0;
+    vertical-align:top;
+}
+#appVersion{
+    float:left;
+    margin:11px 14px;
+}
+#appVersion a{
+    margin-right:7px;
+}
+#copyright{
+    float:right;
+    margin:11px 14px;
+}
+
+.contextZone{
+    height:20px;
+    line-height:20px;
+    background-color:#E1E8EF;
+    white-space:nowrap;
+    overflow:hidden;
+    padding:0 10px;
+}
+.contextZone .operation{
+    line-height:20px;
+    padding-left:10px;
+    margin-right:7px;
+    display:inline-block;
+    background: url(/images/contextDelimiter.gif) 0 5px no-repeat;
+}
+.contextZone > strong {
+    padding-right:7px;
+}
+.contextZone .displayStatus{
+    width:11px;
+    height:11px;
+    background-position: center center;
+    float:left;
+    margin:4px 4px 0 0;
+    font-size:0;
+}
+.contextZone .displayStatus.Green{
+    background:url(/images/displayStatusContextGreen.gif);
+}
+.contextZone .displayStatus.Amber{
+    background:url(/images/displayStatusContextAmber.gif);
+}
+.contextZone .displayStatus.Red{
+    background:url(/images/displayStatusContextRed.gif);
+}
+.contextZone .displayStatus.Gray{
+    background:url(/images/displayStatusContextGray.gif);
+}
+
+.contextZone .displayStatus.GreenTest{
+    background:url(/images/displayStatusContextGreenTest.gif);
+}
+.contextZone .displayStatus.AmberTest{
+    background:url(/images/displayStatusContextAmberTest.gif);
+}
+.contextZone .displayStatus.RedTest{
+    background:url(/images/displayStatusContextRedTest.gif);
+}
+.contextZone .displayStatus.GrayTest{
+    background:url(/images/displayStatusContextGrayTest.gif);
+}
+
+#secondLevelHeader{
+    padding:17px 7px 0 14px;
+}
+#secondLevelHeader .contextZone{
+    background-color:#eee;
+}
+#secondLevelHeader .contextZone {
+    color: #666;
+}
+#secondLevelHeader .categoriesZone{
+    border-bottom: 3px solid #B2B2B2;
+}
+#secondLevelHeader table.categories{
+    margin:0 0 0 3px;
+    border-collapse:collapse;
+}
+#secondLevelHeader table.categories td{
+    padding:0;
+    background-color: #E0E0E0;
+    background-image: url(/images/sec_categorie_right_top.gif);
+    background-position: right top;
+    background-repeat: no-repeat;
+    border-right: 1px solid #FFF;
+}
+#secondLevelHeader table.categories td.current{
+    background-color: #B2B2B2;
+    background-image: url(/images/sec_categorie_curr_right_top.gif);
+}
+#secondLevelHeader table.categories a{
+    display:block;
+    color:#666;
+    text-decoration: none;
+    line-height:19px;
+    padding:0 8px;
+    background-image: url(/images/sec_categorie_left_top.gif);
+    background-position: left top;
+    background-repeat: no-repeat;
+    white-space:nowrap;
+}
+#secondLevelHeader table.categories td.current a{
+    background-image: url(/images/sec_categorie_curr_left_top.gif);
+    color:#FFF;
+}
+#secondLevelHeader table.categories a:hover{
+    text-decoration: underline;
+}
+
+#accountContextMenu td.rootCell{
+    padding:0;
+}
+
+#quick_search_form {
+    display:inline;
+}
+#loginZone .delimiter {
+    margin:0 2px;
+}
+#quick_search {
+    width:122px;
+    height:15px;
+    font-size:12px;
+}
+#quick_search.gray {
+    color:gray;
+}
+#quick_search_preloader {
+    display:none;
+    position:absolute;
+    margin-left:-18px;
+    margin-top:3px;
+}
+.b-qsearchresults {
+    display:none;
+    position:absolute;
+    right:52px;
+    top:28px;
+    border:1px solid #0067cf;
+    background:#fff url(/images/quicksearch.png) left repeat-y;
+    margin:0;
+    overflow:hidden;
+    text-align:left;
+    padding-top:8px;
+    z-index:1000;
+    box-shadow:3px 3px 3px rgba(0,0,0,0.1);
+}
+.b-qsearchresults.scrollable {
+    overflow-y:scroll;
+}
+.b-qsearchresults .b-qsearchresults__group {
+    float:left;
+    width:95px;
+    margin:6px 0 16px 0;
+    text-align:right;
+    padding-right:10px;
+    font-size:12px;
+}
+.b-qsearchresults__group:first-child {
+    margin-top: 14px;
+}
+.b-qsearchresults .b-qsearchresults__list {
+    margin:0 0 16px 105px;
+    width:440px;
+}
+.b-qsearchresults .b-qsearchresults__item {
+    font-size:13px;
+    display: block;
+    color:#000;
+    text-decoration:none;
+    background-position:18px 5px;
+    background-repeat:no-repeat;
+    padding:5px 20px 5px 38px;
+}
+.b-qsearchresults__item:first-child{
+    margin-top:8px;
+}
+.b-qsearchresults__item.green {
+    background-image:url(/images/displayStatusGreen.png);
+}
+.b-qsearchresults__item.amber {
+    background-image:url(/images/displayStatusYellow.png);
+}
+.b-qsearchresults__item.red {
+    background-image:url(/images/displayStatusRed.png);
+}
+.b-qsearchresults__item.gray {
+    background-image:url(/images/displayStatusGrey.png);
+}
+.b-qsearchresults .b-qsearchresults__item.on {
+    background-color:#06c;
+    color: #fff;
+}
+
+.b-loginbody {
+    width:auto;
+    height:auto;
+    margin:0;
+}
+.b-loginform {
+    margin:auto;
+    margin-top:150px;
+    padding-top:85px;
+    width:400px;
+}
+.b-loginform__fields {
+    overflow:hidden;
+    margin:0;
+    padding-top:5px;
+}
+.b-loginform__fields dt{
+    float:left;
+    text-align:right;
+    height:27px;
+    width:100px;
+    padding-top:5px;
+}
+.b-loginform__fields dd{
+    float:right;
+    width:286px;
+    margin-left:0;
+    height:32px;
+}
+    .b-loginform__fields dd label {
+        font-weight:normal;
+    }
+    .b-loginform__fields dd input {
+        margin:1px 0;
+    }
+.b-loginform__fields dd .b-loginform__field-checkbox {
+    position:relative;
+    top:1px;
+    margin-right:2px;
+}
+.b-loginform__field-wide {
+    padding-bottom:6px;
+}

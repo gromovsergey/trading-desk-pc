@@ -1,0 +1,53 @@
+<ui-loading *ngIf="wait || waitStats"></ui-loading>
+
+<ng-template [ngIf]="!(wait || waitStats)">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            _L10N_(agencyAccount.dashboard)
+        </h2>
+    </div>
+
+    <div class="page-header">
+        <h3 class="c-pagetitle c-pagetitle__small">
+            _L10N_(agencyAccount.flightsAlerts)
+        </h3>
+    </div>
+
+    <p *ngIf="dashboardStats && dashboardStats.length === 0">
+        _L10N_(agencyAccount.dashboard.alertListIsEmpty)
+    </p>
+
+    <div *ngIf="dashboardStats && dashboardStats.length > 0" class="table-responsive" [ngClass]="{'table-limited-height': flightsTableLimited}">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th *ngIf="isInternalView()">_L10N_(agencyAccount.agency)</th>
+                <th>_L10N_(advertiserAccount.advertiser)</th>
+                <th>_L10N_(flight.object)</th>
+                <th>_L10N_(flight.blockName.alertReason)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let flightStat of dashboardStats">
+                <td *ngIf="isInternalView() && flightStat.agencyId"><a [routerLink]="['/agency/'+flightStat.agencyId+'/advertisers']">{{flightStat.agencyName}}</a></td>
+                <td *ngIf="isInternalView() && !flightStat.agencyId"></td>
+                <td><a [routerLink]="['/advertiser/'+flightStat.advertiserId+'/flights']">{{flightStat.advertiserName}}</a></td>
+                <td>
+                    <ui-icon [fw]="true" [displayStatus]="flightStat.displayStatus"></ui-icon>&nbsp;
+                    <a [routerLink]="['/flight/'+flightStat.flightId]">{{flightStat.flightName}}</a>
+                    <ui-hint [text]="flightStat.alertReason"></ui-hint>
+                </td>
+                <td>
+                    {{flightStat.alertReason}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="table-limited-height-caret" *ngIf="flightsTableLimited">
+            <span class="label label-default" (click)="showFullFlightsTable($event)">
+                <ui-icon [icon]="'chevron-down'"></ui-icon> _L10N_(button.showAll)
+            </span>
+        </div>
+    </div>
+
+</ng-template>

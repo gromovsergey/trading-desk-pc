@@ -1,0 +1,34 @@
+<project name="WAR-RESOURCES-GENERATION" basedir=".">
+    <taskdef name="sun-appserv-jspc"
+          classname="org.apache.tools.ant.taskdefs.optional.sun.appserv.SunJspc"
+          classpath="${maven.compile.classpath}"/>
+
+    <property name="jsp-destdir" value="${src.build.dir}/jsp_generated"/>
+    <property name="jsp-compile-dir" value="${src.build.dir}/jsp_compiled"/>
+	<property name="sun-web-xml-dir" value="${basedir}/src/main/webapp-conf/WEB-INF"/>
+	
+	<target name="prepare-jsp" depends="precompile-jsp,copy-files"/>
+	
+    <target name="precompile-jsp">
+        <mkdir dir="${jsp-destdir}"/>
+        <mkdir dir="${jsp-compile-dir}"/>
+
+        <sun-appserv-jspc destdir="${jsp-destdir}" webapp="${exploded.target.dir}"  classpath="${destdir}:${maven.compile.classpath}"/>
+
+        <javac srcdir="${jsp-destdir}" destdir="${jsp-compile-dir}" debug="on" classpath="${maven.compile.classpath}" memoryMaximumSize="512m">
+            <include name="**/*.java"/>
+        </javac>
+    </target>
+
+    <target name="copy-files">
+        <tstamp><format property="touch.time" pattern="MM/dd/yyyy hh:mm aa"/></tstamp>
+        <touch datetime="${touch.time}">
+            <fileset dir="${sun-web-xml-dir}"/>
+        </touch>
+        <jar destfile="${src.build.dir}/foros-ui-war.war" update="true">
+            <zipfileset dir="${jsp-compile-dir}" prefix="WEB-INF/classes"/>
+            <zipfileset dir="${sun-web-xml-dir}" prefix="WEB-INF"/>
+        </jar>
+    </target>
+
+</project>

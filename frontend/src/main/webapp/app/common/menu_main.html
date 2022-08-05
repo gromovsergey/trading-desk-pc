@@ -1,0 +1,90 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<ng-template [ngIf]="!wait">
+
+<a class="c-mainmenu__button" *ngIf="canViewAdvertiserEntity && (userSession.role === 'INTERNAL' || agencySession.hasData())" [ngClass]="{'c-mainmenu__button-on': router.url === '/agency/dashboard'}" [routerLink]="['/agency/dashboard']">
+    <ui-icon [icon]="'dashboard'" [fw]="true"></ui-icon>
+    _L10N_(mainMenu.blockName.dashboard)
+</a>
+<a class="c-mainmenu__button" *ngIf="canSearchChannels" [ngClass]="{'c-mainmenu__button-on': router.url === '/channel/search'}" [routerLink]="['/channel/search']">
+    <ui-icon [icon]="'crosshairs'" [fw]="true"></ui-icon>
+    _L10N_(channel.blockName.channels)
+</a>
+<a class="c-mainmenu__button" *ngIf="canViewAgentReport" [ngClass]="{'c-mainmenu__button-on': router.url.indexOf('/agentreport/') !== -1}" [routerLink]="['/agentreport/total']">
+    <ui-icon [icon]="'bar-chart'" [fw]="true"></ui-icon>
+    _L10N_(mainMenu.blockName.agentReport)
+</a>
+<a class="c-mainmenu__button" *ngIf="canViewAudienceResearch" [ngClass]="{'c-mainmenu__button-on': router.url.indexOf('/audienceresearch/') !== -1}" [routerLink]="['/audienceresearch/list']">
+    <ui-icon [icon]="'bar-chart'" [fw]="true"></ui-icon>
+    _L10N_(audienceResearch.list)
+</a>
+<a class="c-mainmenu__button" *ngIf="userSession.role === 'INTERNAL'" [ngClass]="{'c-mainmenu__button-on': router.url.indexOf('/report/detailed') !== -1}" [routerLink]="['/report/detailed' + (userSession.isInternal() ? '' : '/' + userSession.accountId)]">
+    <ui-icon [icon]="'bar-chart'" [fw]="true"></ui-icon>
+    _L10N_(mainMenu.blockName.detailedReport)
+</a>
+<a class="c-mainmenu__button" *ngIf="canRunPublisherReport" [ngClass]="{'c-mainmenu__button-on': router.url.indexOf('/report/publisher') !== -1}" [routerLink]="['/report/publisher' + (userSession.isInternal() ? '' : '/' + userSession.accountId)]">
+    <ui-icon [icon]="'bar-chart'" [fw]="true"></ui-icon>
+    _L10N_(mainMenu.blockName.publisherReport)
+</a>
+<a class="c-mainmenu__button" *ngIf="canRunReferrerReport" [ngClass]="{'c-mainmenu__button-on': router.url.indexOf('/report/referrer') !== -1}" [routerLink]="['/report/referrer' + (userSession.isInternal() ? '' : '/' + userSession.accountId)]">
+    <ui-icon [icon]="'bar-chart'" [fw]="true"></ui-icon>
+    _L10N_(mainMenu.blockName.referrerReport)
+</a>
+<a class="c-mainmenu__button" *ngIf="userSession.role === 'INTERNAL'" [ngClass]="{'c-mainmenu__button-on': router.url === '/agency/select'}" [routerLink]="['/agency/select']">
+    <ui-icon [icon]="'exchange'" [fw]="true"></ui-icon>
+    _L10N_(mainMenu.blockName.selectAccount)
+</a>
+
+<ng-template [ngIf]="agencySession.hasData() && canViewAdvertisingAccount">
+    <a class="c-mainmenu__button c-mainmenu__divider" [ngClass]="{'c-mainmenu__button-on': router.url === '/agency/'+agencySession.id+'/account'}" [routerLink]="['/agency/'+agencySession.id+'/account']">
+        <h3 class="c-mainmenu__title" title="{{agencySession.name}}"><ui-icon [fw]="true" [displayStatus]="agencySession.displayStatus"></ui-icon> {{agencySession.name}}</h3>
+    </a>
+    <a class="c-mainmenu__button" [ngClass]="{'c-mainmenu__button-on': router.url === '/agency/'+agencySession.id+'/channels'}" [routerLink]="['/agency/'+agencySession.id+'/channels']">
+        <ui-icon [icon]="'crosshairs'" [fw]="true"></ui-icon>
+        _L10N_(flight.blockName.channels)
+    </a>
+    <a class="c-mainmenu__button" [ngClass]="{'c-mainmenu__button-on': router.url === '/agency/'+agencySession.id+'/advertisers'}" [routerLink]="['/agency/'+agencySession.id+'/advertisers']">
+        <ui-icon [icon]="'exchange'" [fw]="true"></ui-icon>
+        _L10N_(mainMenu.blockName.allAdvertisers)
+    </a>
+</ng-template>
+
+<ng-template [ngIf]="advertiserSession.hasData() && ((!agencySession.hasData() && canViewAdvertisingAccount) || (agencySession.hasData() && canViewAgencyAdvertiserAccount))">
+    <a class="c-mainmenu__button c-mainmenu__divider" [ngClass]="{'c-mainmenu__button-on': router.url === '/advertiser/'+advertiserSession.id+'/account'}" [routerLink]="['/advertiser/'+advertiserSession.id+'/account']">
+        <h3 class="c-mainmenu__title" title="{{advertiserSession.name}}"><ui-icon [fw]="true" [displayStatus]="advertiserSession.displayStatus"></ui-icon> {{advertiserSession.name}}</h3>
+    </a>
+    <a class="c-mainmenu__button" [ngClass]="{'c-mainmenu__button-on': router.url === '/advertiser/'+advertiserSession.id+'/flights'}" [routerLink]="['/advertiser/'+advertiserSession.id+'/flights']">
+        <ui-icon [icon]="'exchange'" [fw]="true"></ui-icon>
+        _L10N_(mainMenu.blockName.allFlights)
+    </a>
+    <a class="c-mainmenu__button" *ngIf="!agencySession.hasData()" [ngClass]="{'c-mainmenu__button-on': router.url === '/advertiser/'+advertiserSession.id+'/channels'}" [routerLink]="['/advertiser/'+advertiserSession.id+'/channels']">
+        <ui-icon [icon]="'crosshairs'" [fw]="true"></ui-icon>
+        _L10N_(flight.blockName.channels)
+    </a>
+    <a class="c-mainmenu__button" [ngClass]="{'c-mainmenu__button-on': router.url === '/advertiser/'+advertiserSession.id+'/creatives'}" [routerLink]="['/advertiser/'+advertiserSession.id+'/creatives']">
+        <ui-icon [icon]="'photo'" [fw]="true"></ui-icon>
+        _L10N_(flight.blockName.creatives)
+    </a>
+    <a class="c-mainmenu__button" [ngClass]="{'c-mainmenu__button-on': router.url === '/advertiser/'+advertiserSession.id+'/conversions'}" [routerLink]="['/advertiser/'+advertiserSession.id+'/conversions']">
+        <ui-icon [icon]="'shopping-cart'" [fw]="true"></ui-icon>
+        _L10N_(mainMenu.blockName.conversions)
+    </a>
+    <a class="c-mainmenu__button" [ngClass]="{'c-mainmenu__button-on': router.url === '/advertiser/'+advertiserSession.id+'/report'}" [routerLink]="['/advertiser/'+advertiserSession.id+'/report']">
+        <ui-icon [icon]="'bar-chart'" [fw]="true"></ui-icon>
+        _L10N_(mainMenu.blockName.report)
+    </a>
+    <a class="c-mainmenu__button" [ngClass]="{'c-mainmenu__button-on': router.url === '/advertiser/'+advertiserSession.id+'/conversionsReport'}" [routerLink]="['/advertiser/'+advertiserSession.id+'/conversionsReport']">
+        <ui-icon [icon]="'bar-chart'" [fw]="true"></ui-icon>
+        _L10N_(mainMenu.blockName.conversionsReport)
+    </a>
+    <a class="c-mainmenu__button" [ngClass]="{'c-mainmenu__button-on': router.url === '/advertiser/'+advertiserSession.id+'/domainsReport'}" [routerLink]="['/advertiser/'+advertiserSession.id+'/domainsReport']">
+        <ui-icon [icon]="'bar-chart'" [fw]="true"></ui-icon>
+        _L10N_(report.domainsReport)
+    </a>
+    <a class="c-mainmenu__button" [ngClass]="{'c-mainmenu__button-on': router.url === '/advertiser/'+advertiserSession.id+'/segmentsReport'}" [routerLink]="['/advertiser/'+advertiserSession.id+'/segmentsReport']">
+        <ui-icon [icon]="'bar-chart'" [fw]="true"></ui-icon>
+        _L10N_(report.segmentsReport)
+    </a>
+</ng-template>
+
+</ng-template>

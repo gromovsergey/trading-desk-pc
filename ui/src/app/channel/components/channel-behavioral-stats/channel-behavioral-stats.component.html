@@ -1,0 +1,102 @@
+<mat-dialog-content class="mat-typography">
+  <ui-loading *ngIf="wait, else showContent"></ui-loading>
+  <ng-template #showContent>
+    <h2>{{'channel.blockName.keywords.statistics' | translate}}</h2>
+
+    <div class="table-container mb-2" *ngIf="stats?.keywordHitsStat?.length, else noKeywordHitsStat">
+      <table mat-table [dataSource]="stats.keywordHitsStat">
+        <ng-container matColumnDef="keyword">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.keywords.keyword' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.keyword}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="hits">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.keywords.hits' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.hits}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.keywords.type' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.type}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayColumnsHits"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumnsHits;"></tr>
+      </table>
+    </div>
+
+    <ng-template #noKeywordHitsStat>
+      <ui-info-panel type="info">
+        {{'channel.notification.keywords.statEmpty' | translate}}
+      </ui-info-panel>
+    </ng-template>
+
+    <h2>{{'channel.blockName.channel.statistics' | translate}}</h2>
+
+    <div class="table-container mb-2" *ngIf="stats?.keywordTypeHitsStat?.length, else noKeywordTypeHitsStat">
+      <table mat-table [dataSource]="stats.keywordHitsStat">
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>{{'blockName.date' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{moment(stat.date).format(dateFormatShort)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="pageHits">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.keywords.pageHits' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.pageKeywordHits.hits}}&nbsp;({{stat.pageKeywordHits.percent}}%)</td>
+        </ng-container>
+
+        <ng-container matColumnDef="searchHits">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.keywords.searchHits' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.searchKeywordHits.hits}}&nbsp;({{stat.searchKeywordHits.percent}}%)</td>
+        </ng-container>
+
+        <ng-container matColumnDef="urlHits">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.keywords.urlHits' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.urlHits.hits}}&nbsp;({{stat.urlHits.percent}}%)</td>
+        </ng-container>
+
+        <ng-container matColumnDef="urlKeywordsHits">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.keywords.urlKeywordsHits' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.urlKeywordHits.hits}}&nbsp;({{stat.urlKeywordHits.percent}}%)</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalHits">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.keywords.totalHits' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.totalHits}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalUniques">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.keywords.totalUniques' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.totalUniques}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="activeDailyUniques">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.keywords.activeDailyUniques' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.activeDailyUniques}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="bids">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.bids' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.imps}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="clicks">
+          <th mat-header-cell *matHeaderCellDef>{{'blockName.clicks' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.clicks}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayColumnsTypeHits"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumnsTypeHits;"></tr>
+      </table>
+    </div>
+    <ng-template #noKeywordTypeHitsStat>
+      <ui-info-panel type="info">
+        {{'channel.notification.channel.statEmpty' | translate}}
+      </ui-info-panel>
+    </ng-template>
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{'button.close' | translate}}</button>
+</mat-dialog-actions>

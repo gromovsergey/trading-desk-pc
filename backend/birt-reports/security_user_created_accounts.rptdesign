@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.22" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 3.7.1.v20110905 Build &lt;3.7.1.v20110905-1820></property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source" id="7">
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://stat-test.ocslab.com/stat_test</property>
+            <property name="odaUser">oix</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">YWRzZXJ2ZXI=</encrypted-property>
+            <property name="odaJndiName">jdbc/birt</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Data" id="418">
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData"/>
+            <property name="dataSource">Data Source</property>
+            <xml-property name="queryText"><![CDATA[select setup_u.FIRST_NAME setup_user_first_name,
+       setup_u.LAST_NAME setup_user_last_name,
+       setup_u.status u_status,
+       al.log_date creation_date,
+       a.account_id,
+       a.name account_name,
+       a.status acc_status,
+       (case when (a.flags::int & x'1'::int)::bool then 'yes' else 'no' end) test_acc,
+       ar.name account_role
+from 	 
+    accountrole ar,
+    account a
+	     left join auditlog al on a.account_id = al.object_id and al.ACTION_TYPE_ID = 0 and al.OBJECT_TYPE_ID in (select object_type_id from objecttype where name like '%Account')
+	     left join users setup_u on al.user_id = setup_u.user_id
+where 
+   ar.account_role_id = a.role_id
+order by setup_u.first_name]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SETUP_USER_FIRST_NAME</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>200</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>SETUP_USER_FIRST_NAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SETUP_USER_FIRST_NAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>200</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SETUP_USER_LAST_NAME</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>200</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>SETUP_USER_LAST_NAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SETUP_USER_LAST_NAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>200</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CREATION_DATE</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>CREATION_DATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CREATION_DATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>7</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACCOUNT_ID</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ACCOUNT_ID</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACCOUNT_ID</design:label>
+            <design:formattingHints>
+              <design:displaySize>22</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACCOUNT_NAME</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>200</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ACCOUNT_NAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACCOUNT_NAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>200</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACCOUNT_ROLE</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>50</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ACCOUNT_ROLE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACCOUNT_ROLE</design:label>
+            <design:formattingHints>
+              <design:displaySize>50</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LDAP_UID</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>401</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>LDAP_UID</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LDAP_UID</design:label>
+            <design:formattingHints>
+              <design:displaySize>401</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">"Verdana"</property>
+            <property name="fontSize">10pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="6">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">custom</property>
+            <property name="height">9in</property>
+            <property name="width">18in</property>
+            <property name="orientation">landscape</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="471">
+            <property name="dataSet">Data</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">setup_user_first_name</property>
+                    <text-property name="displayName">setup_user_first_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["setup_user_first_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">setup_user_last_name</property>
+                    <text-property name="displayName">setup_user_last_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["setup_user_last_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">u_status</property>
+                    <text-property name="displayName">u_status</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["u_status"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">creation_date</property>
+                    <text-property name="displayName">creation_date</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["creation_date"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">account_id</property>
+                    <text-property name="displayName">account_id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["account_id"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">account_name</property>
+                    <text-property name="displayName">account_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["account_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">acc_status</property>
+                    <text-property name="displayName">acc_status</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["acc_status"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">test_acc</property>
+                    <text-property name="displayName">test_acc</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["test_acc"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">account_role</property>
+                    <text-property name="displayName">account_role</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["account_role"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="520"/>
+            <column id="521"/>
+            <column id="522"/>
+            <column id="523"/>
+            <column id="524"/>
+            <column id="525"/>
+            <column id="526"/>
+            <column id="527"/>
+            <column id="528"/>
+            <header>
+                <row id="472">
+                    <cell id="473">
+                        <label id="474">
+                            <text-property name="text">SETUP_USER_FIRST_NAME</text-property>
+                        </label>
+                    </cell>
+                    <cell id="475">
+                        <label id="476">
+                            <text-property name="text">SETUP_USER_LAST_NAME</text-property>
+                        </label>
+                    </cell>
+                    <cell id="477">
+                        <label id="478">
+                            <text-property name="text">U_STATUS</text-property>
+                        </label>
+                    </cell>
+                    <cell id="479">
+                        <label id="480">
+                            <text-property name="text">CREATION_DATE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="481">
+                        <label id="482">
+                            <text-property name="text">ACCOUNT_ID</text-property>
+                        </label>
+                    </cell>
+                    <cell id="483">
+                        <label id="484">
+                            <text-property name="text">ACCOUNT_NAME</text-property>
+                        </label>
+                    </cell>
+                    <cell id="485">
+                        <label id="486">
+                            <text-property name="text">ACC_STATUS</text-property>
+                        </label>
+                    </cell>
+                    <cell id="487">
+                        <label id="488">
+                            <text-property name="text">TEST_ACC</text-property>
+                        </label>
+                    </cell>
+                    <cell id="489">
+                        <label id="490">
+                            <text-property name="text">ACCOUNT_ROLE</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="491">
+                    <cell id="492">
+                        <data id="493">
+                            <property name="resultSetColumn">setup_user_first_name</property>
+                        </data>
+                    </cell>
+                    <cell id="494">
+                        <data id="495">
+                            <property name="resultSetColumn">setup_user_last_name</property>
+                        </data>
+                    </cell>
+                    <cell id="496">
+                        <data id="497">
+                            <property name="resultSetColumn">u_status</property>
+                        </data>
+                    </cell>
+                    <cell id="498">
+                        <data id="499">
+                            <property name="resultSetColumn">creation_date</property>
+                        </data>
+                    </cell>
+                    <cell id="500">
+                        <data id="501">
+                            <property name="resultSetColumn">account_id</property>
+                        </data>
+                    </cell>
+                    <cell id="502">
+                        <data id="503">
+                            <property name="resultSetColumn">account_name</property>
+                        </data>
+                    </cell>
+                    <cell id="504">
+                        <data id="505">
+                            <property name="resultSetColumn">acc_status</property>
+                        </data>
+                    </cell>
+                    <cell id="506">
+                        <data id="507">
+                            <property name="resultSetColumn">test_acc</property>
+                        </data>
+                    </cell>
+                    <cell id="508">
+                        <data id="509">
+                            <property name="resultSetColumn">account_role</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="510">
+                    <cell id="511"/>
+                    <cell id="512"/>
+                    <cell id="513"/>
+                    <cell id="514"/>
+                    <cell id="515"/>
+                    <cell id="516"/>
+                    <cell id="517"/>
+                    <cell id="518"/>
+                    <cell id="519"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

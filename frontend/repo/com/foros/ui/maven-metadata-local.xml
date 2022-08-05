@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <plugins>
+    <plugin>
+      <name>resource-consolidator</name>
+      <prefix>resource-consolidator</prefix>
+      <artifactId>resource-consolidator</artifactId>
+    </plugin>
+  </plugins>
+  <metadata>
+    <groupId>com.foros.ui</groupId>
+    <artifactId>rs-client-java</artifactId>
+    <versioning>
+      <release>trunk</release>
+      <versions>
+        <version>trunk</version>
+      </versions>
+<!--      <lastUpdated>20200503165526</lastUpdated>-->
+    </versioning>
+  </metadata>
+</metadata>

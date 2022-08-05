@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+    <persistence-unit name="AdServerPU" transaction-type="JTA">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>jdbc/stats</jta-data-source>
+        <properties>
+            <property name="hibernate.max_fetch_depth" value="1"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="hibernate.bytecode.use_reflection_optimizer" value="false"/>
+            <property name="hibernate.dialect" value="com.foros.persistence.hibernate.ForosPostgreSQLDialect"/>
+            <property name="hibernate.ejb.interceptor.session_scoped" value="com.foros.persistence.hibernate.HibernateInterceptor"/>
+            <property name="hibernate.ejb.cfgfile" value="hibernate.cfg.xml"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

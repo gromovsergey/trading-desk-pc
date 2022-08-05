@@ -1,0 +1,38 @@
+@import "~src/scss/variables";
+
+$size: 340px;
+
+.login-screen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .login-box {
+    width: $size;
+    padding: $gen-spacing;
+    margin: 0 auto;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, .1);
+    & > .custom-submit {
+      background: #303f9f;
+      color: #fff;
+      cursor: pointer;
+    }
+  }
+}
+
+.Default {
+  background: #303f9f !important;
+}
+
+.Pharmatic {
+  background: #303f9f !important;
+}
+
+.Genius {
+  background: #172e56 !important;
+}

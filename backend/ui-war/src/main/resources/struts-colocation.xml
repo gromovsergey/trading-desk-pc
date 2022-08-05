@@ -1,0 +1,54 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="colocation" extends="foros-default" namespace="/">
+        <action name="admin/colocation/list" class="com.foros.action.colocation.ListColocationAction" method="list">
+            <result name="success" type="tiles">admin.colocation.list</result>
+        </action>
+
+        <action name="admin/colocation/view" class="com.foros.action.colocation.ViewColocationAction" method="view">
+            <result name="success" type="tiles">admin.colocation.view</result>
+        </action>
+
+        <action name="admin/colocation/new" class="com.foros.action.colocation.EditColocationAction" method="create">
+            <result name="success" type="tiles">admin.colocation.new</result>
+        </action>
+
+        <action name="admin/colocation/edit" class="com.foros.action.colocation.EditColocationAction" method="edit">
+            <result name="success" type="tiles">admin.colocation.edit</result>
+        </action>
+
+        <action name="admin/colocation/create" class="com.foros.action.colocation.SaveColocationAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">/admin/colocation/view.action?id=${model.id}</param>
+            </result>
+            <result name="input" type="tiles">admin.colocation.new</result>
+        </action>
+
+        <action name="admin/colocation/update" class="com.foros.action.colocation.SaveColocationAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">/admin/colocation/view.action?id=${model.id}</param>
+            </result>
+            <result name="input" type="tiles">admin.colocation.edit</result>
+            <result name="version">
+                <param name="location">/admin/colocation/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/colocation/delete" class="com.foros.action.colocation.StatusColocationAction" method="delete">
+            <result name="success" type="redirect">
+                <param name="location">/admin/colocation/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/colocation/undelete" class="com.foros.action.colocation.StatusColocationAction" method="undelete">
+            <result name="success" type="redirect">
+                <param name="location">/admin/colocation/view.action?id=${id}</param>
+            </result>
+        </action>
+    </package>
+</struts>

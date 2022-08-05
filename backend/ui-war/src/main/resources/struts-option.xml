@@ -1,0 +1,67 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="option" extends="foros-default" namespace="/">
+
+        <action name="admin/Option/view"
+                class="com.foros.action.admin.option.ViewOptionAction"
+                method="view">
+            <result name="success" type="tiles">Option.view</result>
+        </action>
+
+        <action name="admin/Option/new"
+                class="com.foros.action.admin.option.EditOptionAction"
+                method="create">
+            <result name="success" type="tiles">Option.create</result>
+        </action>
+
+        <action name="admin/Option/edit"
+                class="com.foros.action.admin.option.EditOptionAction"
+                method="edit">
+            <result name="success" type="tiles">Option.edit</result>
+        </action>
+
+        <action name="admin/Option/remove"
+                class="com.foros.action.admin.option.EditOptionAction"
+                method="remove">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/OptionGroup/view</param>
+                <param name="id">${optionGroup.id}</param>
+            </result>
+        </action>
+
+        <action name="admin/Option/createCopy"
+                class="com.foros.action.admin.option.EditOptionAction"
+                method="createCopy">
+            <result name="success" type="tiles">Option.create</result>
+        </action>
+
+        <action name="admin/Option/create"
+            class="com.foros.action.admin.option.SaveOptionAction"
+            method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/Option/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">Option.create</result>
+        </action>
+
+        <action name="admin/Option/update"
+            class="com.foros.action.admin.option.SaveOptionAction"
+            method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/Option/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">Option.edit</result>
+            <result name="version">
+                <param name="location">/admin/Option/edit.action</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

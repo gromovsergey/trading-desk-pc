@@ -1,0 +1,164 @@
+<h2 mat-dialog-title>Автосоздание креативов</h2>
+<mat-dialog-content class="mat-typography">
+    <div #customContent></div>
+    <div #modal class="modal-body-scroll">
+        <ui-loading *ngIf="!creativeUpload && !uploadErrors"></ui-loading>
+        <div *ngIf="uploadErrors && uploadErrors.actionError">
+            <p *ngFor="let err of uploadErrors.actionError" class="help-block">{{err}}</p>
+        </div>
+        <div class="form-group" *ngIf="altTextOption && creativeUpload"
+             [ngClass]="{'has-error':uploadErrors && uploadErrors.options && uploadErrors.options[altTextOption.id]}">
+            <label>
+                {{altTextOption.defaultName}}
+                <ui-hint *ngIf="altTextOption.defaultLabel" [text]="altTextOption.defaultLabel"></ui-hint>
+                :
+                <span class="required" *ngIf="altTextOption.required">*</span>
+            </label>
+            <div>
+                <input type="text" placeholder="{{altTextOption.defaultName}}" [(ngModel)]="creativeUpload.altText"
+                       maxlength="2000" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group" *ngIf="clickUrlOption && creativeUpload"
+             [ngClass]="{'has-error':uploadErrors && uploadErrors.options && uploadErrors.options[clickUrlOption.id]}">
+            <label>
+                {{clickUrlOption.defaultName}}
+                <ui-hint *ngIf="clickUrlOption.defaultLabel" [text]="clickUrlOption.defaultLabel"></ui-hint>
+                :
+                <span class="required" *ngIf="clickUrlOption.required">*</span>
+            </label>
+            <div>
+                <input type="text" placeholder="{{clickUrlOption.defaultName}}" [(ngModel)]="creativeUpload.clickUrl" (ngModelChange)="checkUrl()"
+                       maxlength="2000" class="form-control">
+            </div>
+            <div *ngIf="uploadErrors && uploadErrors.options && uploadErrors.options[clickUrlOption.id]">
+                <p *ngFor="let err of uploadErrors.options[clickUrlOption.id].value" class="help-block">{{err}}</p>
+            </div>
+        </div>
+
+        <div class="form-group" *ngIf="landingPageUrlOption && creativeUpload"
+             [ngClass]="{'has-error':uploadErrors && uploadErrors.options && uploadErrors.options[landingPageUrlOption.id]}">
+            <label>
+                {{landingPageUrlOption.defaultName}}
+                <ui-hint *ngIf="landingPageUrlOption.defaultLabel" [text]="landingPageUrlOption.defaultLabel"></ui-hint>
+                :
+                <span class="required" *ngIf="landingPageUrlOption.required">*</span>
+            </label>
+            <div>
+                <input type="text" placeholder="{{landingPageUrlOption.defaultName}}"
+                       [(ngModel)]="creativeUpload.landingPageUrl"
+                       maxlength="2000" class="form-control">
+            </div>
+            <div *ngIf="uploadErrors && uploadErrors.options && uploadErrors.options[landingPageUrlOption.id]">
+                <p *ngFor="let err of uploadErrors.options[landingPageUrlOption.id].value"
+                   class="help-block">{{err}}</p>
+            </div>
+        </div>
+
+        <div class="form-group" *ngIf="crAdvTrackPixelOption && creativeUpload"
+             [ngClass]="{'has-error':uploadErrors && uploadErrors.options && uploadErrors.options[crAdvTrackPixelOption.id]}">
+            <label>
+                {{crAdvTrackPixelOption.defaultName}}
+                <ui-hint *ngIf="crAdvTrackPixelOption.defaultLabel"
+                         [text]="crAdvTrackPixelOption.defaultLabel"></ui-hint>
+                :
+                <span class="required" *ngIf="crAdvTrackPixelOption.required">*</span>
+            </label>
+            <div>
+                <input type="text" placeholder="{{crAdvTrackPixelOption.defaultName}}"
+                       [(ngModel)]="creativeUpload.crAdvTrackPixel"
+                       maxlength="2000" class="form-control">
+            </div>
+            <div *ngIf="uploadErrors && uploadErrors.options && uploadErrors.options[crAdvTrackPixelOption.id]">
+                <p *ngFor="let err of uploadErrors.options[crAdvTrackPixelOption.id].value"
+                   class="help-block">{{err}}</p>
+            </div>
+        </div>
+
+        <div class="form-group" *ngIf="crAdvTrackPixel2Option && creativeUpload"
+             [ngClass]="{'has-error':uploadErrors && uploadErrors.options && uploadErrors.options[crAdvTrackPixel2Option.id]}">
+            <label>
+                {{crAdvTrackPixel2Option.defaultName}}
+                <ui-hint *ngIf="crAdvTrackPixel2Option.defaultLabel"
+                         [text]="crAdvTrackPixel2Option.defaultLabel"></ui-hint>
+                :
+                <span class="required" *ngIf="crAdvTrackPixel2Option.required">*</span>
+            </label>
+            <div>
+                <input type="text" placeholder="{{crAdvTrackPixel2Option.defaultName}}"
+                       [(ngModel)]="creativeUpload.crAdvTrackPixel2"
+                       maxlength="2000" class="form-control">
+            </div>
+            <div *ngIf="uploadErrors && uploadErrors.options && uploadErrors.options[crAdvTrackPixel2Option.id]">
+                <p *ngFor="let err of uploadErrors.options[crAdvTrackPixel2Option.id].value"
+                   class="help-block">{{err}}</p>
+            </div>
+        </div>
+
+        <ui-panel
+                [ngClass]="{'has-error':uploadErrors && uploadErrors.contentCategories}"
+                [collapsible]="true"
+                [collapsed]="!uploadErrors || !uploadErrors.contentCategories"
+                [title]="'Категории рекламного материала'"
+                *ngIf="creativeUpload"
+        >
+            <div #body>
+                <ui-option-transfer *ngIf="categories" [options]="categories.contentCategories"
+                                    [selected]="selectedCategories"
+                                    (transferChange)="setContentCategories($event)"
+                                    [customSort]="sort">
+                </ui-option-transfer>
+                <div *ngIf="uploadErrors">
+                    <p *ngFor="let error of uploadErrors.contentCategories" class="help-block">{{error}}</p>
+                </div>
+            </div>
+        </ui-panel>
+
+        <div class="table-responsive"
+             *ngIf="creativeUpload && creativeUpload.imagesList && creativeUpload.imagesList.length > 0">
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th class="h-td__chbx">
+                        <input type="checkbox" (click)="toggleCheckedAll($event);">
+                    </th>
+                    <th>
+                        {{'blockName.name' | translate}}
+                    </th>
+                    <th>
+                        {{'creative.blockName.size' | translate}}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let image of creativeUpload.imagesList">
+                    <td style="width: 20px">
+                        <input type="checkbox" [disabled]="!image.sizeExist" [(ngModel)]="image.checked">
+                    </td>
+                    <td>
+                        {{image.name}}
+                    </td>
+                    <td>
+                        {{image.dimensions.width}} х {{image.dimensions.height}}
+                        <ui-hint *ngIf="!image.sizeExist"
+                                 text="{{'creative.upload.noSizeHint' | translate}}"></ui-hint>
+                    </td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive"
+             *ngIf="creativeUpload && (!creativeUpload.imagesList || creativeUpload.imagesList.length === 0)">
+            {{'creative.upload.noimages' | translate}}
+        </div>
+    </div>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button type="button" mat-button [disabled]="waitSubmit"
+            (click)="uploadCreatives($event)">{{'button.createNew' | translate}}</button>
+    <button type="button" mat-button mat-dialog-close>Закрыть</button>
+</mat-dialog-actions>

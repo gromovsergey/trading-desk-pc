@@ -1,0 +1,28 @@
+#
+# Birt Reports List
+#
+# ONLY reports from this file will be installed in FOROS
+#
+# Format:
+# -ID- # --------- Report File Name in SVN ------------------------------------- # -------- Report Name in FOROS --------------
+5      # isp_reporting_metric.rptdesign                                          # ISP: Reporting Metrics
+6      # isp_colo_update_stats.rptdesign                                         # ISP: Colo Update Stats
+
+20     # finance_client_invoicing.rptdesign                                      # Finance: Client Invoicing
+
+31     # channel_stats_public_channels.rptdesign                                 # Channel Stats: Public Channels
+
+42     # uid_age.rptdesign                                                       # Operations Reports: UID Age
+
+47     # webstats.rptdesign                                                      # WebStats
+
+54     # CTRCalculation/ctr_display_cpc.rptdesign                                # CTR Algorithm State: Display CPC Creative Group
+55     # CTRCalculation/ctr_channel_targeted_cpc_text.rptdesign                  # CTR Algorithm State: Channel Targeted CPC Text Group
+56     # CTRCalculation/ctr_text.rptdesign                                       # CTR Algorithm State: Text Group
+
+57     # isp_hid.rptdesign                                                       # ISP HID Stats
+59     # search_terms.rptdesign                                                  # Search Terms
+60     # search_engines.rptdesign                                                # Search Engines
+
+68     # security_list_of_foros_users.rptdesign                                    # Security: List of FOROS Users
+69     # security_user_created_accounts.rptdesign                                # Security: User Created Accounts

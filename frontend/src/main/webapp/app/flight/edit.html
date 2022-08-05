@@ -1,0 +1,177 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            {{title}}: {{flight.name}}
+        </h2>
+    </div>
+
+	<form (submit)="submitForm()">
+		<div class="row">
+			<div class="col-lg-8">
+
+                <div *ngIf="errors.actionError" class="alert alert-danger has-error" role="alert">
+                    <p *ngFor="let error of errors.actionError">{{error}}</p>
+                </div>
+
+                <ui-panel title="_L10N_(blockName.main)">
+                    <div #body>
+                        <ui-flight-edit-main [isLineItem]="isLineItem"
+                                             [errors]="errors"
+                                             [flight]="flight"
+                                             [spentBudget]="spentBudget"
+                                             [resetableFields]="resetableFields"
+                                             (resetField)="resetField(null, $event)">
+                        </ui-flight-edit-main>
+                    </div>
+                </ui-panel>
+
+                <ui-panel title="_L10N_(blockName.frequencyCaps)" [collapsible]="true" [collapsed]="true">
+                    <div #titlePanel>
+                        <span *ngIf="resetableFields && resetableFields.includes('frequencyCap')">
+                            <a (click)="resetField($event, 'frequencyCap')" class="c-panel__reset">
+                                <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+                            </a>
+                        </span>
+                        <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+                    </div>
+                    <div #body>
+                        <ui-flight-edit-fc [errors]="errors" [fc]="flight.frequencyCap"></ui-flight-edit-fc>
+                    </div>
+                </ui-panel>
+
+                <ui-panel title="_L10N_(blockName.blackList)" [collapsible]="true" [collapsed]="true">
+                    <div #titlePanel>
+                        <span *ngIf="resetableFields && resetableFields.includes('blackList')">
+                            <a (click)="resetField($event, 'blackList')" class="c-panel__reset">
+                                <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+                            </a>
+                        </span>
+                        <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+                    </div>
+                    <div #body>
+                        <div class="form-group" [ngClass]="{'has-error':errors.blackList}">
+                            <textarea class="form-control" rows="5" placeholder="_L10N_(blockName.blackList)"
+                                      [(ngModel)]="flight.blackList" name="blackList"></textarea>
+                            <p *ngFor="let error of errors.blackList" class="help-block">
+                                {{error}}
+                            </p>
+                        </div>
+                    </div>
+                </ui-panel>
+
+                <ui-panel title="_L10N_(blockName.whiteList)" [collapsible]="true" [collapsed]="true">
+                    <div #titlePanel>
+                        <span *ngIf="resetableFields && resetableFields.includes('whiteList')">
+                            <a (click)="resetField($event, 'whiteList')" class="c-panel__reset">
+                                <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+                            </a>
+                        </span>
+                        <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+                    </div>
+                    <div #body>
+                        <div class="form-group" [ngClass]="{'has-error':errors.whiteList}">
+                            <textarea class="form-control" rows="5" placeholder="_L10N_(blockName.whiteList)"
+                                      [(ngModel)]="flight.whiteList" name="whiteList"></textarea>
+                            <p *ngFor="let error of errors.whiteList" class="help-block">
+                                {{error}}
+                            </p>
+                        </div>
+                    </div>
+                </ui-panel>
+
+                <ui-panel title="_L10N_(flight.blockName.sites)" [collapsible]="true" [collapsed]="true">
+                    <div #titlePanel>
+                        <span *ngIf="resetableFields && resetableFields.includes('siteIds')">
+                            <a (click)="resetField($event, 'siteIds')" class="c-panel__reset">
+                                <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+                            </a>
+                        </span>
+                        <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+                    </div>
+                    <div #body>
+                        <ui-flight-edit-inventory [siteIds]="flight.siteIds" (onChange)="siteIdsChange($event)"></ui-flight-edit-inventory>
+                    </div>
+                </ui-panel>
+
+				<ui-panel title="_L10N_(flight.blockName.devices)" [collapsible]="true" [collapsed]="true">
+                    <div #titlePanel>
+                        <span *ngIf="resetableFields && resetableFields.includes('deviceChannelIds')">
+                            <a (click)="resetField($event, 'deviceChannelIds')" class="c-panel__reset">
+                                <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+                            </a>
+                        </span>
+                        <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+                    </div>
+					<div #body>
+						<ui-flight-edit-devices [flight]="flight" (onChange)="devicesChange($event)"></ui-flight-edit-devices>
+					</div>
+				</ui-panel>
+
+				<ui-panel title="_L10N_(flight.blockName.geotarget)" [collapsible]="true" [collapsed]="true">
+                    <div #titlePanel>
+                        <span *ngIf="resetableFields && resetableFields.includes('geoChannelIds')">
+                            <a (click)="resetField($event, 'geoChannelIds')" class="c-panel__reset">
+                                <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+                            </a>
+                        </span>
+                        <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+                    </div>
+					<div #body>
+						<ui-flight-edit-geo [flightId]="flight.id"
+                                            [geoChannelIds]="flight.geoChannelIds"
+                                            [excludedGeoChannelIds]="flight.excludedGeoChannelIds"
+                                            (onGeotargetChange)="geoChange($event)"
+                                            (onExcludedGeotargetChange)="excludedGeoChange($event)"
+                                            (onGeoAdrressChange)="geoAddressesChange($event)"
+                                            (onExcludedGeoAddressChange)="excludedGeoAddressesChange($event)"></ui-flight-edit-geo>
+					</div>
+				</ui-panel>
+
+                <ui-panel [title]="'_L10N_(flight.blockName.deliverySchedule)' + ' (' + '_L10N_(messages.timeZone)' + ': ' + L10nTimeZones[advertiserSession.timeZone] + ')'"
+                          [collapsible]="true"
+                          [collapsed]="true">
+                    <div #titlePanel>
+                        <span *ngIf="resetableFields && resetableFields.includes('schedules')">
+                            <a (click)="resetField($event, 'schedules')" class="c-panel__reset">
+                                <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+                            </a>
+                        </span>
+                        <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+                    </div>
+                    <div #body>
+                        <ui-flight-edit-dschedule [schedules]="flight.schedules"
+                                                  (onScheduleChange)="onDScheduleChange($event)"></ui-flight-edit-dschedule>
+                    </div>
+                </ui-panel>
+
+                <ui-panel title="_L10N_(flight.blockName.conversionsTracking)" [collapsible]="true" [collapsed]="true">
+                    <div #titlePanel>
+                        <span *ngIf="resetableFields && resetableFields.includes('conversionIds')">
+                            <a (click)="resetField($event, 'conversionIds')" class="c-panel__reset">
+                                <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+                            </a>
+                        </span>
+                        <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+                    </div>
+                    <div #body>
+                        <ui-flight-edit-conversions [conversionIds]="flight.conversionIds"
+                                                    (onChange)="convTrackingChange($event)"></ui-flight-edit-conversions>
+                    </div>
+                </ui-panel>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<button [disabled]="waitSubmit" type="submit" class="btn btn-primary">
+                    <ui-icon *ngIf="waitSubmit" [fw]="true" [spin]="true" [icon]="'spinner'"></ui-icon>
+                    {{mode === 'add' ? '_L10N_(button.add)' : '_L10N_(button.save)'}}
+                </button>
+				<a *ngIf="!waitSubmit" [routerLink]="backUrl" class="btn btn-default">_L10N_(button.cancel)</a>
+			</div>
+		</div>
+	</form>
+</section>

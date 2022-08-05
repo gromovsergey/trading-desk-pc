@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name=".InternalUserBase" extends=".mainLayout">
+        <put-attribute name="title" value="/account/userTitle.jsp" />
+        <put-attribute name="taskTitle" value="page.title.users"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.admin"/>
+    </definition>
+
+    <definition name=".InternalAccountUser" extends=".InternalUserBase">
+        <put-attribute name="moduleName" value="admin/internal/account/user"/>
+        <put-attribute name="entityName" value="User"/>
+    </definition>
+
+    <definition name=".InternalUser" extends=".InternalUserBase">
+        <put-attribute name="moduleName" value="admin/InternalUser"/>
+        <put-attribute name="entityName" value="InternalUser"/>
+    </definition>
+
+    <definition name="admin.user.internalUsersList" extends=".InternalUser">
+        <put-attribute name="titleProperty" value="InternalUser.plural"/>
+        <put-attribute name="body" value="/admin/internalUser/internalUserMain.jsp"/>
+    </definition>
+
+    <definition name="admin.account.user.internalView" extends=".InternalAccountUser">
+        <put-attribute name="body" value="/admin/internalUser/internalUserView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.user.internalView" extends=".InternalUser">
+        <put-attribute name="body" value="/admin/internalUser/internalUserView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.account.user.internalEdit" extends=".InternalAccountUser">
+        <put-attribute name="body" value="/admin/internalUser/internalUserEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.user.internalEdit" extends=".InternalUser">
+        <put-attribute name="body" value="/admin/internalUser/internalUserEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.user.internalCreate" extends=".InternalAccountUser">
+        <put-attribute name="body" value="/admin/internalUser/internalUserEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+
+</tiles-definitions>

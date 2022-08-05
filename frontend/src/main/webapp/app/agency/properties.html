@@ -1,0 +1,40 @@
+<div class="row" *ngIf="showBudget">
+    <div class="col-xs-12">
+        <small class="stats-label">_L10N_(blockName.budget) _L10N_(blockName.budget.spent) / _L10N_(blockName.budget.available):</small>
+        <strong>{{spentBudget | currency:currencyCode:'symbol':'1.2-2'}} / {{agency.prepaidAmount | currency:currencyCode:'symbol':'1.2-2'}}</strong>
+        <h4>
+            <div class="progress">
+                <div class="progress-bar" #budgetBar></div>
+            </div>
+        </h4>
+    </div>
+</div>
+
+<div class="row">
+    <ui-cell title="_L10N_(blockName.status)">
+        <div #body>
+            <ui-icon [fw]="true" [displayStatus]="agency.displayStatus"></ui-icon>
+            {{L10nMajorStatuses[agency.displayStatus.split('|')[0]]}}
+        </div>
+    </ui-cell>
+    <ui-cell title="_L10N_(blockName.country)">
+        <div #body>
+            {{L10nCountries[agency.countryCode]}}
+        </div>
+    </ui-cell>
+    <ui-cell title="_L10N_(blockName.currency)">
+        <div #body>
+            {{agency.currencyCode}}&nbsp;({{0 | currency:agency.currencyCode:'symbol':'1.0-0' | replace:'&nbsp;':'' | replace:'&nbsp;|[0 ]+':''}})
+        </div>
+    </ui-cell>
+    <ui-cell title="_L10N_(messages.timeZone)">
+        <div #body>
+            {{L10nTimeZones[agency.timeZone]}}
+        </div>
+    </ui-cell>
+    <ui-cell *ngIf="agency.selfServiceFlag && showSelfServiceCommission" title="_L10N_(agencyAccount.selfServiceCommission)">
+        <div #body>
+            {{agency.selfServiceCommission}}%
+        </div>
+    </ui-cell>
+</div>

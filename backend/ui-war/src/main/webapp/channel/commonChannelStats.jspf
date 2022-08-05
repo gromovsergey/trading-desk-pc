@@ -1,0 +1,45 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="ui" %>
+
+<c:if test="${liveAssociations != null || performance != null}">
+
+    <ui:fieldGroup>
+
+        <c:if test="${lastUsedRelativeDate != null}">
+            <ui:field labelKey="channel.usage.lastUsed">
+                <ui:text text="${lastUsedRelativeDate}"/>
+            </ui:field>
+        </c:if>
+
+        <c:if test="${liveAssociations != null}">
+            <ui:field labelKey="channel.usage.liveAdvertisers">
+                <c:set var="textVal">
+                    <fmt:formatNumber value="${liveAssociations.liveAdvertisers}" groupingUsed="true"/>
+                </c:set>
+                <ui:text text="${pageScope.textVal}"/>
+            </ui:field>
+
+            <ui:field labelKey="channel.usage.liveCampaigns">
+                <c:set var="textVal">
+                    <fmt:formatNumber value="${liveAssociations.liveCampaigns}" groupingUsed="true"/>
+                </c:set>
+                <ui:text text="${pageScope.textVal}"/>
+            </ui:field>
+
+            <ui:field labelKey="channel.usage.liveCreativeGroups">
+                <c:set var="textVal">
+                    <fmt:formatNumber value="${liveAssociations.liveCreativeGroups}" groupingUsed="true"/>
+                </c:set>
+                <ui:text text="${pageScope.textVal}"/>
+            </ui:field>
+        </c:if>
+
+        <ui:simpleField labelKey="channel.usage.channelLifetimeImpressions" value="${performance.lifetimeImps==null?0:performance.lifetimeImps}"/>
+        <c:if test="${ad:isInternal()}">
+            <ui:simpleField labelKey="channel.usage.channelLifetimeClicks" value="${performance.lifetimeClicks==null?0:performance.lifetimeClicks}"/>
+            <ui:simpleField labelKey="channel.usage.channelLifetimeValue" value="${ad:formatAndConvertIntoCurrency(performance.lifetimeRevenue, currencyExchangeRate)}"/>
+        </c:if>
+
+    </ui:fieldGroup>
+</c:if>

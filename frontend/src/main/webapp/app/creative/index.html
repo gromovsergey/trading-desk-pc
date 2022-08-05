@@ -1,0 +1,15 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait && !!creative">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [fw]="true" [displayStatus]="creative.displayStatus"></ui-icon> {{title}}
+
+            <div class="btn-group">
+                <button [routerLink]="['/advertiser/'+advertiser.id+'/creative/'+creative.id+'/edit']" class="btn btn-default">_L10N_(button.edit)</button>
+            </div>
+        </h2>
+    </div>
+
+    <div class="h-pretext">{{creative|json}}</div>
+</section>

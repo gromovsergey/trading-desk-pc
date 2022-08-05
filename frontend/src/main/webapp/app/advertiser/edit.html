@@ -1,0 +1,49 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            {{title}}
+        </h2>
+    </div>
+
+	<form (submit)="submitForm()">
+        <div class="row">
+            <div class="col-lg-8">
+
+                <div *ngIf="errors.actionError" class="alert alert-danger has-error" role="alert">
+                    <p *ngFor="let error of errors.actionError">{{error}}</p>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':errors.name}">
+                    <label>_L10N_(blockName.name)<sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup></label>
+                    <div>
+                        <input name="name" #mName="ngModel" [(ngModel)]="advertiser.name" required type="text" placeholder="_L10N_(blockName.name)" class="form-control">
+                    </div>
+                    <p *ngFor="let error of errors.name" class="help-block">{{error}}</p>
+                </div>
+
+                <div *ngIf="canEditCommission" class="form-group" [ngClass]="{'has-error':errors.commissionPercent || errors.commission}">
+                    <label>_L10N_(advertiserAccount.commission)(%)<sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup></label>
+                    <div>
+                        <input name="commission" #mName="ngModel" [(ngModel)]="advertiser.commission" required type="text" placeholder="_L10N_(advertiserAccount.commission)" class="form-control">
+                    </div>
+                    <p *ngFor="let error of errors.commissionPercent" class="help-block">{{error}}</p>
+                    <p *ngFor="let error of errors.commission" class="help-block">{{error}}</p>
+                </div>
+
+            </div>
+        </div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<button [disabled]="waitSubmit" type="submit" class="btn btn-primary">
+                    <ui-icon *ngIf="waitSubmit" [fw]="true" [spin]="true" [icon]="'spinner'"></ui-icon>
+                    {{mode === 'add' ? '_L10N_(button.add)' : '_L10N_(button.save)'}}
+                </button>
+				<a *ngIf="!waitSubmit" [routerLink]="backUrl" class="btn btn-default">_L10N_(button.cancel)</a>
+			</div>
+		</div>
+	</form>
+</section>

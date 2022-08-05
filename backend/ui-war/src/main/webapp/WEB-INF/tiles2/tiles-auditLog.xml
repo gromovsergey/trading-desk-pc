@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name="AuditLog.view" extends=".mainLayout">
+        <put-attribute name="taskTitle" value="page.title.auditLog" type="string"/>
+        <put-attribute name="moduleName" value="admin/auditLog"/>
+        <put-attribute name="path" value="/auditLog/logPath.jsp"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.admin"/>
+        <put-attribute name="title" value="/auditLog/logTitle.jsp"/>
+        <put-attribute name="body" value="/auditLog/logView.jsp"/>
+        <put-attribute name="isAuditLogPage" value="true"/>
+    </definition>
+
+    <definition name="AuditLog.viewRecords" template="/auditLog/logRecordsView.jsp"/>
+</tiles-definitions>

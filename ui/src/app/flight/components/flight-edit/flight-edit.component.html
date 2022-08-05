@@ -1,0 +1,173 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1>{{((isLineItem ? 'lineItem' : 'flight') + '.button.' + (mode === 'edit' ? 'edit' : 'add')) | translate}}</h1>
+
+  <ui-info-panel type="danger" *ngIf="errors.actionError" class="mb-2">
+    <p *ngFor="let error of errors.actionError">{{error}}</p>
+  </ui-info-panel>
+
+  <form (submit)="submitForm()">
+
+    <ui-panel class="form-panel" title="{{'blockName.main' | translate}}">
+
+      <ui-flight-edit-main [isLineItem]="isLineItem"
+                           [errors]="errors"
+                           [flight]="flight"
+                           [spentBudget]="spentBudget"
+                           [resetableFields]="resetableFields"
+                           (resetField)="resetField(null, $event)">
+      </ui-flight-edit-main>
+    </ui-panel>
+
+    <ui-panel title="{{'blockName.limits' | translate }}" class="form-panel" [collapsed]="true">
+      <ng-container *ngIf="resetableFields && resetableFields.includes('limits')">
+        <i
+            class="material-icons"
+            (click)="resetField($event, 'limits')"
+            style="cursor: pointer;position: absolute;right: 45px;top: 20px;font-size: 20px;color: #416e84;"
+        >refresh</i>
+      </ng-container>
+      <ui-loading *ngIf="isLineItem && resetableFields === null"></ui-loading>
+      <ui-flight-edit-limits [errors]="errors" [flight]="flight"></ui-flight-edit-limits>
+    </ui-panel>
+
+    <ui-panel title="{{'blockName.frequencyCaps' | translate }}" class="form-panel" [collapsed]="true">
+      <ng-container *ngIf="resetableFields && resetableFields.includes('frequencyCap')">
+          <i
+                  class="material-icons"
+                  (click)="resetField($event, 'frequencyCap')"
+                  style="cursor: pointer;position: absolute;right: 45px;top: 20px;font-size: 20px;color: #416e84;"
+          >refresh</i>
+      </ng-container>
+      <ui-loading *ngIf="isLineItem && resetableFields === null"></ui-loading>
+      <ui-flight-edit-frequency-caps [errors]="errors" [frequencyCaps]="flight.frequencyCap"></ui-flight-edit-frequency-caps>
+    </ui-panel>
+
+    <ui-panel title="{{'blockName.blackList' | translate}}" class="form-panel" [collapsed]="true">
+      <ng-container *ngIf="resetableFields && resetableFields.includes('blackList')">
+        <i
+                class="material-icons"
+                (click)="resetField($event, 'blackList')"
+                style="cursor: pointer;position: absolute;right: 45px;top: 20px;font-size: 20px;color: #416e84;"
+        >refresh</i>
+      </ng-container>
+      <ui-loading *ngIf="isLineItem && resetableFields === null"></ui-loading>
+      <div class="form-group">
+        <ui-info-panel *ngIf="errors.blackList" type="danger">
+          <p *ngFor="let error of errors.blackList">{{error}}</p>
+        </ui-info-panel>
+        <mat-form-field class="width-full">
+          <textarea rows="5" matInput
+                    [(ngModel)]="flight.blackList"
+                    name="blackList"></textarea>
+        </mat-form-field>
+      </div>
+    </ui-panel>
+
+    <ui-panel title="{{'blockName.whiteList' | translate}}"
+              class="form-panel" [collapsed]="true">
+      <ng-container *ngIf="resetableFields && resetableFields.includes('whiteList')">
+        <i
+                class="material-icons"
+                (click)="resetField($event, 'whiteList')"
+                style="cursor: pointer;position: absolute;right: 45px;top: 20px;font-size: 20px;color: #416e84;"
+        >refresh</i>
+      </ng-container>
+      <ui-loading *ngIf="isLineItem && resetableFields === null"></ui-loading>
+
+      <ui-info-panel *ngIf="errors.whiteList" type="danger">
+        <p *ngFor="let error of errors.whiteList">{{error}}</p>
+      </ui-info-panel>
+      <mat-form-field class="width-full">
+          <textarea rows="5" matInput
+                    [(ngModel)]="flight.whiteList"
+                    name="whiteList"></textarea>
+      </mat-form-field>
+    </ui-panel>
+
+    <ui-panel title="{{'flight.blockName.sites' | translate}}"
+              class="form-panel" [collapsed]="true">
+      <ng-container *ngIf="resetableFields && resetableFields.includes('siteIds')">
+        <i
+                class="material-icons"
+                (click)="resetField($event, 'siteIds')"
+                style="cursor: pointer;position: absolute;right: 45px;top: 20px;font-size: 20px;color: #416e84;"
+        >refresh</i>
+      </ng-container>
+      <ui-loading *ngIf="isLineItem && resetableFields === null"></ui-loading>
+      <ui-flight-edit-inventory [siteIds]="flight.siteIds" (sourceChange)="siteIdsChange($event)"></ui-flight-edit-inventory>
+    </ui-panel>
+
+    <ui-panel title="{{'flight.blockName.devices' | translate}}"
+              class="form-panel" [collapsed]="true">
+      <ng-container *ngIf="resetableFields && resetableFields.includes('deviceChannelIds')">
+        <i
+                class="material-icons"
+                (click)="resetField($event, 'deviceChannelIds')"
+                style="cursor: pointer;position: absolute;right: 45px;top: 20px;font-size: 20px;color: #416e84;"
+        >refresh</i>
+      </ng-container>
+      <ui-loading *ngIf="isLineItem && resetableFields === null"></ui-loading>
+      <ui-flight-edit-devices [flight]="flight" (deviceChange)="devicesChange($event)"></ui-flight-edit-devices>
+    </ui-panel>
+
+    <ui-panel title="{{'flight.blockName.geotarget' | translate}}"
+              class="form-panel" [collapsed]="true">
+      <ng-container *ngIf="resetableFields && resetableFields.includes('geoChannelIds')">
+        <i
+                class="material-icons"
+                (click)="resetField($event, 'geoChannelIds')"
+                style="cursor: pointer;position: absolute;right: 45px;top: 20px;font-size: 20px;color: #416e84;"
+        >refresh</i>
+      </ng-container>
+      <ui-loading *ngIf="isLineItem && resetableFields === null"></ui-loading>
+      <ui-flight-edit-geo [flightId]="flight.id"
+                          [geoChannelIds]="flight.geoChannelIds"
+                          [excludedGeoChannelIds]="flight.excludedGeoChannelIds"
+                          (geotargetChange)="geoChange($event)"
+                          (excludedGeotargetChange)="excludedGeoChange($event)"
+                          (geoAddressChange)="geoAddressesChange($event)"
+                          (excludedGeoAddressChange)="excludedGeoAddressesChange($event)"></ui-flight-edit-geo>
+    </ui-panel>
+
+    <ui-panel title="{{'flight.blockName.deliverySchedule' | translate}}
+              ({{'messages.timeZone' | translate}}:
+              {{L10nTimeZones[advertiserSession.timeZone] | translate}})"
+              class="form-panel" [collapsed]="true">
+      <ng-container *ngIf="resetableFields && resetableFields.includes('schedules')">
+        <i
+                class="material-icons"
+                (click)="resetField($event, 'schedules')"
+                style="cursor: pointer;position: absolute;right: 45px;top: 20px;font-size: 20px;color: #416e84;"
+        >refresh</i>
+      </ng-container>
+      <ui-loading *ngIf="isLineItem && resetableFields === null"></ui-loading>
+      <ui-flight-edit-dschedule [schedules]="flight.schedules"
+                                (scheduleChange)="onDScheduleChange($event)"></ui-flight-edit-dschedule>
+    </ui-panel>
+
+    <ui-panel title="{{'flight.blockName.conversionsTracking' | translate}}"
+              class="form-panel" [collapsed]="true">
+      <ng-container *ngIf="resetableFields && resetableFields.includes('conversionIds')">
+        <i
+                class="material-icons"
+                (click)="resetField($event, 'conversionIds')"
+                style="cursor: pointer;position: absolute;right: 45px;top: 20px;font-size: 20px;color: #416e84;"
+        >refresh</i>
+      </ng-container>
+      <ui-loading *ngIf="isLineItem && resetableFields === null"></ui-loading>
+      <ui-flight-edit-conversions [conversionIds]="flight.conversionIds"
+                                  (conversionChange)="convTrackingChange($event)"></ui-flight-edit-conversions>
+    </ui-panel>
+
+    <div class="form-footer mb-2">
+      <ui-submit-button title="{{mode === 'add' ? 'button.add' : 'button.save' | translate}}"
+                        [wait]="waitSubmit"></ui-submit-button>
+      <button type="button"
+              mat-flat-button
+              [disabled]="waitSubmit"
+              [routerLink]="backUrl">{{'button.cancel' | translate}}</button>
+    </div>
+  </form>
+</ng-template>

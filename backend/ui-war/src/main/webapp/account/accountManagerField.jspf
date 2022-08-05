@@ -1,0 +1,9 @@
+<s:if test="accountManager != null">
+    <ui:field labelKey="account.accountManager">
+        <ui:text text="${accountManager.nameWithStatusSuffix}"/><br/>
+        <ui:text text="${accountManager.email}"/>
+        <c:if test="${not empty accountManager.phone}">
+                <br/><ui:text text="${accountManager.phone}"/>
+        </c:if>
+    </ui:field>
+</s:if>

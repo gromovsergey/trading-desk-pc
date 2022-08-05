@@ -1,0 +1,25 @@
+
+.panel-icon {
+  margin-right: 1rem;
+}
+
+.panel{
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  &-title {
+    display: flex;
+    align-items: center;
+  }
+
+  &-button {
+    margin-right: 10px;
+    border-radius: 10px;
+    box-shadow: none !important;
+    background-color: #ffffff;
+
+    &:hover {
+      background-color: #e3e3e3;
+    }
+  }
+}

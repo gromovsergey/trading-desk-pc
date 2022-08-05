@@ -1,0 +1,21 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait && !_wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [fw]="true" [displayStatus]="advertiser.displayStatus"></ui-icon> {{title}}
+
+            <div class="btn-group" *ngIf="canCreateChannel">
+                <ui-dropdown-btn title="_L10N_(button.createNew)" [menu]="createMenu"></ui-dropdown-btn>
+            </div>
+            <ui-channel-report-upload *ngIf="canDownloadReports" [accountId]="advertiser.id"></ui-channel-report-upload>
+        </h2>
+    </div>
+
+    <ui-channel-list [channels]="channels"
+                     [showAccountColumn]="false"
+                     [showVisibilityColumn]="false"
+                     [canUpdateChannels]="canUpdateChannels"
+                     [canLocalize]="false">
+    </ui-channel-list>
+</section>

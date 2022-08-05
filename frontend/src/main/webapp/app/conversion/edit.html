@@ -1,0 +1,109 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            {{title}}
+        </h2>
+    </div>
+
+	<form (submit)="submitForm()">
+        <div class="row">
+            <div class="col-lg-8">
+
+                <div *ngIf="errors.actionError" class="alert alert-danger has-error" role="alert">
+                    <p *ngFor="let error of errors.actionError">{{error}}</p>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':errors.conversion?.name}">
+                    <label>_L10N_(blockName.name)<sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup></label>
+                    <div>
+                        <input name="conversion.name" #mName="ngModel" [(ngModel)]="conversion.conversion.name" required type="text" placeholder="_L10N_(blockName.name)" class="form-control">
+                    </div>
+                    <p *ngFor="let error of errors.conversion?.name" class="help-block">{{error}}</p>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':errors.conversion?.conversionCategory}">
+                    <label>_L10N_(advertiserAccount.conversion.category)
+                        <sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup>
+                    </label>
+                    <select required
+                            name="conversion.conversionCategory"
+                            class="form-control"
+                            #conversionCategory
+                            [(ngModel)]="conversion.conversion.conversionCategory">
+                        <option value="PURCHASE">_L10N_(advertiserAccount.conversion.type.PURCHASE)</option>
+                        <option value="ADD_TO_CART">_L10N_(advertiserAccount.conversion.type.ADD_TO_CART)</option>
+                        <option value="KEY_PAGE_VIEW">_L10N_(advertiserAccount.conversion.type.KEY_PAGE_VIEW)</option>
+                        <option value="LANDING_PAGE_VIEW">_L10N_(advertiserAccount.conversion.type.LANDING_PAGE_VIEW)</option>
+                        <option value="SIGNUP">_L10N_(advertiserAccount.conversion.type.SIGNUP)</option>
+                        <option value="LEAD">_L10N_(advertiserAccount.conversion.type.LEAD)</option>
+                        <option value="OTHER">_L10N_(advertiserAccount.conversion.type.OTHER)</option>
+                    </select>
+                    <p *ngFor="let error of errors.conversion?.conversionCategory" class="help-block">{{error}}</p>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':errors.conversion?.url}">
+                    <label>_L10N_(advertiserAccount.conversion.pageURL)</label>
+                    <div>
+                        <input name="conversion.url"
+                               #mName="ngModel"
+                               [(ngModel)]="conversion.conversion.url"
+                               type="text"
+                               placeholder="_L10N_(advertiserAccount.conversion.pageURL)"
+                               class="form-control">
+                    </div>
+                    <p *ngFor="let error of errors.conversion?.url" class="help-block">{{error}}</p>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':errors.conversion?.impWindow}">
+                    <label>
+                        _L10N_(advertiserAccount.conversion.postImpressionConversionWindow)
+                        <ui-hint [text]="'_L10N_(advertiserAccount.conversion.postImpressionConversionWindow.hint)'"></ui-hint>
+                        <sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup>
+                    </label>
+                    <div>
+                        <input name="conversion.impWindow"
+                               #mName="ngModel"
+                               [(ngModel)]="conversion.conversion.impWindow"
+                               required
+                               type="text"
+                               placeholder="_L10N_(advertiserAccount.conversion.postImpressionConversionWindow)"
+                               class="form-control">
+                    </div>
+                    <p *ngFor="let error of errors.conversion?.impWindow" class="help-block">{{error}}</p>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':errors.conversion?.clickWindow}">
+                    <label>
+                        _L10N_(advertiserAccount.conversion.postClickConversionWindow)
+                        <ui-hint [text]="'_L10N_(advertiserAccount.conversion.postClickConversionWindow.hint)'"></ui-hint>
+                        <sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup>
+                    </label>
+                    <div>
+                        <input name="conversion.clickWindow"
+                               #mName="ngModel"
+                               [(ngModel)]="conversion.conversion.clickWindow"
+                               required
+                               type="text"
+                               placeholder="_L10N_(advertiserAccount.conversion.postClickConversionWindow)"
+                               class="form-control">
+                    </div>
+                    <p *ngFor="let error of errors.conversion?.clickWindow" class="help-block">{{error}}</p>
+                </div>
+
+            </div>
+        </div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<button [disabled]="waitSubmit" type="submit" class="btn btn-primary">
+                    <ui-icon *ngIf="waitSubmit" [fw]="true" [spin]="true" [icon]="'spinner'"></ui-icon>
+                    {{mode === 'add' ? '_L10N_(button.add)' : '_L10N_(button.save)'}}
+                </button>
+				<a *ngIf="!waitSubmit" [routerLink]="backUrl" class="btn btn-default">_L10N_(button.cancel)</a>
+			</div>
+		</div>
+	</form>
+</section>

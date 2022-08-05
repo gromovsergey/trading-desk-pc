@@ -1,0 +1,52 @@
+<project basedir=".">
+    <condition property="remoteRepositoryUrl" value="${repositoryUrl}" else="">
+        <not>
+            <contains string="${version}" substring="-SNAPSHOT"/>
+        </not>
+    </condition>
+    <condition property="remoteRepositoryId" value="${repositoryId}" else="">
+        <not>
+            <contains string="${version}" substring="-SNAPSHOT"/>
+        </not>
+    </condition>
+    <condition property="remoteSnapshotsRepositoryUrl" value="${snapshotsRepositoryUrl}" else="">
+        <contains string="${version}" substring="-SNAPSHOT"/>
+    </condition>
+    <condition property="remoteSnapshotsRepositoryId" value="${snapshotsRepositoryId}" else="">
+        <contains string="${version}" substring="-SNAPSHOT"/>
+    </condition>
+    <target name="deploy.project">
+        <property name="tmpPomFile" value="${pomFile}.tmp.pom"/>
+
+        <copyfile src="${pomFile}" dest="${tmpPomFile}" forceoverwrite="true"/>
+        <replace file="${tmpPomFile}" token="##VERSION##" value="${version}"/>
+
+        <exec executable="mvn" failonerror="true">
+            <arg value="org.apache.maven.plugins:maven-deploy-plugin:2.8.2:deploy-file"/>
+            <arg value="-Dfile=${jarFile}"/>
+            <arg value="-Dsources=${sourcesFile}"/>
+            <arg value="-DpomFile=${tmpPomFile}"/>
+            <arg value="-DgroupId=${groupId}"/>
+            <arg value="-DartifactId=${artifactId}"/>
+            <arg value="-Dversion=${version}"/>
+            <arg value="-DrepositoryId=${remoteRepositoryId}${remoteSnapshotsRepositoryId}"/>
+            <arg value="-Durl=${remoteRepositoryUrl}${remoteSnapshotsRepositoryUrl}"/>
+            <arg value="-Dpackaging=jar"/>
+            <arg value="-DgeneratePom=false"/>
+            <arg value="-DcreateChecksum=true"/>
+        </exec>
+
+        <delete file="${tmpPomFile}"/>
+    </target>
+
+    <target name="generate.test.properties">
+        <java classname="com.foros.rs.sandbox.ForosApiSandboxGenerator" failonerror="true">
+            <classpath >
+                <pathelement path="${testClasspath}"/>
+            </classpath>
+            <arg value="${sourcePropertiesFilePath}"/>
+            <arg value="${targetPropertiesFilePath}"/>
+        </java>
+    </target>
+
+</project>

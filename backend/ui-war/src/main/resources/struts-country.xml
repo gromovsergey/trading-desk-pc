@@ -1,0 +1,59 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="country" extends="foros-default" namespace="/">
+        <action name="admin/Country/main" class="com.foros.action.admin.country.ListCountryAction" method="list">
+            <result name="success" type="tiles">Country.main</result>
+        </action>
+
+        <action name="admin/Country/edit" class="com.foros.action.admin.country.EditCountryAction" method="edit">
+            <result name="success" type="tiles">Country.edit</result>
+        </action>
+
+        <action name="admin/Country/view" class="com.foros.action.admin.country.ViewCountryAction" method="view">
+            <result name="success" type="tiles">Country.view</result>
+        </action>
+
+        <action name="admin/Country/save" class="com.foros.action.admin.country.SaveCountryAction" method="save">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">1048576</param>
+            </interceptor-ref>
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">/admin/Country/view.action?id=${model.countryCode}</param>
+            </result>
+            <result name="input" type="tiles">Country.edit</result>
+            <result name="version">
+                <param name="location">/admin/Country/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/Country/downloadInvoiceRpt"
+                class="com.foros.action.admin.country.DownloadCountryAction"
+                method="download">
+            <result name="success" type="download-file"/>
+        </action>
+
+        <action name="admin/Country/CTRAlgorithm/view" class="com.foros.action.admin.country.ctra.ViewCTRAlgorithmDataAction" method="view">
+            <result name="success" type="tiles">Country.CTRAlgorithm.view</result>
+        </action>
+
+        <action name="admin/Country/CTRAlgorithm/edit" class="com.foros.action.admin.country.ctra.ViewCTRAlgorithmDataAction" method="edit">
+            <result name="success" type="tiles">Country.CTRAlgorithm.edit</result>
+        </action>
+
+        <action name="admin/Country/CTRAlgorithm/save" class="com.foros.action.admin.country.ctra.SaveCTRAlgorithmDataAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">/admin/Country/CTRAlgorithm/view.action?id=${model.countryCode}</param>
+            </result>
+            <result name="input" type="tiles">Country.CTRAlgorithm.edit</result>
+            <result name="version">
+                <param name="location">/admin/Country/CTRAlgorithm/edit.action</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

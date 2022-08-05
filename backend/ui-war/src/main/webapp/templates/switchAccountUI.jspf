@@ -1,0 +1,40 @@
+<%@ page contentType="text/html"%>
+<%@ page pageEncoding="UTF-8"%>
+<%@ taglib uri="/ad/serverUI" prefix="ad" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="f" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="ui" %>
+        <ui:text text="${_user.account.name}" subClass="entityName"/>
+            <c:if test="${not _principal.anonymous}">
+                <c:if test="${!ad:isInternal()}">
+                    <c:set var="accessibleUsers" value="${_switchableUsers}"/>
+                    <c:set var="usersCount" value="${f:length(accessibleUsers)}"/>
+                    <c:if test="${usersCount > 0}">
+                        <span class="delimiter">|</span>
+
+                        <c:choose>
+                            <c:when test="${usersCount == 1}">
+                                <%--only one account available to switch to--%>
+                                <c:forEach items="${accessibleUsers}" var="accessibleUser">
+                                    <a href="/login/j_spring_switch_user?j_switch_to_user_id=${accessibleUser.id}&j_return_url=/"><ui:text text="${accessibleUser.account.name}" subClass="entityName"/></a>
+                                </c:forEach>
+                            </c:when>
+
+                            <c:when test="${usersCount > 1}">
+                                <%--more than one account available to switch to--%>
+                                    <form method="get" id="switchUserForm" action="/login/j_spring_switch_user">
+                                        <input type="hidden" name="j_return_url" value="/">
+                                        <select id="accessibleUserId" class="middleLengthText" name="j_switch_to_user_id">
+                                            <c:forEach items="${accessibleUsers}" var="accessibleUser">
+                                                <option value="${accessibleUser.id}"><c:out value="${accessibleUser.account.name}"/></option>
+                                            </c:forEach>
+                                        </select>
+                                    </form>
+                                <a href="#" onclick="$('#switchUserForm').submit();return false;"><fmt:message key="account.switch"/></a>
+                            </c:when>
+
+                        </c:choose>
+                    </c:if>
+                </c:if>
+            </c:if>

@@ -1,0 +1,43 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="currency" extends="foros-default" namespace="/">
+        <action name="admin/Currency/main" class="com.foros.action.admin.currency.ListCurrencyAction" method="list">
+            <result name="success" type="tiles">Currency.main</result>
+        </action>
+
+        <action name="admin/Currency/new" class="com.foros.action.admin.currency.EditCurrencyAction" method="create">
+            <result name="success" type="tiles">Currency.edit</result>
+        </action>
+
+        <action name="admin/Currency/edit" class="com.foros.action.admin.currency.EditCurrencyAction" method="edit">
+            <result name="success" type="tiles">Currency.edit</result>
+        </action>
+
+        <action name="admin/Currency/create" class="com.foros.action.admin.currency.SaveCurrencyAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/Currency/main</param>
+            </result>
+            <result name="version" type="forosChain">
+                <param name="actionName">admin/Currency/edit</param>
+                <param name="parameters">id=${id}</param>
+                <param name="clearPreviousParameters">true</param>
+            </result>
+            <result name="input" type="tiles">Currency.edit</result>
+        </action>
+
+        <action name="admin/Currency/update" class="com.foros.action.admin.currency.SaveCurrencyAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/Currency/main</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/Currency/edit.action</param>
+            </result>
+            <result name="input" type="tiles">Currency.edit</result>
+        </action>
+    </package>
+</struts>

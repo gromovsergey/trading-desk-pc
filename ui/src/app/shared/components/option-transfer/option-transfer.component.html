@@ -1,0 +1,61 @@
+<mat-form-field style="width: 50%; height: 50px" class="form-field_wrapper" appearance="outline">
+  <mat-label>Введите название</mat-label>
+  <input matInput #searchInput type="text" (input)="search()">
+  <mat-icon matSuffix class="material-icons">search</mat-icon>
+</mat-form-field>
+<div uiButtonListener class="option-transfer">
+  <div class="option-column">
+    <div>
+      <label>{{availableMsg  | translate}}</label>
+      <button type="button" mat-icon-button (click)="sortUp(allSites)">
+        <span class="a-active sort-up_button material-icons">
+          arrow_drop_up
+        </span>
+      </button>
+      <button type="button" mat-icon-button (click)="sortDown(allSites)">
+        <span class="sort-down_button material-icons">
+          arrow_drop_down
+        </span>
+      </button>
+    </div>
+    <mat-nav-list class="option-container">
+      <ng-container *ngFor="let item of allSites">
+        <a
+           mat-list-item
+           class="list-item"
+           (click)="selectItem(item)">
+          {{item.name}}
+        </a>
+      </ng-container>
+    </mat-nav-list>
+  </div>
+  <div class="buttons-column">
+    <button type="button" mat-icon-button (click)="selectAll()">
+      <i class="material-icons">double_arrow</i>
+    </button>
+    <button type="button" mat-icon-button (click)="deselectAll()">
+      <i class="material-icons t-flip-horizontal">double_arrow</i>
+    </button>
+  </div>
+  <div class="option-column">
+    <label>{{selectedMsg  | translate}}</label>
+    <button type="button" mat-icon-button (click)="sortUp(selectedSites)">
+        <span class="s-active sort-up_selectedButton material-icons">
+          arrow_drop_up
+        </span>
+    </button>
+    <button type="button" mat-icon-button (click)="sortDown(selectedSites)">
+        <span class="sort-down_selectedButton material-icons">
+          arrow_drop_down
+        </span>
+    </button>
+    <mat-nav-list class="option-container">
+      <a *ngFor="let item of selectedSites"
+         class="list-item"
+         mat-list-item
+         (click)="deselectItem(item)">
+        {{item.name}}
+      </a>
+    </mat-nav-list>
+  </div>
+</div>

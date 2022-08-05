@@ -1,0 +1,73 @@
+<ui-loading *ngIf="wait || waitAccounts"></ui-loading>
+
+<section *ngIf="!wait && !waitAccounts">
+
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            {{title}}
+        </h2>
+    </div>
+
+	<form (submit)="submitForm()">
+        <div class="row">
+            <div class="col-lg-8">
+
+                <div *ngIf="errors.actionError" class="alert alert-danger has-error" role="alert">
+                    <p *ngFor="let error of errors.actionError">{{error}}</p>
+                </div>
+
+                <div class="form-group" *ngIf="accounts">
+                    <label>_L10N_(accountSearch.account)<sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup></label>
+                    <div>
+                        <select [(ngModel)]="channel.account.id" name="accountId" class="form-control">
+                            <option *ngFor="let item of accounts" [value]="item.id">{{item.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':errors.name}">
+                    <label>_L10N_(blockName.name)<sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup></label>
+                    <div>
+                        <input #mName="ngModel" name="name" [(ngModel)]="channel.name" required type="text" placeholder="_L10N_(blockName.name)" class="form-control">
+                    </div>
+                    <p *ngFor="let error of errors.name" class="help-block">{{error}}</p>
+                </div>
+
+                <ui-triggers-edit
+                        [channel]="channel"
+                        [errors]="errors"
+                        type="P">
+                </ui-triggers-edit>
+
+                <ui-triggers-edit
+                        [channel]="channel"
+                        [errors]="errors"
+                        type="S">
+                </ui-triggers-edit>
+
+                <ui-triggers-edit
+                        [channel]="channel"
+                        [errors]="errors"
+                        type="U">
+                </ui-triggers-edit>
+
+                <ui-triggers-edit
+                        [channel]="channel"
+                        [errors]="errors"
+                        type="R">
+                </ui-triggers-edit>
+
+            </div>
+        </div>
+
+        <div class="row">
+			<div class="col-sm-12">
+				<button [disabled]="waitSubmit" type="submit" class="btn btn-primary">
+                    <ui-icon *ngIf="waitSubmit" [fw]="true" [spin]="true" [icon]="'spinner'"></ui-icon>
+                    {{mode === 'add' ? '_L10N_(button.add)' : '_L10N_(button.save)'}}
+                </button>
+				<a *ngIf="!waitSubmit" [routerLink]="getBackUrl()" class="btn btn-default">_L10N_(button.cancel)</a>
+			</div>
+		</div>
+	</form>
+</section>

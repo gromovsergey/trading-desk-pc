@@ -1,0 +1,27 @@
+package ${packageName};
+
+
+import com.foros.validation.code.InputErrors;
+import com.foros.validation.code.ForosError;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ParseErrorByType {
+    private static final Map<String, ForosError> PARSE_ERRORS_BY_TYPE = new HashMap<String, ForosError>() {{
+        put("oui:entity-id", InputErrors.XML_ID_PARSE_ERROR);
+        put("xs:long", InputErrors.XML_LONG_INVALID);
+        put("xs:int", InputErrors.XML_INTEGER_INVALID);
+        put("xs:decimal", InputErrors.XML_DECIMAL_INVALID);
+        put("xs:date", InputErrors.XML_DATE_INVALID);
+        put("xs:dateTime", InputErrors.XML_DATE_TIME_INVALID);
+        put("xs:time", InputErrors.XML_TIME_INVALID);
+        put("xs:boolean", InputErrors.XML_BOOLEAN_ERROR);
+        <%schema.simpleTypes.values().each { type -> %>put("${type.name}", InputErrors.XML_ENUM_PARSE_ERROR);
+        <%}%>
+    }};
+
+    public static ForosError resolveError(String nodeTypeName) {
+        return PARSE_ERRORS_BY_TYPE.get(nodeTypeName);
+    }
+}

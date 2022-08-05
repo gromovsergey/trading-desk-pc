@@ -1,0 +1,45 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="ApplicationFormat" extends="foros-default" namespace="/">
+
+        <action name="admin/ApplicationFormat/main" class="com.foros.action.admin.applicationFormat.ListApplicationFormatAction" method="list">
+            <result name="success" type="tiles">ApplicationFormat.main</result>
+        </action>
+
+        <action name="admin/ApplicationFormat/view" class="com.foros.action.admin.applicationFormat.ViewApplicationFormatAction" method="view">
+            <result name="success" type="tiles">ApplicationFormat.view</result>
+        </action>
+
+        <action name="admin/ApplicationFormat/edit" class="com.foros.action.admin.applicationFormat.EditApplicationFormatAction" method="edit">
+            <result name="success" type="tiles">ApplicationFormat.edit</result>
+        </action>
+
+        <action name="admin/ApplicationFormat/new" class="com.foros.action.admin.applicationFormat.EditApplicationFormatAction" method="create">
+            <result name="success" type="tiles">ApplicationFormat.create</result>
+        </action>
+
+        <action name="admin/ApplicationFormat/create" class="com.foros.action.admin.applicationFormat.SaveApplicationFormatAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+              <param name="actionName">admin/ApplicationFormat/view</param>
+              <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">ApplicationFormat.create</result>
+        </action>
+
+        <action name="admin/ApplicationFormat/update" class="com.foros.action.admin.applicationFormat.SaveApplicationFormatAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/ApplicationFormat/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">ApplicationFormat.edit</result>
+            <result name="version">
+                <param name="location">/admin/ApplicationFormat/edit.action</param>
+            </result>
+        </action>
+    </package>
+</struts>

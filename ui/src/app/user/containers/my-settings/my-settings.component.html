@@ -1,0 +1,85 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1>{{'blockName.mySettings' | translate}}</h1>
+
+  <mat-card class="card-row mb-2">
+    <ui-cell title="{{'mySettings.blockName.login' | translate}}">
+      {{userSettings?.email}}
+    </ui-cell>
+    <ui-cell title="{{'agencyAccount.user.firstName' | translate}}">
+      {{userSettings?.firstName}}
+    </ui-cell>
+    <ui-cell title="{{'agencyAccount.user.lastName' | translate}}">
+      {{userSettings?.lastName}}
+    </ui-cell>
+  </mat-card>
+
+  <button *ngIf="!showPasswordForm, else passwordForm" mat-flat-button (click)="showPasswordForm = true">
+    {{'agencyAccount.user.changePassword' | translate}}
+  </button>
+
+  <p *ngIf="notificationMessage" style="text-align: center; margin: 20px;border: 1px solid green;border-radius: 5px;padding: 5px">{{notificationMessage}}</p>
+  <ng-template #passwordForm>
+
+    <form (submit)="doSubmit($event)">
+      <div class="form-container form-container-compact">
+        <mat-form-field class="mat-form-field-max" appearance="standard">
+          <mat-label>
+            {{'agencyAccount.user.oldPassword' | translate}}
+          </mat-label>
+          <input
+                  matInput
+                  [(ngModel)]="oldPassword"
+                  required
+                  name="oldPassword"
+                  type="password"
+                  autocomplete="off"
+                  [errorStateMatcher]="matcher(errors?.oldPassword)"
+          >
+          <mat-error *ngFor="let error of errors.oldPassword">{{error}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="mat-form-field-max" appearance="standard">
+          <mat-label>
+            {{'agencyAccount.user.newPassword' | translate}}
+          </mat-label>
+          <input
+                  matInput
+                  [(ngModel)]="newPassword"
+                  required
+                  name="newPassword"
+                  type="password"
+                  autocomplete="off"
+                  [errorStateMatcher]="matcher(errors?.newPassword)"
+          >
+          <mat-error *ngFor="let error of errors.newPassword">{{error}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="mat-form-field-max" appearance="standard">
+          <mat-label>
+            {{'agencyAccount.user.confirmNewPassword' | translate}}
+          </mat-label>
+          <input
+                  matInput
+                  [(ngModel)]="confirmNewPassword"
+                  required
+                  name="confirmNewPassword"
+                  type="password"
+                  autocomplete="off"
+                  [errorStateMatcher]="matcher(errors?.confirmNewPassword)"
+          >
+          <mat-error *ngFor="let error of errors.confirmNewPassword">{{error}}</mat-error>
+        </mat-form-field>
+
+        <div class="form-footer">
+          <button type="submit" [disabled]="waitSubmit" mat-flat-button color="primary">
+            <mat-spinner *ngIf="waitSubmit" class="button-spinner" [diameter]="20"></mat-spinner>
+            {{'button.save' | translate}}
+          </button>
+          <button type="button" mat-flat-button (click)="showPasswordForm = false">
+            {{'button.cancel' | translate}}
+          </button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</ng-template>

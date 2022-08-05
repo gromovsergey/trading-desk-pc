@@ -1,0 +1,37 @@
+@import "variables";
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-size: 16px;
+}
+
+body.theme {
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: $gen-font-size;
+  background: #fafafa;
+
+  button {
+    outline: transparent;
+  }
+
+  a {
+    color: $ui-color-primary;
+  }
+}
+
+.mat-button-wrapper {
+  & > .material-icons,
+  & > .button-spinner {
+    display: inline-block;
+  }
+}
+
+.hidden {
+  display: none;
+}

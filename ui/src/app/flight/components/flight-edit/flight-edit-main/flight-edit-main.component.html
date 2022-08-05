@@ -1,0 +1,184 @@
+<mat-form-field class="mat-form-field-max" appearance="standard">
+  <mat-label>{{'blockName.name' | translate}}</mat-label>
+  <input matInput name="name" required
+         [(ngModel)]="flight.name" type="text"
+         [errorStateMatcher]="matcher(!flight.name || errors?.name)">
+  <mat-error *ngFor="let error of errors?.name">
+    {{error}}
+  </mat-error>
+</mat-form-field>
+
+<mat-form-field class="mat-form-field-max" appearance="standard">
+  <mat-label>
+    {{'blockName.budget' | translate}}
+  </mat-label>
+  <input matInput name="budget"
+         type="number"
+         [(ngModel)]="flight.budget"
+         [errorStateMatcher]="matcher(errors?.budget)">
+  <button *ngIf="resetableFields?.includes('budget')"
+          type="button"
+          matTooltip="{{'hint.resetField' | translate}}"
+          mat-icon-button matSuffix
+          (click)="onReset($event, 'budget')">
+    <i class="material-icons">refresh</i>
+  </button>
+  <mat-error *ngFor="let error of errors?.budget">
+    {{error}}
+  </mat-error>
+</mat-form-field>
+
+<div class="flex-row mb-2">
+  <mat-form-field appearance="standard">
+    <mat-label>
+      {{'flight.blockName.startDate' | translate}}
+    </mat-label>
+    <input matInput name="dateStart"
+           [matDatepicker]="pickerStart"
+           [value]="getShort(flight.dateStart)"
+           [max]="getShort(flight.dateEnd)"
+           (blur)="dateInputChange($event, 'dateStart')"
+           (dateChange)="dateChange($event.value, 'dateStart')"
+           [errorStateMatcher]="matcher(errors?.dateStart)"
+    >
+    <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+    <mat-datepicker #pickerStart ></mat-datepicker>
+    <mat-hint *ngIf="errors?.dateStart">
+      <mat-error *ngFor="let error of errors?.dateStart">
+        {{error}}
+      </mat-error>
+    </mat-hint>
+  </mat-form-field>
+  <button *ngIf="resetableFields?.includes('dateStart')"
+          type="button"
+          matTooltip="{{'hint.resetField' | translate}}"
+          mat-icon-button matSuffix
+          (click)="onReset($event, 'dateStart')">
+    <i class="material-icons">refresh</i>
+  </button>
+  <div>
+    <mat-slide-toggle class="mr-1"
+                      [checked]="useDateEnd"
+                      (change)="useDateEnd = $event.checked"></mat-slide-toggle>
+    <mat-form-field appearance="standard">
+      <mat-label>{{'flight.blockName.endDate' | translate}}</mat-label>
+      <input matInput name="dateEnd"
+             [disabled]="!useDateEnd"
+             [matDatepicker]="pickerEnd"
+             [required]="useDateEnd"
+             [value]="getShort(flight.dateEnd)"
+             [min]="getShort(flight.dateStart)"
+             (blur)="dateInputChange($event, 'dateEnd')"
+             (dateChange)="dateChange($event.value, 'dateEnd')"
+      >
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+      <mat-hint *ngIf="!useDateEnd">{{'flight.message.unlimited' | translate}}</mat-hint>
+      <mat-hint *ngIf="errors?.dateEnd">
+        <mat-error *ngFor="let error of errors?.dateEnd">
+          {{error}}
+        </mat-error>
+      </mat-hint>
+    </mat-form-field>
+    <button *ngIf="resetableFields?.includes('dateEnd')"
+            type="button"
+            matTooltip="{{'hint.resetField' | translate}}"
+            mat-icon-button matSuffix
+            (click)="onReset($event, 'dateEnd')">
+      <i class="material-icons">refresh</i>
+    </button>
+  </div>
+</div>
+
+<div class="flex-row">
+  <mat-form-field>
+    <mat-label>{{'flight.blockName.deliveryPacing' | translate}}</mat-label>
+    <mat-select [(value)]="flight.deliveryPacing">
+      <mat-option value="U">{{'flight.blockName.deliveryPacing.unrestricted' | translate}}</mat-option>
+      <mat-option value="F">{{'flight.blockName.deliveryPacing.fixed' | translate}}</mat-option>
+      <mat-option *ngIf="flight.dateEnd"
+                  value="D">{{'flight.blockName.deliveryPacing.dynamic' | translate}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="flight.deliveryPacing === 'F'">
+    <strong class="mr-1" matPrefix>
+      {{0 | currency:advCurrency:'symbol':'1.0-0' | replace:'&nbsp;':'' | replace:'&nbsp;|[0 ]+':''}}:
+    </strong>
+    <input
+            type="number"
+            matInput name="dailyBudget"
+            [(ngModel)]="flight.dailyBudget"
+            [errorStateMatcher]="matcher(errors?.dailyBudget)"
+    >
+    <mat-error *ngFor="let error of errors?.dailyBudget">
+      {{error}}
+    </mat-error>
+  </mat-form-field>
+  <ng-container [ngSwitch]="flight.deliveryPacing">
+    <ui-hint *ngSwitchCase="'U'" text="{{'flight.notification.noDailyTarget' | translate}}"></ui-hint>
+    <ui-hint *ngSwitchCase="'F'" text="{{'flight.notification.fixedDailyTarget' | translate}}"></ui-hint>
+    <ui-hint *ngSwitchCase="'D'" text="{{'flight.notification.dynamicDailyTarget' | translate}}"></ui-hint>
+  </ng-container>
+
+  <button *ngIf="resetableFields?.includes('deliveryPacing')"
+          type="button"
+          matTooltip="{{'hint.resetField' | translate}}"
+          mat-icon-button matSuffix
+          (click)="onReset($event, 'deliveryPacing')">
+    <i class="material-icons">refresh</i>
+  </button>
+</div>
+
+<div *ngIf="flight.deliveryPacing === 'D'">
+  {{'flight.notification.dynamicDailyTarget.info1' | translate}}
+  {{dynamicBudget | currency: advCurrency:'symbol':'1.2-2'}}
+  {{'flight.notification.dynamicDailyTarget.info2' | translate}}
+  {{dynamicDate}}
+</div>
+
+<div class="mb-2"></div>
+
+<ui-info-panel type="danger" *ngIf="errors.rateValue">
+  <p *ngFor="let error of errors.rateValue">{{error}}</p>
+</ui-info-panel>
+
+<div class="flex-row">
+  <button *ngIf="resetableFields?.includes('rateType')"
+          type="button"
+          matTooltip="{{'hint.resetField' | translate}}"
+          mat-icon-button matSuffix
+          (click)="onReset($event, 'rateType')">
+    <i class="material-icons">refresh</i>
+  </button>
+  <mat-form-field>
+    <mat-label>{{L10nFlightRateTypes[flight.rateType] | translate}}</mat-label>
+    <input type="number" matInput maxlength="20" name="rateValueCpc" [(ngModel)]="flight.rateValue">
+  </mat-form-field>
+  <div class="cpc-cpm-toggle">
+    <mat-form-field>
+      <mat-label>CPC/CPM</mat-label>
+      <mat-select [(value)]="flight.rateType">
+        <mat-option value="CPC">CPC</mat-option>
+        <mat-option value="CPM">CPM</mat-option>
+        <mat-option value="MCPM">Max CPM</mat-option>
+      </mat-select>
+    </mat-form-field>
+<!--    CPC-->
+<!--    <mat-slide-toggle [checked]="flight.rateType === 'CPM'"-->
+<!--                      color="primary"-->
+<!--                      (change)="flight.rateType = $event.checked ? 'CPM' : 'CPC'"></mat-slide-toggle>-->
+
+<!--    CPM-->
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label>{{'blockName.maximiseReach' | translate}}</mat-label>
+      <mat-select [(value)]="flight.bidStrategy">
+        <mat-option value="MAXIMISE_REACH">Maximise Reach</mat-option>
+        <mat-option value="CTR_BY_AMOUNT">Optimise CTR by Amount</mat-option>
+        <mat-option value="CTR_BY_PREDICTION">Optimise CTR by Prediction</mat-option>
+        <mat-option value="MARGIN">Optimise Margin</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

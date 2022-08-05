@@ -1,0 +1,35 @@
+select.date{
+    width:84px;
+}
+select.smallLengthNumber{
+    width:29px;
+}
+select.middleLengthNumber{
+    width:74px;
+}
+select.smallLengthText{
+    width:84px;
+}
+select.smallLengthText1{
+    width:154px;
+}
+select.smallLengthText2{
+    width:224px;
+}
+select.middleLengthText{
+    width:304px;
+}
+select.middleLengthText1{
+    width:454px;
+}
+select.bigLengthText{
+    width:604px;
+}
+input[type="file"]{
+    border:none;
+}
+
+.ui-datepicker .ui-datepicker-title select {
+    position:relative;
+    top:-1px;
+}

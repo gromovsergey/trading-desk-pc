@@ -1,0 +1,36 @@
+<div class="login-screen">
+  <ui-logo></ui-logo>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="login-box">
+      <div *ngIf="hasError" class="mat-error">{{'login.error.loginFailed' | translate}}</div>
+      <mat-form-field appearance="standard">
+        <mat-label>E-mail</mat-label>
+        <input matInput type="email" formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>{{'login.blockName.password' | translate}}</mat-label>
+        <input #password matInput type="password" formControlName="password">
+      </mat-form-field>
+
+      <mat-checkbox class="mb-2" formControlName="saveEmail">
+        {{'login.blockName.rememberEmail' | translate}}
+      </mat-checkbox>
+
+      <button type="submit"
+              [disabled]="!loginForm.valid || submitted"
+              mat-flat-button
+              class="custom-submit"
+              color="primary"
+              [ngClass]= "{
+              'Default': hostName === 'Default',
+              'Genius': hostName === 'Genius',
+              'Pharmatic': hostName === 'Pharmatic'
+              }"
+      >
+        <mat-spinner *ngIf="submitted" class="button-spinner" [diameter]="20"></mat-spinner>
+        {{'login.blockName.login' | translate}}
+      </button>
+    </div>
+  </form>
+</div>

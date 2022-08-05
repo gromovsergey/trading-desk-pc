@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<fop version="1.0">
+
+  <!-- Base URL for resolving relative URLs -->
+  <base>./src/main/resources/app/programmatic/ui/agentreport/pdf/fonts/</base>
+
+    <renderers>
+        <renderer mime="application/pdf">
+            <filterList>
+                <value>flate</value>
+            </filterList>
+            <fonts>
+                <font kerning="yes"
+                      metrics-url="./src/main/resources/app/programmatic/ui/agentreport/pdf/fonts/arial.xml"
+                      embed-url="./src/main/resources/app/programmatic/ui/agentreport/pdf/fonts/Arial.ttf">
+                    <font-triplet name="Arial" style="normal" weight="normal"/>
+                </font>
+                <font kerning="yes"
+                      metrics-url="./src/main/resources/app/programmatic/ui/agentreport/pdf/fonts/arialb.xml"
+                      embed-url="./src/main/resources/app/programmatic/ui/agentreport/pdf/fonts/Arialb.ttf">
+                    <font-triplet name="Arial" style="normal" weight="bold"/>
+                </font>
+                <font kerning="yes"
+                      metrics-url="./src/main/resources/app/programmatic/ui/agentreport/pdf/fonts/timesnewroman.xml"
+                      embed-url="./src/main/resources/app/programmatic/ui/agentreport/pdf/fonts/TimesNewRoman.ttf">
+                    <font-triplet name="Times New Roman" style="normal" weight="normal"/>
+                </font>
+                <font kerning="yes"
+                      metrics-url="./src/main/resources/app/programmatic/ui/agentreport/pdf/fonts/timesnewromanb.xml"
+                      embed-url="./src/main/resources/app/programmatic/ui/agentreport/pdf/fonts/TimesNewRomanb.ttf">
+                    <font-triplet name="Times New Roman" style="normal" weight="bold"/>
+                </font>
+            </fonts>
+        </renderer>
+    </renderers>
+
+  <!-- Font Base URL for resolving relative font URLs -->
+  <font-base>./src/main/resources/app/programmatic/ui/agentreport/pdf/fonts/</font-base>
+
+</fop>

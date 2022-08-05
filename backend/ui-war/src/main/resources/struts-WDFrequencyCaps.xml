@@ -1,0 +1,28 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="WDFrequencyCaps" extends="foros-default" namespace="/">
+
+        <action name="admin/WDFrequencyCaps/view" class="com.foros.action.admin.wdFrequencyCaps.ViewWDFrequencyCapsAction" method="view">
+            <result name="success" type="tiles">admin.WDFrequencyCaps.view</result>
+        </action>
+
+        <action name="admin/WDFrequencyCaps/edit" class="com.foros.action.admin.wdFrequencyCaps.ViewWDFrequencyCapsAction" method="edit">
+            <result name="success" type="tiles">admin.WDFrequencyCaps.edit</result>
+        </action>
+
+        <action name="admin/WDFrequencyCaps/save" class="com.foros.action.admin.wdFrequencyCaps.SaveWDFrequencyCapsAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">admin/WDFrequencyCaps/view.action</param>
+            </result>
+            <result name="input" type="tiles">admin.WDFrequencyCaps.edit</result>
+            <result name="version">
+                <param name="location">/admin/WDFrequencyCaps/edit.action</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

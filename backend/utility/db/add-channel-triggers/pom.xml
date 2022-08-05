@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.foros.ui</groupId>
+        <artifactId>foros-ui</artifactId>
+        <version>trunk</version>
+        <relativePath>../../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>add-channel-triggers</artifactId>
+    <version>trunk</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+<!--    <dependency>
+oracle      <groupId>com.oracle</groupId>
+ was        <artifactId>ojdbc</artifactId>
+removed </dependency>
+-->
+        <dependency>
+            <groupId>com.foros.ui</groupId>
+            <artifactId>ui-ejb</artifactId>
+            <version>trunk</version>
+        </dependency>
+        <dependency>
+            <groupId>com.foros.ui</groupId>
+            <artifactId>segmentor</artifactId>
+            <version>trunk</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.foros.tools.AddChannelTrigger</mainClass>
+                        </manifest>
+                    </archive>
+                    <finalName>add-channel-triggers</finalName>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

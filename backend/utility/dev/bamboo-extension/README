@@ -1,0 +1,85 @@
+# Bamboo Extention
+
+## Main features
+
+* Dependency tree
+* Gantt Diagram
+
+## Settings
+  Default settings:
+  
+* address: 127.0.0.1
+* port: 8888
+* bamboo baseurl: https://bamboo.ocslab.com
+
+Login and password should be entered during start.
+
+### Settings file
+
+Default location: ~/.bx.json
+
+Can be specified with "-s" argument.
+
+Full file schema:
+
+    {
+        "server": {
+            "address": "127.0.0.1",
+            "port": 8888,
+            "directory": "<prefix>/bamboo_extentions/data"
+        },
+        "bamboo": {
+            "baseurl": "https://bamboo.ocslab.com",
+            "login": "<login>",
+            "password": "<password>"
+        }
+    }       
+
+
+## Installation
+
+### Ubuntu
+
+Make sure that python module virtualenv is installed. E.g. run
+
+    sudo apt-get install python-virtualenv
+
+Install python modules:
+    
+    sudo apt-get install python-tornado python-pyquery python-lxml
+    
+Also you may need building dependencies for python-lxml:
+
+    sudo apt-get build-dep python-lxml
+    
+Then in source directory run:
+
+    virtualenv --system-site-packages ./env
+    ./env/bin/pip install .
+    ./env/bin/bx_serve
+    
+### Mac OS
+
+First of all install ports:
+
+    sudo port install py27-virtualenv 
+    sudo port install py27-tornado 
+    sudo port install py27-lxml 
+    sudo port install py27-pyquery 
+    sudo port install libxslt 
+    sudo port install libxml2 
+    sudo port install py27-cssselect
+    
+Then in source directory run:
+
+    virtualenv --system-site-packages ./env
+    ./env/bin/pip install .
+    ./env/bin/bx_serve
+    
+## Update application
+    
+For update application run:
+    
+    ./env/bin/pip uninstall bamboo_extension
+    ./env/bin/pip install .
+

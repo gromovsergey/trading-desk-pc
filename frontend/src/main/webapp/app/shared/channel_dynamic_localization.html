@@ -1,0 +1,21 @@
+<ui-popup [options]="options"
+          [visible]="true"
+          [blocked]="wait"
+          (close)="onClose()"
+          (save)="onSave()"
+          [closeBtnTitle]="'_L10N_(button.close)'">
+    <div #modal class="modal-body-scroll">
+        <div *ngIf="!wait">
+            <div *ngFor="let lang of languages">
+                <label>{{L10nLanguages[lang]}}</label>
+                <div>
+                    <input #mName="ngModel"
+                           [ngModel]="getLocalization(lang)"
+                           (ngModelChange)="setLocalization(lang, $event)"
+                           type="text"
+                           class="form-control">
+                </div>
+            </div>
+        </div>
+    </div>
+</ui-popup>

@@ -1,0 +1,50 @@
+<project basedir=".">
+    <condition property="skipTests" value="true">
+        <isset property="maven.test.skip.exec"/>
+    </condition>
+    <target name="tests.run" unless="skipTests">
+        <exec executable="php" failonerror="true">
+            <arg value="${mainFile}"/>
+            <arg value="${testProperties}"/>
+            <arg value="${php_include_path}"/>
+        </exec>
+    </target>
+
+    <condition property="remoteRepositoryUrl" value="${repositoryUrl}" else="">
+        <not>
+            <contains string="${version}" substring="-SNAPSHOT"/>
+        </not>
+    </condition>
+    <condition property="remoteRepositoryId" value="${repositoryId}" else="">
+        <not>
+            <contains string="${version}" substring="-SNAPSHOT"/>
+        </not>
+    </condition>
+    <condition property="remoteSnapshotsRepositoryUrl" value="${snapshotsRepositoryUrl}" else="">
+        <contains string="${version}" substring="-SNAPSHOT"/>
+    </condition>
+    <condition property="remoteSnapshotsRepositoryId" value="${snapshotsRepositoryId}" else="">
+        <contains string="${version}" substring="-SNAPSHOT"/>
+    </condition>
+    <target name="deploy.project">
+        <exec executable="mvn" failonerror="true">
+            <arg value="org.apache.maven.plugins:maven-deploy-plugin:2.8.2:deploy-file"/>
+            <arg value="-Dfile=target/rs-client-php.zip"/>
+            <arg value="-DgroupId=${groupId}"/>
+            <arg value="-DartifactId=${artifactId}"/>
+            <arg value="-Dversion=${version}"/>
+            <arg value="-DrepositoryId=${remoteRepositoryId}${remoteSnapshotsRepositoryId}"/>
+            <arg value="-Durl=${remoteRepositoryUrl}${remoteSnapshotsRepositoryUrl}"/>
+            <arg value="-Dpackaging=zip"/>
+            <arg value="-DgeneratePom=false"/>
+            <arg value="-DcreateChecksum=true"/>
+        </exec>
+    </target>
+
+    <target name="make.zip">
+        <mkdir dir="${basedir}/target"/>
+        <zip destfile="${basedir}/target/rs-client-php.zip">
+            <fileset dir="${basedir}/src"/>
+        </zip>
+    </target>
+</project>

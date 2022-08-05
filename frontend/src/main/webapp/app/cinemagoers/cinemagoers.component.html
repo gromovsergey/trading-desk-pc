@@ -1,0 +1,9 @@
+<section class="cinemagoers">
+  <h1>{{headline}}</h1>
+  <div *ngFor="let item of categories; index as i" class="cinemagoers-container">
+    <a *ngFor="let item of categories[i]" [routerLink]="[item.id]" class="cinemagoers-chart-nav cinemagoers-main-link">
+      <i class="fa {{item.class}}" aria-hidden="true"></i>
+      <h2>{{item.name}}</h2><span class="cinemagoers-description">{{item.description}}</span>
+    </a>
+  </div>
+</section>

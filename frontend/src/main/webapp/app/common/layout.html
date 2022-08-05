@@ -1,0 +1,15 @@
+<ui-navbar (onXsMenuShow)="xsMenuShow($event)" [xsMenuVisible]="xsMenuVisible"></ui-navbar>
+
+<section class="c-mainmenu col-sm-3 col-lg-2 col-xs-6" [ngClass]="{'hidden-xs': !xsMenuVisible}" (touchstart)="touchStart($event)" (touchend)="touchEnd($event)">
+    <ui-main></ui-main>
+</section>
+
+<div class="container-fluid l-wrap">
+    <div class="row">
+        <main class="col-sm-offset-3 col-sm-9 col-lg-offset-2 col-lg-10 col-xs-12 l-main" role="main">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>
+
+<ui-footer></ui-footer>

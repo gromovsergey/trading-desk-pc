@@ -1,0 +1,8 @@
+Generate jar file to be used in FOROS UI
+It contains
+# Classes generated for AdServer channel.idl
+# Grammars for Expression Channels
+
+To deploy to Foros repository,
+
+mvn deploy source:jar deploy -PRemoteInstall

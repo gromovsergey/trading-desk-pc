@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name=".CampaignCredit" extends=".mainLayout">
+        <put-attribute name="activeMenuItemKey" value="global.submenu.account"/>
+        <put-attribute name="entityName" value="CampaignCredit" type="string"/>
+    </definition>
+
+    <definition name="campaignCredit.new" extends=".CampaignCredit">
+        <put-attribute name="body" value="/campaign/campaignCredit/campaignCreditEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="campaignCredit.edit" extends=".CampaignCredit">
+        <put-attribute name="body" value="/campaign/campaignCredit/campaignCreditEdit.jsp"/>
+    </definition>
+
+    <definition name="campaignCredit.view" extends=".CampaignCredit">
+        <put-attribute name="body" value="/campaign/campaignCredit/campaignCreditView.jsp"/>
+        <put-attribute name="title" value="/campaign/campaignCredit/manageCampaignCreditTitle.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name=".CampaignCreditAllocation" extends=".mainLayout">
+        <put-attribute name="entityName" value="CampaignCreditAllocation" type="string"/>
+        <put-attribute name="activeMenuItemKey" expression="global.submenu.account"/>
+    </definition>
+
+    <definition name="campaignCreditAllocation.new" extends=".CampaignCreditAllocation">
+        <put-attribute name="body" value="/campaign/campaignCredit/creditAllocationEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="campaignCreditAllocation.edit" extends=".CampaignCreditAllocation">
+        <put-attribute name="body" value="/campaign/campaignCredit/creditAllocationEdit.jsp"/>
+    </definition>
+</tiles-definitions>

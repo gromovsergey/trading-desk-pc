@@ -1,0 +1,55 @@
+<ui-panel [title]="sectionName"
+          [collapsible]="true"
+          [collapsed]="triggers.positive?.length === 0">
+  <mat-form-field class="width-full">
+    <mat-label>{{sectionName}}</mat-label>
+    <textarea name="triggers" matInput
+              [value]="triggers?.positive?.join('\n')"
+              (change)="updatePositiveTriggers($event)"
+              rows="10"></textarea>
+  </mat-form-field>
+
+  <ui-info-panel *ngIf="errors[triggersErrorKeyByType()]?.positive" type="danger">
+    <p *ngFor="let error of errors[triggersErrorKeyByType()]?.positive">{{error}}</p>
+  </ui-info-panel>
+
+  <h4>{{'channel.blockName.keywords.matchingCriteria' | translate}}:</h4>
+
+  <div class="flex-row">
+    <mat-form-field [style.width.px]="50" class="mr-1">
+      <mat-select name="minVisit"
+                  [(ngModel)]="behavioralParameters.minimumVisits"
+                  [disabled]="behavioralParameters.timeFrom === 0">
+        <mat-option [value]="visit" *ngFor="let visit of visitsValues">{{visit}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div>{{'channel.blockName.keywords.timesBetween' | translate}}</div>
+
+    <mat-form-field [style.width.px]="80" class="ml-1 mr-1">
+      <mat-select name="timeFrom" [(ngModel)]="behavioralParameters.timeFrom">
+        <mat-option [value]="day * 60 * 60 * 24"
+                    *ngFor="let day of daysValues">
+          {{(day === 0 ? 'messages.now' : day.toString()) | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div>{{'messages.and' | translate}}</div>
+
+    <mat-form-field [style.width.px]="80" class="ml-1 mr-1">
+      <mat-select name="timeTo" [(ngModel)]="behavioralParameters.timeTo">
+        <mat-option [value]="day * 60 * 60 * 24"
+                    *ngFor="let day of daysValues">
+          {{(day === 0 ? 'messages.now' : day.toString()) | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div>{{(behavioralParameters.timeTo !== 0 ? 'channel.blockName.keywords.calendarDaysAgo' : '') | translate}}</div>
+  </div>
+
+  <ui-info-panel type="danger" *ngIf="errors[behavioralParametersErrorKeyByType()]?.minimumVisits">
+    <p *ngFor="let error of errors[behavioralParametersErrorKeyByType()]">{{error}}</p>
+  </ui-info-panel>
+</ui-panel>

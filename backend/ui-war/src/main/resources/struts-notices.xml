@@ -1,0 +1,33 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="notices" extends="foros-default" namespace="/">
+
+        <action name="admin/Notices/main" class="com.foros.action.admin.account.ListClobParamsAction" method="notices">
+            <result name="success" type="tiles">Notices.main</result>
+        </action>
+
+        <action name="admin/Notices/edit" class="com.foros.action.admin.account.EditClobParamAction" method="edit">
+            <result name="success" type="tiles">Notices.edit</result>
+        </action>
+
+        <action name="admin/Notices/save" class="com.foros.action.admin.account.SaveClobParamAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/Notices/main</param>
+                <param name="accountId">${accountId}</param>
+            </result>
+            <result name="input" type="tiles">Notices.edit</result>
+            <result name="version">
+                <param name="location">/admin/Notices/edit.action</param>
+            </result>
+        </action>
+
+        <action name="*/Notices" class="com.foros.action.admin.account.DisplayNoticeAction" method="myNotice">
+            <result name="success" type="tiles">Notices.snapshot</result>
+        </action>
+
+    </package>
+</struts>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
+        <param-value>en_US</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>resource.applicationResource</param-value>
+    </context-param>
+
+
+    <mime-mapping>
+        <extension>ico</extension>
+        <mime-type>image/x-icon</mime-type>
+    </mime-mapping>
+
+    <listener>
+        <listener-class>com.foros.web.filters.ContextListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>ProfilingFilter</filter-name>
+        <filter-class>com.foros.util.profiling.ProfilingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ProfilingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>Kaptcha</servlet-name>
+        <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Kaptcha</servlet-name>
+        <url-pattern>/images/captcha.jpg</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>OpenFromExcelServlet</servlet-name>
+        <servlet-class>com.foros.action.excel.OpenFromExcelServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OpenFromExcelServlet</servlet-name>
+        <url-pattern>/excel/*</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>NoCachingFilter</filter-name>
+        <filter-class>com.foros.util.web.NoCacheFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>NoCachingFilter</filter-name>
+        <url-pattern>/</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>NoCachingFilter</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>CachingFilter</filter-name>
+        <filter-class>com.foros.web.filters.CachingFilter</filter-class>
+        <init-param>
+            <param-name>expiration-time</param-name> <!-- how long the resource should stay in the browser cache -->
+            <param-value>31536000000</param-value> <!-- one year -->
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CachingFilter</filter-name>
+        <url-pattern>*.gif</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>CachingFilter</filter-name>
+        <url-pattern>/thirdparty/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>CachingFilter</filter-name>
+        <url-pattern>*.ico</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>CachingFilter</filter-name>
+        <url-pattern>*.swf</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>ResponseOverrideFilter</filter-name>
+        <filter-class>org.displaytag.filter.ResponseOverrideFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ResponseOverrideFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <listener>
+        <listener-class>com.foros.framework.tiles.ForosTilesListener</listener-class>
+    </listener>
+
+    <session-config>
+        <session-timeout>120</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/errors/commonErrorPageFull.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/errorHandler.action?errorCode=403</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errorHandler.action?errorCode=404</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errorHandler.action?errorCode=500</location>
+    </error-page>
+    <jsp-config>
+        <taglib>
+            <taglib-uri>/ad/serverUI</taglib-uri>
+            <taglib-location>/WEB-INF/AdServerUI.tld</taglib-location>
+        </taglib>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <trim-directive-whitespaces>true</trim-directive-whitespaces>
+        </jsp-property-group>
+    </jsp-config>
+</web-app>

@@ -1,0 +1,14 @@
+package ${packageName};
+
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlType;
+
+<%if(type.documentation) {%>/**
+ <%type.documentation.eachLine { line -> %>* ${line}<%}%>
+ */<%}%>
+@XmlEnum
+@XmlType(name = "${type.name}")
+public enum ${util.toCamelStyle(type.name)} {
+    <%type.values.eachWithIndex { value, index ->%>
+    ${value}${type.values.size()-1 == index ?"":","}<%} %>
+}

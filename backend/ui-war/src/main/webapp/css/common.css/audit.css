@@ -1,0 +1,22 @@
+
+span.auditLabel {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+ul.auditEntity {
+  list-style-type: square; 
+  padding-left: 25px;
+  /* margin-bottom: 5px; */
+}
+
+table.auditCol {
+  border-collapse: collapse; 
+  margin: 3px 0px 5px 10px;
+}
+
+table.auditCol td,
+table.auditCol th {
+  padding: 5px;
+  border: 1px solid silver;
+}

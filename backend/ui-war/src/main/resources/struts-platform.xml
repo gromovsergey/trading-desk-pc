@@ -1,0 +1,12 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="platform" extends="foros-default" namespace="/">
+        <action name="admin/Platform/view" class="com.foros.action.admin.platform.ViewPlatformAction"
+                method="view">
+            <result name="success" type="tiles">Platform.view</result>
+        </action>
+    </package>
+</struts>

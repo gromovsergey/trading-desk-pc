@@ -1,0 +1,99 @@
+<h1>{{'accountSearch.accounts' | translate}}</h1>
+
+<form [formGroup]="searchForm" (ngSubmit)="search()">
+  <div class="form-container form-container-compact">
+    <mat-form-field class="mat-form-field-max" appearance="standard">
+      <mat-label>{{'accountSearch.accountName' | translate}}</mat-label>
+      <input autofocus="autofocus" matInput type="text" formControlName="name" autocomplete="off">
+    </mat-form-field>
+
+    <ng-container *ngIf="!waitParams && filterState">
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'blockName.country' | translate}}</mat-label>
+        <mat-select formControlName="country">
+          <mat-option value="">{{'messages.optionTransfer.all' | translate}}</mat-option>
+          <mat-option *ngFor="let country of searchParams?.countries" [value]="country.code">
+            {{country.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'blockName.status' | translate}}</mat-label>
+        <mat-select formControlName="displayStatuses">
+          <mat-option *ngFor="let status of searchParams?.displayStatuses" [value]="status.type">
+            {{status.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'blockName.type' | translate}}</mat-label>
+        <mat-select formControlName="accountRole">
+          <mat-option *ngFor="let role of searchParams?.accountRoles" [value]="role.roleId">
+            {{role.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </ng-container>
+
+    <div class="form-footer">
+      <ui-submit-button [icon]="'search'" [wait]="wait"></ui-submit-button>
+      <button type="button" [disabled]="waitParams" (click)="filterState = !filterState" mat-flat-button>
+        <mat-spinner *ngIf="waitParams" class="button-spinner" [diameter]="20"></mat-spinner>
+        <i class="material-icons">{{filterState ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</i>
+        {{(filterState ? 'button.hide' : 'button.show') | translate}} {{'blockName.filters' | translate}}
+      </button>
+    </div>
+  </div>
+</form>
+
+<ng-container *ngIf="!wait && agencyList">
+  <div *ngIf="agencyList.length, else noResult">
+    <h2>{{'accountSearch.searchResults' | translate}}</h2>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="agencyList">
+
+        <ng-container matColumnDef="account">
+          <th mat-header-cell *matHeaderCellDef>{{'accountSearch.account' | translate}}</th>
+          <td mat-cell *matCellDef="let row">
+            <i class="material-icons" appDisplayStatus [displayStatus]="row.displayStatus">lens</i>
+            <a *ngIf="row.agency" [routerLink]="['/agency/'+row.id+'/advertisers']">{{row.name}}</a>
+            <a *ngIf="!row.agency" [routerLink]="['/advertiser/'+row.id+'/flights']">{{row.name}}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="imps">
+          <th mat-header-cell *matHeaderCellDef>{{'blockName.imps' | translate}}</th>
+          <td mat-cell *matCellDef="let row">{{row.impressions}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="clicks">
+          <th mat-header-cell *matHeaderCellDef>{{'blockName.clicks' | translate}}</th>
+          <td mat-cell *matCellDef="let row">{{row.clicks}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ctr">
+          <th mat-header-cell *matHeaderCellDef>{{'blockName.ctr' | translate}}</th>
+          <td mat-cell *matCellDef="let row">{{row.ctr.toFixed(2)}}%</td>
+        </ng-container>
+
+        <ng-container matColumnDef="revenue">
+          <th mat-header-cell *matHeaderCellDef>{{'blockName.revenue' | translate}}</th>
+          <td mat-cell *matCellDef="let row">{{row.revenue | currency:row.currencyCode:'symbol':'1.2-2'}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #noResult>
+    <ui-info-panel type="info">
+      {{'messages.nothingFound' | translate}}
+    </ui-info-panel>
+  </ng-template>
+</ng-container>

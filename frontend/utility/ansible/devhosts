@@ -1,0 +1,12 @@
+[buildserver]
+oix-dev9
+
+[buildserver:vars]
+buildstamp={{ ansible_date_time.epoch }}
+git_branch=HEAD
+
+[webserver]
+oix-dev2
+
+[webserver:vars]
+profile=dev

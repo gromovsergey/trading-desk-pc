@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name=".Colocation" extends=".mainLayout">
+        <put-attribute name="taskTitle" value="page.title.colocations" type="string"/>
+        <put-attribute name="activeMenuItemKey" value="global.submenu.colocations"/>
+        <put-attribute name="entityName" value="Colocation" type="string"/>
+    </definition>
+
+    <!-- Report -->
+
+    <definition name=".AdminColocation" extends=".Colocation">
+        <put-attribute name="moduleName" value="admin/colocation"/>
+    </definition>
+
+   <definition name="admin.colocation.edit" extends=".AdminColocation">
+     <put-attribute name="body" value="/colocation/colocationEdit.jsp"/>
+   </definition>
+  
+   <definition name="admin.colocation.new" extends=".AdminColocation">
+     <put-attribute name="body" value="/colocation/colocationEdit.jsp"/>
+     <put-attribute name="isCreatePage" value="true"/>
+   </definition>
+
+   <definition name="admin.colocation.view" extends=".AdminColocation">
+     <put-attribute name="body" value="/colocation/colocationView.jsp"/>
+     <put-attribute name="isViewPage" value="true"/>
+   </definition>
+  
+   <definition name="admin.colocation.list" extends=".AdminColocation">
+     <put-attribute name="titleProperty" value="colocations"/>
+     <put-attribute name="body" value="/colocation/colocationAdmin.jsp"/>
+   </definition>
+
+</tiles-definitions>

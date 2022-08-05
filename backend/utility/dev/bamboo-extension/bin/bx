@@ -1,0 +1,43 @@
+#!/opt/foros/bamboo-extension/lib/env/bin/python
+#coding=utf-8
+import os
+import sys
+import locale
+
+from bamboo_extension import server, config, utils
+
+
+def get_args():
+    DEFAULT_SETTINGS = "/opt/bamboo-extension/etc/config.json"
+    ACTIONS = ("start", "stop", "status")
+
+    try:
+        import argparse
+        parser = argparse.ArgumentParser()
+        parser.add_argument("-s", "--settings", metavar="filename",
+                            help="settings filename", default=DEFAULT_SETTINGS)
+        parser.add_argument("action", choices=ACTIONS)
+        return parser.parse_args()
+    except ImportError:
+        #  for python2.6 compatibility
+        import optparse
+        parser = optparse.OptionParser(
+            usage="%prog [-h] [-s filename] {start,stop,status}")
+        parser.add_option("-s", "--settings", metavar="filename",
+                          help="settings filename", dest="settings",
+                          default=DEFAULT_SETTINGS)
+        (options, args) = parser.parse_args()
+        if len(args) != 1 or not args[0] in ACTIONS:
+            parser.error("you should choose action - %s" % str(ACTIONS))
+        setattr(options, "action", args[0])
+        return options
+
+
+if __name__ == '__main__':
+    locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
+    os.putenv("LANG", "en_US.UTF-8")
+    args = get_args()
+    config = config.Config(args.settings)
+    utils.init_logging(config)
+    server = server.Server(config)
+    server.execute(args.action)

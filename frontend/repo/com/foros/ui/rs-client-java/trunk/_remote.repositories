@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sun May 03 19:55:26 MSK 2020
+rs-client-java-trunk.jar>=
+rs-client-java-trunk-sources.jar>=
+rs-client-java-trunk.pom>=

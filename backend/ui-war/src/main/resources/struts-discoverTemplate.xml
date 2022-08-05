@@ -1,0 +1,75 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="discoverTemplate" extends="foros-default" namespace="/">
+
+        <action name="admin/DiscoverTemplate/main"
+                class="com.foros.action.admin.template.discover.ListDiscoverTemplateAction"
+                method="list">
+            <result name="success" type="tiles">DiscoverTemplate.main</result>
+        </action>
+
+        <action name="admin/DiscoverTemplate/view"
+                class="com.foros.action.admin.template.discover.ViewDiscoverTemplateAction"
+                method="view">
+            <result name="success" type="tiles">DiscoverTemplate.view</result>
+        </action>
+
+        <action name="admin/DiscoverTemplate/new"
+                class="com.foros.action.admin.template.discover.EditDiscoverTemplateAction"
+                method="create">
+            <result name="success" type="tiles">DiscoverTemplate.create</result>
+        </action>
+
+        <action name="admin/DiscoverTemplate/edit"
+                class="com.foros.action.admin.template.discover.EditDiscoverTemplateAction"
+                method="edit">
+            <result name="success" type="tiles">DiscoverTemplate.edit</result>
+        </action>
+
+        <action name="admin/DiscoverTemplate/create" class="com.foros.action.admin.template.discover.SaveDiscoverTemplateAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/DiscoverTemplate/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">DiscoverTemplate.create</result>
+        </action>
+
+        <action name="admin/DiscoverTemplate/update" class="com.foros.action.admin.template.discover.SaveDiscoverTemplateAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/DiscoverTemplate/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">DiscoverTemplate.edit</result>
+            <result name="version">
+                <param name="location">/admin/DiscoverTemplate/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/DiscoverTemplate/createCopy" class="com.foros.action.admin.template.discover.EditDiscoverTemplateAction" method="createCopy">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/DiscoverTemplate/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/DiscoverTemplate/delete" class="com.foros.action.admin.template.StatusTemplateAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/DiscoverTemplate/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/DiscoverTemplate/undelete" class="com.foros.action.admin.template.StatusTemplateAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/DiscoverTemplate/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

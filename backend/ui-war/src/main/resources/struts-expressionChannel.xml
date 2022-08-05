@@ -1,0 +1,155 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package abstract="true" name="expressionChannels" extends="foros-default">
+        <global-results>
+            <result name="version" type="chain">
+                <param name="actionName">ExpressionChannel/view</param>
+            </result>
+        </global-results>
+
+        <action name="ExpressionChannel/view" class="com.foros.action.channel.expression.ViewExpressionChannelAction" method="view">
+            <result name="success" type="tiles">channel.ExpressionChannel.view</result>
+        </action>
+
+        <action name="ExpressionChannel/edit" class="com.foros.action.channel.expression.EditExpressionChannelAction" method="edit">
+            <result name="success" type="tiles">channel.ExpressionChannel.edit</result>
+        </action>
+
+        <action name="ExpressionChannel/new" class="com.foros.action.channel.expression.CreateExpressionChannelAction" method="create">
+            <result name="success" type="tiles">channel.ExpressionChannel.new</result>
+        </action>
+
+        <action name="ExpressionChannel/create" class="com.foros.action.channel.expression.SaveExpressionChannelAction" method="create">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+            <result name="input" type="tiles">channel.ExpressionChannel.new</result>
+        </action>
+
+        <action name="ExpressionChannel/update" class="com.foros.action.channel.expression.SaveExpressionChannelAction" method="update">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+            <result name="input" type="tiles">channel.ExpressionChannel.edit</result>
+            <result name="version" type="chain">
+                <param name="actionName">ExpressionChannel/edit</param>
+            </result>
+        </action>
+
+        <action name="ExpressionChannel/makePublic" class="com.foros.action.channel.expression.MakePublicExpressionChannelAction" method="makePublic">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+        </action>
+
+        <action name="ExpressionChannel/makePrivate" class="com.foros.action.channel.expression.MakePublicExpressionChannelAction" method="makePrivate">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+        </action>
+
+        <action name="ExpressionChannel/activate" class="com.foros.action.channel.expression.StatusExpressionChannelAction" method="activate">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">view</param>
+            </result>
+        </action>
+
+        <action name="ExpressionChannel/inactivate" class="com.foros.action.channel.expression.StatusExpressionChannelAction" method="inactivate">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">view</param>
+            </result>
+        </action>
+
+        <action name="ExpressionChannel/delete" class="com.foros.action.channel.expression.StatusExpressionChannelAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="internal" type="chain">
+                <param name="actionName">view</param>
+            </result>
+            <result name="external" type="redirectAction">
+                <param name="actionName">contextMain</param>
+            </result>
+        </action>
+
+        <action name="ExpressionChannel/undelete" class="com.foros.action.channel.expression.StatusExpressionChannelAction" method="undelete">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">view</param>
+            </result>
+            <result name="input" type="chain">
+                <param name="actionName">ExpressionChannel/view</param>
+            </result>
+        </action>
+
+        <action name="ExpressionChannel/submitCmp" class="com.foros.action.channel.expression.EditExpressionChannelAction" method="submitCmp">
+            <result name="success" type="tiles">channel.advertising.submitCmp</result>
+        </action>
+
+        <action name="ExpressionChannel/saveSubmitCmp" class="com.foros.action.channel.expression.SaveExpressionChannelAction" method="submitToCmp">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+            <result name="input" type="tiles">channel.advertising.submitCmp</result>
+            <result name="version" type="chain">
+                <param name="actionName">ExpressionChannel/submitCmp</param>
+            </result>
+        </action>
+
+        <action name="ExpressionChannel/editCmp" class="com.foros.action.channel.expression.EditExpressionChannelAction" method="editCmp">
+            <result name="success" type="tiles">channel.advertising.editCmp</result>
+        </action>
+
+        <action name="ExpressionChannel/saveEditCmp" class="com.foros.action.channel.expression.SaveExpressionChannelAction" method="updateCmp">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+            <result name="input" type="tiles">channel.advertising.editCmp</result>
+            <result name="version" type="chain">
+                <param name="actionName">ExpressionChannel/editCmp</param>
+            </result>
+        </action>
+
+        <action name="ExpressionChannel/searchUsedChannels" class="com.foros.action.channel.UsedChannelSearchAction" method="searchUsedChannels">
+            <result name="success">/channel/searchUsedChannelsTab.jsp?channelAction=insert</result>
+        </action>
+        
+        <action name="ExpressionChannel/searchChannels" class="com.foros.action.channel.ContentChannelSearchAction" method="searchChannels">
+            <result name="success">/channel/searchChannelsTab.jsp?channelAction=insert</result>
+        </action>
+        
+        <action name="ExpressionChannel/logChecksPopup" class="com.foros.action.regularchecks.ChannelLogCheckAction" method="edit">
+            <result name="success">/regularchecks/logChecksPopup.jsp</result>
+        </action>
+
+        <action name="ExpressionChannel/logChecks" class="com.foros.action.regularchecks.ChannelLogCheckAction" method="updateCheck">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/regularchecks/logChecksPopup.jsp</result>
+            <result name="input">/regularchecks/logChecksPopup.jsp</result>
+        </action>
+
+    </package>
+
+    <package namespace="/admin/channel" name="internalExpressionChannels" extends="expressionChannels"/>
+    <package namespace="/advertiser/channel" name="advertisingExpressionChannels" extends="expressionChannels"/>
+    <package namespace="/cmp/channel" name="cmpExpressionChannels" extends="expressionChannels"/>
+</struts>

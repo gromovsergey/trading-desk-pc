@@ -1,0 +1,19 @@
+<ui-dropdown-btn *ngIf="uploadMenu && uploadMenu.length > 0" title="_L10N_(channel.report.upload)" [menu]="uploadMenu" [isInline]="true"></ui-dropdown-btn>
+<ui-dropdown-btn *ngIf="downloadMenu && downloadMenu.length > 0" title="_L10N_(channel.report.download)" [menu]="downloadMenu" [isInline]="true"></ui-dropdown-btn>
+
+<section *ngIf="uploadData">
+    <a [href]="uploadData.url" target="_blank" *ngIf="uploadData.url && uploadData.name">{{uploadData.name}}</a>
+    <span *ngIf="!uploadData.url && uploadData.name">{{uploadData.name}}</span>
+    <a href="#" *ngIf="uploadData.name" [title]="clearBtnTitle" (click)="clearField($event)">
+        <ui-icon [icon]="'times'"></ui-icon>
+    </a>
+</section>
+<input type="file" (change)="doUpload($event)" #fileUpload class="h-file-hidden">
+<a class="hidden" #downloadBtn [href]="downloadUrl" target="_blank" [download]="downloadName">{{downloadName}}</a>
+
+<div class="help-block" *ngIf="errors && errors.length">
+    <p *ngFor="let error of errors" class="text-danger">{{error}}</p>
+</div>
+<div class="help-block" *ngIf="!!actionErrors && !!actionErrors.length">
+    <p *ngFor="let error of actionErrors" class="text-danger">{{error}}</p>
+</div>

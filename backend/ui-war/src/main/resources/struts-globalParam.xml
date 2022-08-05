@@ -1,0 +1,26 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="globalParam" extends="foros-default" namespace="/">
+        <action name="admin/GlobalParam/view" class="com.foros.action.admin.globalParams.ViewGlobalParamAction" method="view">
+            <result name="success" type="tiles">GlobalParam.view</result>
+        </action>
+
+        <action name="admin/GlobalParam/edit" class="com.foros.action.admin.globalParams.EditGlobalParamAction" method="edit">
+            <result name="success" type="tiles">GlobalParam.edit</result>
+        </action>
+
+        <action name="admin/GlobalParam/save" class="com.foros.action.admin.globalParams.SaveGlobalParamAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/GlobalParam/view</param>
+            </result>
+            <result name="input" type="tiles">GlobalParam.edit</result>
+            <result name="version">
+                <param name="location">/admin/GlobalParam/edit.action</param>
+            </result>
+        </action>
+    </package>
+</struts>

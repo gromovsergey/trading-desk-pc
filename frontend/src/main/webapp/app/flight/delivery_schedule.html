@@ -1,0 +1,37 @@
+<div class="form-group">
+    <div class="radio">
+        <label>
+            <input type="radio" [(ngModel)]="radio" (change)="typeChange($event)" [value]="0">
+            _L10N_(flight.notification.schedule24x7serving)
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" [(ngModel)]="radio" (change)="typeChange($event)" [value]="1">
+            _L10N_(flight.notification.scheduleSelect)
+        </label>
+    </div>
+</div>
+<div *ngIf="radio === 1">
+    <div class="alert alert-info">
+        _L10N_(flight.notification.scheduleSelectHint)
+    </div>
+    <div class="timeRange" (mousedown)="mDown($event)" (mouseup)="mUp($event)">
+        <div class="c-ds__phases">
+            <div *ngFor="let phase of phases; let e = even" class="c-ds__phase" [ngClass]="{'c-ds__phase-even': e}">{{phase}}</div>
+        </div>
+        <div class="c-ds__rows clearfix" *ngFor="let day of days; let i = index">
+            <div class="c-ds__weekday">{{day}}</div>
+            <div class="c-ds__slots" *ngFor="let slot of phases; let e = even; let j = index">
+                <div class="c-ds__slot" [ngClass]="{'c-ds__slot-even': e, 'on': slots.indexOf(2*(i*phases.length+j)) !== -1}"
+                     (mouseleave)="bindPhase($event, 2*(i*phases.length+j))"
+                     (mouseenter)="bindPhase($event, 2*(i*phases.length+j))"
+                     (click)="bindPhase($event, 2*(i*phases.length+j), true)"></div>
+                <div class="c-ds__slot" [ngClass]="{'c-ds__slot-even': e, 'on': slots.indexOf(2*(i*phases.length+j)+1) !== -1}"
+                     (mouseleave)="bindPhase($event, 2*(i*phases.length+j)+1)"
+                     (mouseenter)="bindPhase($event, 2*(i*phases.length+j)+1)"
+                     (click)="bindPhase($event, 2*(i*phases.length+j)+1, true)"></div>
+            </div>
+        </div>
+    </div>
+</div>

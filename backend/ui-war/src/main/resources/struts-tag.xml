@@ -1,0 +1,189 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="tag" extends="foros-default" namespace="/">
+
+        <!-- tags download -->
+        <action name="*/site/downloadTagsSite" class="com.foros.action.site.TagsDownloadAction" method="downloadTags">
+            <result name="success" type="tiles">tags.download.site</result>
+        </action>
+
+        <action name="*/site/downloadTagsAccount" class="com.foros.action.site.TagsDownloadAction" method="downloadTags">
+            <result name="success" type="tiles">tags.download.account</result>
+        </action>
+
+        <action name="admin/tag/view" class="com.foros.action.site.ViewTagAction" method="view">
+            <result name="success" type="tiles">admin.tag.view</result>
+        </action>
+
+        <!-- tag manipulation -->
+        <action name="publisher/tag/view" class="com.foros.action.site.ViewTagAction" method="view">
+            <result name="success" type="tiles">publisher.tag.view</result>
+        </action>
+
+        <action name="admin/tag/edit" class="com.foros.action.site.EditTagAction" method="edit">
+            <result name="success" type="tiles">admin.tag.edit</result>
+        </action>
+
+        <action name="publisher/tag/edit" class="com.foros.action.site.EditTagAction" method="edit">
+            <result name="success" type="tiles">publisher.tag.edit</result>
+        </action>
+
+        <action name="admin/tag/editCreativeCustomization" class="com.foros.action.site.EditCreativeCustomizationAction" method="edit">
+            <result name="success" type="tiles">admin.tag.editCreativeCustomization</result>
+        </action>
+
+        <action name="publisher/tag/editCreativeCustomization" class="com.foros.action.site.EditCreativeCustomizationAction" method="edit">
+            <result name="success" type="tiles">publisher.tag.editCreativeCustomization</result>
+        </action>
+
+        <action name="publisher/tag/changeSizeType" class="com.foros.action.site.EditTagAction" method="changeSizeType">
+            <result name="multisize">/site/tag/sizes.jsp</result>
+            <result name="singlesize">/site/tag/size.jsp</result>
+        </action>
+
+        <action name="admin/tag/changeSizeType" class="com.foros.action.site.EditTagAction" method="changeSizeType">
+            <result name="multisize">/site/tag/sizes.jsp</result>
+            <result name="singlesize">/site/tag/size.jsp</result>
+        </action>
+
+        <action name="admin/tag/new" class="com.foros.action.site.EditTagAction" method="create">
+            <result name="success" type="tiles">admin.tag.edit</result>
+        </action>
+
+        <action name="publisher/tag/new" class="com.foros.action.site.EditTagAction" method="create">
+            <result name="success" type="tiles">publisher.tag.edit</result>
+        </action>
+
+        <action name="admin/tag/editAuctionSettings" class="com.foros.action.site.EditTagAuctionSettingsAction" method="edit">
+            <result name="success" type="tiles">admin.tag.editAuctionSettings</result>
+        </action>
+
+        <action name="admin/tag/create" class="com.foros.action.site.SaveTagAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">admin.tag.edit</result>
+            <result name="success" type="redirect">
+                <param name="location">admin/tag/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="publisher/tag/create" class="com.foros.action.site.SaveTagAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">publisher.tag.edit</result>
+            <result name="success" type="redirect">
+                <param name="location">publisher/tag/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/tag/update" class="com.foros.action.site.SaveTagAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">admin.tag.edit</result>
+            <result name="success" type="redirect">
+                <param name="location">admin/tag/view.action?id=${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/tag/edit.action</param>
+            </result>
+        </action>
+
+        <action name="publisher/tag/update" class="com.foros.action.site.SaveTagAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">publisher.tag.edit</result>
+            <result name="success" type="redirect">
+                <param name="location">publisher/tag/view.action?id=${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/publisher/tag/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/tag/updateCreativeCustomization" class="com.foros.action.site.SaveCreativeCustomizationAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">admin.tag.editCreativeCustomization</result>
+            <result name="success" type="redirect">
+                <param name="location">admin/tag/view.action?id=${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/tag/editCreativeCustomization.action</param>
+            </result>
+        </action>
+
+        <action name="publisher/tag/updateCreativeCustomization" class="com.foros.action.site.SaveCreativeCustomizationAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">publisher.tag.editCreativeCustomization</result>
+            <result name="success" type="redirect">
+                <param name="location">publisher/tag/view.action?id=${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/publisher/tag/editCreativeCustomization.action</param>
+            </result>
+        </action>
+
+        <action name="admin/tag/delete" class="com.foros.action.site.StatusTagAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/tag/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/tag/view.action</param>
+            </result>
+        </action>
+
+        <action name="publisher/tag/delete" class="com.foros.action.site.StatusTagAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">publisher/site/view</param>
+                <param name="id">${siteId}</param>
+            </result>
+            <result name="version">
+                <param name="location">/publisher/tag/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/tag/undelete" class="com.foros.action.site.StatusTagAction" method="undelete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/tag/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/tag/view.action</param>
+            </result>
+        </action>
+
+        <action name="publisher/tag/undelete" class="com.foros.action.site.StatusTagAction" method="undelete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">publisher/tag/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/publisher/tag/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/tag/updateAuctionSettings" class="com.foros.action.site.SaveTagAuctionSettingsAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">admin.tag.editAuctionSettings</result>
+            <result name="success" type="redirect">
+                <param name="location">admin/tag/view.action?id=${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/tag/editAuctionSettings.action</param>
+            </result>
+        </action>
+
+        <!-- tag preview -->
+        <action name="admin/tag/preview" class="com.foros.action.site.PreviewTagAction" method="execute">
+            <result name="success" type="tiles">admin.preview</result>
+        </action>
+
+        <action name="publisher/tag/preview" class="com.foros.action.site.PreviewTagAction" method="execute">
+            <result name="success" type="tiles">publisher.preview</result>
+        </action>
+
+    </package>
+</struts>

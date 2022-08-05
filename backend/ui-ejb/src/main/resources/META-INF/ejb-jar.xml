@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd">
+    <interceptors>
+        <interceptor>
+            <interceptor-class>com.foros.session.context.EjbContextInterceptor</interceptor-class>
+        </interceptor>
+        <interceptor>
+            <interceptor-class>com.foros.profiling.ProfilingInterceptor</interceptor-class>
+        </interceptor>
+        <interceptor>
+            <interceptor-class>com.foros.changes.CaptureChangesInterceptor</interceptor-class>
+        </interceptor>
+        <interceptor>
+            <interceptor-class>com.foros.cache.generic.interceptor.CacheInterceptor</interceptor-class>
+        </interceptor>
+    </interceptors>
+    <assembly-descriptor>
+        <interceptor-binding>
+            <ejb-name>*</ejb-name>
+            <interceptor-class>com.foros.session.context.EjbContextInterceptor</interceptor-class>
+        </interceptor-binding>
+
+        <interceptor-binding>
+            <ejb-name>*</ejb-name>
+            <interceptor-class>com.foros.profiling.ProfilingInterceptor</interceptor-class>
+        </interceptor-binding>
+
+        <interceptor-binding>
+            <ejb-name>*</ejb-name>
+            <interceptor-class>com.foros.cache.generic.interceptor.CacheInterceptor</interceptor-class>
+        </interceptor-binding>
+
+        <!-- Workaround of Glassfish bug. Start. -->
+        <interceptor-binding>
+            <ejb-name>BehavioralChannelService</ejb-name>
+            <interceptor-class>com.foros.changes.CaptureChangesInterceptor</interceptor-class>
+            <method>
+                <method-name>update</method-name>
+            </method>
+        </interceptor-binding>
+
+        <interceptor-binding>
+            <ejb-name>BehavioralChannelService</ejb-name>
+            <interceptor-class>com.foros.changes.CaptureChangesInterceptor</interceptor-class>
+            <method>
+                <method-name>submitToCmp</method-name>
+            </method>
+        </interceptor-binding>
+
+        <interceptor-binding>
+            <ejb-name>ExpressionChannelService</ejb-name>
+            <interceptor-class>com.foros.changes.CaptureChangesInterceptor</interceptor-class>
+            <method>
+                <method-name>update</method-name>
+            </method>
+        </interceptor-binding>
+
+        <interceptor-binding>
+            <ejb-name>ExpressionChannelService</ejb-name>
+            <interceptor-class>com.foros.changes.CaptureChangesInterceptor</interceptor-class>
+            <method>
+                <method-name>submitToCmp</method-name>
+            </method>
+        </interceptor-binding>
+
+        <interceptor-binding>
+            <ejb-name>AudienceChannelService</ejb-name>
+            <interceptor-class>com.foros.changes.CaptureChangesInterceptor</interceptor-class>
+            <method>
+                <method-name>update</method-name>
+            </method>
+        </interceptor-binding>
+        <!-- Workaround of Glassfish bug. End. -->
+
+        <application-exception>
+            <exception-class>javax.validation.ConstraintViolationException</exception-class>
+            <rollback>true</rollback>
+        </application-exception>
+        <application-exception>
+            <exception-class>java.security.AccessControlException</exception-class>
+            <rollback>true</rollback>
+        </application-exception>
+        <application-exception>
+            <exception-class>javax.persistence.EntityNotFoundException</exception-class>
+            <rollback>true</rollback>
+        </application-exception>
+    </assembly-descriptor>
+</ejb-jar>

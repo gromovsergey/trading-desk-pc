@@ -1,0 +1,467 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="user" extends="foros-default" namespace="/">
+
+        <action name="*/myPreferences/changeRsCredentials" class="com.foros.action.user.ChangeRsCredentialsAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">{1}/myPreferences/view.action</param>
+            </result>
+            <result name="input" type="redirect">
+                <param name="location">{1}/myPreferences/view.action?changeWSCredentialsFailure=true</param>
+            </result>
+        </action>
+
+        <action name="admin/account/user/*View" class="com.foros.action.user.ViewUserAction" method="view">
+            <result name="success" type="tiles">admin.user.{1}View</result>
+        </action>
+
+        <action name="admin/internal/account/user/view" class="com.foros.action.user.ViewInternalUserAction" method="view">
+            <result name="success" type="tiles">admin.account.user.internalView</result>
+        </action>
+
+        <action name="admin/InternalUser/view" class="com.foros.action.user.ViewInternalUserStandaloneAction" method="view">
+            <result name="success" type="tiles">admin.user.internalView</result>
+        </action>
+
+        <action name="*/myAccount/myUser/view" class="com.foros.action.user.ViewUserAction" method="view">
+            <result name="success" type="tiles">{1}.myUser.view</result>
+        </action>
+
+        <action name="*/myAccount/myUser/*View" class="com.foros.action.user.ViewUserAction" method="view">
+            <result name="success" type="tiles">{1}.myUser.view</result>
+        </action>
+
+        <action name="admin/account/user/view" class="com.foros.action.user.ViewUserAction" method="selectView">
+            <result name="success.advertiser" type="redirect">
+                <param name="location">/admin/account/user/advertiserView.action?id=${id}</param>
+            </result>
+            <result name="success.isp" type="redirect">
+                <param name="location">/admin/account/user/ispView.action?id=${id}</param>
+            </result>
+            <result name="success.publisher" type="redirect">
+                <param name="location">/admin/account/user/publisherView.action?id=${id}</param>
+            </result>
+            <result name="success.cmp" type="redirect">
+                <param name="location">/admin/account/user/cmpView.action?id=${id}</param>
+            </result>
+            <result name="success.internal" type="redirect">
+                <param name="location">/admin/internal/account/user/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/InternalUser/main" class="com.foros.action.user.ListInternalUsersAction" method="list">
+            <result name="success" type="tiles">admin.user.internalUsersList</result>
+        </action>
+
+        <action name="admin/account/user/*Edit" class="com.foros.action.user.EditUserAction" method="edit">
+            <result name="success" type="tiles">admin.user.{1}Edit</result>
+        </action>
+
+        <action name="admin/internal/account/user/edit" class="com.foros.action.user.EditUserAction" method="edit">
+            <result name="success" type="tiles">admin.account.user.internalEdit</result>
+        </action>
+
+        <action name="admin/InternalUser/edit" class="com.foros.action.user.EditInternalUserStandaloneAction" method="edit">
+            <result name="success" type="tiles">admin.user.internalEdit</result>
+        </action>
+
+        <action name="*/myAccount/myUser/edit" class="com.foros.action.user.EditUserAction" method="edit">
+            <result name="success" type="tiles">{1}.myUser.edit</result>
+        </action>
+
+        <action name="*/myAccount/myUser/*Edit" class="com.foros.action.user.EditUserAction" method="edit">
+            <result name="success" type="tiles">{1}.myUser.edit</result>
+        </action>
+
+        <action name="admin/account/user/*Update" class="com.foros.action.user.SaveUserAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">admin/account/user/{1}View.action?id=${id}</param>
+            </result>
+            <result name="success.password_sent" type="redirect">
+                <param name="location">admin/account/user/{1}View.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+            <result name="success.mail_failure" type="redirect">
+                <param name="location">admin/account/user/{1}View.action?id=${id}&amp;mailFailure=1</param>
+            </result>
+            <result name="input" type="tiles">admin.user.{1}Edit</result>
+            <result name="version">
+                <param name="location">/admin/account/user/{1}Edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/internal/account/user/update" class="com.foros.action.user.SaveUserAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}</param>
+            </result>
+            <result name="success.password_sent" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+            <result name="success.mail_failure" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}&amp;mailFailure=1</param>
+            </result>
+            <result name="input" type="tiles">admin.account.user.internalEdit</result>
+            <result name="version">
+                <param name="location">/admin/internal/account/user/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/InternalUser/update" class="com.foros.action.user.SaveInternalUserStandaloneAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">admin/InternalUser/view.action?id=${id}</param>
+            </result>
+            <result name="success.password_sent" type="redirect">
+                <param name="location">admin/InternalUser/view.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+            <result name="success.mail_failure" type="redirect">
+                <param name="location">admin/InternalUser/view.action?id=${id}&amp;mailFailure=1</param>
+            </result>
+            <result name="input" type="tiles">admin.user.internalEdit</result>
+            <result name="version">
+                <param name="location">/admin/InternalUser/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/internal/account/user/updateMaxCreditLimit" class="com.foros.action.user.SaveUserAction" method="updateMaxCreditLimit">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.account.user.internalEdit</result>
+            <result name="version">
+                <param name="location">/admin/internal/account/user/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/InternalUser/updateMaxCreditLimit" class="com.foros.action.user.SaveUserAction" method="updateMaxCreditLimit">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">admin/InternalUser/view.action?id=${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.user.internalEdit</result>
+            <result name="version">
+                <param name="location">/admin/InternalUser/edit.action</param>
+            </result>
+        </action>
+
+        <action name="*/myAccount/myUser/update" class="com.foros.action.user.SaveUserAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}</param>
+            </result>
+            <result name="success.password_sent" type="redirect">
+                <param name="location">{1}/myAccount/myUser/{1}View.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+            <result name="success.mail_failure" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}&amp;mailFailure=1</param>
+            </result>
+            <result name="input" type="tiles">{1}.myUser.edit</result>
+            <result name="version">
+                <param name="location">/{1}/myAccount/myUser/edit.action</param>
+            </result>
+        </action>
+
+        <action name="*/myAccount/myUser/*Update" class="com.foros.action.user.SaveUserAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}</param>
+            </result>
+            <result name="success.password_sent" type="redirect">
+                <param name="location">{1}/myAccount/myUser/{1}View.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+            <result name="success.mail_failure" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}&amp;mailFailure=1</param>
+            </result>
+            <result name="input" type="tiles">{1}.myUser.edit</result>
+            <result name="version">
+                <param name="location">/{1}/myAccount/myUser/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/account/user/*New" class="com.foros.action.user.EditUserAction" method="create">
+            <result name="success" type="tiles">admin.user.{1}Create</result>
+        </action>
+
+        <action name="admin/internal/account/user/new" class="com.foros.action.user.EditUserAction" method="create">
+            <result name="success" type="tiles">admin.user.internalCreate</result>
+        </action>
+
+        <action name="*/myAccount/myUser/new" class="com.foros.action.user.EditUserAction" method="create">
+            <result name="success" type="tiles">{1}.myUser.create</result>
+        </action>
+
+        <action name="admin/account/user/*Create" class="com.foros.action.user.SaveUserAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">admin/account/user/{1}View.action?id=${id}</param>
+            </result>
+            <result name="success.password_sent" type="redirect">
+                <param name="location">admin/account/user/{1}View.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+            <result name="success.mail_failure" type="redirect">
+                <param name="location">admin/account/user/{1}View.action?id=${id}&amp;mailFailure=1</param>
+            </result>
+            <result name="input" type="tiles">admin.user.{1}Create</result>
+        </action>
+
+        <action name="admin/internal/account/user/create" class="com.foros.action.user.SaveUserAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}</param>
+            </result>
+            <result name="success.password_sent" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+            <result name="success.mail_failure" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}&amp;mailFailure=1</param>
+            </result>
+            <result name="input" type="tiles">admin.user.internalCreate</result>
+        </action>
+
+         <action name="*/myAccount/myUser/create" class="com.foros.action.user.SaveUserAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}</param>
+            </result>
+            <result name="success.password_sent" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+            <result name="success.mail_failure" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}&amp;mailFailure=1</param>
+            </result>
+            <result name="input" type="tiles">{1}.myUser.create</result>
+        </action>
+
+        <action name="*/myAccount/myUser/*Create" class="com.foros.action.user.SaveUserAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}</param>
+            </result>
+            <result name="success.password_sent" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+            <result name="success.mail_failure" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}&amp;mailFailure=1</param>
+            </result>
+            <result name="input" type="tiles">{1}.myUser.create</result>
+        </action>
+
+        <action name="admin/account/user/*Activate" class="com.foros.action.user.StatusUserAction" method="activate">
+            <result name="success" type="redirect">
+                <param name="location">admin/account/user/{1}View.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/internal/account/user/activate" class="com.foros.action.user.StatusUserAction" method="activate">
+            <result name="success" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/InternalUser/activate" class="com.foros.action.user.StatusUserAction" method="activate">
+            <result name="success" type="redirect">
+                <param name="location">admin/InternalUser/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="*/myAccount/myUser/activate" class="com.foros.action.user.StatusUserAction" method="activate">
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="*/myAccount/myUser/*Activate" class="com.foros.action.user.StatusUserAction" method="activate">
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/account/user/*Inactivate" class="com.foros.action.user.StatusUserAction" method="inactivate">
+            <result name="success" type="redirect">
+                <param name="location">admin/account/user/{1}View.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/internal/account/user/inactivate" class="com.foros.action.user.StatusUserAction" method="inactivate">
+            <result name="success" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/InternalUser/inactivate" class="com.foros.action.user.StatusUserAction" method="inactivate">
+            <result name="success" type="redirect">
+                <param name="location">admin/InternalUser/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="*/myAccount/myUser/inactivate" class="com.foros.action.user.StatusUserAction" method="inactivate">
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="*/myAccount/myUser/*Inactivate" class="com.foros.action.user.StatusUserAction" method="inactivate">
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/account/user/*Delete" class="com.foros.action.user.StatusUserAction" method="delete">
+            <result name="success" type="redirect">
+                <param name="location">admin/account/user/{1}View.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/internal/account/user/delete" class="com.foros.action.user.StatusUserAction" method="delete">
+            <result name="success" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/InternalUser/delete" class="com.foros.action.user.StatusUserAction" method="delete">
+            <result name="success" type="redirect">
+                <param name="location">admin/InternalUser/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="*/myAccount/myUser/delete" class="com.foros.action.user.StatusUserAction" method="delete">
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myAccountView.action</param>
+            </result>
+        </action>
+
+        <action name="*/myAccount/myUser/*Delete" class="com.foros.action.user.StatusUserAction" method="delete">
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myAccountView.action</param>
+            </result>
+        </action>
+
+        <action name="admin/account/user/*Undelete" class="com.foros.action.user.StatusUserAction" method="undelete">
+            <result name="success" type="redirect">
+                <param name="location">admin/account/user/{1}View.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/internal/account/user/undelete" class="com.foros.action.user.StatusUserAction" method="undelete">
+            <result name="success" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/InternalUser/undelete" class="com.foros.action.user.StatusUserAction" method="undelete">
+            <result name="success" type="redirect">
+                <param name="location">admin/InternalUser/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/account/user/*SendPassword" class="com.foros.action.user.ResetPasswordAction" method="execute">
+            <result name="success" type="redirect">
+                <param name="location">admin/account/user/{1}View.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+        </action>
+
+        <action name="*/account/user/resetPasswordUrl" class="com.foros.action.user.GetChangeUidAction" method="execute">
+            <result name="success">/account/passwordResetLink.jsp</result>
+        </action>
+
+        <action name="admin/internal/account/user/sendPassword" class="com.foros.action.user.ResetPasswordAction" method="execute">
+            <result name="success" type="redirect">
+                <param name="location">admin/internal/account/user/view.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+        </action>
+
+        <action name="admin/InternalUser/sendPassword" class="com.foros.action.user.ResetPasswordAction" method="execute">
+            <result name="success" type="redirect">
+                <param name="location">admin/InternalUser/view.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+        </action>
+
+        <action name="*/myAccount/myUser/sendPassword" class="com.foros.action.user.ResetPasswordAction" method="execute">
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+        </action>
+
+        <action name="*/myAccount/myUser/*SendPassword" class="com.foros.action.user.ResetPasswordAction" method="execute">
+            <result name="success" type="redirect">
+                <param name="location">{1}/myAccount/myUser/view.action?id=${id}&amp;isPasswordSent=${passwordSent}</param>
+            </result>
+        </action>
+
+        <action name="admin/account/user/editAdvertisers" class="com.foros.action.user.EditUserAdvertisersAction" method="edit">
+            <result name="success" type="tiles">admin.user.editAdvertisers</result>
+        </action>
+
+        <action name="advertiser/myAccount/myUser/editAdvertisers" class="com.foros.action.user.EditUserAdvertisersAction" method="edit">
+            <result name="success" type="tiles">advertiser.myUser.editAdvertisers</result>
+        </action>
+
+        <action name="admin/account/user/saveAdvertisers" class="com.foros.action.user.SaveUserAdvertisersAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">admin/account/user/advertiserView.action?id=${id.toString()}</param>
+            </result>
+            <result name="input" type="tiles">admin.user.editAdvertisers</result>
+            <result name="version">
+                <param name="location">/admin/account/user/editAdvertisers.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/myAccount/myUser/saveAdvertisers" class="com.foros.action.user.SaveUserAdvertisersAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">advertiser/myAccount/myUser/view.action?id=${id}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.myUser.editAdvertisers</result>
+            <result name="version">
+                <param name="location">/advertiser/myAccount/myUser/editAdvertisers.action</param>
+            </result>
+        </action>
+
+        <action name="*/myPreferences/view" class="com.foros.action.user.ViewMyPreferencesAction" method="view">
+            <result name="success" type="tiles">{1}.myPreferences.view</result>
+        </action>
+
+        <action name="*/myPreferences/edit" class="com.foros.action.user.ViewMyPreferencesAction" method="view">
+            <result name="success" type="tiles">{1}.myPreferences.edit</result>
+        </action>
+
+        <action name="*/myPreferences/save" class="com.foros.action.user.SaveMyPreferencesAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">{1}/myPreferences/view.action</param>
+            </result>
+            <result name="success.mail_failure" type="redirect">
+                <param name="location">{1}/myPreferences/view.action?mailFailure=1</param>
+            </result>
+            <result name="input" type="tiles">{1}.myPreferences.edit</result>
+            <result name="version">
+                <param name="location">/{1}/myPreferences/edit.action</param>
+            </result>
+        </action>
+
+        <action name="*/myPreferences/changePassword" class="com.foros.action.BaseActionSupport" method="execute">
+            <interceptor-ref name="defaultForosStack">
+                <param name="csrf.readOnly">true</param>
+            </interceptor-ref>
+            <result name="success" type="tiles">{1}.myPreferences.changePassword</result>
+        </action>
+
+        <action name="*/myPreferences/changePasswordSave" class="com.foros.action.user.SaveMyPasswordAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">{1}/myPreferences/view.action</param>
+            </result>
+            <result name="input" type="tiles">{1}.myPreferences.changePassword</result>
+            <result name="version">
+                <param name="location">/{1}/myPreferences/changePassword.action</param>
+            </result>
+        </action>
+    </package>
+</struts>

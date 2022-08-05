@@ -1,0 +1,48 @@
+@import "scss/theme";
+@import "scss/variables";
+@import "scss/helpers";
+@import "scss/forms";
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$new-programmatic-primary: mat-palette($mat-indigo, 700, 300, 200);
+$new-programmatic-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$new-programmatic-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$new-programmatic-theme: mat-light-theme((
+  color: (
+    primary: $new-programmatic-primary,
+    accent: $new-programmatic-accent,
+    warn: $new-programmatic-warn,
+  )
+));
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Roboto, monospace',
+  $headline: mat-typography-level(2 * $gen-font-size, 2.2 * $gen-font-size, 600),
+  $body-1: mat-typography-level($gen-font-size, 1.5 * $gen-font-size, 400)
+);
+
+@include mat-base-typography($custom-typography);
+
+// Include theme styles for core and each components used in your app.
+// Alternatively, you can import and @include the theme mixins for each components
+// that you are using.
+@include angular-material-theme($new-programmatic-theme);
+

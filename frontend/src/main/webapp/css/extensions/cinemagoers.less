@@ -1,0 +1,303 @@
+@background-color: #fabf2b;
+@main-color: #666;
+@error-color: red;
+@box-border: 1px solid @main-color;
+@box-shadow: 2px 2px 5px -1px @main-color;
+@chart-container-min-width: 300px;
+@chart-tooltip-zindex: 100;
+
+.cinemagoers {
+  color: @main-color;
+  line-height: 1.5em;
+
+  .cinemagoers-container {
+    width: 100%;
+    display: flex;
+    /*justify-content: space-around;*/
+  }
+
+  .cinemagoers-container-row {
+    flex-flow: row wrap;
+  }
+
+  .cinemagoers-container-column {
+    flex-flow: column wrap;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 30px;
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  a {
+    outline: 0 none;
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+
+  .cinemagoers-main-link {
+    flex: auto;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 10px;
+    h2, span {
+      position: relative;
+    }
+    .fa {
+      position: absolute;
+      left: 20px;
+      font-size: 2em;
+      color: @background-color;
+      opacity: 0.9;
+    }
+    &:hover {
+      .fa {
+        color: white;
+      }
+    }
+  }
+
+  ui-cinemagoers-chart {
+    flex: auto;
+  }
+
+  .cinemagoers-chart-container {
+    flex: 1;
+    position: relative;
+    min-width: @chart-container-min-width;
+    /*max-width: -moz-fit-content;*/
+    /*max-width: fit-content;*/
+    border: @box-border;
+    box-shadow: @box-shadow;
+    border-radius: 10px;
+    margin: 20px 10px;
+    padding: 30px;
+    overflow: hidden;
+    .cinemagoers-chart {
+      /*width: 100%;*/
+      /*height: 100%;*/
+      /*max-width: -moz-fit-content;*/
+      /*max-width: fit-content;*/
+      /*overflow: auto;*/
+      margin-bottom: 50px;
+
+      /* jQuery.jqPlot chart styles */
+      /*.jqplot-yaxis {
+        max-width: 100px;
+        overflow: hidden;
+      }*/
+      .jqplot-point-label {
+        line-height: 1em;
+      }
+      &.BAR_VERTICAL, &.LINE_TIME {
+        margin-left: 20px;  /* for long tick labels */
+      }
+      &.BAR_VERTICAL .jqplot-point-label {
+        color: white;
+        font-size: initial;
+      }
+      /*.jqplot-donut-series.jqplot-data-label span {
+        font-size: 1.1em;
+        color: black;
+      }*/
+      table.jqplot-table-legend {
+        /*left: 0 !important;*/
+        top: 0 !important;
+        margin: 60px 0 20px 10px;
+        padding-bottom: 10px;
+        display: block;
+        /*height: 100%;*/
+        max-width: 200px;
+        overflow: auto;
+        border: 0 none !important;
+        font-size: 14px !important;
+        white-space: nowrap;
+        tr {
+          cursor: pointer;
+          &.disabled {
+            opacity: 0.5;
+            /*text-decoration: line-through;*/
+          }
+        }
+        td {
+          text-align: left;
+          padding-left: 2px;
+        }
+      }
+      .jqplot-highlighter-tooltip {
+        border: 1px solid black;
+        background-color: black;
+        opacity: 0.8;
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 0.85em;
+        z-index: 10;
+      }
+
+      /* Google chart styles */
+      .google-visualization-tooltip {
+        /*border-radius: 10px !important;*/
+        border: 0 none !important;
+        background-color: transparent !important;
+        box-shadow: unset !important;
+        /*line-height: 5em !important;*/
+        /*width: auto !important;*/
+        /*height: auto !important;*/
+        /*padding: 0 20px;*/
+        z-index: @chart-tooltip-zindex !important;
+        right: 1em !important;
+        left: unset !important;
+        .generate-tooltips(@count) when (@count > 0) {
+          .generate-tooltips((@count - 1));
+          &:nth-child(@{count}) {
+            top: 2em * @count !important;
+          }
+        }
+        .generate-tooltips(5);
+      }
+      .google-visualization-tooltip-item-list .google-visualization-tooltip-item {
+        margin: 0 !important;
+        padding: 0 0 0 5px !important;
+        float: left;
+      }
+      .google-visualization-tooltip-item-list .google-visualization-tooltip-item span {
+        font: normal 1.2em Arial,sans-serif !important;
+        color: @main-color !important;
+        /*text-shadow: 1px 1px 1px white;*/
+        display: none;
+      }
+      .google-visualization-tooltip-item-list .google-visualization-tooltip-item:first-child span {
+        display: inline;
+        /*color: black !important;*/
+        /*font-weight: bold !important;*/
+      }
+      .google-visualization-tooltip-item-list .google-visualization-tooltip-item:last-child span:last-child {
+        display: inline;
+        font-size: 1.5em !important;
+        color: black !important;
+        &::after {
+          content: '%';
+          font-size: small;
+        }
+      }
+    }
+    .jqplot-title, .google-title {
+      padding-bottom: 2em;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    &.google-geochart {
+      max-width: -moz-fit-content;
+      max-width: fit-content;
+      margin: auto;
+      .cinemagoers-chart {
+        max-width: -moz-fit-content;
+        max-width: fit-content;
+      }
+    }
+  }
+
+  .cinemagoers-back-link {
+    display: table;
+    width: 60px;
+    height: 60px;
+    position: fixed !important;
+    top: 50%;
+    margin-top: -30px;
+    right: 0;
+    border-radius: 100%;
+    background-color: white;
+    opacity: 0.8;
+    z-index: @chart-tooltip-zindex + 1;
+    .fa {
+      width: 100%;
+      height: 100%;
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 2em;
+    }
+  }
+
+  .cinemagoers-image-link {
+    opacity: 0.5;
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+    &.cinemagoers-chart-photo {
+      position: absolute;
+      right: 10px;
+      bottom: 7px;
+      font-size: 1.5em;
+    }
+  }
+
+  .cinemagoers-chart-nav {
+    text-align: center;
+    position: relative;
+    border: @box-border;
+    box-shadow: @box-shadow;
+    &:hover {
+      background-color: @background-color;
+    }
+  }
+
+  .cinemagoers-chart-error {
+    color: @error-color;
+    background-color: white;
+    position: relative;
+    z-index: 1;
+  }
+
+  a.cinemagoers-chart-comments {
+    &::before {
+      font: normal 1em FontAwesome;
+      content: '\f196';
+      vertical-align: middle;
+    }
+    &:hover {
+      color: black;
+    }
+    &.active {
+      font-weight: bold;
+      &::before {
+        content: '\f147';
+      }
+    }
+  }
+  span.cinemagoers-chart-comments {
+    font-weight: bold;
+  }
+  div.cinemagoers-chart-comments {
+    margin: 10px;
+    /*display: none;*/
+    /*position: relative;*/
+    overflow: auto;
+    textarea {
+      /*position: absolute;*/
+      width: 100%;
+      height: 6em;
+      resize: vertical;
+      border: @box-border;
+      background-color: rgba(255, 235, 59, 0.2);
+      &[readonly] {
+        border: 0 none;
+        background-color: transparent;
+        resize: none;
+      }
+    }
+  }
+  .cinemagoers-chart-comments-control {
+    /*display: none;*/
+    margin-left: 10px;
+  }
+}

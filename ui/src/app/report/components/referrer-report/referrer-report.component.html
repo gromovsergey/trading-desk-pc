@@ -1,0 +1,38 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1>{{'report.referrerReport' | translate}}</h1>
+
+  <ui-report [meta]="meta"
+             [reportParameters]="reportParameters"
+             [reportService]="reportService"
+             [downloadNamePrefix]="'Referrer Report for ' + accountName"
+             [canSelectColumns]="true"
+             [dateRangeOptions]="'Y T WTD MTD LW LM R'">
+    <div #params>
+      <mat-form-field *ngIf="accounts" class="width-full">
+        <mat-label>{{'report.publisherReport.account' | translate}}</mat-label>
+        <mat-select [(ngModel)]="reportParameters.accountId"
+                    name="accountId" required
+                    (ngModelChange)="onAccountChange($event)">
+          <mat-option *ngFor="let item of accounts" [value]="item.id">{{item.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="width-full">
+        <mat-label>{{'report.referrerReport.site' | translate}}</mat-label>
+        <mat-select required [(ngModel)]="siteId" (ngModelChange)="onSiteChange()">
+          <mat-option *ngFor="let item of sites" [value]="item.id">{{item.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="width-full">
+        <mat-label>{{'report.referrerReport.tag' | translate}}</mat-label>
+        <mat-select [(ngModel)]="tagId" (ngModelChange)="onTagChange()">
+          <mat-option [value]="-1">{{'report.referrerReport.tag.all' | translate}}</mat-option>
+          <mat-option *ngFor="let item of tags" [value]="item.id">{{item.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </ui-report>
+</ng-template>

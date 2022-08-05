@@ -1,0 +1,75 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="creativeTemplate" extends="foros-default" namespace="/">
+
+        <action name="admin/CreativeTemplate/main"
+                class="com.foros.action.admin.template.creative.ListCreativeTemplateAction"
+                method="list">
+            <result name="success" type="tiles">CreativeTemplate.main</result>
+        </action>
+
+        <action name="admin/CreativeTemplate/view"
+                class="com.foros.action.admin.template.creative.ViewCreativeTemplateAction"
+                method="view">
+            <result name="success" type="tiles">CreativeTemplate.view</result>
+        </action>
+
+        <action name="admin/CreativeTemplate/new"
+                class="com.foros.action.admin.template.creative.EditCreativeTemplateAction"
+                method="create">
+            <result name="success" type="tiles">CreativeTemplate.create</result>
+        </action>
+
+        <action name="admin/CreativeTemplate/edit"
+                class="com.foros.action.admin.template.creative.EditCreativeTemplateAction"
+                method="edit">
+            <result name="success" type="tiles">CreativeTemplate.edit</result>
+        </action>
+
+        <action name="admin/CreativeTemplate/create" class="com.foros.action.admin.template.creative.SaveCreativeTemplateAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeTemplate/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">CreativeTemplate.create</result>
+        </action>
+
+        <action name="admin/CreativeTemplate/update" class="com.foros.action.admin.template.creative.SaveCreativeTemplateAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeTemplate/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">CreativeTemplate.edit</result>
+            <result name="version">
+                <param name="location">/admin/CreativeTemplate/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/CreativeTemplate/createCopy" class="com.foros.action.admin.template.creative.EditCreativeTemplateAction" method="createCopy">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeTemplate/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/CreativeTemplate/delete" class="com.foros.action.admin.template.StatusTemplateAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeTemplate/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/CreativeTemplate/undelete" class="com.foros.action.admin.template.StatusTemplateAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeTemplate/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

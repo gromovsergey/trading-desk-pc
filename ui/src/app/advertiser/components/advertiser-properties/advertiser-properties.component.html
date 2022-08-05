@@ -1,0 +1,43 @@
+<ui-cell *ngIf="showBudget"
+         class="cell-full"
+         title="{{'blockName.budget' | translate}}">
+  <small class="stats-label">
+    {{'blockName.budget' | translate}} {{'blockName.budget.spent' | translate}} /
+    {{'blockName.budget.available' | translate}}:
+  </small>
+  <strong>{{spentBudget | currency:currencyCode:'symbol':'1.2-2'}}
+    / {{advertiser.prepaidAmount | currency:currencyCode:'symbol':'1.2-2'}}</strong>
+
+  <mat-progress-bar class="budget-progress"
+                    mode="determinate"
+                    [color]="progressColor"
+                    [value]="progressValue"></mat-progress-bar>
+</ui-cell>
+
+<ui-cell class="cell-25"
+         title="{{'blockName.status' | translate}}">
+  <ui-display-status-btn *ngIf="statusChangeable && advertiser.displayStatus.split('|')[0] !== 'DELETED'"
+                         [status]="advertiser.displayStatus"
+                         (statusChange)="statusChange($event)"></ui-display-status-btn>
+  <span *ngIf="!(statusChangeable && advertiser.displayStatus.split('|')[0] !== 'DELETED')">
+                <i class="material-icons" appDisplayStatus [displayStatus]="advertiser.displayStatus">lens</i>
+    {{L10nMajorStatuses[advertiser.displayStatus.split('|')[0]] | translate}}</span>
+</ui-cell>
+<ui-cell class="cell-25"
+         title="{{'blockName.country' | translate}}">
+  {{L10nCountries[advertiser.countryCode] | translate}}
+</ui-cell>
+<ui-cell class="cell-25"
+         title="{{'blockName.currency' | translate}}">
+  {{currencyCode | translate}}
+  ({{0 | currency:currencyCode:'symbol':'1.0-0' | replace:'&nbsp;':'' | replace:'&nbsp;|[0 ]+':''}})
+</ui-cell>
+<ui-cell class="cell-25"
+         title="{{'messages.timeZone' | translate}}">
+  {{L10nTimeZones[advertiser.timeZone] | translate}}
+</ui-cell>
+<ui-cell *ngIf="advertiser.financialFieldsFlag && advertiser.selfServiceFlag && canViewFinance"
+         class="cell-25"
+         title="{{'advertiserAccount.commission' | translate}}">
+  {{advertiser.commission}}%
+</ui-cell>

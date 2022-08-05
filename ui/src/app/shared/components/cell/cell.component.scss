@@ -1,0 +1,15 @@
+:host {
+  max-width: 100%;
+}
+
+.cell {
+  .cell-label {
+    font-weight: 100;
+  }
+  .cell-body {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,20 @@
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.required{
+  color: #aa3333;
+}
+
+input {
+  border-radius: 5px;
+  width: 100%;
+  margin: 5px 0;
+}
+
+.help-block{
+  color: red;
+}

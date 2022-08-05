@@ -1,0 +1,11 @@
+:host {
+  width: 100%;
+  display: block;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}

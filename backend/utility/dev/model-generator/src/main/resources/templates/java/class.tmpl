@@ -1,0 +1,92 @@
+package ${packageName};
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlSeeAlso;
+<%util.resolveImports(packageName, rootPackage, type.dependentTypes).each { str -> %>import ${str};
+<%} %>
+
+<%if(type.documentation) {%>/**
+ <%type.documentation.eachLine { line -> %>* ${line}<%}%>
+ */<%}%>
+<%  def alias = schema.getAliasFor(type.name)
+    if(alias) {%>@XmlRootElement(name="${alias.name}")<%}%>
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "${type.name}")
+<%if(schema.isParent(type)) {%>@XmlSeeAlso({
+    <% def children = schema.getChildren(type)
+        children.eachWithIndex { subType, index -> %>
+    ${rootPackage}.${subType.packageName}.${subType.name}.class${index+1==children.size()?"":","}<%}%>
+})<%}%>
+public class ${type.name}<%
+    type.genericTypes.values().eachWithIndex { genericType, index ->
+        if (index == 0) {%><<%}
+        %>${genericType.name}<%
+        genericType.inheritance.eachWithIndex { t, i ->
+            if (i == 0) {%> extends <%}
+            %>${t.name}<%
+            if(i+1 != genericType.inheritance.size()) {%> & <%}
+        }
+        if(index+1 == type.genericTypes.size()) {%>><%}
+        else {%>,<%}
+    }
+
+    type.inheritance.eachWithIndex { itype, index ->
+        if (index == 0) {%> extends <%}
+        %>${itype.name}<%
+        if(index+1 != type.inheritance.size()) {%>,<%}
+    }%> {
+<%type.fields.each{ def field ->
+    if(field.documentation) {%>
+    /**
+     <%field.documentation.eachLine { line -> %>* ${line}<%}%>
+     */
+<%}
+    if(util.isAttribute(field)){
+%>    @XmlAttribute(name = "${field.name}")
+<%
+    }
+    def type = util.isArray(field.type) ? field.type.contentTypes[0] : field.type
+    if (field.meta["elementName"] != null || field.nillable != null) {
+      if (field.nillable != null) {
+%>      @XmlElement(name = "${field.name}", nillable = ${field.nillable})
+<%
+      } else {
+%>      @XmlElement(name = "${field.meta["elementName"]}")
+<%
+      }
+    }
+    if (field.meta["wrapperElement"]) {
+%>    @XmlElementWrapper(name = "${field.name}")
+<%
+    }
+    if(util.isGeneric(type)) {
+%>    @XmlElementRef
+<%
+    }
+%>    private ${util.resolveTypeName(field.type)} ${field.name}<%
+      def defaultValue = util.defaultValue(field)
+      if (defaultValue) {
+        %> = ${defaultValue}<%
+      }
+      %>;
+<%}%>
+<%type.fields.each{ def field ->
+    def fieldName = field.name%>
+    <%if(field.documentation) {%>/**
+     <%field.documentation.eachLine { line -> %>* ${line}<%}%>
+     */<%}%>
+    public ${util.resolveTypeName(field.type)} get${util.toCamelStyle(field.name)}() {
+        return this.${fieldName};
+    }
+
+    public void set${util.toCamelStyle(field.name)}(${util.resolveTypeName(field.type)} ${fieldName}) {
+        this.${fieldName} = ${fieldName};
+    }
+<%}%>}

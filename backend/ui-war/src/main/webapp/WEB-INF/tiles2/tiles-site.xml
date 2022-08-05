@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name="tags.download.site" extends=".unauthorizedLayout">
+        <put-attribute name="title" value="/site/tagsDownloadForSiteTitle.jsp"/>
+        <put-attribute name="body" value="/site/tagsDownload.jsp"/>
+        <put-attribute name="isTagPreview" value="true"/>
+    </definition>
+
+    <definition name="tags.download.account" extends=".unauthorizedLayout">
+        <put-attribute name="title" value="/site/tagsDownloadForAccountTitle.jsp"/>
+        <put-attribute name="body" value="/site/tagsDownload.jsp"/>
+        <put-attribute name="isTagPreview" value="true"/>
+    </definition>
+
+    <definition name=".sites.main" extends=".mainLayout">
+        <put-attribute name="taskTitle" value="page.title.sites" type="string"/>
+        <put-attribute name="entityName" value="Site" type="string"/>
+        <put-attribute name="titleProperty" value="site.list.sites"/>
+    </definition>
+
+    <definition name="publisher.sites.main" extends=".sites.main">
+        <put-attribute name="moduleName" value="publisher/site"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.sites"/>
+        <put-attribute name="body" value="publisher.SnapshotBySite.view"/>
+    </definition>
+
+   <definition name="admin.SnapshotBySite.view" template="/dashboard/snapshotPublisher.jsp">
+       <put-attribute name="contextModule" value="/admin"/>
+       <put-attribute name="contextPath" value="/admin/publisher"/>
+   </definition>
+
+    <definition name="admin.sites.main" extends=".sites.main">
+        <put-attribute name="moduleName" value="admin/site"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.sites"/>
+        <put-attribute name="contextPath" value="publisher"/>
+        <put-attribute name="body" value="admin.SnapshotBySite.view"/>
+    </definition>
+
+   <definition name="publisher.SnapshotBySite.view" template="/dashboard/snapshotPublisher.jsp">
+       <put-attribute name="contextModule" value="/publisher"/>
+       <put-attribute name="contextPath" value="/publisher"/>
+   </definition>
+
+    <definition name=".Site" extends=".mainLayout">
+        <put-attribute name="taskTitle" value="page.title.sites" type="string"/>
+        <put-attribute name="entityName" value="Site" type="string"/>
+    </definition>
+
+    <definition name=".AdminSite" extends=".Site">
+        <put-attribute name="moduleName" value="admin/site"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.sites"/>
+    </definition>
+
+    <definition name=".PublisherSite" extends=".Site">
+        <put-attribute name="moduleName" value="publisher/site"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.sites"/>
+    </definition>
+
+    <definition name="admin.site.view" extends=".AdminSite">
+        <put-attribute name="body" value="/site/siteView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="publisher.site.view" extends=".PublisherSite">
+        <put-attribute name="body" value="/site/siteView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.site.edit" extends=".AdminSite">
+        <put-attribute name="body" value="/site/siteEdit.jsp"/>
+    </definition>
+
+    <definition name="publisher.site.edit" extends=".PublisherSite">
+        <put-attribute name="body" value="/site/siteEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.site.new" extends=".AdminSite">
+        <put-attribute name="body" value="/site/siteEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="publisher.site.new" extends=".PublisherSite">
+        <put-attribute name="body" value="/site/siteEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="admin.site.upload" extends=".AdminSite">
+        <put-attribute name="titleProperty" value="site.heading.upload"/>
+        <put-attribute name="body" value="/site/siteUpload.jsp"/>
+   </definition>
+
+    <definition name="admin.publishers.site.upload" extends="admin.site.upload">
+        <put-attribute name="moduleName" value="admin/site"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.publishers"/>
+   </definition>
+
+
+    <definition name="publisher.site.upload" extends=".PublisherSite">
+        <put-attribute name="titleProperty" value="site.heading.upload"/>
+        <put-attribute name="body" value="/site/siteUpload.jsp"/>
+   </definition>
+
+
+</tiles-definitions>

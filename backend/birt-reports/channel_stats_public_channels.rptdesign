@@ -1,0 +1,1752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.22" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 3.7.1.v20110905 Build &lt;3.7.1.v20110905-1820></property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <parameters>
+        <scalar-parameter name="rp_InternalAccount" id="523">
+            <text-property name="promptText">Internal Account</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="dataSetName">ds_InternalAccount</property>
+            <expression name="valueExpr">dataSetRow["account_id"]</expression>
+            <expression name="labelExpr">dataSetRow["name"]</expression>
+            <expression name="sortByColumn">dataSetRow["name"]</expression>
+            <property name="sortDirection">asc</property>
+            <property name="dataType">integer</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">421</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">false</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_Country" id="320">
+            <text-property name="promptText">Country</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="isRequired">true</property>
+            <property name="dataSetName">ds_Country</property>
+            <expression name="valueExpr">dataSetRow["country_code"]</expression>
+            <expression name="labelExpr">dataSetRow["country_name"]</expression>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">BR</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <property name="autoSuggestThreshold">1</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_ChannelStatus" id="521">
+            <text-property name="promptText">Channel Status</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="dataSetName">ds_ChannelStatus</property>
+            <expression name="valueExpr">dataSetRow["display_status_id"]</expression>
+            <expression name="labelExpr">dataSetRow["description"]</expression>
+            <property name="dataType">integer</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_ChannelVisibility" id="524">
+            <text-property name="promptText">Channel Visibility</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">PUB</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">PUB</property>
+                    <property name="label">Public</property>
+                </structure>
+                <structure>
+                    <property name="value">PRI</property>
+                    <property name="label">Private</property>
+                </structure>
+                <structure>
+                    <property name="value">CMP</property>
+                    <property name="label">Channel Marketplace</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_StartDate" id="10">
+            <text-property name="promptText">Start Date</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="dataSetName">ds_Date</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["available_date"]</expression>
+            <expression name="labelExpr" type="javascript">dataSetRow["available_date"]</expression>
+            <property name="dataType">date</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">BirtDateTime.year( BirtDateTime.addDay(BirtDateTime.today(),-7) )+"-"&#13;
++BirtDateTime.month( BirtDateTime.addDay(BirtDateTime.today(),-7) )+"-"&#13;
++BirtDateTime.day( BirtDateTime.addDay(BirtDateTime.today(),-7) )</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_EndDate" id="11">
+            <text-property name="promptText">End Date</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="dataSetName">ds_Date</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["available_date"]</expression>
+            <expression name="labelExpr" type="javascript">dataSetRow["available_date"]</expression>
+            <property name="dataType">date</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">BirtDateTime.year( BirtDateTime.addDay(BirtDateTime.today(),-1) )+"-"&#13;
++BirtDateTime.month( BirtDateTime.addDay(BirtDateTime.today(),-1) )+"-"&#13;
++BirtDateTime.day( BirtDateTime.addDay(BirtDateTime.today(),-1) )</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source" id="7">
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://localhost:25432/stat</property>
+            <property name="odaUser">ui</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">SEpnMjZGaWFNTWFIM3NX</encrypted-property>
+            <property name="odaJndiName">jdbc/birt</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ds_Country" id="319">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">country_code</property>
+                    <text-property name="displayName">country_code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_name</property>
+                    <text-property name="displayName">country_name</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">country_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">country_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">country_code</property>
+                    <property name="nativeName">country_code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">country_name</property>
+                    <property name="nativeName">country_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select '00' country_code, 'Not Specified' country_name 
+union all
+select * from (select code country_code, en country_name
+from (
+    select 'AD' code, 'Andorra' en union
+    select 'AE' code, 'United Arab Emirates' en union
+    select 'AF' code, 'Afghanistan' en union
+    select 'AG' code, 'Antigua and Barbuda' en union
+    select 'AI' code, 'Anguilla' en union
+    select 'AL' code, 'Albania' en union
+    select 'AM' code, 'Armenia' en union
+    select 'AN' code, 'Netherlands Antilles' en union
+    select 'AO' code, 'Angola' en union
+    select 'AQ' code, 'Antarctica' en union
+    select 'AR' code, 'Argentina' en union
+    select 'AS' code, 'American Samoa' en union
+    select 'AT' code, 'Austria' en union
+    select 'AU' code, 'Australia' en union
+    select 'AW' code, 'Aruba' en union
+    select 'AX' code, 'Aland Islands' en union
+    select 'AZ' code, 'Azerbaijan' en union
+    select 'BA' code, 'Bosnia and Herzegovina' en union
+    select 'BB' code, 'Barbados' en union
+    select 'BD' code, 'Bangladesh' en union
+    select 'BE' code, 'Belgium' en union
+    select 'BF' code, 'Burkina Faso' en union
+    select 'BG' code, 'Bulgaria' en union
+    select 'BH' code, 'Bahrain' en union
+    select 'BI' code, 'Burundi' en union
+    select 'BJ' code, 'Benin' en union
+    select 'BM' code, 'Bermuda' en union
+    select 'BN' code, 'Brunei' en union
+    select 'BO' code, 'Bolivia' en union
+    select 'BR' code, 'Brazil' en union
+    select 'BS' code, 'Bahamas' en union
+    select 'BT' code, 'Bhutan' en union
+    select 'BV' code, 'Bouvet Island' en union
+    select 'BW' code, 'Botswana' en union
+    select 'BY' code, 'Belarus' en union
+    select 'BZ' code, 'Belize' en union
+    select 'CA' code, 'Canada' en union
+    select 'CC' code, 'Cocos Islands' en union
+    select 'CD' code, 'The Democratic Republic Of Congo' en union
+    select 'CF' code, 'Central African Republic' en union
+    select 'CG' code, 'Congo' en union
+    select 'CH' code, 'Switzerland' en union
+    select 'CI' code, 'Cote d''Ivoire' en union
+    select 'CK' code, 'Cook Islands' en union
+    select 'CL' code, 'Chile' en union
+    select 'CM' code, 'Cameroon' en union
+    select 'CN' code, 'China' en union
+    select 'CO' code, 'Colombia' en union
+    select 'CR' code, 'Costa Rica' en union
+    select 'CS' code, 'Serbia and Montenegro' en union
+    select 'CU' code, 'Cuba' en union
+    select 'CV' code, 'Cape Verde' en union
+    select 'CX' code, 'Christmas Island' en union
+    select 'CY' code, 'Cyprus' en union
+    select 'CZ' code, 'Czech Republic' en union
+    select 'DE' code, 'Germany' en union
+    select 'DJ' code, 'Djibouti' en union
+    select 'DK' code, 'Denmark' en union
+    select 'DM' code, 'Dominica' en union
+    select 'DO' code, 'Dominican Republic' en union
+    select 'DZ' code, 'Algeria' en union
+    select 'EC' code, 'Ecuador' en union
+    select 'EE' code, 'Estonia' en union
+    select 'EG' code, 'Egypt' en union
+    select 'EH' code, 'Western Sahara' en union
+    select 'ER' code, 'Eritrea' en union
+    select 'ES' code, 'Spain' en union
+    select 'ET' code, 'Ethiopia' en union
+    select 'FI' code, 'Finland' en union
+    select 'FJ' code, 'Fiji' en union
+    select 'FK' code, 'Falkland Islands' en union
+    select 'FM' code, 'Micronesia' en union
+    select 'FO' code, 'Faroe Islands' en union
+    select 'FR' code, 'France' en union
+    select 'GA' code, 'Gabon' en union
+    select 'GB' code, 'United Kingdom' en union
+    select 'GD' code, 'Grenada' en union
+    select 'GE' code, 'Georgia' en union
+    select 'GF' code, 'French Guiana' en union
+    select 'GG' code, 'North Gabon' en union
+    select 'GH' code, 'Ghana' en union
+    select 'GI' code, 'Gibraltar' en union
+    select 'GL' code, 'Greenland' en union
+    select 'GM' code, 'Gambia' en union
+    select 'GN' code, 'Guinea' en union
+    select 'GP' code, 'Guadeloupe' en union
+    select 'GQ' code, 'Equatorial Guinea' en union
+    select 'GR' code, 'Greece' en union
+    select 'GS' code, 'South Georgia And The South Sandwich Islands' en union
+    select 'GT' code, 'Guatemala' en union
+    select 'GU' code, 'Guam' en union
+    select 'GW' code, 'Guinea-Bissau' en union
+    select 'GY' code, 'Guyana' en union
+    select 'HK' code, 'Hong Kong' en union
+    select 'HM' code, 'Heard Island And McDonald Islands' en union
+    select 'HN' code, 'Honduras' en union
+    select 'HR' code, 'Croatia' en union
+    select 'HT' code, 'Haiti' en union
+    select 'HU' code, 'Hungary' en union
+    select 'ID' code, 'Indonesia' en union
+    select 'IE' code, 'Ireland' en union
+    select 'IL' code, 'Israel' en union
+    select 'IN' code, 'India' en union
+    select 'IO' code, 'British Indian Ocean Territory' en union
+    select 'IQ' code, 'Iraq' en union
+    select 'IR' code, 'Iran' en union
+    select 'IS' code, 'Iceland' en union
+    select 'IT' code, 'Italy' en union
+    select 'JM' code, 'Jamaica' en union
+    select 'JO' code, 'Jordan' en union
+    select 'JP' code, 'Japan' en union
+    select 'KE' code, 'Kenya' en union
+    select 'KG' code, 'Kyrgyzstan' en union
+    select 'KH' code, 'Cambodia' en union
+    select 'KI' code, 'Kiribati' en union
+    select 'KM' code, 'Comoros' en union
+    select 'KN' code, 'Saint Kitts And Nevis' en union
+    select 'KP' code, 'North Korea' en union
+    select 'KR' code, 'South Korea' en union
+    select 'KW' code, 'Kuwait' en union
+    select 'KY' code, 'Cayman Islands' en union
+    select 'KZ' code, 'Kazakhstan' en union
+    select 'LA' code, 'Laos' en union
+    select 'LB' code, 'Lebanon' en union
+    select 'LC' code, 'Saint Lucia' en union
+    select 'LI' code, 'Liechtenstein' en union
+    select 'LK' code, 'Sri Lanka' en union
+    select 'LR' code, 'Liberia' en union
+    select 'LS' code, 'Lesotho' en union
+    select 'LT' code, 'Lithuania' en union
+    select 'LU' code, 'Luxembourg' en union
+    select 'LV' code, 'Latvia' en union
+    select 'LY' code, 'Libya' en union
+    select 'MA' code, 'Morocco' en union
+    select 'MC' code, 'Monaco' en union
+    select 'MD' code, 'Moldova' en union
+    select 'MG' code, 'Madagascar' en union
+    select 'MH' code, 'Marshall Islands' en union
+    select 'MK' code, 'Macedonia' en union
+    select 'ML' code, 'Mali' en union
+    select 'MM' code, 'Myanmar' en union
+    select 'MN' code, 'Mongolia' en union
+    select 'MO' code, 'Macao' en union
+    select 'MP' code, 'Northern Mariana Islands' en union
+    select 'MQ' code, 'Martinique' en union
+    select 'MR' code, 'Mauritania' en union
+    select 'MS' code, 'Montserrat' en union
+    select 'MT' code, 'Malta' en union
+    select 'MU' code, 'Mauritius' en union
+    select 'MV' code, 'Maldives' en union
+    select 'MW' code, 'Malawi' en union
+    select 'MX' code, 'Mexico' en union
+    select 'MY' code, 'Malaysia' en union
+    select 'MZ' code, 'Mozambique' en union
+    select 'NA' code, 'Namibia' en union
+    select 'NC' code, 'New Caledonia' en union
+    select 'NE' code, 'Niger' en union
+    select 'NF' code, 'Norfolk Island' en union
+    select 'NG' code, 'Nigeria' en union
+    select 'NI' code, 'Nicaragua' en union
+    select 'NL' code, 'Netherlands' en union
+    select 'NO' code, 'Norway' en union
+    select 'NP' code, 'Nepal' en union
+    select 'NR' code, 'Nauru' en union
+    select 'NU' code, 'Niue' en union
+    select 'NZ' code, 'New Zealand' en union
+    select 'OM' code, 'Oman' en union
+    select 'PA' code, 'Panama' en union
+    select 'PE' code, 'Peru' en union
+    select 'PF' code, 'French Polynesia' en union
+    select 'PG' code, 'Papua New Guinea' en union
+    select 'PH' code, 'Philippines' en union
+    select 'PK' code, 'Pakistan' en union
+    select 'PL' code, 'Poland' en union
+    select 'PM' code, 'Saint Pierre And Miquelon' en union
+    select 'PN' code, 'Pitcairn' en union
+    select 'PR' code, 'Puerto Rico' en union
+    select 'PS' code, 'Palestine' en union
+    select 'PT' code, 'Portugal' en union
+    select 'PW' code, 'Palau' en union
+    select 'PY' code, 'Paraguay' en union
+    select 'QA' code, 'Qatar' en union
+    select 'RE' code, 'Reunion' en union
+    select 'RO' code, 'Romania' en union
+    select 'RU' code, 'Russia' en union
+    select 'RW' code, 'Rwanda' en union
+    select 'SA' code, 'Saudi Arabia' en union
+    select 'SB' code, 'Solomon Islands' en union
+    select 'SC' code, 'Seychelles' en union
+    select 'SD' code, 'Sudan' en union
+    select 'SE' code, 'Sweden' en union
+    select 'SG' code, 'Singapore' en union
+    select 'SH' code, 'Saint Helena' en union
+    select 'SI' code, 'Slovenia' en union
+    select 'SJ' code, 'Svalbard And Jan Mayen' en union
+    select 'SK' code, 'Slovakia' en union
+    select 'SL' code, 'Sierra Leone' en union
+    select 'SM' code, 'San Marino' en union
+    select 'SN' code, 'Senegal' en union
+    select 'SO' code, 'Somalia' en union
+    select 'SR' code, 'Suriname' en union
+    select 'ST' code, 'Sao Tome And Principe' en union
+    select 'SV' code, 'El Salvador' en union
+    select 'SY' code, 'Syria' en union
+    select 'SZ' code, 'Swaziland' en union
+    select 'TC' code, 'Turks And Caicos Islands' en union
+    select 'TD' code, 'Chad' en union
+    select 'TF' code, 'French Southern Territories' en union
+    select 'TG' code, 'Togo' en union
+    select 'TH' code, 'Thailand' en union
+    select 'TJ' code, 'Tajikistan' en union
+    select 'TK' code, 'Tokelau' en union
+    select 'TL' code, 'Timor-Leste' en union
+    select 'TM' code, 'Turkmenistan' en union
+    select 'TN' code, 'Tunisia' en union
+    select 'TO' code, 'Tonga' en union
+    select 'TR' code, 'Turkey' en union
+    select 'TT' code, 'Trinidad and Tobago' en union
+    select 'TV' code, 'Tuvalu' en union
+    select 'TW' code, 'Taiwan' en union
+    select 'TZ' code, 'Tanzania' en union
+    select 'UA' code, 'Ukraine' en union
+    select 'UG' code, 'Uganda' en union
+    select 'UM' code, 'United States Minor Outlying Islands' en union
+    select 'US' code, 'United States' en union
+    select 'UY' code, 'Uruguay' en union
+    select 'UZ' code, 'Uzbekistan' en union
+    select 'VA' code, 'Vatican' en union
+    select 'VC' code, 'Saint Vincent And The Grenadines' en union
+    select 'VE' code, 'Venezuela' en union
+    select 'VG' code, 'British Virgin Islands' en union
+    select 'VI' code, 'U.S. Virgin Islands' en union
+    select 'VN' code, 'Vietnam' en union
+    select 'VU' code, 'Vanuatu' en union
+    select 'WF' code, 'Wallis And Futuna' en union
+    select 'WS' code, 'Samoa' en union
+    select 'YE' code, 'Yemen' en union
+    select 'YT' code, 'Mayotte' en union
+    select 'ZA' code, 'South Africa' en union
+    select 'ZM' code, 'Zambia' en union
+    select 'ZW' code, 'Zimbabwe' en
+) foo order by 2) fooo
+]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>1.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>COUNTRY_CODE</design:name>
+            <design:position>1</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>COUNTRY_CODE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>COUNTRY_CODE</design:label>
+            <design:formattingHints>
+              <design:displaySize>2</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>COUNTRY_NAME</design:name>
+            <design:position>2</design:position>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>COUNTRY_NAME</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>COUNTRY_NAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>2</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ds_Date" id="415">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">available_date</property>
+                    <text-property name="displayName">available_date</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">available_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">available_date</property>
+                    <property name="nativeName">available_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select current_date - generate_series(0, 180) as available_date]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>1.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>AVAILABLE_DATE</design:name>
+            <design:position>1</design:position>
+            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>AVAILABLE_DATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>AVAILABLE_DATE</design:label>
+            <design:formattingHints>
+              <design:displaySize>7</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ds_InternalAccount" id="522">
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">account_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">account_id</property>
+                    <property name="nativeName">account_id</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">name</property>
+                    <property name="nativeName">name</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select ACCOUNT.ACCOUNT_ID, ACCOUNT.NAME
+from ACCOUNT
+where ACCOUNT.ROLE_ID = 0]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ds_ChannelStatus" id="8">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">display_status_id</property>
+                    <text-property name="displayName">display_status_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                    <text-property name="displayName">description</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">display_status_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">display_status_id</property>
+                    <property name="nativeName">display_status_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">description</property>
+                    <property name="nativeName">description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select d.display_status_id, d.description
+from objecttype o, displaystatus d
+where lower(o.name) = 'channel'
+and o.object_type_id = d.object_type_id
+order by 2]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Data Set" id="526">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">channel_name</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">channel_name</text-property>
+                    <text-property name="heading">channel_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">sdate</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">sdate</text-property>
+                    <text-property name="heading">sdate</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">active_user_count</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">active_user_count</text-property>
+                    <text-property name="heading">active_user_count</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">total_user_count</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">total_user_count</text-property>
+                    <text-property name="heading">total_user_count</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">hits_urls</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">hits_urls</text-property>
+                    <text-property name="heading">hits_urls</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">hits_kws</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">hits_kws</text-property>
+                    <text-property name="heading">hits_kws</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">hits_search_kws</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">hits_search_kws</text-property>
+                    <text-property name="heading">hits_search_kws</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">imps</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">imps</text-property>
+                    <text-property name="heading">imps</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">impops_user_count_d</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">impops_user_count_d</text-property>
+                    <text-property name="heading">impops_user_count_d</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">impops_user_count_t</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">impops_user_count_t</text-property>
+                    <text-property name="heading">impops_user_count_t</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">impops_all_imp_ops_d</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">impops_all_imp_ops_d</text-property>
+                    <text-property name="heading">impops_all_imp_ops_d</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">impops_all_imp_ops_t</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">impops_all_imp_ops_t</text-property>
+                    <text-property name="heading">impops_all_imp_ops_t</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">net_active_user_count</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">net_active_user_count</text-property>
+                    <text-property name="heading">net_active_user_count</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">net_total_user_count</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">net_total_user_count</text-property>
+                    <text-property name="heading">net_total_user_count</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">net_impops_user_count_d</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">net_impops_user_count_d</text-property>
+                    <text-property name="heading">net_impops_user_count_d</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">net_impops_user_count_t</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">net_impops_user_count_t</text-property>
+                    <text-property name="heading">net_impops_user_count_t</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">net_impops_all_imp_ops_d</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">net_impops_all_imp_ops_d</text-property>
+                    <text-property name="heading">net_impops_all_imp_ops_d</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">net_impops_all_imp_ops_t</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">net_impops_all_imp_ops_t</text-property>
+                    <text-property name="heading">net_impops_all_imp_ops_t</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">channel_reach</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">channel_reach</text-property>
+                    <text-property name="heading">channel_reach</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">dsp_Country</property>
+                    <property name="paramName">rp_Country</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_CountryName</property>
+                    <property name="dataType">string</property>
+                    <property name="position">2</property>
+                    <expression name="defaultValue">params["rp_Country"].displayText</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_ChannelStatus</property>
+                    <property name="paramName">rp_ChannelStatus</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">3</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_ChannelVisibility</property>
+                    <property name="paramName">rp_ChannelVisibility</property>
+                    <property name="dataType">string</property>
+                    <property name="position">4</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_StartDate</property>
+                    <property name="paramName">rp_StartDate</property>
+                    <property name="dataType">date</property>
+                    <property name="position">5</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_EndDate</property>
+                    <property name="paramName">rp_EndDate</property>
+                    <property name="dataType">date</property>
+                    <property name="position">6</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_InternalAccount</property>
+                    <property name="paramName">rp_InternalAccount</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">7</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">channel_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">sdate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">active_user_count</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">total_user_count</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">hits_urls</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">hits_kws</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">hits_search_kws</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">imps</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">impops_user_count_d</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">impops_user_count_t</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">impops_all_imp_ops_d</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">impops_all_imp_ops_t</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">net_active_user_count</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">net_total_user_count</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">net_impops_user_count_d</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">net_impops_user_count_t</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">net_impops_all_imp_ops_d</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">net_impops_all_imp_ops_t</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">channel_reach</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[importPackage(Packages.java.text);
+sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+qry = this.queryText;
+
+var dateStartMinus1 = new Date(reportContext.getParameterValue("rp_StartDate").getTime()-24*60*60*1000);
+var dateEndPlus1 = new Date(reportContext.getParameterValue("rp_EndDate").getTime()+24*60*60*1000);
+
+qry = qry.replace("(select dsp_StartDate from param)", "'" + reportContext.getParameterValue("rp_StartDate") + "'");
+qry = qry.replace("(select dsp_EndDate from param)", "'" + reportContext.getParameterValue("rp_EndDate") + "'");
+qry = qry.replace("(select dsp_CountryName from param)", "'" + params["rp_Country"].displayText + "'");
+qry = qry.replace("(select dsp_Country from param)", "'" + reportContext.getParameterValue("rp_Country") + "'");
+qry = qry.replace("(select dsp_ChannelVisibility from param)", "'" + reportContext.getParameterValue("rp_ChannelVisibility") + "'");
+qry = qry.replace("(select dsp_ChannelStatus from param)", "" + reportContext.getParameterValue("rp_ChannelStatus"));
+
+qry = qry.replace("(select dsp_StartDate-1 from param)", "'" + sdf.format(dateStartMinus1) + "'");
+qry = qry.replace("(select dsp_EndDate+1 from param)", "'" + sdf.format(dateEndPlus1) + "'");
+
+
+this.queryText = qry;
+
+reportContext.setGlobalVariable("myquery", this.queryText);
+]]></method>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">channel_name</property>
+                    <property name="nativeName">channel_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">sdate</property>
+                    <property name="nativeName">sdate</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">active_user_count</property>
+                    <property name="nativeName">active_user_count</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">total_user_count</property>
+                    <property name="nativeName">total_user_count</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">hits_urls</property>
+                    <property name="nativeName">hits_urls</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">hits_kws</property>
+                    <property name="nativeName">hits_kws</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">hits_search_kws</property>
+                    <property name="nativeName">hits_search_kws</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">imps</property>
+                    <property name="nativeName">imps</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">impops_user_count_d</property>
+                    <property name="nativeName">impops_user_count_d</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">impops_user_count_t</property>
+                    <property name="nativeName">impops_user_count_t</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">impops_all_imp_ops_d</property>
+                    <property name="nativeName">impops_all_imp_ops_d</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">impops_all_imp_ops_t</property>
+                    <property name="nativeName">impops_all_imp_ops_t</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">net_active_user_count</property>
+                    <property name="nativeName">net_active_user_count</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">net_total_user_count</property>
+                    <property name="nativeName">net_total_user_count</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">net_impops_user_count_d</property>
+                    <property name="nativeName">net_impops_user_count_d</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">net_impops_user_count_t</property>
+                    <property name="nativeName">net_impops_user_count_t</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">net_impops_all_imp_ops_d</property>
+                    <property name="nativeName">net_impops_all_imp_ops_d</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">net_impops_all_imp_ops_t</property>
+                    <property name="nativeName">net_impops_all_imp_ops_t</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">channel_reach</property>
+                    <property name="nativeName">channel_reach</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[with param as (
+select ?::varchar dsp_Country,
+       ?::varchar dsp_CountryName,
+       ?::integer dsp_ChannelStatus,
+       ?::varchar dsp_ChannelVisibility,
+       ?::date dsp_StartDate,
+       ?::date dsp_EndDate
+)
+select  cq.channel_name,
+    cq.sdate,
+    cq.active_user_count,
+    cq.total_user_count,
+    cq.hits_urls,
+    cq.hits_kws,
+    cq.hits_search_kws,
+    cq.imps,
+    cq.impops_user_count_d,
+    cq.impops_user_count_t,
+    cq.impops_all_imp_ops_d,
+    cq.impops_all_imp_ops_t,
+    nq.active_user_count    net_active_user_count,
+    nq.total_user_count net_total_user_count,
+    nq.impops_user_count_d net_impops_user_count_d,
+    nq.impops_user_count_t net_impops_user_count_t,
+    nq.impops_all_imp_ops_d net_impops_all_imp_ops_d,
+    nq.impops_all_imp_ops_t net_impops_all_imp_ops_t,
+    case when nq.active_user_count is null then 0
+         when nq.active_user_count = 0 then 0
+         else cq.active_user_count / nq.active_user_count
+    end channel_reach
+from
+(
+with recursive subaccount as (
+  select account_id from account where account_id = ? /*dsp_InternalAccount*/
+  union all
+  select a.account_id from account a join subaccount sa on a.internal_account_id=sa.account_id
+)
+select chn.name channel_name,
+        chi.sdate sdate,
+        sum(coalesce(chi.active_user_count,0)) active_user_count,
+        sum(coalesce(chi.total_user_count,0)) total_user_count,
+        sum(coalesce(chi.hits_urls,0)) hits_urls,
+        sum(coalesce(chi.hits_kws,0)) hits_kws,
+        sum(coalesce(chi.hits_search_kws,0)) hits_search_kws,
+        sum(coalesce(imps_d,0)+coalesce(imps_t,0)) imps,
+        sum(coalesce(imps_other_d,0)+coalesce(imps_other_t,0)) imps_other,
+        sum(coalesce(impops_no_imp_d,0)+coalesce(impops_no_imp_t,0)) impops_no_imp,
+        sum(coalesce(impops_user_count_d,0)) impops_user_count_d,
+        sum(coalesce(impops_user_count_t,0)) impops_user_count_t,
+        sum(coalesce(imps_d,0)+coalesce(imps_other_d,0)+coalesce(impops_no_imp_d,0)) impops_all_imp_ops_d,
+        sum(coalesce(imps_t,0)+coalesce(imps_other_t,0)+coalesce(impops_no_imp_t,0)) impops_all_imp_ops_t
+ from channel chn
+      join subaccount sa on chn.account_id = sa.account_id
+      join channelstats chi on chn.channel_id = chi.channel_id
+where chn.country_code = (select dsp_Country from param)
+  and chn.display_status_id = (select dsp_ChannelStatus from param)
+  and chn.visibility = (select dsp_ChannelVisibility from param)
+  and chi.sdate >= (select dsp_StartDate from param)
+  and chi.sdate < (select dsp_EndDate+1 from param)
+group by channel_name, sdate
+)  cq
+left join
+(
+select chn.name channel_name,
+        chi.sdate sdate,
+        sum(coalesce(chi.active_user_count,0)) active_user_count,
+        sum(coalesce(chi.total_user_count,0)) total_user_count,
+        sum(coalesce(chi.hits_urls,0)) hits_urls,
+        sum(coalesce(chi.hits_kws,0)) hits_kws,
+        sum(coalesce(chi.hits_search_kws,0)) hits_search_kws,
+        sum(coalesce(imps_d,0)+coalesce(imps_t,0)) imps,
+        sum(coalesce(imps_other_d,0)+coalesce(imps_other_t,0)) imps_other,
+        sum(coalesce(impops_no_imp_d,0)+coalesce(impops_no_imp_t,0)) impops_no_imp,
+        sum(coalesce(impops_user_count_d,0)) impops_user_count_d,
+        sum(coalesce(impops_user_count_t,0)) impops_user_count_t,
+        sum(coalesce(imps_d,0)+coalesce(imps_other_d,0)+coalesce(impops_no_imp_d,0)) impops_all_imp_ops_d,
+        sum(coalesce(imps_t,0)+coalesce(imps_other_t,0)+coalesce(impops_no_imp_t,0)) impops_all_imp_ops_t
+ from channel chn
+      join top100urls chi on chn.channel_id = chi.channel_id
+ where chn.name = (select dsp_CountryName from param) || '_Top100URLs(month)'
+   and chi.sdate >= (select dsp_StartDate from param)
+   and chi.sdate < (select dsp_EndDate+1 from param)
+group by channel_name, sdate
+)  nq
+on cq.sdate = nq.sdate
+order by 1, 2
+]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">"Verdana"</property>
+            <property name="fontSize">10pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="6">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">custom</property>
+            <property name="height">8.5in</property>
+            <property name="width">18.5in</property>
+            <property name="orientation">landscape</property>
+            <property name="rightMargin">0in</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="528">
+            <property name="width">18.09722222222222in</property>
+            <property name="dataSet">Data Set</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">channel_name</property>
+                    <text-property name="displayName">channel_name</text-property>
+                    <expression name="expression">dataSetRow["channel_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">sdate</property>
+                    <text-property name="displayName">sdate</text-property>
+                    <expression name="expression">dataSetRow["sdate"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">active_user_count</property>
+                    <text-property name="displayName">active_user_count</text-property>
+                    <expression name="expression">dataSetRow["active_user_count"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">total_user_count</property>
+                    <text-property name="displayName">total_user_count</text-property>
+                    <expression name="expression">dataSetRow["total_user_count"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">hits_urls</property>
+                    <text-property name="displayName">hits_urls</text-property>
+                    <expression name="expression">dataSetRow["hits_urls"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">hits_kws</property>
+                    <text-property name="displayName">hits_kws</text-property>
+                    <expression name="expression">dataSetRow["hits_kws"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">hits_search_kws</property>
+                    <text-property name="displayName">hits_search_kws</text-property>
+                    <expression name="expression">dataSetRow["hits_search_kws"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">imps</property>
+                    <text-property name="displayName">imps</text-property>
+                    <expression name="expression">dataSetRow["imps"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">impops_user_count</property>
+                    <text-property name="displayName">impops_user_count_d</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["impops_user_count_d"]</expression>
+                    <property name="dataType">decimal</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">impops_all_imp_ops</property>
+                    <text-property name="displayName">impops_all_imp_ops_d</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["impops_all_imp_ops_d"]</expression>
+                    <property name="dataType">decimal</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">net_active_user_count</property>
+                    <text-property name="displayName">net_active_user_count</text-property>
+                    <expression name="expression">dataSetRow["net_active_user_count"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">net_total_user_count</property>
+                    <text-property name="displayName">net_total_user_count</text-property>
+                    <expression name="expression">dataSetRow["net_total_user_count"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">net_impops_all_imp_ops</property>
+                    <text-property name="displayName">net_impops_all_imp_ops_d</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["net_impops_all_imp_ops_d"]</expression>
+                    <property name="dataType">decimal</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">net_impops_user_count</property>
+                    <text-property name="displayName">net_impops_user_count_t</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["net_impops_user_count_t"]</expression>
+                    <property name="dataType">decimal</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">channel_reach</property>
+                    <text-property name="displayName">channel_reach</text-property>
+                    <expression name="expression">dataSetRow["channel_reach"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">impops_all_imp_ops_t</property>
+                    <text-property name="displayName">impops_all_imp_ops_t</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["impops_all_imp_ops_t"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">impops_user_count_t</property>
+                    <text-property name="displayName">impops_user_count_t</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["impops_user_count_t"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">net_impops_all_imp_ops_t</property>
+                    <text-property name="displayName">net_impops_all_imp_ops_t</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["net_impops_all_imp_ops_t"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">net_impops_user_count_t</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["net_impops_user_count_t"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">41</property>
+            <column id="582">
+                <property name="width">3.5in</property>
+            </column>
+            <column id="583">
+                <property name="width">1.0520833333333333in</property>
+            </column>
+            <column id="584">
+                <property name="width">0.8125in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="613">
+                <property name="width">0.8125in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="665">
+                <property name="width">0.3in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="590">
+                <property name="width">0.813in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="591">
+                <property name="width">0.813in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="589">
+                <property name="width">0.813in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="586">
+                <property name="width">0.813in</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="588">
+                <property name="width">0.813in</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="587">
+                <property name="width">0.813in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="644">
+                <property name="width">0.813in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="639">
+                <property name="width">0.813in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="677">
+                <property name="width">0.3in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="634">
+                <property name="width">0.813in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="629">
+                <property name="width">0.813in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <column id="624">
+                <property name="width">0.813in</property>
+                <property name="repeat">1</property>
+                <property name="textAlign">right</property>
+            </column>
+            <header>
+                <row id="529">
+                    <property name="fontWeight">bold</property>
+                    <property name="textAlign">left</property>
+                    <cell id="530">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <label id="531">
+                            <text-property name="text">Channel Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="532">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <label id="533">
+                            <text-property name="text">Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="534">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <label id="535">
+                            <text-property name="text">Active Daily Uniques</text-property>
+                        </label>
+                    </cell>
+                    <cell id="614">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <label id="615">
+                            <text-property name="text">Total Uniques</text-property>
+                        </label>
+                    </cell>
+                    <cell id="661">
+                        <property name="colSpan">3</property>
+                        <property name="rowSpan">1</property>
+                        <property name="textAlign">center</property>
+                        <label id="547">
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Opportunities to Serve</text-property>
+                        </label>
+                    </cell>
+                    <cell id="544">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <label id="545">
+                            <text-property name="text">Impressions</text-property>
+                        </label>
+                    </cell>
+                    <cell id="538">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <label id="539">
+                            <text-property name="text">Matched URLS</text-property>
+                        </label>
+                    </cell>
+                    <cell id="542">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <label id="543">
+                            <text-property name="text">Matched Search Keywords</text-property>
+                        </label>
+                    </cell>
+                    <cell id="540">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <label id="541">
+                            <text-property name="text">Matched Keywords</text-property>
+                        </label>
+                    </cell>
+                    <cell id="640">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <label id="655">
+                            <text-property name="text">Network Active Daily Uniques</text-property>
+                        </label>
+                    </cell>
+                    <cell id="635">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <label id="656">
+                            <text-property name="text">Network Total Uniques</text-property>
+                        </label>
+                    </cell>
+                    <cell id="673">
+                        <property name="colSpan">3</property>
+                        <property name="rowSpan">1</property>
+                        <label id="657">
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Network Opportunities to Serve</text-property>
+                        </label>
+                    </cell>
+                    <cell id="620">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <label id="653">
+                            <text-property name="text">Channel Reach</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="602">
+                    <property name="fontWeight">bold</property>
+                    <property name="textAlign">left</property>
+                    <cell id="662"/>
+                    <cell id="606">
+                        <label id="612">
+                            <text-property name="text">Impressions</text-property>
+                        </label>
+                    </cell>
+                    <cell id="607">
+                        <label id="549">
+                            <text-property name="text">Uniques</text-property>
+                        </label>
+                    </cell>
+                    <cell id="674"/>
+                    <cell id="631">
+                        <label id="658">
+                            <text-property name="text">Impressions</text-property>
+                        </label>
+                    </cell>
+                    <cell id="626">
+                        <label id="659">
+                            <text-property name="text">Uniques</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="550">
+                    <property name="height">0.2916666666666667in</property>
+                    <property name="fontSize">8pt</property>
+                    <property name="textAlign">left</property>
+                    <cell id="551">
+                        <data id="552">
+                            <property name="resultSetColumn">channel_name</property>
+                        </data>
+                    </cell>
+                    <cell id="553">
+                        <data id="554">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Medium Date</property>
+                                <property name="pattern">Medium Date</property>
+                            </structure>
+                            <property name="resultSetColumn">sdate</property>
+                        </data>
+                    </cell>
+                    <cell id="555">
+                        <data id="556">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">active_user_count</property>
+                        </data>
+                    </cell>
+                    <cell id="616">
+                        <data id="619">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">total_user_count</property>
+                        </data>
+                    </cell>
+                    <cell id="663">
+                        <text id="666">
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[D:]]></text-property>
+                        </text>
+                        <text id="667">
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[T:]]></text-property>
+                        </text>
+                    </cell>
+                    <cell id="567">
+                        <data id="570">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">impops_all_imp_ops</property>
+                        </data>
+                        <data id="668">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">impops_all_imp_ops_t</property>
+                        </data>
+                    </cell>
+                    <cell id="569">
+                        <data id="568">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">impops_user_count</property>
+                        </data>
+                        <data id="669">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">impops_user_count_t</property>
+                        </data>
+                    </cell>
+                    <cell id="565">
+                        <data id="566">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">imps</property>
+                        </data>
+                    </cell>
+                    <cell id="559">
+                        <data id="560">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">hits_urls</property>
+                        </data>
+                    </cell>
+                    <cell id="563">
+                        <data id="564">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">hits_search_kws</property>
+                        </data>
+                    </cell>
+                    <cell id="561">
+                        <data id="562">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">hits_kws</property>
+                        </data>
+                    </cell>
+                    <cell id="642">
+                        <data id="646">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">net_active_user_count</property>
+                        </data>
+                    </cell>
+                    <cell id="637">
+                        <data id="648">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">net_total_user_count</property>
+                        </data>
+                    </cell>
+                    <cell id="675">
+                        <text id="678">
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[D:]]></text-property>
+                        </text>
+                        <text id="679">
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[T:]]></text-property>
+                        </text>
+                    </cell>
+                    <cell id="632">
+                        <data id="650">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">net_impops_all_imp_ops</property>
+                        </data>
+                        <data id="670">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">net_impops_all_imp_ops_t</property>
+                        </data>
+                    </cell>
+                    <cell id="627">
+                        <data id="652">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0</property>
+                            </structure>
+                            <property name="resultSetColumn">net_impops_user_count</property>
+                        </data>
+                        <data id="672">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">Column Binding</property>
+                        </data>
+                    </cell>
+                    <cell id="622">
+                        <data id="654">
+                            <structure name="numberFormat">
+                                <property name="category">Percent</property>
+                                <property name="pattern">#,##0.000%</property>
+                            </structure>
+                            <property name="resultSetColumn">channel_reach</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="571">
+                    <cell id="572"/>
+                    <cell id="573"/>
+                    <cell id="574"/>
+                    <cell id="618"/>
+                    <cell id="664"/>
+                    <cell id="580"/>
+                    <cell id="581"/>
+                    <cell id="579"/>
+                    <cell id="576"/>
+                    <cell id="578"/>
+                    <cell id="577"/>
+                    <cell id="643"/>
+                    <cell id="638"/>
+                    <cell id="676"/>
+                    <cell id="633"/>
+                    <cell id="628"/>
+                    <cell id="623"/>
+                </row>
+            </footer>
+        </table>
+        <text id="1871">
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">true</expression>
+                </structure>
+            </list-property>
+            <property name="contentType">html</property>
+            <text-property name="content"><![CDATA[<VALUE-OF>reportContext.getGlobalVariable("myquery");</VALUE-OF>]]></text-property>
+        </text>
+    </body>
+</report>

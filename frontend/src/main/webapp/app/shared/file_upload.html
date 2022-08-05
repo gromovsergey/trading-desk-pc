@@ -1,0 +1,20 @@
+<div class="c-fileupload">
+    <button (click)="selectFile($event)" [disabled]="btnDisable" class="btn btn-default">
+        <ui-icon [icon]="'spinner'" [spin]="true" *ngIf="wait"></ui-icon>
+        {{title}}
+    </button>
+    <ui-hint *ngIf="hint" [text]="hint"></ui-hint>
+
+    <section *ngIf="uploadData">
+        <a [href]="uploadData.url" target="_blank" *ngIf="uploadData.url && uploadData.name">{{uploadData.name}}</a>
+        <span *ngIf="!uploadData.url && uploadData.name">{{uploadData.name}}</span>
+        <a href="#" *ngIf="uploadData.name" [title]="clearBtnTitle" (click)="clearField($event)"><ui-icon [icon]="'times'"></ui-icon></a>
+    </section>
+    <input type="file" (change)="doUpload($event)" #fileUpload class="h-file-hidden">
+</div>
+<div class="help-block" *ngIf="errors && errors.length">
+    <p *ngFor="let error of errors" class="text-danger">{{error}}</p>
+</div>
+<div class="help-block" *ngIf="!!actionErrors && !!actionErrors.length">
+    <p *ngFor="let error of actionErrors" class="text-danger">{{error}}</p>
+</div>

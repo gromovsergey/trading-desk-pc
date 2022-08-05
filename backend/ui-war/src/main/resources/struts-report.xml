@@ -1,0 +1,112 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the report package. -->
+    <package name="report" extends="foros-default" namespace="/">
+
+        <!--  Main Report -->
+        <action name="admin/report/main" class="com.foros.action.reporting.MainReportAction" method="viewReports">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.ReportMain.view</result>
+        </action>
+
+        <action name="*/report/main" class="com.foros.action.reporting.MainReportAction" method="viewReports">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">ADVERTISER,AGENCY,CMP,ISP,PUBLISHER</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">{1}.ReportMain.view</result>
+        </action>
+
+        <action name="admin/*/report/main" class="com.foros.action.reporting.MainReportAction" method="viewReports">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.{1}.ReportMain.view</result>
+        </action>
+
+        <!-- Custom Reports -->
+        <action name="admin/report/birtReport/new" class="com.foros.action.birt.EditBirtReportAction" method="create">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.BirtReports.create</result>
+        </action>
+
+        <action name="admin/report/birtReport/edit" class="com.foros.action.birt.EditBirtReportAction" method="edit">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.BirtReports.edit</result>
+        </action>
+
+        <action name="admin/report/birtReport/create" class="com.foros.action.birt.SaveBirtReportAction" method="create">
+            <interceptor-ref name="fileUpload"/>
+            <interceptor-ref name="saveStack"/>
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">/admin/report/main.action</param>
+            </result>
+            <result name="input" type="tiles">admin.BirtReports.create</result>
+            <result name="version">
+                <param name="location">/admin/report/birtReport/new.action</param>
+            </result>
+        </action>
+
+        <action name="admin/report/birtReport/update" class="com.foros.action.birt.SaveBirtReportAction" method="update">
+            <interceptor-ref name="fileUpload"/>
+            <interceptor-ref name="saveStack"/>
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">/admin/report/main.action</param>
+            </result>
+            <result name="input" type="tiles">admin.BirtReports.edit</result>
+            <result name="version">
+                <param name="location">/admin/report/birtReport/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/report/birtReport/delete" class="com.foros.action.birt.StatusBirtReportAction" method="delete">
+            <result name="success" type="redirect">
+                <param name="location">/admin/report/main.action</param>
+            </result>
+        </action>
+
+        <action name="admin/report/birtReport/showBirtError" class="com.foros.action.birt.EditBirtReportAction" method="showBirtError">
+            <result name="success" type="tiles">BirtReports.error</result>
+        </action>
+
+        <!-- Audit Report -->
+        <action name="admin/report/audit" class="com.foros.action.reporting.audit.AuditLogReportAction" method="view">
+            <result name="success" type="tiles">AuditReport.view</result>
+        </action>
+
+        <action name="admin/report/audit/run" class="com.foros.action.reporting.audit.AuditLogReportAction" method="run">
+            <result name="success" type="tiles">AuditReport.run</result>
+        </action>
+
+        <action name="admin/report/audit/record" class="com.foros.action.reporting.audit.ViewAuditLogRecordAction" method="view">
+            <result name="success">/auditLog/logRecordDescription.jsp</result>
+        </action>
+
+        <action name="admin/report/birtReport/downloadTemplate"
+                class="com.foros.action.birt.DownloadTemplateAction"
+                method="download">
+            <result name="success" type="download-file"/>
+        </action>
+    </package>
+</struts>

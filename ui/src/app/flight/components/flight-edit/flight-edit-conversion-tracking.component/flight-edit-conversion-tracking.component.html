@@ -1,0 +1,16 @@
+<ui-loading [overlay]="true" *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <mat-selection-list *ngIf="conversions?.length"
+                      (selectionChange)="selectConversion($event)">
+    <mat-list-option *ngFor="let item of conversions"
+                     [value]="item"
+                     [selected]="item.checked">
+      {{item.conversion.name}}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <ui-info-panel type="info" *ngIf="!conversions || conversions.length === 0">
+    {{'advertiserAccount.conversionListIsEmpty' | translate}}
+  </ui-info-panel>
+</ng-template>

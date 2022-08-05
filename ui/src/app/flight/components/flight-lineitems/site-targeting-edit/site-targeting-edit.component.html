@@ -1,0 +1,50 @@
+<header class="m5-bottom">
+    <mat-tab-group
+            mat-align-tabs="center"
+            dynamicHeight animationDuration="{{animationDuration}}ms"
+            (selectedTabChange)="setActiveItem($event)">
+        <mat-tab *ngFor="let tab of tabSettings" [label]="language === 'ru' ? tab.rus : tab.english">
+        </mat-tab>
+    </mat-tab-group>
+</header>
+
+<ui-info-panel
+        *ngIf="operationDone"
+        [type]="operationResult"
+        (close)="destroyInfoPanel()">
+    {{operationText}}
+</ui-info-panel>
+
+<section class="custom-style">
+    <div *ngIf="this.activeItem.english === tabSettings[0].english">
+        <ui-flight-edit-inventory
+                #flightEditInventory
+                [siteIds]="flight.siteIds"
+                (sourceChange)="onSourceChange($event)">
+        </ui-flight-edit-inventory>
+    </div>
+
+    <div *ngIf="this.activeItem.english === tabSettings[1].english">
+        <ui-search-multiselect-list
+                [data]="sites"
+                [dropdownSettings]="dropdownSettings"
+                [placeholder]="'Enter sites to be added'"
+                (ngModelChange)="onNgModelChange($event)">
+        </ui-search-multiselect-list>
+    </div>
+
+    <div *ngIf="this.activeItem.english === tabSettings[2].english">
+        <ui-search-multiselect-list
+                [data]="sites"
+                [dropdownSettings]="dropdownSettings"
+                [placeholder]="'Enter sites to be removed'"
+                (ngModelChange)="onNgModelChange($event)">
+        </ui-search-multiselect-list>
+    </div>
+</section>
+
+
+<footer class="custom-style f-wrapper">
+    <button mat-stroked-button (click)="onClose()" class="m5-right">{{'button.close' | translate}}</button>
+    <button mat-stroked-button [disabled]="disabled" (click)="onSubmit()" color="primary" class="m5-left submit-button">{{'button.save' | translate}}</button>
+</footer>

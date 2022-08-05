@@ -1,0 +1,392 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="advertiserAccount" extends="foros-default" namespace="/">
+
+        <action name="admin/advertiser/account/view" class="com.foros.action.account.ViewAccountAction" method="view">
+            <result name="advertiser" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/advertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="agencyAdvertiser" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/agencyAdvertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/advertiserView" class="com.foros.action.account.ViewAdvertiserAccountAction" method="view">
+            <result name="success" type="tiles">admin.advertiser.view</result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyAdvertiserView" class="com.foros.action.account.ViewAdvertiserAccountAction" method="viewAgencyAdvertiser">
+            <result name="success" type="tiles">admin.agencyAdvertiserView</result>
+        </action>
+
+        <action name="admin/advertiser/account/advertiserEdit" class="com.foros.action.account.EditAdvertiserAccountAction" method="edit">
+            <result name="success" type="tiles">admin.advertiser.edit</result>
+        </action>
+
+        <action name="admin/advertiser/account/advertiserNew" class="com.foros.action.account.EditAdvertiserAccountAction" method="create">
+            <result name="success" type="tiles">admin.advertiser.new</result>
+        </action>
+
+        <action name="admin/advertiser/account/advertiserChangeCountry" class="com.foros.action.account.EditAdvertiserAccountAction" method="changeCountry">
+            <result name="success">/account/addressEditSection.jsp</result>
+        </action>
+
+        <action name="admin/advertiser/account/advertiserUpdate" class="com.foros.action.account.SaveAdvertiserAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/advertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.advertiser.edit</result>
+            <result name="version">
+                <param name="location">/admin/advertiser/account/advertiserEdit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/advertiserCreate" class="com.foros.action.account.SaveAdvertiserAccountAction" method="create">
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/advertiser/account/advertiserView</param>
+            <param name="id">${id}</param>
+          </result>
+          <result name="input" type="tiles">admin.advertiser.new</result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyEdit" class="com.foros.action.account.EditAgencyAccountAction" method="edit">
+            <result name="success" type="tiles">admin.agency.edit</result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyNew" class="com.foros.action.account.EditAgencyAccountAction" method="create">
+            <result name="success" type="tiles">admin.agency.new</result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyChangeCountry" class="com.foros.action.account.EditAgencyAccountAction" method="changeCountry">
+            <result name="success">/account/addressEditSection.jsp</result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyUpdate" class="com.foros.action.account.SaveAgencyAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/advertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.agency.edit</result>
+            <result name="version">
+                <param name="location">/admin/advertiser/account/agencyEdit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyCreate" class="com.foros.action.account.SaveAgencyAccountAction" method="create">
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/advertiser/account/advertiserView</param>
+            <param name="id">${id}</param>
+          </result>
+          <result name="input" type="tiles">admin.agency.new</result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyAdvertiserNew" class="com.foros.action.account.EditAgencyAdvertiserAccountAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">admin.agencyAdvertiser.new</result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyAdvertiserEdit" class="com.foros.action.account.EditAgencyAdvertiserAccountAction" method="edit">
+            <result name="success" type="tiles">admin.agencyAdvertiser.edit</result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyAdvertiserUpdate" class="com.foros.action.account.SaveAgencyAdvertiserAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/agencyAdvertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.agencyAdvertiser.edit</result>
+            <result name="version">
+                <param name="location">/admin/advertiser/account/agencyAdvertiserEdit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyAdvertiserCreate" class="com.foros.action.account.SaveAgencyAdvertiserAccountAction" method="create">
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/advertiser/account/agencyAdvertiserView</param>
+            <param name="id">${id}</param>
+          </result>
+          <result name="input" type="tiles">admin.agencyAdvertiser.new</result>
+        </action>
+
+        <action name="admin/advertiser/account/terms/add" class="com.foros.action.account.terms.AddAccountTermsAction" method="edit">
+            <result name="success" type="tiles">admin.advertiser.terms.add</result>
+        </action>
+
+        <action name="admin/advertiser/account/terms/save" class="com.foros.action.account.terms.AddAccountTermsAction" method="save">
+          <interceptor-ref name="fileUpload">
+            <param name="allowedTypes">image/jpeg,image/pjpeg,image/png,image/x-png,image/gif,application/pdf,image/tiff,image/tiff-fx</param>
+          </interceptor-ref>
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/advertiser/account/advertiserView</param>
+            <param name="id">${id}</param>
+          </result>
+            <result name="input" type="tiles">admin.advertiser.terms.add</result>
+        </action>
+
+        <!--ToDo: uncomment when needed (OUI-28825)-->
+        <!--<action name="admin/advertiser/account/advertiserEditFinance" class="com.foros.action.account.EditAdvertiserFinanceAction" method="edit">-->
+            <!--<result name="success" type="tiles">admin.advertiserFinance.edit</result>-->
+        <!--</action>-->
+
+        <!--<action name="admin/advertiser/account/advertiserUpdateFinance" class="com.foros.action.account.SaveAdvertiserFinanceAction" method="update">-->
+            <!--<interceptor-ref name="saveStack"/>-->
+            <!--<result name="success" type="redirectAction">-->
+                <!--<param name="actionName">admin/advertiser/account/advertiserView</param>-->
+                <!--<param name="id">${accountId}</param>-->
+            <!--</result>-->
+            <!--<result name="input" type="tiles">admin.advertiserFinance.edit</result>-->
+            <!--<result name="version">-->
+                <!--<param name="location">/admin/advertiser/account/advertiserEditFinance.action</param>-->
+            <!--</result>-->
+        <!--</action>-->
+
+        <!--<action name="admin/advertiser/account/agencyAdvertiserEditFinance" class="com.foros.action.account.EditAdvertiserFinanceAction" method="edit">-->
+            <!--<result name="success" type="tiles">admin.agencyAdvertiserFinance.edit</result>-->
+        <!--</action>-->
+
+        <!--<action name="admin/advertiser/account/agencyAdvertiserUpdateFinance" class="com.foros.action.account.SaveAdvertiserFinanceAction" method="update">-->
+            <!--<interceptor-ref name="saveStack"/>-->
+            <!--<result name="success" type="redirectAction">-->
+                <!--<param name="actionName">admin/advertiser/account/agencyAdvertiserView</param>-->
+                <!--<param name="id">${accountId}</param>-->
+            <!--</result>-->
+            <!--<result name="input" type="tiles">admin.agencyAdvertiserFinance.edit</result>-->
+            <!--<result name="version">-->
+                <!--<param name="location">/admin/advertiser/account/agencyAdvertiserEditFinance.action</param>-->
+            <!--</result>-->
+        <!--</action>-->
+
+        <action name="admin/advertiser/account/advertiserActivate" class="com.foros.action.account.StatusAccountAction" method="activate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/advertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/advertiserInactivate" class="com.foros.action.account.StatusAccountAction" method="inactivate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/advertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/advertiserDelete" class="com.foros.action.account.StatusAccountAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/advertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/advertiserUndelete" class="com.foros.action.account.StatusAccountAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/advertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyAdvertiserActivate" class="com.foros.action.account.StatusAgencyAdvertiserAccountAction" method="activate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/agencyAdvertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyAdvertiserInactivate" class="com.foros.action.account.StatusAgencyAdvertiserAccountAction" method="inactivate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/agencyAdvertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyAdvertiserDelete" class="com.foros.action.account.StatusAgencyAdvertiserAccountAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/agencyAdvertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/agencyAdvertiserUndelete" class="com.foros.action.account.StatusAgencyAdvertiserAccountAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/agencyAdvertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/main" class="com.foros.action.account.SwitchContextAdvertiserAction"
+                method="main">
+            <result name="success.campaign" type="redirectAction">
+                <param name="actionName">admin/campaign/main</param>
+                <param name="advertiserId">${advertiserId}</param>
+                <param name="agencyId">${agencyId}</param>
+            </result>
+            <result name="success.channel" type="redirect">
+                <param name="location">admin/channel/contextMain.action?accountId=${accountId}</param>
+            </result>
+            <result name="success.account" type="redirect">
+                <param name="location">admin/advertiser/account/advertiserView.action?id=${accountId}</param>
+            </result>
+            <result name="input" type="tiles">admin.advertiser.main</result>
+        </action>
+
+        <action name="admin/advertiser/account/search"
+                class="com.foros.action.account.SwitchContextAdvertiserAction" method="search">
+            <result name="success" type="tiles">admin.advertiser.main</result>
+            <result name="input" type="tiles">admin.advertiser.main</result>
+        </action>
+
+        <action name="admin/advertiser/account/selectAccount"
+                class="com.foros.action.account.SwitchContextAdvertiserAction" method="selectAccount">
+            <result name="success.campaign" type="redirectAction">
+                <param name="actionName">admin/campaign/main</param>
+                <param name="advertiserId">${advertiserId}</param>
+                <param name="agencyId">${agencyId}</param>
+            </result>
+            <result name="success.channel" type="redirect">
+                <param name="location">admin/channel/contextMain.action?accountId=${accountId}</param>
+            </result>
+            <result name="success.account" type="redirect">
+                <param name="location">admin/advertiser/account/advertiserView.action?id=${accountId}</param>
+            </result>
+        </action>
+
+        <action name="admin/advertiser/account/switch"
+                class="com.foros.action.account.SwitchContextAdvertiserAction" method="switchContext">
+            <result name="success" type="tiles">admin.advertiser.main</result>
+        </action>
+
+        <action name="advertiser/myAccount/agencyAdvertiserView" class="com.foros.action.account.ViewAdvertiserAccountAction" method="viewAgencyAdvertiser">
+            <result name="success" type="tiles">advertiser.agencyAdvertiserView</result>
+        </action>
+
+        <action name="advertiser/myAccount/agencyAdvertiserNew" class="com.foros.action.account.EditAgencyAdvertiserAccountAction" method="create">
+            <result name="success" type="tiles">advertiser.agencyAdvertiser.new</result>
+        </action>
+
+        <action name="advertiser/myAccount/agencyAdvertiserEdit" class="com.foros.action.account.EditAgencyAdvertiserAccountAction" method="edit">
+            <result name="success" type="tiles">advertiser.agencyAdvertiser.edit</result>
+        </action>
+
+        <action name="advertiser/myAccount/agencyAdvertiserUpdate" class="com.foros.action.account.SaveAgencyAdvertiserAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/myAccount/agencyAdvertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.agencyAdvertiser.edit</result>
+            <result name="version">
+                <param name="location">/advertiser/myAccount/agencyAdvertiserEdit.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/myAccount/agencyAdvertiserCreate" class="com.foros.action.account.SaveAgencyAdvertiserAccountAction" method="create">
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">advertiser/myAccount/agencyAdvertiserView</param>
+            <param name="id">${id}</param>
+          </result>
+          <result name="input" type="tiles">advertiser.agencyAdvertiser.new</result>
+        </action>
+
+        <!--ToDo: uncomment when needed (OUI-28825)-->
+        <!--<action name="advertiser/myAccount/agencyAdvertiserEditFinance" class="com.foros.action.account.EditAdvertiserFinanceAction" method="edit">-->
+            <!--<result name="success" type="tiles">advertiser.agencyAdvertiserFinance.edit</result>-->
+        <!--</action>-->
+
+        <!--<action name="advertiser/myAccount/agencyAdvertiserUpdateFinance" class="com.foros.action.account.SaveAdvertiserFinanceAction" method="update">-->
+            <!--<interceptor-ref name="saveStack"/>-->
+            <!--<result name="success" type="redirectAction">-->
+                <!--<param name="actionName">advertiser/myAccount/agencyAdvertiserView</param>-->
+                <!--<param name="id">${accountId}</param>-->
+            <!--</result>-->
+            <!--<result name="input" type="tiles">advertiser.agencyAdvertiserFinance.edit</result>-->
+            <!--<result name="version">-->
+                <!--<param name="location">/advertiser/myAccount/agencyAdvertiserEditFinance.action</param>-->
+            <!--</result>-->
+        <!--</action>-->
+
+        <!--<action name="advertiser/myAccount/advertiserEditFinance" class="com.foros.action.account.EditAdvertiserFinanceAction" method="edit">-->
+            <!--<result name="success" type="tiles">advertiser.advertiserFinance.edit</result>-->
+        <!--</action>-->
+
+        <!--<action name="advertiser/myAccount/advertiserUpdateFinance" class="com.foros.action.account.SaveAdvertiserFinanceAction" method="update">-->
+            <!--<interceptor-ref name="saveStack"/>-->
+            <!--<result name="success" type="redirectAction">-->
+                <!--<param name="actionName">advertiser/myAccount/myAccountView</param>-->
+            <!--</result>-->
+            <!--<result name="input" type="tiles">advertiser.advertiserFinance.edit</result>-->
+            <!--<result name="version">-->
+                <!--<param name="location">/advertiser/myAccount/advertiserEditFinance.action</param>-->
+            <!--</result>-->
+        <!--</action>-->
+
+        <action name="advertiser/myAccount/myAccountView" class="com.foros.action.account.ViewMyAdvertiserAccountAction" method="view">
+            <result name="success" type="tiles">advertiser.myAccount.view</result>
+        </action>
+
+        <action name="advertiser/myAccount/myAccountEdit" class="com.foros.action.account.EditMyAdvertiserAccountAction" method="edit">
+            <result name="success" type="tiles">advertiser.myAccount.edit</result>
+        </action>
+
+        <action name="advertiser/myAccount/myAdvertiserAccountUpdate" class="com.foros.action.account.SaveMyAdvertiserAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/myAccount/myAccountView</param>
+            </result>
+            <result name="input" type="tiles">advertiser.myAccount.edit</result>
+            <result name="version">
+                <param name="location">/advertiser/myAccount/myAccountEdit.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/myAccount/myAgencyAccountUpdate" class="com.foros.action.account.SaveMyAgencyAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/myAccount/myAccountView</param>
+            </result>
+            <result name="input" type="tiles">advertiser.myAccount.edit</result>
+            <result name="version">
+                <param name="location">/advertiser/myAccount/myAccountEdit.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/myAccount/agencyAdvertiserActivate" class="com.foros.action.account.StatusAccountAction" method="activate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/myAccount/agencyAdvertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="advertiser/myAccount/agencyAdvertiserInactivate" class="com.foros.action.account.StatusAccountAction" method="inactivate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/myAccount/agencyAdvertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="advertiser/myAccount/agencyAdvertiserDelete" class="com.foros.action.account.StatusAccountAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName"/>/advertiser/campaign/advertisers</result>
+        </action>
+
+        <action name="advertiser/myAccount/agencyAdvertiserUndelete" class="com.foros.action.account.StatusAccountAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/myAccount/agencyAdvertiserView</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

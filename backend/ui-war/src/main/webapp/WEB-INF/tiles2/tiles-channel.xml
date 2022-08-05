@@ -1,0 +1,98 @@
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <definition name="channel.upload" extends=".mainLayout">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="titleProperty" value="channel.upload.title"/>
+        <put-attribute name="moduleName" value="channel/upload"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.channels"/>
+        <put-attribute name="body" value="/channel/bulk/channelUpload.jsp"/>
+    </definition>
+
+    <definition name="channel.uploadInternal" extends=".mainLayout">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="titleProperty" value="channel.upload.title"/>
+        <put-attribute name="moduleName" value="channel/uploadInternal"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.admin"/>
+        <put-attribute name="body" value="/channel/bulk/channelUploadInternal.jsp"/>
+    </definition>
+
+    <definition name=".Channel" extends=".mainLayout">
+        <put-attribute name="moduleName" value="channel"/>
+        <put-attribute name="activeMenuItemKey" expression="${requestContexts.set ? 'global.menu.channels' : 'global.menu.admin'}"/>
+    </definition>
+
+    <definition name=".Channel.editView" extends=".Channel">
+        <put-attribute name="entityName" expression="${model.class.simpleName}"/>
+    </definition>
+
+    <definition name="admin.channel.main" extends=".Channel">
+        <put-attribute name="titleProperty" value="channel.search"/>
+        <put-attribute name="body" value="/admin/channel/channelAdmin.jsp"/>
+    </definition>
+
+    <definition name="external.channel.main" extends=".Channel">
+        <put-attribute name="titleProperty" value="channel.search"/>
+        <put-attribute name="body" value="/channel/channelMain.jsp"/>
+    </definition>
+
+    <!-- Behavioral -->
+    <definition name="channel.BehavioralChannel.view" extends=".Channel.editView">
+        <put-attribute name="body" value="/channel/channelView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="channel.BehavioralChannel.edit" extends=".Channel.editView">
+        <put-attribute name="body" value="/channel/channelEdit.jsp"/>
+        <put-attribute name="test" value="testValue" cascade="true"/>
+    </definition>
+
+    <definition name="channel.BehavioralChannel.new" extends=".Channel.editView">
+        <put-attribute name="body" value="/channel/channelEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <!-- Expression -->
+    <definition name="channel.ExpressionChannel.view" extends=".Channel.editView">
+        <put-attribute name="body" value="/channel/expressionChannelView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="channel.ExpressionChannel.edit" extends=".Channel.editView">
+        <put-attribute name="body" value="/channel/expressionEdit.jsp"/>
+    </definition>
+
+    <definition name="channel.ExpressionChannel.new" extends=".Channel.editView">
+        <put-attribute name="body" value="/channel/expressionEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <!-- CMP -->
+    <definition name="channel.advertising.editCmp" extends=".Channel.editView">
+        <put-attribute name="body" value="/channel/cmpChannelEdit.jsp"/>
+    </definition>
+
+    <definition name="channel.advertising.submitCmp" extends=".Channel.editView">
+        <put-attribute name="title" value="/channel/cmpChannelSubmitTitle.jsp"/>
+        <put-attribute name="body" value="/channel/cmpChannelSubmit.jsp"/>
+    </definition>
+
+    <!-- Audience -->
+    <definition name="channel.AudienceChannel.view" extends=".Channel.editView">
+        <put-attribute name="body" value="/channel/audienceChannelView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <!-- Channel Categories -->
+    <definition name="channel.Categories.edit" extends=".Channel.editView">
+        <put-attribute name="titleProperty" value="channel.channelCategories"/>
+        <put-attribute name="body" value="/channel/categoriesEdit.jsp"/>
+    </definition>
+
+    <definition name="channelMatch.list" extends=".Channel">
+        <put-attribute name="titleProperty" value="channel.test"/>
+        <put-attribute name="body" value="/channel/channelMatch.jsp"/>
+    </definition>
+</tiles-definitions>

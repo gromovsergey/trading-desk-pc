@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<audit-record>
+  <login>
+    <email>
+      test@ocslab.com
+    </email>
+    <status>
+      success
+    </status>
+  </login>
+</audit-record>

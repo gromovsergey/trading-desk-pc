@@ -1,0 +1,15 @@
+<ui-popup [blocked]="wait"
+          [visible]="show"
+          [options]="popupOptions"
+          (close)="onPopupClose(true)"
+          [closeBtnTitle]="'_L10N_(button.close)'">
+    <div #modal class="modal-body-scroll">
+        <div class="text-center" *ngIf="!wait && creative && previewData">
+            <div class="table-responsive"><iframe #frame class="e2e-trusted-url c-frame" [src]="previewData.secureUrl" [width]="previewData.width" [height]="previewData.height"></iframe></div>
+            <p>{{creative.name}}<br><strong>{{previewData.width}}x{{previewData.height}}</strong>, {{creative.templateName}}</p>
+        </div>
+        <div class="text-danger" *ngIf="!wait && !(creative && previewData)">
+            Can't show preview
+        </div>
+    </div>
+</ui-popup>

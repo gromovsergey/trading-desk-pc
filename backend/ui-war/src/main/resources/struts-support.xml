@@ -1,0 +1,102 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="admin-support" extends="foros-default" namespace="/">
+
+        <!-- support action Cache Evict-->
+        <action name="admin/support/cache/main"
+                class="com.foros.action.support.CacheEvictionAction"
+                method="main">
+            <result name="success">/admin/cacheEvict.jsp</result>
+        </action>
+
+        <action name="admin/support/cache/evict"
+                class="com.foros.action.support.CacheEvictionAction"
+                method="evict">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/admin/cacheEvict.jsp</result>
+            <result name="input">/admin/cacheEvict.jsp</result>
+        </action>
+
+        <action name="admin/support/cache/clear"
+                class="com.foros.action.support.CacheEvictionAction"
+                method="clear">
+            <result name="success">/admin/cacheEvict.jsp</result>
+        </action>
+
+        <action name="admin/support/saiku/refreshDataSource"
+                class="com.foros.action.support.CacheEvictionAction"
+                method="refreshOlapDataSource">
+            <result name="success">/admin/cacheEvict.jsp</result>
+        </action>
+
+        <!-- manual running scheduled db jobs -->
+        <action name="admin/support/dbJobs/main"
+                class="com.foros.action.support.DBJobsExecutorAction"
+                method="main">
+            <result name="success">/admin/dbJobs.jsp</result>
+        </action>
+
+        <action name="admin/support/dbJobs/checkPendingInactivation"
+                class="com.foros.action.support.DBJobsExecutorAction"
+                method="checkPendingInactivation">
+            <result name="success">/admin/dbJobs.jsp</result>
+        </action>
+
+        <action name="admin/support/dbJobs/checkThresholdChannelByUsers"
+                class="com.foros.action.support.DBJobsExecutorAction"
+                method="checkThresholdChannelByUsers">
+            <result name="success">/admin/dbJobs.jsp</result>
+        </action>
+
+        <!--ToDo: uncomment when needed (OUI-28825)-->
+        <!--<action name="admin/support/dbJobs/checkBillingDate"-->
+                <!--class="com.foros.action.support.DBJobsExecutorAction"-->
+                <!--method="checkBillingDate">-->
+            <!--<result name="success">/admin/dbJobs.jsp</result>-->
+        <!--</action>-->
+
+        <action name="admin/support/dbJobs/calcCTR"
+                class="com.foros.action.support.DBJobsExecutorAction"
+                method="calcCTR">
+            <result name="success">/admin/dbJobs.jsp</result>
+        </action>
+
+        <action name="admin/support/currencyFeed/update"
+                class="com.foros.action.support.CurrencyExchangeFeedAction" method="update">
+            <result name="success">/admin/updateCurrencyFeed.jsp</result>
+        </action>
+        
+         <!-- manual running yandex jobs -->
+        <action name="admin/support/yandexJobs/main"
+                class="com.foros.action.support.YandexJobsExecutorAction"
+                method="main">
+            <result name="success">/admin/yandexJobs.jsp</result>
+        </action>
+
+        <action name="admin/support/yandexJobs/advertisersSynchronize"
+                class="com.foros.action.support.YandexJobsExecutorAction"
+                method="advertisersSynchronize">
+            <result name="success">/admin/yandexJobs.jsp</result>
+        </action>
+
+        <action name="admin/support/yandexJobs/brandsSynchronize"
+                class="com.foros.action.support.YandexJobsExecutorAction"
+                method="brandsSynchronize">
+            <result name="success">/admin/yandexJobs.jsp</result>
+        </action>
+
+        <action name="admin/support/queries/all"
+                class="com.foros.action.support.CancelQueryAction"
+                method="all">
+            <result name="success">/admin/allQueries.jsp</result>
+        </action>
+
+        <action name="admin/support/queries/cancel"
+                class="com.foros.action.reporting.CancellablePageReportingAction"
+                method="cancel"/>
+
+    </package>
+</struts>

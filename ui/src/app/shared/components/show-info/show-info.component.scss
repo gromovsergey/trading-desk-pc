@@ -1,0 +1,41 @@
+@import "~src/scss/variables";
+
+::ng-deep {
+  .custom-dialog-container .mat-dialog-container { padding: 0 !important; }
+}
+
+.container {
+  min-height: 50px;
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-height: 55px;
+    padding: 5px 5px;
+    &-options {
+      display: flex;
+    }
+  }
+}
+
+.warning {
+  color: $ui-color-warning;
+  border: 1px solid $ui-color-warning;
+  background: lighten($ui-color-warning, 55%);
+}
+.info {
+  color: $ui-color-primary;
+  border: 1px solid $ui-color-primary;
+  background: lighten($ui-color-primary, 55%);
+}
+.error {
+  color: $ui-color-danger;
+  border: 1px solid $ui-color-danger;
+  background: lighten($ui-color-danger, 50%);
+}
+.check_circle {
+  color: darken($ui-color-success, 15%);
+  border: 1px solid $ui-color-success;
+  background: lighten($ui-color-success, 50%);
+}

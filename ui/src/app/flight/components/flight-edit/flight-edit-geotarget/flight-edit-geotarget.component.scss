@@ -1,0 +1,34 @@
+@import "~src/scss/variables";
+
+.geo-list-group {
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+
+  .geo-list-group-item {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: stretch;
+    border-bottom: 1px solid #eee;
+
+    .geo-place {
+      padding: $gen-spacing;
+      width: 100%;
+    }
+    .geo-action {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}
+
+.form-group-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.radio-column {
+  display: flex;
+  flex-direction: column;
+}

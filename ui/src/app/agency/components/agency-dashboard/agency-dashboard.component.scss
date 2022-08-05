@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.table-container {
+  overflow-y: auto;
+}
+.long-name-wrap {
+  padding-right: 1rem;
+}

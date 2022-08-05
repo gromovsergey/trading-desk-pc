@@ -1,0 +1,33 @@
+<ng-template #showPreloader>
+  <ui-loading></ui-loading>
+</ng-template>
+
+<ng-container *ngIf="advertiser$ | async as advertiser, else showPreloader">
+  <h1 class="main-title">
+    {{'advertiserAccount.advertiserChannels' | translate}}
+    <ui-dropdown-btn *ngIf="canCreateChannel && createMenu"
+                     title="{{'button.createNew' | translate}}"
+                     [menu]="createMenu"></ui-dropdown-btn>
+    <ui-channel-report-upload *ngIf="canDownloadReports"
+                              [accountId]="advertiser.id"></ui-channel-report-upload>
+  </h1>
+  <h2 class="main-title">
+    <i appDisplayStatus [displayStatus]="advertiser.displayStatus" class="material-icons">lens</i>
+    {{advertiser.name}}
+  </h2>
+
+  <ng-container *ngIf="channels$ | async as channels, else showPreloader">
+    <ui-channel-list *ngIf="channels && !channels.error, else showError"
+      [channels]="channels"
+      [showAccountColumn]="false"
+      [showVisibilityColumn]="false"
+      [canUpdateChannels]="canUpdateChannels"
+      [canLocalize]="false"></ui-channel-list>
+
+    <ng-template #showError>
+      <ui-info-panel type="danger">
+        {{'error.forbidden' | translate}}
+      </ui-info-panel>
+    </ng-template>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <definition name=".Creative" extends=".mainLayout">
+        <put-attribute name="taskTitle" value="page.title.creatives"/>
+        <put-attribute name="entityName" value="Creative"/>
+    </definition>
+
+    <!-- ADMIN -->
+    <definition name=".AdminCreative" extends=".Creative">
+        <put-attribute name="moduleName" value="admin/creative"/>
+        <put-attribute name="activeMenuItemKey" value="global.submenu.creatives"/>
+    </definition>
+
+    <definition name="admin.creative.main" extends=".AdminCreative">
+        <put-attribute name="titleProperty" value="creatives"/>
+        <put-attribute name="body" value="/creative/creativeMain.jsp"/>
+    </definition>
+
+    <definition name="admin.creative.list" template="/creative/creativeList.jsp" extends=".AdminCreative">
+        <put-attribute name="contextModule" value="/admin"/>
+    </definition>
+
+    <definition name="admin.creative.view" extends=".AdminCreative">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/creative/creativeView.jsp"/>
+    </definition>
+
+    <definition name="admin.creative.edit" extends=".AdminCreative">
+        <put-attribute name="body" value="/creative/creativeEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.creative.upload" extends=".AdminCreative">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="titleProperty" value="creative.upload.breadcrumbs"/>
+        <put-attribute name="body" value="/creative/creativeBulkUpload.jsp"/>
+    </definition>
+
+    <!-- ADVERTISER -->
+    <definition name=".AdvertiserCreative" extends=".Creative">
+        <put-attribute name="moduleName" value="advertiser/creative"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.creatives"/>
+    </definition>
+
+    <definition name="advertiser.creative.main" extends=".AdvertiserCreative">
+        <put-attribute name="titleProperty" value="creatives"/>
+        <put-attribute name="body" value="/creative/creativeMain.jsp"/>
+    </definition>
+
+    <definition name="advertiser.creative.list" template="/creative/creativeList.jsp" extends=".AdvertiserCreative">
+        <put-attribute name="contextModule" value="/advertiser"/>
+    </definition>
+
+    <definition name="advertiser.creative.view" extends=".AdvertiserCreative">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/creative/creativeView.jsp"/>
+    </definition>
+
+    <definition name="advertiser.creative.edit" extends=".AdvertiserCreative">
+        <put-attribute name="body" value="/creative/creativeEdit.jsp"/>
+    </definition>
+
+    <definition name="creative.clickTracking" template="/creative/clickTracking.jsp">
+    </definition>
+
+    <definition name="creative.edit.preview" template="/creative/creativeEditPreview.jsp">
+    </definition>
+
+    <definition name="advertiser.creative.upload" extends=".AdvertiserCreative">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="titleProperty" value="creative.upload.breadcrumbs"/>
+        <put-attribute name="body" value="/creative/creativeBulkUpload.jsp"/>
+    </definition>
+
+</tiles-definitions>

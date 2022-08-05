@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name=".AccountType" extends=".Admin">
+        <put-attribute name="entityName" value="AccountType"/>
+    </definition>
+
+    <definition name="AccountType.edit" extends=".AccountType">
+        <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+        <put-attribute name="body" value="/admin/accountType/accountTypeEdit.jsp"/>
+    </definition>
+
+    <definition name="AccountType.create" extends="AccountType.edit">
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="AccountType.view" extends=".AccountType">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="bodyHeader" value="/admin/accountType/accountTypeHeader.jsp"/>
+        <put-attribute name="body" value="/admin/accountType/accountTypeView.jsp"/>
+    </definition>
+
+    <definition name="AccountType.main" extends=".AccountType">
+        <put-attribute name="bodyHeader" value="/admin/accountType/accountTypeMainHeaderAboveTable.jsp"/>
+        <put-attribute name="titleProperty" value="AccountType.plural"/>
+        <put-attribute name="body" value="/admin/accountType/accountTypeMain.jsp"/>
+    </definition>
+
+</tiles-definitions>

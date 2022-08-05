@@ -1,0 +1,199 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            {{title}}
+        </h2>
+    </div>
+
+	<form (submit)="submitForm()">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div *ngIf="errors.actionError" class="alert alert-danger has-error" role="alert">
+                    <p *ngFor="let error of errors.actionError">{{error}}</p>
+                </div>
+
+                <div class="form-group" *ngIf="mode === 'add'" [ngClass]="{'has-error':errors.targetChannel}">
+                    <label>_L10N_(audienceResearch.targetChannel)<sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup></label>
+                    <div class="dropdown clearfix show">
+                        <input type="text" class="form-control" placeholder="_L10N_(blockName.search)..." #textInput1
+                               [disabled]="waitTargetSearch" [ngClass]="{hidden: waitTargetSearch}"
+                               (click)="hideTargetAutocomplete($event)" (keyup)="textTargetInputChange($event)" (paste)="textTargetInputChange($event)">
+                        <div class="form-control" *ngIf="waitTargetSearch" disabled>
+                            <ui-icon [icon]="'spinner'" [spin]="true"></ui-icon> _L10N_(messages.wait)...
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-autocomplete dropdown-menu-autocomplete-geo show"
+                            *ngIf="autocompleteTargetChannels && autocompleteTargetChannels.length > 0">
+                            <li *ngFor="let item of autocompleteTargetChannels">
+                                <a (click)="selectTargetChannel($event, item)">
+                                    <b>{{item.name}}</b>{{' / ' + item.account.name}}
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="dropdown-menu dropdown-menu-autocomplete dropdown-menu-autocomplete-geo show"
+                            *ngIf="autocompleteTargetChannels && autocompleteTargetChannels.length === 0">
+                            <li><a (click)="clearTargetAutocomplete($event)"><i>_L10N_(messages.nothingFound)</i></a></li>
+                        </ul>
+                    </div>
+                    <p *ngFor="let error of errors.targetChannel" class="help-block">{{error}}</p>
+                </div>
+
+                <div class="form-group" *ngIf="mode === 'edit'">
+                    <label>_L10N_(audienceResearch.targetChannel)</label>
+                    <div>
+                        <ui-icon [displayStatus]="audienceResearch.targetChannel.majorDisplayStatus"></ui-icon>&nbsp;{{audienceResearch.targetChannel.name}}
+                    </div>
+                </div>
+
+                <ui-panel [title]="'_L10N_(audienceResearch.channels)'" required="true">
+                    <div #body class="form-group" [ngClass]="{'has-error':errors.channels}">
+                        <p *ngIf="audienceResearch.channels.length === 0">
+                            _L10N_(messages.listIsEmpty)
+                        </p>
+                        <table *ngIf="audienceResearch.channels.length > 0" class="table table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <th *ngIf="audienceResearch.channels.length > 1" style="width: 96px;"></th>
+                                <th>_L10N_(accountSearch.account)</th>
+                                <th>_L10N_(channel.blockName.channel)</th>
+                                <th>_L10N_(audienceResearch.chartType)</th>
+                                <th *ngIf="mode === 'edit'">_L10N_(audienceResearch.startDate)</th>
+                                <th style="width: 96px;"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let channel of audienceResearch.channels; index as i;">
+                                <td *ngIf="audienceResearch.channels.length > 1">
+                                    <button *ngIf="i < audienceResearch.channels.length - 1"
+                                            class="btn btn-default pull-left" (click)="changeOrders($event, i, i + 1)">
+                                        <ui-icon [icon]="'arrow-down'"></ui-icon>
+                                    </button>
+                                    <button *ngIf="i > 0" class="btn btn-default pull-right" (click)="changeOrders($event, i - 1, i)">
+                                        <ui-icon [icon]="'arrow-up'"></ui-icon>
+                                    </button>
+                                </td>
+                                <td>
+                                    <ui-icon [fw]="true" [displayStatus]="channel.channel.account.majorDisplayStatus"></ui-icon>&nbsp;
+                                    {{channel.channel.account.name}}
+                                </td>
+                                <td>
+                                    <ui-icon [fw]="true" [displayStatus]="channel.channel.majorDisplayStatus"></ui-icon>&nbsp;
+                                    {{channel.channel.name}}
+                                </td>
+                                <td>
+                                    <select class="form-control" [name]="'chartType' + channel.channel.id" [(ngModel)]="channel.chartType">
+                                        <option *ngFor="let chartType of chartTypes" [value]="chartType">{{L10nAudienceResearchChartTypes[chartType]}}</option>
+                                    </select>
+                                </td>
+                                <td *ngIf="mode === 'edit'">{{channel.startDate ?
+                                    moment(channel.startDate).format(dateFormatShort) : ''}}
+                                </td>
+                                <td class="text-right">
+                                    <button *ngIf="moment().startOf('day').diff(moment(channel.startDate).startOf('day'), 'days') > 0"
+                                            class="btn btn-default" title="_L10N_(button.preview)" (click)="showChartsPopup($event, channel)">
+                                        <ui-icon [icon]="'search-plus'"></ui-icon>
+                                    </button>
+
+                                    <button class="btn btn-default" title="_L10N_(button.delete)"
+                                            (click)="deleteChannel($event, channel.channel.id)">
+                                        <ui-icon [icon]="'trash'"></ui-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p *ngFor="let error of errors.channels" class="help-block">{{error}}</p>
+                        <div class="dropdown clearfix show">
+                            <input type="text" class="form-control" placeholder="_L10N_(blockName.search)..."
+                                   #textInput2 [disabled]="waitSearch" [ngClass]="{hidden: waitSearch}"
+                                   (click)="hideAutocomplete($event)" (keyup)="textInputChange($event)"
+                                   (paste)="textInputChange($event)">
+                            <div class="form-control" *ngIf="waitSearch" disabled>
+                                <ui-icon [icon]="'spinner'" [spin]="true"></ui-icon>
+                                _L10N_(messages.wait)...
+                            </div>
+                            <ul class="dropdown-menu dropdown-menu-autocomplete dropdown-menu-autocomplete-geo show"
+                                *ngIf="autocompleteChannels && autocompleteChannels.length > 0">
+                                <li *ngFor="let item of autocompleteChannels">
+                                    <a (click)="addChannel($event, item)">
+                                        <b>{{item.name}}</b>{{' / ' + item.account.name}}
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="dropdown-menu dropdown-menu-autocomplete dropdown-menu-autocomplete-geo show"
+                                *ngIf="autocompleteChannels && autocompleteChannels.length === 0">
+                                <li><a (click)="clearAutocomplete($event)"><i>_L10N_(messages.nothingFound)</i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </ui-panel>
+
+                <ui-panel [title]="'_L10N_(audienceResearch.customers)'">
+                    <div #body class="form-group" [ngClass]="{'has-error':errors.advertisers}">
+                        <p *ngIf="audienceResearch.advertisers.length === 0">
+                            _L10N_(messages.listIsEmpty)
+                        </p>
+                        <table *ngIf="audienceResearch.advertisers.length > 0" class="table table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <th>_L10N_(accountSearch.account)</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let advertiser of audienceResearch.advertisers">
+                                <td>
+                                    <ui-icon [fw]="true" [displayStatus]="advertiser.majorDisplayStatus"></ui-icon>&nbsp;
+                                    {{advertiser.name}}
+                                </td>
+                                <td class="text-right">
+                                    <button class="btn btn-default" title="_L10N_(button.delete)"
+                                            (click)="deleteAdvertiser($event, advertiser.id)">
+                                        <ui-icon [icon]="'trash'"></ui-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p *ngFor="let error of errors.advertisers" class="help-block">{{error}}</p>
+                        <div class="dropdown clearfix show">
+                            <input #textInput3 type="text" class="form-control" placeholder="_L10N_(button.add)..." (click)="showAdvertiserSelect($event)">
+                            <ul class="dropdown-menu dropdown-menu-autocomplete dropdown-menu-autocomplete-geo show" *ngIf="showAccounts">
+                                <li *ngFor="let item of accounts"><a (click)="addAdvertiser($event, item)">{{item.name}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </ui-panel>
+
+            </div>
+        </div>
+
+        <div class="row">
+			<div class="col-sm-12">
+				<button [disabled]="waitSubmit" type="submit" class="btn btn-primary">
+                    <ui-icon *ngIf="waitSubmit" [fw]="true" [spin]="true" [icon]="'spinner'"></ui-icon>
+                    {{mode === 'add' ? '_L10N_(button.add)' : '_L10N_(button.save)'}}
+                </button>
+				<a *ngIf="!waitSubmit" [routerLink]="backUrl" class="btn btn-default">_L10N_(button.cancel)</a>
+			</div>
+		</div>
+	</form>
+</section>
+
+<ui-popup *ngIf="!wait && mode === 'edit'"
+          [visible]="showCharts"
+          [options]="chartsPopupOptions"
+          (close)="hideChartsPopup($event)"
+          [closeBtnTitle]="'_L10N_(button.close)'">
+    <div #modal class="modal-body-scroll">
+        <ui-audience-research-chart *ngIf="currentChannel" [audienceResearchId]="audienceResearch.id"
+                                    [yesterdayComment]="currentChannel.yesterdayComment" [totalComment]="currentChannel.totalComment"
+                                    (updateYesterdayComment)="updateYesterdayComment($event, currentChannel.id)"
+                                    (updateTotalComment)="updateTotalComment($event, currentChannel.id)"
+                                    [template]="currentChannel.chartType" [channelId]="currentChannel.channel.id">
+        </ui-audience-research-chart>
+    </div>
+</ui-popup>

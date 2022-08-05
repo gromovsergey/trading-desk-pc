@@ -1,0 +1,1020 @@
+<Schema name="Custom Report Cube">
+    <Dimension name="Conversion">
+        <Hierarchy hasAll="true" primaryKey="action_id">
+            <Table name="action_" schema="bi"/>
+            <Level name="Conversion Advertiser Country" column="country_code" type="String" uniqueMembers="false"
+                   approxRowCount="200"/>
+            <Level name="Conversion Agency" column="agency_account_id" nameColumn="agency_account_name" type="Integer"
+                   uniqueMembers="True" approxRowCount="100"/>
+            <Level name="Conversion Advertiser Account" column="account_id" nameColumn="account_name"
+                   ordinalColumn="account_id" type="Integer" uniqueMembers="true" approxRowCount="1000"/>
+            <Level name="Conversion Name" column="action_id" nameColumn="name" type="Integer" approxRowCount="500"/>
+        </Hierarchy>
+    </Dimension>
+    <Dimension name="Advertiser">
+        <Hierarchy hasAll="true" primaryKey="cc_id">
+            <Table name="dimension_advertiser" schema="bi"/>
+            <Level name="Advertiser Country" column="country_code" type="String" uniqueMembers="true"
+                   approxRowCount="200">
+            </Level>
+            <Level name="Agency" column="agency_account_id" nameColumn="agency_account_name" type="Integer"
+                   uniqueMembers="True" approxRowCount="100">
+            </Level>
+            <Level name="Advertiser Account" column="account_id" nameColumn="account_name" ordinalColumn="account_id"
+                   type="Integer" uniqueMembers="true" approxRowCount="1000">
+                <Property name="Business Area" column="business_area" type="String" dependsOnLevelValue="true"/>
+            </Level>
+            <Level name="Campaign" column="campaign_id" nameColumn="campaign_name" type="Integer" uniqueMembers="True"
+                   approxRowCount="3000">
+            </Level>
+            <Level name="Creative Group" column="ccg_id" nameColumn="ccg_name" type="Integer" uniqueMembers="True"
+                   approxRowCount="30000">
+            </Level>
+            <Level name="Creative" column="creative_id" nameColumn="creative_name" type="Integer" uniqueMembers="True"
+                   approxRowCount="200000">
+            </Level>
+            <Level name="Campaign Creative ID" column="cc_id" type="Integer" uniqueMembers="true"
+                   approxRowCount="300000">
+            </Level>
+        </Hierarchy>
+        <Hierarchy hasAll="true" name='Creative Group Type'>
+            <Table name="dimension_advertiser" schema="bi"/>
+            <Level name="Creative Group Type" column="ccg_type" type="String" uniqueMembers="true" approxRowCount="3">
+            </Level>
+            <Level name="Campaign Creative ID" column="cc_id" type="Integer" uniqueMembers="true"
+                   approxRowCount="300000" visible="false">
+            </Level>
+        </Hierarchy>
+        <Hierarchy hasAll="true" name='Campaign Display Status'>
+            <Table name="dimension_advertiser" schema="bi"/>
+            <Level name="Campaign Display Status" column="campaign_ds_id" nameColumn="campaign_ds_descr" type="Integer"
+                   uniqueMembers="true" approxRowCount="10">
+            </Level>
+            <Level name="Campaign Creative ID" column="cc_id" type="Integer" uniqueMembers="true"
+                   approxRowCount="300000" visible="false">
+            </Level>
+        </Hierarchy>
+        <Hierarchy hasAll="true" name='Campaign with values'>
+            <Table name="dimension_campaign_budget" schema="bi"/>
+            <Level name="Campaign" column="campaign_id" nameColumn="campaign_name" type="Integer" uniqueMembers="True"
+                   approxRowCount="3000">
+                <Property name="campaign Start Date (GMT)" column="campaign_start_date" type="Date"
+                          dependsOnLevelValue="true"/>
+                <Property name="campaign Start Date (Account TZ)" column="campaign_start_date_local" type="Date"
+                          dependsOnLevelValue="true"/>
+                <Property name="campaign End Date (GMT)" column="campaign_end_date" type="Date"
+                          dependsOnLevelValue="true"/>
+                <Property name="campaign End Date (Account TZ)" column="campaign_end_date_local" type="Date"
+                          dependsOnLevelValue="true"/>
+                <Property name="campaign Budget" column="campaign_budget" type="String" dependsOnLevelValue="true"/>
+                <Property name="campaign Budget Remaining" column="remaining_budget" type="String"
+                          dependsOnLevelValue="true"/>
+                <Property name="campaign Revenue" column="revenue" type="String" dependsOnLevelValue="true"/>
+                <Property name="campaign Price" column="rate_type" type="String" dependsOnLevelValue="true"/>
+            </Level>
+            <Level name="Campaign Creative ID" column="cc_id" type="Integer" uniqueMembers="true"
+                   approxRowCount="300000" visible="false">
+            </Level>
+        </Hierarchy>
+        <Hierarchy hasAll="true" primaryKey="cc_id" name="ChannelTarget">
+            <Table name="dimension_channel_target" schema="bi"/>
+            <Level name="channel target" column="channel_id" nameColumn="channel_name" type="Integer"
+                   uniqueMembers="false" approxRowCount="5000"/>
+            <Level name="Campaign Creative ID" visible="false" column="cc_id" type="Integer" uniqueMembers="True"
+                   approxRowCount="30000"/>
+        </Hierarchy>
+    </Dimension>
+    <Dimension name="ChannelDevice">
+        <Hierarchy hasAll="true" primaryKey="channel_id">
+            <Table name="channel_device_dimension"/>
+            <Level name="Device Channel" column="channel_id" nameColumn="name" type="Integer" approxRowCount="500"
+                   uniqueMembers="true"/>
+        </Hierarchy>
+    </Dimension>
+    <Dimension highCardinality="false" name="ISP">
+        <Hierarchy hasAll="true" primaryKey="colo_id">
+            <Table name="dimension_isp" schema="bi">
+            </Table>
+            <Level name="Isp Country" column="country_code" type="String" uniqueMembers="true" approxRowCount="200">
+            </Level>
+            <Level name="Isp Account" column="account_id" nameColumn="isp_account_name" type="Integer"
+                   uniqueMembers="false" approxRowCount="50">
+            </Level>
+            <Level name="Colo" column="colo_id" nameColumn="colo_name" type="Integer" uniqueMembers="true"
+                   approxRowCount="200">
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension highCardinality="false" name="Publisher">
+        <Hierarchy hasAll="true" primaryKey="tag_id">
+            <Table name="dimension_publisher" schema="bi">
+            </Table>
+            <Level name="Publisher Country" column="country_code" type="String" uniqueMembers="true"
+                   approxRowCount="200">
+            </Level>
+            <Level name="Publisher Account" column="account_id" nameColumn="account_name" type="Integer"
+                   uniqueMembers="true" approxRowCount="200">
+            </Level>
+            <Level name="Site" column="site_id" nameColumn="site_name" type="Integer" uniqueMembers="true"
+                   approxRowCount="2000">
+            </Level>
+            <Level name="Tag" column="tag_id" nameColumn="tag_name" type="Integer" uniqueMembers="true"
+                   approxRowCount="4000">
+            </Level>
+        </Hierarchy>
+        <Hierarchy name="tag size" hasAll="true" primaryKey="tag_id">
+            <Table name="dimension_tag_size" schema="bi"/>
+            <Level name="Size Group " column="size_group" type="String" uniqueMembers="true" approxRowCount="10"/>
+            <Level name="Size" column="size_id" nameColumn="size_name" type="Integer" uniqueMembers="true"
+                   approxRowCount="200"/>
+            <Level name="Tag" column="tag_id" nameColumn="tag_name" type="Integer" uniqueMembers="true"
+                   approxRowCount="4000" visible="false"/>
+        </Hierarchy>
+    </Dimension>
+    <Dimension highCardinality="false" name="UserStatus">
+        <Hierarchy hasAll="true" primaryKey="user_status">
+            <Table name="user_status" schema="bi"/>
+            <Level name="User Status" column="user_status" nameColumn="name" type="String" uniqueMembers="true"
+                   approxRowCount="3">
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension highCardinality="false" name="UserCountry">
+        <Hierarchy hasAll="true" primaryKey="country_code">
+            <Table name="country"/>
+            <Level name="Country Code" column="country_code" type="String" uniqueMembers="true" approxRowCount="200">
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension highCardinality="false" name="FraudCorrection">
+        <Hierarchy hasAll="true" primaryKey="fraud_correction">
+            <Table name="dimension_fraud_corr" schema="bi"/>
+            <Level name="Fraud Correction" column="fraud_correction" uniqueMembers="true" approxRowCount="2">
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension type="TimeDimension" name="Country Date" highCardinality="false">
+        <Hierarchy hasAll="true">
+            <Table name="date_time_dimen" schema="bi"/>
+            <Level name="Country Year" column="syear" type="Integer" uniqueMembers="true" levelType="TimeYears">
+                <Annotations>
+                    <Annotation name="AnalyzerDateFormat">[yyyy]</Annotation>
+                </Annotations>
+            </Level>
+            <Level name="Country Quarter" column="squarter" type="Integer" uniqueMembers="false"
+                   levelType="TimeQuarters">
+                <Annotations>
+                    <Annotation name="AnalyzerDateFormat">[yyyy].[q]</Annotation>
+                </Annotations>
+            </Level>
+            <Level name="Country Month" column="smonth" type="Integer" uniqueMembers="false" levelType="TimeMonths">
+                <Annotations>
+                    <Annotation name="AnalyzerDateFormat">[yyyy].[q].[M]</Annotation>
+                </Annotations>
+            </Level>
+            <Level name="Country Day" column="sday" type="Integer" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
+                <Annotations>
+                    <Annotation name="AnalyzerDateFormat">[yyyy].[q].[M].[d]</Annotation>
+                </Annotations>
+            </Level>
+            <Level name="Country Date" column="sdate" uniqueMembers="true" type="Date" levelType="TimeDays">
+                <Annotations>
+                    <Annotation name="AnalyzerDateFormat">[yyyy].[q].[M].[d].[yyyy-mm-dd]</Annotation>
+                </Annotations>
+                <Property name="Country day of week" column="sweek_day" type="String" dependsOnLevelValue="true"/>
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension type="TimeDimension" highCardinality="false" name="Country Time">
+        <Hierarchy hasAll="true">
+            <Table name="time_dimen_hour" schema="bi"/>
+            <Level name="Country Hour" column="hour" uniqueMembers="false" levelType="TimeHours">
+                <Annotations>
+                    <Annotation name="AnalyzerDateFormat">[HH]</Annotation>
+                </Annotations>
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension name="UserProperty">
+        <Hierarchy hasAll="true" primaryKey="user_property_id">
+            <Table name="userproperty">
+            </Table>
+            <Level name="Property Type" column="name" type="String" approxRowCount="5">
+            </Level>
+            <Level name="Property Value" column="value" type="String" approxRowCount="300000">
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension name="CcgRate">
+        <Hierarchy hasAll="true" primaryKey="ccg_rate_id">
+            <Table name="ccgrate">
+            </Table>
+            <Level name="Rate Model" column="rate_type" type="String" approxRowCount="3">
+            </Level>
+            <Level name="CCG Rate ID" column="ccg_rate_id" type="Integer" approxRowCount="100000" visible="false"
+                   uniqueMembers="true">
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Cube name="HourlyStats" cache="true" enabled="true" visible="false">
+        <Table name="requeststatshourly">
+            <AggName name="AdvertiserStatsDailyCountry_" schema="bi" ignorecase="true" approxRowCount="2000000">
+                <AggFactCount column="fact_count"/>
+                <AggMeasure column="actions" name="[Measures].[actions]"/>
+                <AggMeasure column="clicks" name="[Measures].[clicks]"/>
+                <AggMeasure column="imps" name="[Measures].[imps]"/>
+                <AggMeasure column="passbacks" name="[Measures].[passbacks]"/>
+                <AggMeasure column="requests" name="[Measures].[requests]"/>
+                <AggMeasure column="adv_amount" name="[Measures].[total cost net]"/>
+                <AggMeasure column="adv_comm_amount" name="[Measures].[_comm_amt]"/>
+                <AggMeasure column="adv_amount_global" name="[Measures].[total cost net usd]"/>
+                <AggMeasure column="adv_comm_amount_global" name="[Measures].[_comm_amt_global]"/>
+                <AggLevel column="cc_id" name="[Advertiser].[Campaign Creative ID]" collapsed="false"/>
+                <AggLevel column="cht_cc_id" name="[Advertiser.ChannelTarget].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="camp_cc_id" name="[Advertiser.Campaign with values].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="ccgt_cc_id" name="[Advertiser.Creative Group Type].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="user_status" name="[UserStatus].[User Status]" collapsed="false"/>
+                <AggLevel column="country_code" name="[UserCountry].[Country Code]" collapsed="false"/>
+                <AggLevel column="fraud_correction" name="[FraudCorrection].[Fraud Correction]" collapsed="false"/>
+                <AggLevel column="country_sdate" name="[Country Date].[Country Date]" collapsed="false"/>
+                <AggLevel column="ccg_rate_id" name="[CcgRate].[CCG Rate ID]" collapsed="false"/>
+                <AggLevel column="isp_country_code" name="[ISP].[Isp Country]" collapsed="false"/>
+                <AggLevel column="isp_account_id" name="[ISP].[Isp Account]" collapsed="true"/>
+                <AggLevel column="pub_country_code" name="[Publisher].[Publisher Country]" collapsed="false"/>
+                <AggLevel column="pub_account_id" name="[Publisher].[Publisher Account]" collapsed="true"/>
+            </AggName>
+            <AggName name="requeststatsmonthlycountry_" schema="bi" ignorecase="true" approxRowCount="5000000">
+                <AggFactCount column="fact_count"/>
+                <AggMeasure column="actions" name="[Measures].[actions]"/>
+                <AggMeasure column="clicks" name="[Measures].[clicks]"/>
+                <AggMeasure column="imps" name="[Measures].[imps]"/>
+                <AggMeasure column="passbacks" name="[Measures].[passbacks]"/>
+                <AggMeasure column="requests" name="[Measures].[requests]"/>
+                <AggMeasure column="pub_amount_global" name="[Measures].[payouts usd]"/>
+                <AggMeasure column="pub_amount" name="[Measures].[payouts]"/>
+                <AggMeasure column="adv_amount" name="[Measures].[total cost net]"/>
+                <AggMeasure column="adv_comm_amount" name="[Measures].[_comm_amt]"/>
+                <AggMeasure column="adv_amount_global" name="[Measures].[total cost net usd]"/>
+                <AggMeasure column="adv_comm_amount_global" name="[Measures].[_comm_amt_global]"/>
+                <AggLevel column="cc_id" name="[Advertiser].[Campaign Creative ID]" collapsed="false"/>
+                <AggLevel column="cht_cc_id" name="[Advertiser.ChannelTarget].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="camp_cc_id" name="[Advertiser.Campaign with values].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="ccgt_cc_id" name="[Advertiser.Creative Group Type].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="cds_cc_id" name="[Advertiser.Campaign Display Status].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="colo_id" name="[ISP].[Colo]" collapsed="false"/>
+                <AggLevel column="tag_id" name="[Publisher].[Tag]" collapsed="false"/>
+                <AggLevel column="tag_id_" name="[Publisher.tag size].[Tag]" collapsed="false"/>
+                <AggLevel column="user_status" name="[UserStatus].[User Status]" collapsed="false"/>
+                <AggLevel column="country_code" name="[UserCountry].[Country Code]" collapsed="false"/>
+                <AggLevel column="fraud_correction" name="[FraudCorrection].[Fraud Correction]" collapsed="false"/>
+                <AggLevel column="device_channel_id" name="[ChannelDevice].[Device Channel]" collapsed="false"/>
+                <AggLevel column="country_syear" name="[Country Date].[Country Year]" collapsed="false"/>
+                <AggLevel column="country_squarter" name="[Country Date].[Country Quarter]" collapsed="true"/>
+                <AggLevel column="country_smonth" name="[Country Date].[Country Month]" collapsed="true"/>
+                <AggLevel column="ccg_rate_id" name="[CcgRate].[CCG Rate ID]" collapsed="false"/>
+            </AggName>
+            <AggName name="requeststatsdailycountry_" schema="bi" ignorecase="true" approxRowCount="100000000">
+                <AggFactCount column="fact_count"/>
+                <AggMeasure column="actions" name="[Measures].[actions]"/>
+                <AggMeasure column="clicks" name="[Measures].[clicks]"/>
+                <AggMeasure column="imps" name="[Measures].[imps]"/>
+                <AggMeasure column="passbacks" name="[Measures].[passbacks]"/>
+                <AggMeasure column="requests" name="[Measures].[requests]"/>
+                <AggMeasure column="pub_amount_global" name="[Measures].[payouts usd]"/>
+                <AggMeasure column="pub_amount" name="[Measures].[payouts]"/>
+                <AggMeasure column="adv_amount" name="[Measures].[total cost net]"/>
+                <AggMeasure column="adv_comm_amount" name="[Measures].[_comm_amt]"/>
+                <AggMeasure column="adv_amount_global" name="[Measures].[total cost net usd]"/>
+                <AggMeasure column="adv_comm_amount_global" name="[Measures].[_comm_amt_global]"/>
+                <AggLevel column="cc_id" name="[Advertiser].[Campaign Creative ID]" collapsed="false"/>
+                <AggLevel column="cht_cc_id" name="[Advertiser.ChannelTarget].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="camp_cc_id" name="[Advertiser.Campaign with values].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="ccgt_cc_id" name="[Advertiser.Creative Group Type].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="cds_cc_id" name="[Advertiser.Campaign Display Status].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="colo_id" name="[ISP].[Colo]" collapsed="false"/>
+                <AggLevel column="tag_id" name="[Publisher].[Tag]" collapsed="false"/>
+                <AggLevel column="tag_id_" name="[Publisher.tag size].[Tag]" collapsed="false"/>
+                <AggLevel column="user_status" name="[UserStatus].[User Status]" collapsed="false"/>
+                <AggLevel column="country_code" name="[UserCountry].[Country Code]" collapsed="false"/>
+                <AggLevel column="fraud_correction" name="[FraudCorrection].[Fraud Correction]" collapsed="false"/>
+                <AggLevel column="device_channel_id" name="[ChannelDevice].[Device Channel]" collapsed="false"/>
+                <AggLevel column="country_sdate" name="[Country Date].[Country Date]" collapsed="false"/>
+                <AggLevel column="ccg_rate_id" name="[CcgRate].[CCG Rate ID]" collapsed="false"/>
+            </AggName>
+            <!--  <AggName name="PublisherStatsDailyCountry_" schema="bi" ignorecase="true" approxRowCount="10000000">
+                    <AggFactCount column="fact_count" />
+                    <AggMeasure column="actions" name="[Measures].[actions]" />
+                    <AggMeasure column="clicks" name="[Measures].[clicks]" />
+                    <AggMeasure column="imps" name="[Measures].[imps]" />
+                    <AggMeasure column="passbacks" name="[Measures].[passbacks]" />
+                    <AggMeasure column="requests" name="[Measures].[requests]" />
+                    <AggMeasure column="pub_amount_global" name="[Measures].[payouts usd]" />
+                    <AggMeasure column="pub_amount" name="[Measures].[payouts]" />
+                    <AggLevel column="tag_id" name="[Publisher].[Tag]" collapsed="false" />
+                    <AggLevel column="tag_id_" name="[Publisher.tag size].[Tag]" collapsed="false" />
+                    <AggLevel column="user_status" name="[UserStatus].[User Status]" collapsed="false" />
+                    <AggLevel column="country_code" name="[UserCountry].[Country Code]" collapsed="false" />
+                    <AggLevel column="fraud_correction" name="[FraudCorrection].[Fraud Correction]" collapsed="false" />
+                    <AggLevel column="country_sdate" name="[Country Date].[Country Date]" collapsed="false" />
+                    <AggLevel column="isp_country_code" name="[ISP].[Isp Country]" collapsed="false"/>
+                    <AggLevel column="isp_account_id" name="[ISP].[Isp Account]" collapsed="true" />
+                    <AggLevel column="adv_country_code" name="[Advertiser].[Advertiser Country]" collapsed="false"/>
+                    <AggLevel column="agency_account_id" name="[Advertiser].[Agency]" collapsed="true" />
+                    <AggLevel column="adv_account_id" name="[Advertiser].[Advertiser Account]" collapsed="true" />
+                  </AggName>
+                  <AggName name="IspStatsDailyCountry_" schema="bi" ignorecase="true" approxRowCount="10000000">
+                    <AggFactCount column="fact_count" />
+                    <AggMeasure column="actions" name="[Measures].[actions]" />
+                    <AggMeasure column="clicks" name="[Measures].[clicks]" />
+                    <AggMeasure column="imps" name="[Measures].[imps]" />
+                    <AggMeasure column="passbacks" name="[Measures].[passbacks]" />
+                    <AggMeasure column="requests" name="[Measures].[requests]" />
+                    <AggLevel column="colo_id" name="[ISP].[Colo]" collapsed="false" />
+                    <AggLevel column="user_status" name="[UserStatus].[User Status]" collapsed="false" />
+                    <AggLevel column="country_code" name="[UserCountry].[Country Code]" collapsed="false" />
+                    <AggLevel column="fraud_correction" name="[FraudCorrection].[Fraud Correction]" collapsed="false" />
+                    <AggLevel column="country_sdate" name="[Country Date].[Country Date]" collapsed="false" />
+                    <AggLevel column="pub_country_code" name="[Publisher].[Publisher Country]" collapsed="false"/>
+                    <AggLevel column="pub_account_id" name="[Publisher].[Publisher Account]" collapsed="true" />
+                    <AggLevel column="adv_country_code" name="[Advertiser].[Advertiser Country]" collapsed="false"/>
+                    <AggLevel column="agency_account_id" name="[Advertiser].[Agency]" collapsed="true" />
+                    <AggLevel column="adv_account_id" name="[Advertiser].[Advertiser Account]" collapsed="true" />
+                  </AggName> -->
+            <AggName name="advertiserstatstotal_" schema="bi" ignorecase="true" approxRowCount="1000000">
+                <AggFactCount column="fact_count"/>
+                <AggMeasure column="actions" name="[Measures].[actions]"/>
+                <AggMeasure column="clicks" name="[Measures].[clicks]"/>
+                <AggMeasure column="imps" name="[Measures].[imps]"/>
+                <AggMeasure column="requests" name="[Measures].[requests]"/>
+                <AggMeasure column="adv_amount" name="[Measures].[total cost net]"/>
+                <AggMeasure column="adv_comm_amount" name="[Measures].[_comm_amt]"/>
+                <AggMeasure column="adv_amount_global" name="[Measures].[total cost net usd]"/>
+                <AggMeasure column="adv_comm_amount_global" name="[Measures].[_comm_amt_global]"/>
+                <AggLevel column="cc_id" name="[Advertiser].[Campaign Creative ID]" collapsed="false"/>
+                <AggLevel column="cht_cc_id" name="[Advertiser.ChannelTarget].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="camp_cc_id" name="[Advertiser.Campaign with values].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="ccgt_cc_id" name="[Advertiser.Creative Group Type].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="cds_cc_id" name="[Advertiser.Campaign Display Status].[Campaign Creative ID]"
+                          collapsed="false"/>
+                <AggLevel column="fraud_correction" name="[FraudCorrection].[Fraud Correction]" collapsed="false"/>
+                <AggLevel column="device_channel_id" name="[ChannelDevice].[Device Channel]" collapsed="false"/>
+            </AggName>
+            <AggName name="publisherstatstotal_" schema="bi" ignorecase="true" approxRowCount="500000">
+                <AggFactCount column="fact_count"/>
+                <AggMeasure column="actions" name="[Measures].[actions]"/>
+                <AggMeasure column="clicks" name="[Measures].[clicks]"/>
+                <AggMeasure column="imps" name="[Measures].[imps]"/>
+                <AggMeasure column="requests" name="[Measures].[requests]"/>
+                <AggMeasure column="pub_amount" name="[Measures].[payouts]"/>
+                <AggLevel column="tag_id" name="[Publisher].[Tag]" collapsed="false"/>
+                <AggLevel column="tag_id_" name="[Publisher.tag size].[Tag]" collapsed="false"/>
+                <AggLevel column="country_code" name="[UserCountry].[Country Code]" collapsed="false"/>
+                <AggMeasure column="passbacks" name="[Measures].[passbacks]"/>
+            </AggName>
+        </Table>
+
+        <DimensionUsage source="Advertiser" name="Advertiser" foreignKey="cc_id" highCardinality="false"/>
+        <DimensionUsage source="ISP" name="ISP" foreignKey="colo_id" highCardinality="false"/>
+        <DimensionUsage source="Publisher" name="Publisher" foreignKey="tag_id"/>
+        <DimensionUsage source="UserStatus" name="UserStatus" foreignKey="user_status" highCardinality="false"/>
+        <DimensionUsage source="UserCountry" name="UserCountry" foreignKey="country_code" highCardinality="false"/>
+        <DimensionUsage source="FraudCorrection" name="FraudCorrection" foreignKey="fraud_correction"
+                        highCardinality="false"/>
+        <DimensionUsage source="ChannelDevice" name="ChannelDevice" foreignKey="device_channel_id"
+                        highCardinality="false"/>
+        <DimensionUsage source="Country Date" name="Country Date" foreignKey="country_sdate" highCardinality="false"/>
+        <DimensionUsage source="Country Time" name="Country Time" foreignKey="country_hour" highCardinality="false"/>
+        <DimensionUsage source="CcgRate" name="CcgRate" foreignKey="ccg_rate_id" highCardinality="false"/>
+
+        <Measure name="actions" column="actions" datatype="Integer" aggregator="sum"/>
+        <Measure name="clicks" column="clicks" datatype="Integer" aggregator="sum"/>
+        <Measure name="imps" column="imps" datatype="Integer" aggregator="sum"/>
+        <Measure name="requests" column="requests" aggregator="sum"/>
+        <Measure name="passbacks" column="passbacks" datatype="Integer" aggregator="sum"/>
+        <Measure name="payouts usd" column="pub_amount_global" datatype="Integer" aggregator="sum"/>
+        <Measure name="payouts" column="amount_global" datatype="Integer" aggregator="sum"/>
+        <Measure name="total cost net" column="adv_amount" datatype="Integer" aggregator="sum"/>
+        <Measure name="_comm_amt" column="adv_comm_amount" datatype="Integer" aggregator="sum" visible="false"/>
+        <Measure name="total cost net usd" column="adv_amount_global" datatype="Integer" aggregator="sum"/>
+        <Measure name="_comm_amt_global" column="comm_amount_global" datatype="Integer" aggregator="sum"
+                 visible="false"/>
+
+        <CalculatedMember name="invalid clicks" dimension="Measures">
+            <Formula>sum({[FraudCorrection].[Fraud Correction].[true]}
+                ,[Measures].[Clicks])*-1
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="invalid imps" dimension="Measures">
+            <Formula>sum({[FraudCorrection].[Fraud Correction].[true]}
+                ,[Measures].[Imps])*-1
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="invalid requests" dimension="Measures">
+            <Formula>sum({[FraudCorrection].[Fraud Correction].[true]}
+                ,[Measures].[Requests])*-1
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="total cost gross" dimension="Measures">
+            <Formula>[Measures].[total cost net] + [Measures].[_comm_amt]</Formula>
+        </CalculatedMember>
+        <CalculatedMember name="total cost gross usd" dimension="Measures">
+            <Formula>[Measures].[total cost net usd] + [Measures].[_comm_amt_global]</Formula>
+        </CalculatedMember>
+    </Cube>
+
+    <Cube name="CCUniqueUsers" cache="true" enabled="true" visible="false">
+        <Table name="ccuserstatsrunning"/>
+        <DimensionUsage source="Advertiser" name="Advertiser" foreignKey="cc_id" highCardinality="false"/>
+        <DimensionUsage source="Country Date" name="Country Date" usagePrefix="country_sdate" foreignKey="adv_sdate"
+                        highCardinality="false"/>
+        <Measure name="cc_unique_users" column="daily_unique_users" datatype="Integer" visible="false"
+                 aggregator="sum"/>
+        <Measure name="cc_weekly_unique_users" column="weekly_unique_users" datatype="Integer" visible="false"
+                 aggregator="sum"/>
+        <Measure name="cc_monthly_unique_users" column="monthly_unique_users" datatype="Integer" visible="false"
+                 aggregator="sum"/>
+        <CalculatedMember name="CCCalculatingFlag" visible="false" dimension="Measures">
+            <Formula>
+                IIF([Advertiser].[Advertiser].Level.Name="Campaign Creative ID" AND
+                ([Country Date].Level.Name="Country Day"
+                OR [Country Date].Level.Name="Country Date" ),
+                1, NULL)
+            </Formula>
+        </CalculatedMember>
+    </Cube>
+
+    <Cube name="CCGUniqueUsers" cache="true" enabled="true" visible="false">
+        <Table name="ccguserstatsrunning" schema="bi"/>
+        <DimensionUsage source="Advertiser" name="Advertiser" foreignKey="cc_id" highCardinality="false"/>
+        <DimensionUsage source="Country Date" name="Country Date" usagePrefix="country_sdate" foreignKey="adv_sdate"
+                        highCardinality="false"/>
+        <Measure name="ccg_unique_users" column="daily_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <Measure name="ccg_weekly_unique_users" column="weekly_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <Measure name="ccg_monthly_unique_users" column="monthly_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <CalculatedMember name="CCGCalculatingFlag" visible="false" dimension="Measures">
+            <Formula>
+                IIF(([Advertiser].[Advertiser].Level.Name="Creative Group"
+                OR [Advertiser].[Advertiser].Level.Name="Creative"
+                OR [Advertiser].[Advertiser].Level.Name="Campaign Creative ID" ) AND
+                ([Country Date].Level.Name="Country Day"
+                OR [Country Date].Level.Name="Country Date"),
+                1, NULL)
+            </Formula>
+        </CalculatedMember>
+    </Cube>
+
+    <Cube name="CampaignUniqueUsers" cache="true" enabled="true" visible="false">
+        <Table name="campaignuserstatsrunning" schema="bi"/>
+        <DimensionUsage source="Advertiser" name="Advertiser" foreignKey="cc_id" highCardinality="false"/>
+        <DimensionUsage source="Country Date" name="Country Date" usagePrefix="country_sdate" foreignKey="adv_sdate"
+                        highCardinality="false"/>
+        <Measure name="campaign_unique_users" column="daily_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <Measure name="campaign_weekly_unique_users" column="weekly_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <Measure name="campaign_monthly_unique_users" column="monthly_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <CalculatedMember name="CampaignCalculatingFlag" visible="false" dimension="Measures">
+            <Formula>
+                IIF(([Advertiser].[Advertiser].Level.Name="Campaign"
+                OR [Advertiser].[Advertiser].Level.Name="Creative Group"
+                OR [Advertiser].[Advertiser].Level.Name="Creative"
+                OR [Advertiser].[Advertiser].Level.Name="Campaign Creative ID" ) AND
+                ([Country Date].Level.Name="Country Day"
+                OR [Country Date].Level.Name="Country Date"),
+                1, NULL)
+            </Formula>
+        </CalculatedMember>
+    </Cube>
+
+    <Cube name="AdvertiserUniqueUsers" cache="true" enabled="true" visible="false">
+        <Table name="advertiseruserstatsrunning" schema="bi"/>
+        <DimensionUsage source="Advertiser" name="Advertiser" foreignKey="cc_id" highCardinality="false"/>
+        <DimensionUsage source="Country Date" name="Country Date" usagePrefix="country_sdate" foreignKey="adv_sdate"
+                        highCardinality="false"/>
+        <Measure name="advertiser_unique_users" column="daily_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <Measure name="advertiser_weekly_unique_users" column="weekly_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <Measure name="advertiser_monthly_unique_users" column="monthly_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <CalculatedMember name="AdvertiserCalculatingFlag" visible="false" dimension="Measures">
+            <Formula>
+                IIF(([Advertiser].[Advertiser].Level.Name="Advertiser Account"
+                OR [Advertiser].[Advertiser].Level.Name="Campaign"
+                OR [Advertiser].[Advertiser].Level.Name="Creative Group"
+                OR [Advertiser].[Advertiser].Level.Name="Creative"
+                OR [Advertiser].[Advertiser].Level.Name="Campaign Creative ID" ) AND
+                ([Country Date].Level.Name="Country Day"
+                OR [Country Date].Level.Name="Country Date" ),
+                1, NULL)
+            </Formula>
+        </CalculatedMember>
+    </Cube>
+
+    <Cube name="ColoUniqueUsers" cache="true" enabled="true" visible="false">
+        <Table name="colouserstatsrunning"/>
+        <DimensionUsage source="ISP" name="ISP" foreignKey="colo_id" highCardinality="false"/>
+        <DimensionUsage source="Country Date" name="Country Date" usagePrefix="country_sdate" foreignKey="adv_sdate"
+                        highCardinality="false"/>
+        <Measure name="colo_unique_users" column="daily_unique_users" datatype="Integer" visible="false"
+                 aggregator="sum"/>
+        <Measure name="colo_weekly_unique_users" column="weekly_unique_users" datatype="Integer" visible="false"
+                 aggregator="sum"/>
+        <Measure name="colo_monthly_unique_users" column="monthly_unique_users" datatype="Integer" visible="false"
+                 aggregator="sum"/>
+        <CalculatedMember name="ColoCalculatingFlag" visible="false" dimension="Measures">
+            <Formula>
+                IIF([ISP].[ISP].Level.Name="Colo" AND
+                ([Country Date].Level.Name="Country Day"
+                OR [Country Date].Level.Name="Country Date" ),
+                1, NULL)
+            </Formula>
+        </CalculatedMember>
+    </Cube>
+
+    <Cube name="SiteUniqueUsers" cache="true" enabled="true" visible="false">
+        <Table name="siteuserstatsrunning" schema="bi"/>
+        <DimensionUsage source="Publisher" name="Publisher" foreignKey="tag_id" highCardinality="false"/>
+        <DimensionUsage source="Country Date" name="Country Date" usagePrefix="country_sdate" foreignKey="adv_sdate"
+                        highCardinality="false"/>
+        <Measure name="site_unique_users" column="daily_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <Measure name="site_weekly_unique_users" column="weekly_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <Measure name="site_monthly_unique_users" column="monthly_unique_users" datatype="Integer" visible="false"
+                 aggregator="max"/>
+        <CalculatedMember name="SiteCalculatingFlag" visible="false" dimension="Measures">
+            <Formula>
+                IIF(([Publisher].[Publisher].Level.Name="Site" OR
+                [Publisher].[Publisher].Level.Name="Tag" )
+                AND ([Country Date].Level.Name="Country Day"
+                OR [Country Date].Level.Name="Country Date"),
+                1, NULL)
+            </Formula>
+        </CalculatedMember>
+    </Cube>
+
+    <Cube name="UserProperties" cache="true" enabled="true">
+        <Table name="userpropertystats">
+        </Table>
+        <DimensionUsage source="UserProperty" name="UserProperty" foreignKey="user_property_id"
+                        highCardinality="false"/>
+        <DimensionUsage source="ISP" name="ISP" foreignKey="colo_id" highCardinality="false"/>
+        <DimensionUsage source="UserStatus" name="UserStatus" foreignKey="user_status" highCardinality="false"/>
+        <Measure name="UserProperties Requests" column="requests" datatype="Integer" aggregator="sum"/>
+        <Measure name="UserProperties Imps" column="imps" datatype="Integer" aggregator="sum"/>
+        <Measure name="UserProperties Clicks" column="clicks" datatype="Integer" aggregator="sum"/>
+        <Measure name="UserProperties Actions" column="actions" datatype="Integer" aggregator="sum"/>
+        <Measure name="UserProperties Unverified Imps" column="imps_unverified" datatype="Integer" aggregator="sum"/>
+        <Measure name="UserProperties Profiling Requests" column="profiling_requests" datatype="Integer"
+                 aggregator="sum"/>
+    </Cube>
+
+    <Cube name="Conversions" cache="true" enabled="true">
+        <Table name="actionstats_" schema="bi">
+        </Table>
+        <Dimension name="Days since impression">
+            <Hierarchy hasAll="true">
+                <Level name="Days since impression" type="Integer" approxRowCount="200">
+                    <KeyExpression>
+                        <SQL>coalesce(trunc(date_part('days', action_date - imp_date)), -1)</SQL>
+                    </KeyExpression>
+                    <NameExpression>
+                        <SQL>coalesce(trunc(date_part('days', action_date - imp_date))::text, 'Not set')</SQL>
+                    </NameExpression>
+                </Level>
+            </Hierarchy>
+        </Dimension>
+        <Dimension name="Days since click">
+            <Hierarchy hasAll="true">
+                <Level name="Days since click" type="Integer" approxRowCount="200">
+                    <KeyExpression>
+                        <SQL>coalesce(trunc(date_part('days', action_date - click_date)), -1)</SQL>
+                    </KeyExpression>
+                    <NameExpression>
+                        <SQL>coalesce(trunc(date_part('days', action_date - click_date))::text, 'Not set')</SQL>
+                    </NameExpression>
+                </Level>
+            </Hierarchy>
+        </Dimension>
+        <DimensionUsage source="Conversion" name="Conversion" foreignKey="action_id" highCardinality="false"/>
+        <DimensionUsage source="Advertiser" name="Advertiser" foreignKey="cc_id" highCardinality="false"/>
+        <DimensionUsage source="ISP" name="ISP" foreignKey="colo_id" highCardinality="false"/>
+        <DimensionUsage source="Publisher" name="Publisher" foreignKey="tag_id"/>
+        <DimensionUsage source="UserCountry" name="UserCountry" foreignKey="country_code" highCardinality="false"/>
+        <DimensionUsage source="Country Date" name="Country Date" usagePrefix="country_sdate"
+                        foreignKey="country_action_sdate" highCardinality="false"/>
+        <Measure name="Confirmed Conversions" column="action_request_id" datatype="Integer"
+                 aggregator="distinct-count"/>
+    </Cube>
+
+    <Cube name="Conversions with click window" cache="true" enabled="true" visible="false">
+        <Table name="days_since_click" schema="bi">
+            <SQL>days_since_click = 30</SQL>
+        </Table>
+        <DimensionUsage source="Conversion" name="Conversion" foreignKey="action_id" highCardinality="false"/>
+        <DimensionUsage source="Advertiser" name="Advertiser" foreignKey="cc_id" highCardinality="false"/>
+        <DimensionUsage source="ISP" name="ISP" foreignKey="colo_id" highCardinality="false"/>
+        <DimensionUsage source="Publisher" name="Publisher" foreignKey="tag_id"/>
+        <DimensionUsage source="UserCountry" name="UserCountry" foreignKey="country_code" highCardinality="false"/>
+        <DimensionUsage source="Country Date" name="Country Date" usagePrefix="country_sdate"
+                        foreignKey="country_action_sdate" highCardinality="false"/>
+        <Measure name="Confirmed Post Click Conversions" column="action_request_id" datatype="Integer"
+                 aggregator="distinct-count"/>
+    </Cube>
+
+    <Cube name="Conversions with imp window" cache="true" enabled="true" visible="false">
+        <Table name="days_since_imp" schema="bi">
+            <SQL>days_since_imp = 7</SQL>
+        </Table>
+        <DimensionUsage source="Conversion" name="Conversion" foreignKey="action_id" highCardinality="false"/>
+        <DimensionUsage source="Advertiser" name="Advertiser" foreignKey="cc_id" highCardinality="false"/>
+        <DimensionUsage source="ISP" name="ISP" foreignKey="colo_id" highCardinality="false"/>
+        <DimensionUsage source="Publisher" name="Publisher" foreignKey="tag_id"/>
+        <DimensionUsage source="UserCountry" name="UserCountry" foreignKey="country_code" highCardinality="false"/>
+        <DimensionUsage source="Country Date" name="Country Date" usagePrefix="country_sdate"
+                        foreignKey="country_action_sdate" highCardinality="false"/>
+        <Measure name="Confirmed Post Impressions Conversions" column="action_request_id" datatype="Integer"
+                 aggregator="distinct-count"/>
+    </Cube>
+
+    <Cube name="ConversionRequests" cache="true" enabled="true">
+        <Table name="actionrequests">
+        </Table>
+        <DimensionUsage source="Conversion" name="Conversion" foreignKey="action_id" highCardinality="false"/>
+        <DimensionUsage source="ISP" name="ISP" foreignKey="colo_id" highCardinality="false"/>
+        <DimensionUsage source="UserCountry" name="UserCountry" foreignKey="country_code" highCardinality="false"/>
+        <DimensionUsage source="UserStatus" name="UserStatus" foreignKey="user_status" highCardinality="false"/>
+        <Measure name="Conversion Requests" column="action_request_count" datatype="Integer" aggregator="sum"/>
+    </Cube>
+
+    <VirtualCube name="CustomReport">
+        <CubeUsages>
+            <CubeUsage cubeName="Conversions"/>
+            <CubeUsage cubeName="Conversions with click window"/>
+            <CubeUsage cubeName="Conversions with imp window"/>
+            <CubeUsage cubeName="ConversionRequests"/>
+            <CubeUsage cubeName="HourlyStats"/>
+            <CubeUsage cubeName="CCUniqueUsers"/>
+            <CubeUsage cubeName="CCGUniqueUsers"/>
+            <CubeUsage cubeName="CampaignUniqueUsers"/>
+            <CubeUsage cubeName="AdvertiserUniqueUsers"/>
+            <CubeUsage cubeName="ColoUniqueUsers"/>
+            <CubeUsage cubeName="SiteUniqueUsers"/>
+            <CubeUsage cubeName="UserProperties"/>
+        </CubeUsages>
+
+        <VirtualCubeDimension name="Country Date"/>
+        <VirtualCubeDimension name="Country Time"/>
+        <VirtualCubeDimension name="Advertiser"/>
+        <VirtualCubeDimension name="ISP"/>
+        <VirtualCubeDimension name="Publisher"/>
+        <VirtualCubeDimension name="UserStatus"/>
+        <VirtualCubeDimension name="UserCountry"/>
+        <VirtualCubeDimension name="FraudCorrection"/>
+        <VirtualCubeDimension name="ChannelDevice"/>
+        <VirtualCubeDimension name="UserProperty"/>
+        <VirtualCubeDimension name="Conversion"/>
+        <VirtualCubeDimension name="CcgRate"/>
+
+
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[imps]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[clicks]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[requests]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[invalid imps]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[invalid clicks]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[invalid requests]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[actions]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[passbacks]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[payouts usd]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[payouts]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[total cost net]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[total cost net usd]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[total cost gross]"/>
+        <VirtualCubeMeasure cubeName="HourlyStats" name="[Measures].[total cost gross usd]"/>
+
+        <VirtualCubeMeasure cubeName="CCUniqueUsers" name="[Measures].[CCCalculatingFlag]"/>
+        <VirtualCubeMeasure cubeName="CCUniqueUsers" name="[Measures].[cc_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="CCUniqueUsers" name="[Measures].[cc_weekly_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="CCUniqueUsers" name="[Measures].[cc_monthly_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="CCGUniqueUsers" name="[Measures].[CCGCalculatingFlag]"/>
+        <VirtualCubeMeasure cubeName="CCGUniqueUsers" name="[Measures].[ccg_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="CCGUniqueUsers" name="[Measures].[ccg_weekly_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="CCGUniqueUsers" name="[Measures].[ccg_monthly_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="CampaignUniqueUsers" name="[Measures].[CampaignCalculatingFlag]"/>
+        <VirtualCubeMeasure cubeName="CampaignUniqueUsers" name="[Measures].[campaign_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="CampaignUniqueUsers" name="[Measures].[campaign_weekly_unique_users]"
+                            visible="false"/>
+        <VirtualCubeMeasure cubeName="CampaignUniqueUsers" name="[Measures].[campaign_monthly_unique_users]"
+                            visible="false"/>
+        <VirtualCubeMeasure cubeName="AdvertiserUniqueUsers" name="[Measures].[AdvertiserCalculatingFlag]"/>
+        <VirtualCubeMeasure cubeName="AdvertiserUniqueUsers" name="[Measures].[advertiser_unique_users]"
+                            visible="false"/>
+        <VirtualCubeMeasure cubeName="AdvertiserUniqueUsers" name="[Measures].[advertiser_weekly_unique_users]"
+                            visible="false"/>
+        <VirtualCubeMeasure cubeName="AdvertiserUniqueUsers" name="[Measures].[advertiser_monthly_unique_users]"
+                            visible="false"/>
+        <VirtualCubeMeasure cubeName="ColoUniqueUsers" name="[Measures].[ColoCalculatingFlag]"/>
+        <VirtualCubeMeasure cubeName="ColoUniqueUsers" name="[Measures].[colo_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="ColoUniqueUsers" name="[Measures].[colo_weekly_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="ColoUniqueUsers" name="[Measures].[colo_monthly_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="SiteUniqueUsers" name="[Measures].[SiteCalculatingFlag]"/>
+        <VirtualCubeMeasure cubeName="SiteUniqueUsers" name="[Measures].[site_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="SiteUniqueUsers" name="[Measures].[site_weekly_unique_users]" visible="false"/>
+        <VirtualCubeMeasure cubeName="SiteUniqueUsers" name="[Measures].[site_monthly_unique_users]" visible="false"/>
+
+        <VirtualCubeMeasure cubeName="UserProperties" name="[Measures].[UserProperties Requests]"/>
+        <VirtualCubeMeasure cubeName="UserProperties" name="[Measures].[UserProperties Imps]"/>
+        <VirtualCubeMeasure cubeName="UserProperties" name="[Measures].[UserProperties Clicks]"/>
+        <VirtualCubeMeasure cubeName="UserProperties" name="[Measures].[UserProperties Actions]"/>
+        <VirtualCubeMeasure cubeName="UserProperties" name="[Measures].[UserProperties Unverified Imps]"/>
+        <VirtualCubeMeasure cubeName="UserProperties" name="[Measures].[UserProperties Profiling Requests]"/>
+
+        <VirtualCubeMeasure cubeName="Conversions with click window"
+                            name="[Measures].[Confirmed Post Click Conversions]"/>
+        <VirtualCubeMeasure cubeName="Conversions with imp window"
+                            name="[Measures].[Confirmed Post Impressions Conversions]"/>
+        <VirtualCubeMeasure cubeName="Conversions" name="[Measures].[Confirmed Conversions]"/>
+        <VirtualCubeMeasure cubeName="ConversionRequests" name="[Measures].[Conversion Requests]"/>
+
+
+        <CalculatedMember name="CC daily unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[CCCalculatingFlag] =1, [Measures].[cc_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="CC weekly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[CCCalculatingFlag] =1, [Measures].[cc_weekly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="CC monthly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[CCCalculatingFlag] =1, [Measures].[cc_monthly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="CCG daily unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[CCGCalculatingFlag] =1, [Measures].[ccg_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="CCG weekly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[CCGCalculatingFlag] =1, [Measures].[ccg_weekly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="CCG monthly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[CCGCalculatingFlag] =1, [Measures].[ccg_monthly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Campaign daily unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[CampaignCalculatingFlag] =1, [Measures].[campaign_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Campaign weekly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[CampaignCalculatingFlag] =1, [Measures].[campaign_weekly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Campaign monthly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[CampaignCalculatingFlag] =1, [Measures].[campaign_monthly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Advertiser daily unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[AdvertiserCalculatingFlag] =1, [Measures].[advertiser_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Advertiser weekly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[AdvertiserCalculatingFlag] =1, [Measures].[advertiser_weekly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Advertiser monthly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[ColoCalculatingFlag] =1, [Measures].[advertiser_monthly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Colo daily unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[ColoCalculatingFlag] =1, [Measures].[colo_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Colo weekly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[ColoCalculatingFlag] =1, [Measures].[colo_weekly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Colo monthly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[ColoCalculatingFlag] =1, [Measures].[colo_monthly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Site daily unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[SiteCalculatingFlag] =1, [Measures].[site_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Site weekly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[SiteCalculatingFlag] =1, [Measures].[site_weekly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+        <CalculatedMember name="Site monthly unique users" dimension="Measures">
+            <Formula>
+                IIF([Measures].[SiteCalculatingFlag] =1, [Measures].[site_monthly_unique_users], NULL)
+            </Formula>
+        </CalculatedMember>
+    </VirtualCube>
+
+    <Role name="Administrator">
+        <SchemaGrant access="all"/>
+    </Role>
+
+    <Role name="TEST">
+        <SchemaGrant access="all"/>
+    </Role>
+
+    <Role name="Power User">
+        <SchemaGrant access="all"/>
+    </Role>
+
+    <Role name="web.ru00.dev.bi.poweruser">
+        <SchemaGrant access="all"/>
+    </Role>
+
+    <Role name="web.ru00.dev.bi.readonly">
+        <SchemaGrant access="all"/>
+    </Role>
+
+    <Role name="Business Analyst">
+        <SchemaGrant access="all"/>
+    </Role>
+
+    <Role name="Read Only">
+        <SchemaGrant access="all"/>
+    </Role>
+
+    <Role name="RU Business Analyst">
+        <SchemaGrant access="all">
+            <CubeGrant cube="CustomReport" access="all">
+                <HierarchyGrant hierarchy="[Advertiser]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Advertiser].[RU]" access="all"/>
+                    <MemberGrant member="[Advertiser].[n/a]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Publisher]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Publisher].[RU]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[RU]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Advertiser.Campaign with values]" access="all"/>
+                <HierarchyGrant hierarchy="[Publisher.tag size]" access="all"/>
+                <HierarchyGrant hierarchy="[Advertiser.ChannelTarget]" access="all"/>
+                <HierarchyGrant hierarchy="[Advertiser.Creative Group Type]" access="all"/>
+                <HierarchyGrant hierarchy="[Advertiser.Campaign Display Status]" access="all"/>
+            </CubeGrant>
+            <CubeGrant cube="Conversions" access="all">
+                <HierarchyGrant hierarchy="[Advertiser]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Advertiser].[RU]" access="all"/>
+                    <MemberGrant member="[Advertiser].[n/a]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Conversion]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Conversion].[RU]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Publisher]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Publisher].[RU]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[RU]" access="all"/>
+                </HierarchyGrant>
+            </CubeGrant>
+            <CubeGrant cube="ConversionRequests" access="all">
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[RU]" access="all"/>
+                </HierarchyGrant>
+            </CubeGrant>
+            <CubeGrant cube="UserProperties" access="all">
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[RU]" access="all"/>
+                </HierarchyGrant>
+            </CubeGrant>
+        </SchemaGrant>
+    </Role>
+
+    <Role name="TR Business Analyst">
+        <SchemaGrant access="all">
+            <CubeGrant cube="CustomReport" access="all">
+                <HierarchyGrant hierarchy="[Advertiser]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Advertiser].[TR]" access="all"/>
+                    <MemberGrant member="[Advertiser].[n/a]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Publisher]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Publisher].[TR]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[TR]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Advertiser.Campaign with values]" access="all"/>
+                <HierarchyGrant hierarchy="[Publisher.tag size]" access="all"/>
+                <HierarchyGrant hierarchy="[Advertiser.ChannelTarget]" access="all"/>
+                <HierarchyGrant hierarchy="[Advertiser.Creative Group Type]" access="all"/>
+                <HierarchyGrant hierarchy="[Advertiser.Campaign Display Status]" access="all"/>
+            </CubeGrant>
+            <CubeGrant cube="Conversions" access="all">
+                <HierarchyGrant hierarchy="[Advertiser]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Advertiser].[TR]" access="all"/>
+                    <MemberGrant member="[Advertiser].[n/a]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Conversion]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Conversion].[TR]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Publisher]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Publisher].[TR]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[TR]" access="all"/>
+                </HierarchyGrant>
+            </CubeGrant>
+            <CubeGrant cube="ConversionRequests" access="all">
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[TR]" access="all"/>
+                </HierarchyGrant>
+            </CubeGrant>
+            <CubeGrant cube="UserProperties" access="all">
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[TR]" access="all"/>
+                </HierarchyGrant>
+            </CubeGrant>
+        </SchemaGrant>
+    </Role>
+
+    <Role name="CN Business Analyst">
+        <SchemaGrant access="all">
+            <CubeGrant cube="CustomReport" access="all">
+                <HierarchyGrant hierarchy="[Advertiser]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Advertiser].[CN]" access="all"/>
+                    <MemberGrant member="[Advertiser].[n/a]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Publisher]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Publisher].[CN]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[CN]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Advertiser.Campaign with values]" access="all"/>
+                <HierarchyGrant hierarchy="[Publisher.tag size]" access="all"/>
+                <HierarchyGrant hierarchy="[Advertiser.ChannelTarget]" access="all"/>
+                <HierarchyGrant hierarchy="[Advertiser.Creative Group Type]" access="all"/>
+                <HierarchyGrant hierarchy="[Advertiser.Campaign Display Status]" access="all"/>
+            </CubeGrant>
+            <CubeGrant cube="Conversions" access="all">
+                <HierarchyGrant hierarchy="[Advertiser]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Advertiser].[CN]" access="all"/>
+                    <MemberGrant member="[Advertiser].[n/a]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Conversion]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Conversion].[CN]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[Publisher]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[Publisher].[CN]" access="all"/>
+                </HierarchyGrant>
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[CN]" access="all"/>
+                </HierarchyGrant>
+            </CubeGrant>
+            <CubeGrant cube="ConversionRequests" access="all">
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[CN]" access="all"/>
+                </HierarchyGrant>
+            </CubeGrant>
+            <CubeGrant cube="UserProperties" access="all">
+                <HierarchyGrant hierarchy="[ISP]" access="custom" rollupPolicy="partial">
+                    <MemberGrant member="[ISP].[CN]" access="all"/>
+                </HierarchyGrant>
+            </CubeGrant>
+        </SchemaGrant>
+    </Role>
+
+</Schema>  

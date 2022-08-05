@@ -1,0 +1,12 @@
+<ui-nav-top (menuClick)="drawer.toggle()"></ui-nav-top>
+
+<mat-drawer-container class="main-container" [hasBackdrop]="isMobile">
+  <mat-drawer #drawer class="left-menu"
+              [(opened)]="menuOpened"
+              [mode]="isMobile ? 'over' : 'side'">
+    <ui-main></ui-main>
+  </mat-drawer>
+  <mat-drawer-content class="main-content">
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,110 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Frequency Caps -->
+    <package abstract="true" name="campaignGroupBulkFrequencyCaps" extends="foros-default">
+        <action name="edit" class="com.foros.action.campaign.campaignGroup.bulk.EditBulkFrequencyCapsAction" method="edit">
+            <result name="success">/campaign/ccg/bulk/editFrequencyCaps.jsp</result>
+        </action>
+
+        <action name="save" class="com.foros.action.campaign.campaignGroup.bulk.SaveBulkFrequencyCapsAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/campaign/ccg/bulk/closeDialog.jsp</result>
+            <result name="input">/campaign/ccg/bulk/editFrequencyCaps.jsp</result>
+        </action>
+    </package>
+    <package namespace="/admin/group/bulk/frequencyCaps" name="internalCampaignGroupBulkFrequencyCaps" extends="campaignGroupBulkFrequencyCaps"/>
+    <package namespace="/advertiser/group/bulk/frequencyCaps" name="advertiserCampaignGroupBulkFrequencyCaps" extends="campaignGroupBulkFrequencyCaps"/>
+
+    <!-- Geotarget -->
+    <package abstract="true" name="campaignGroupBulkGeotarget" extends="foros-default">
+        <action name="edit" class="com.foros.action.campaign.campaignGroup.bulk.EditBulkGeotargetAction" method="edit">
+            <result name="success">/campaign/ccg/bulk/editGeotarget.jsp</result>
+        </action>
+
+        <action name="save" class="com.foros.action.campaign.campaignGroup.bulk.SaveBulkGeotargetAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/campaign/ccg/bulk/closeDialog.jsp</result>
+            <result name="input">/campaign/ccg/bulk/editGeotarget.jsp</result>
+        </action>
+    </package>
+    <package namespace="/admin/group/bulk/geotarget" name="internalcampaignGroupBulkGeotarget" extends="campaignGroupBulkGeotarget"/>
+    <package namespace="/advertiser/group/bulk/geotarget" name="advertisercampaignGroupBulkGeotarget" extends="campaignGroupBulkGeotarget"/>
+
+    <!-- Rates -->
+    <package abstract="true" name="campaignGroupBulkRates" extends="foros-default">
+        <action name="edit" class="com.foros.action.campaign.campaignGroup.bulk.EditBulkRatesAction" method="edit">
+            <result name="success">/campaign/ccg/bulk/editRates.jsp</result>
+        </action>
+
+        <action name="save" class="com.foros.action.campaign.campaignGroup.bulk.SaveBulkRatesAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/campaign/ccg/bulk/closeDialog.jsp</result>
+            <result name="input">/campaign/ccg/bulk/editRates.jsp</result>
+        </action>
+    </package>
+    <package namespace="/admin/group/bulk/ccgRate" name="internalCampaignGroupBulkRates" extends="campaignGroupBulkRates"/>
+    <package namespace="/advertiser/group/bulk/ccgRate" name="advertiserCampaignGroupBulkRates" extends="campaignGroupBulkRates"/>
+
+    <!-- Bid Strategy -->
+    <package abstract="true" name="campaignGroupBulkBidStrategy" extends="foros-default">
+        <action name="edit" class="com.foros.action.campaign.campaignGroup.bulk.EditBulkBidStrategyAction" method="edit">
+            <result name="success">/campaign/ccg/bulk/bulkEditBidStrategy.jsp</result>
+        </action>
+
+        <action name="save" class="com.foros.action.campaign.campaignGroup.bulk.SaveBulkBidStrategyAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/campaign/ccg/bulk/closeDialog.jsp</result>
+            <result name="input">/campaign/ccg/bulk/bulkEditBidStrategy.jsp</result>
+        </action>
+    </package>
+    <package namespace="/admin/group/bulk/bidStrategy" name="internalCampaignGroupBulkBidStrategy" extends="campaignGroupBulkBidStrategy"/>
+    <package namespace="/advertiser/group/bulk/bidStrategy" name="advertiserCampaignGroupBulkBidStrategy" extends="campaignGroupBulkBidStrategy"/>
+
+    <!-- Site Targeting -->
+    <package abstract="true" name="campaignGroupBulkSiteTargeting" extends="foros-default">
+        <action name="edit" class="com.foros.action.campaign.campaignGroup.bulk.EditBulkSiteTargetingAction" method="edit">
+            <result name="success">/campaign/ccg/bulk/editSiteTargeting.jsp</result>
+        </action>
+
+        <action name="save" class="com.foros.action.campaign.campaignGroup.bulk.SaveBulkSiteTargetingAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/campaign/ccg/bulk/closeDialog.jsp</result>
+            <result name="input">/campaign/ccg/bulk/editSiteTargeting.jsp</result>
+        </action>
+    </package>
+    <package namespace="/admin/group/bulk/siteTargeting" name="internalCampaignGroupBulkSiteTargeting" extends="campaignGroupBulkSiteTargeting"/>
+    <package namespace="/advertiser/group/bulk/siteTargeting" name="advertiserCampaignGroupBulkSiteTargeting" extends="campaignGroupBulkSiteTargeting"/>
+
+    <!-- Device Targeting -->
+    <package abstract="true" name="campaignGroupBulkDeviceTargeting" extends="foros-default">
+        <action name="edit" class="com.foros.action.campaign.campaignGroup.bulk.EditBulkDeviceTargetingAction" method="edit">
+            <result name="success">/campaign/ccg/bulk/editDeviceTargeting.jsp</result>
+        </action>
+
+        <action name="save" class="com.foros.action.campaign.campaignGroup.bulk.SaveBulkDeviceTargetingAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/campaign/ccg/bulk/closeDialog.jsp</result>
+            <result name="input">/campaign/ccg/bulk/editDeviceTargeting.jsp</result>
+        </action>
+    </package>
+    <package namespace="/admin/group/bulk/deviceTargeting" name="internalCampaignGroupBulkDeviceTargeting" extends="campaignGroupBulkDeviceTargeting"/>
+    <package namespace="/advertiser/group/bulk/deviceTargeting" name="advertiserCampaignGroupBulkDeviceTargeting" extends="campaignGroupBulkDeviceTargeting"/>
+
+    <!-- Click URLs -->
+    <package abstract="true" name="campaignGroupBulkClickUrls" extends="foros-default">
+        <action name="edit" class="com.foros.action.campaign.campaignGroup.bulk.EditBulkClickUrlsAction" method="edit">
+            <result name="success">/campaign/ccg/bulk/editAdClickUrls.jsp</result>
+        </action>
+
+        <action name="save" class="com.foros.action.campaign.campaignGroup.bulk.SaveBulkClickUrlsAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/campaign/ccg/bulk/closeDialog.jsp</result>
+            <result name="input">/campaign/ccg/bulk/editAdClickUrls.jsp</result>
+        </action>
+    </package>
+    <package namespace="/admin/group/bulk/clickUrls" name="internalcampaignGroupBulkClickUrls" extends="campaignGroupBulkClickUrls"/>
+    <package namespace="/advertiser/group/bulk/clickUrls" name="advertisercampaignGroupBulkClickUrls" extends="campaignGroupBulkClickUrls"/>
+</struts>

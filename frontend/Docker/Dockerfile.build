@@ -1,0 +1,9 @@
+FROM sergevs42/centos7.x86_64-abt
+MAINTAINER Serge at serge@ocslab.com
+
+RUN yum -y --setopt=tsflags=nodocs install http://repo.ocslab.com/CentOS/7.2/extras/x86_64/java-oracle/java-1.8.0-oracle-1.8.0.71-1jpp.1.el7.x86_64.rpm \
+        http://repo.ocslab.com/CentOS/7.2/extras/x86_64/java-oracle/java-1.8.0-oracle-devel-1.8.0.71-1jpp.1.el7.x86_64.rpm \
+        https://repos.fedorapeople.org/dchen/apache-maven/epel-7Server/x86_64/apache-maven-3.3.9-3.el7.noarch.rpm && \
+    yum clean all
+
+RUN echo "export JAVA_HOME=`/usr/sbin/alternatives --display java_sdk_1.8.0 | awk '/link currently/{print $5}'`" > /etc/profile.d/java.sh

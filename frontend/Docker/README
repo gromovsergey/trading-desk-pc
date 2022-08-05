@@ -1,0 +1,9 @@
+Dockerfile.build is the image suitable to build rpm package for the ui.
+
+To build image use:
+docker build -f Docker/Dockerfile.build -t test Docker
+
+To build rpm use:
+docker run -it --rm -e UID=$UID -e USER=$USER -e UHOME=$HOME -v $HOME:$HOME <image tag> -v <version> -b local -A "newui `pwd`" newui
+
+Result rpm will be available at ~/repos/el7/RPMS.test

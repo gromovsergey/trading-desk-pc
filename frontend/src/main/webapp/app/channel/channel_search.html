@@ -1,0 +1,75 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            {{title}}
+            <div class="btn-group" *ngIf="canCreateChannel">
+                <ui-dropdown-btn title="_L10N_(button.createNew)" [menu]="createMenu"></ui-dropdown-btn>
+            </div>
+            <ui-channel-report-upload></ui-channel-report-upload>
+        </h2>
+    </div>
+
+    <form class="form-horizontal" (submit)="search()">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">_L10N_(blockName.name):</label>
+            <div class="col-sm-6">
+                <input name="channelName"
+                       class="form-control"
+                       autocomplete="off"
+                       [(ngModel)]="searchModel.name"
+                       placeholder="_L10N_(blockName.name)">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">_L10N_(accountSearch.account):</label>
+            <div class="col-sm-6">
+                <select class="form-control" [(ngModel)]="searchModel.accountId" name="accountId">
+                    <option value="">_L10N_(messages.optionTransfer.all)</option>
+                    <option *ngFor="let item of accounts" [value]="item.id">{{item.name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">_L10N_(channel.blockName.channelType):</label>
+            <div class="col-sm-6">
+                <select class="form-control" [(ngModel)]="searchModel.channelType" name="channelType">
+                    <option value="">_L10N_(messages.optionTransfer.all)</option>
+                    <option value="B">_L10N_(channel.blockName.type.BehavioralChannel)</option>
+                    <option value="E">_L10N_(channel.blockName.type.ExpressionChannel)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">_L10N_(channel.blockName.visibility):</label>
+            <div class="col-sm-6">
+                <select class="form-control" [(ngModel)]="searchModel.visibility" name="visibility">
+                    <option value="">_L10N_(messages.optionTransfer.all)</option>
+                    <option value="PRI">_L10N_(channel.blockName.visibility.private)</option>
+                    <option value="PUB">_L10N_(channel.blockName.visibility.public)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-6">
+                <button type="submit" [disabled]="wait" class="btn btn-primary">
+                    <ui-icon [fw]="true" [icon]="wait?'spinner':'search'" [spin]="wait"></ui-icon>
+                    _L10N_(blockName.search)
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <ui-channel-list [channels]="channels"
+                     [showChannels]="showChannels"
+                     [canUpdateChannels]="canUpdateChannels"
+                     [canLocalize]="canLocalize"
+                     [waitChannels]="waitChannels"
+                     [truncated]="truncated">
+    </ui-channel-list>
+</section>

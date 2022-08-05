@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name=".AccountSearch" extends=".mainLayout">
+        <put-attribute name="moduleName" value="admin/account"/>
+    </definition>
+
+    <definition name=".Account" extends=".mainLayout">
+        <put-attribute name="moduleName" value="admin/account"/>
+        <put-attribute name="entityName" value="Account"/>
+        <put-attribute name="taskTitle" value="page.title.accounts"/>
+        <put-attribute name="activeMenuItemKey" value="global.submenu.account"/>
+    </definition>
+
+    <definition name=".ExternalAccount" extends=".mainLayout">
+        <put-attribute name="entityName" value="Account"/>
+        <put-attribute name="taskTitle" value="page.title.accounts"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.myAccount"/>
+    </definition>
+
+    <!-- Advertiser -->
+    <definition name=".AdvertiserAccountSearch" extends=".AccountSearch">
+        <put-attribute name="moduleName" value="admin/advertiser/account"/>
+        <put-attribute name="body" value=".AdvertiserBodyLayout"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.advertisers"/>
+        <put-attribute name="titleProperty" value="advertiserAccount.accounts"/>
+        <put-attribute name="taskTitle" value="Advertiser"/>
+    </definition>
+
+    <definition name=".AdvertiserBodyLayout" template="/account/accountSearchBody.jsp">
+        <put-attribute name="bodyHeader" value="/account/accountSearchHead.jsp"/>
+        <put-attribute name="searchCriteria" value="/account/accountSearchCriteria.jsp"/>
+        <put-attribute name="searchResults" value="/account/advertiserAccountSearchResults.jsp"/>
+    </definition>
+
+    <definition name="admin.advertiser.main" extends=".AdvertiserAccountSearch">
+        <put-attribute name="entityName" value="advertiserAccount"/>
+    </definition>
+
+    <definition name=".AdvertiserAccount" extends=".Account">
+        <put-attribute name="moduleName" value="admin/advertiser/account"/>
+    </definition>
+
+    <definition name=".ExternalAdvertiserAccount" extends=".ExternalAccount">
+        <put-attribute name="moduleName" value="advertiser/myAccount"/>
+    </definition>
+    
+    <definition name="admin.advertiser.view" extends=".AdvertiserAccount">
+        <put-attribute name="body" value="/account/advertiserAccountView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.agencyAdvertiserView" extends=".AdvertiserAccount">
+        <put-attribute name="entityName" value="Advertiser"/>
+        <put-attribute name="body" value="/account/agencyAdvertiserView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="advertiser.agencyAdvertiserView" extends=".ExternalAdvertiserAccount">
+        <put-attribute name="entityName" value="Advertiser"/>
+        <put-attribute name="body" value="/account/agencyAdvertiserView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.advertiser.edit" extends=".AdvertiserAccount">
+        <put-attribute name="body" value="/account/advertiserAccountEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.advertiser.new" extends=".AdvertiserAccount">
+        <put-attribute name="body" value="/account/advertiserAccountEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.advertisers"/>
+    </definition>
+
+    <definition name="admin.agency.edit" extends=".AdvertiserAccount">
+        <put-attribute name="body" value="/account/advertiserAccountEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.agency.new" extends=".AdvertiserAccount">
+        <put-attribute name="body" value="/account/advertiserAccountEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.advertisers"/>
+    </definition>
+
+    <definition name="admin.agencyAdvertiser.edit" extends=".AdvertiserAccount">
+        <put-attribute name="entityName" value="Advertiser" />
+        <put-attribute name="body" value="/account/agencyAdvertiserEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.agencyAdvertiser.new" extends=".AdvertiserAccount">
+        <put-attribute name="entityName" value="Advertiser" />
+        <put-attribute name="body" value="/account/agencyAdvertiserEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="activeMenuItemKey" value="global.submenu.advertiser"/>
+    </definition>
+
+    <definition name="advertiser.agencyAdvertiser.edit" extends=".ExternalAdvertiserAccount">
+        <put-attribute name="entityName" value="Advertiser" />
+        <put-attribute name="body" value="/account/agencyAdvertiserEdit.jsp"/>
+    </definition>
+
+    <definition name="advertiser.agencyAdvertiser.new" extends=".ExternalAdvertiserAccount">
+        <put-attribute name="entityName" value="Advertiser" />
+        <put-attribute name="body" value="/account/agencyAdvertiserEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="activeMenuItemKey" value="global.submenu.advertiser"/>
+    </definition>
+
+    <!--ToDo: uncomment when needed (OUI-28825)-->
+    <!--<definition name="admin.advertiserFinance.edit" extends=".AdvertiserAccount">-->
+        <!--<put-attribute name="titleProperty" value="AccountFinance.entityName.edit"/>-->
+        <!--<put-attribute name="body" value="/account/advAccountFinanceEdit.jsp"/>-->
+    <!--</definition>-->
+
+    <!--<definition name="admin.agencyAdvertiserFinance.edit" extends=".AdvertiserAccount">-->
+        <!--<put-attribute name="titleProperty" value="AccountFinance.entityName.edit"/>-->
+        <!--<put-attribute name="body" value="/account/advAccountFinanceEdit.jsp"/>-->
+    <!--</definition>-->
+
+    <!--<definition name="advertiser.advertiserFinance.edit" extends=".ExternalAdvertiserAccount">-->
+        <!--<put-attribute name="titleProperty" value="AccountFinance.entityName.edit"/>-->
+        <!--<put-attribute name="body" value="/account/advAccountFinanceEdit.jsp"/>-->
+    <!--</definition>-->
+
+    <!--<definition name="advertiser.agencyAdvertiserFinance.edit" extends=".ExternalAdvertiserAccount">-->
+        <!--<put-attribute name="titleProperty" value="AccountFinance.entityName.edit"/>-->
+        <!--<put-attribute name="body" value="/account/advAccountFinanceEdit.jsp"/>-->
+    <!--</definition>-->
+
+    <definition name="advertiser.myAccount.view" extends=".ExternalAdvertiserAccount">
+        <put-attribute name="activeMenuItemKey" value="global.menu.myAccount"/>
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/myAccount/myAccountView.jsp"/>
+    </definition>
+
+    <definition name="advertiser.myAccount.edit" extends=".ExternalAdvertiserAccount">
+        <put-attribute name="activeMenuItemKey" value="global.menu.myAccount"/>
+        <put-attribute name="body" value="/myAccount/myAccountEdit.jsp"/>
+    </definition>
+
+    <!-- Publisher -->
+    <definition name=".PublisherAccount" extends=".Account">
+        <put-attribute name="moduleName" value="admin/publisher/account"/>
+    </definition>
+
+    <definition name=".ExternalPublisherAccount" extends=".ExternalAccount">
+        <put-attribute name="moduleName" value="publisher/myAccount"/>
+    </definition>
+
+    <definition name=".PublisherAccountSearch" extends=".AccountSearch">
+        <put-attribute name="moduleName" value="admin/publisher/account"/>
+        <put-attribute name="body" value=".PublisherBodyLayout"/>
+        <put-attribute name="titleProperty" value="publisherAccount.accounts"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.publishers"/>
+        <put-attribute name="taskTitle" value="Publisher"/>
+    </definition>
+
+    <definition name=".PublisherBodyLayout" template="/account/accountSearchBody.jsp">
+        <put-attribute name="bodyHeader" value="/account/accountSearchHead.jsp"/>
+        <put-attribute name="searchCriteria" value="/account/accountSearchCriteria.jsp"/>
+        <put-attribute name="searchResults" value="/account/publisherAccountSearchResults.jsp"/>
+    </definition>
+
+    <definition name="admin.publisher.main" extends=".PublisherAccountSearch">
+        <put-attribute name="entityName" value="publisherAccount"/>
+    </definition>
+
+    <definition name="admin.publisher.view" extends=".PublisherAccount">
+        <put-attribute name="body" value="/account/publisherAccountView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.publisher.edit" extends=".PublisherAccount">
+        <put-attribute name="body" value="/account/publisherAccountEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.publisher.new" extends=".PublisherAccount">
+        <put-attribute name="body" value="/account/publisherAccountEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.publishers"/>
+    </definition>
+
+    <definition name="admin.publisherFinance.edit" extends=".PublisherAccount">
+        <put-attribute name="titleProperty" value="AccountFinance.entityName.edit"/>
+        <put-attribute name="body" value="/account/accountsPayableFinanceEdit.jsp"/>
+    </definition>
+
+    <definition name="publisher.publisherFinance.edit" extends=".ExternalPublisherAccount">
+        <put-attribute name="titleProperty" value="AccountFinance.entityName.edit"/>
+        <put-attribute name="body" value="/account/accountsPayableFinanceEdit.jsp"/>
+    </definition>
+
+    <definition name="publisher.myAccount.view" extends=".ExternalPublisherAccount">
+        <put-attribute name="activeMenuItemKey" value="global.menu.myAccount"/>
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/myAccount/myAccountView.jsp"/>
+    </definition>
+
+    <definition name="publisher.myAccount.edit" extends=".ExternalPublisherAccount">
+        <put-attribute name="activeMenuItemKey" value="global.menu.myAccount"/>
+        <put-attribute name="body" value="/myAccount/myAccountEdit.jsp"/>
+    </definition>
+
+    <!-- ISP -->
+    <definition name=".ISPAccount" extends=".Account">
+        <put-attribute name="moduleName" value="admin/isp/account"/>
+    </definition>
+
+    <definition name=".ExternalISPAccount" extends=".ExternalAccount">
+        <put-attribute name="moduleName" value="isp/myAccount"/>
+    </definition>
+
+    <definition name=".ISPAccountSearch" extends=".AccountSearch">
+        <put-attribute name="moduleName" value="admin/isp/account"/>
+        <put-attribute name="body" value=".ISPBodyLayout"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.isps"/>
+        <put-attribute name="titleProperty" value="ispAccount.accounts"/>
+        <put-attribute name="taskTitle" value="ISP"/>
+    </definition>
+
+    <definition name=".ISPBodyLayout" template="/account/accountSearchBody.jsp">
+        <put-attribute name="bodyHeader" value="/account/accountSearchHead.jsp"/>
+        <put-attribute name="searchCriteria" value="/account/accountSearchCriteria.jsp"/>
+        <put-attribute name="searchResults" value="/account/ispAccountSearchResults.jsp"/>
+    </definition>
+
+    <definition name="admin.isp.main" extends=".ISPAccountSearch">
+        <put-attribute name="entityName" value="ispAccount"/>
+    </definition>
+
+    <definition name="admin.isp.view" extends=".ISPAccount">
+        <put-attribute name="body" value="/account/ispAccountView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.isp.edit" extends=".ISPAccount">
+        <put-attribute name="body" value="/account/ispAccountEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.isp.new" extends=".ISPAccount">
+        <put-attribute name="body" value="/account/ispAccountEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.isps"/>
+    </definition>
+
+    <definition name="admin.ispFinance.edit" extends=".ISPAccount">
+        <put-attribute name="titleProperty" value="AccountFinance.entityName.edit"/>
+        <put-attribute name="body" value="/account/accountsPayableFinanceEdit.jsp"/>
+    </definition>
+
+    <definition name="isp.ispFinance.edit" extends=".ExternalISPAccount">
+        <put-attribute name="titleProperty" value="AccountFinance.entityName.edit"/>
+        <put-attribute name="body" value="/account/accountsPayableFinanceEdit.jsp"/>
+    </definition>
+
+    <definition name="isp.myAccount.view" extends=".ExternalISPAccount">
+        <put-attribute name="activeMenuItemKey" value="global.menu.myAccount"/>
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/myAccount/myAccountView.jsp"/>
+    </definition>
+
+    <definition name="isp.myAccount.edit" extends=".ExternalISPAccount">
+        <put-attribute name="activeMenuItemKey" value="global.menu.myAccount"/>
+        <put-attribute name="body" value="/myAccount/myAccountEdit.jsp"/>
+    </definition>
+
+    <!-- CMP -->
+    <definition name=".CMPAccount" extends=".Account">
+        <put-attribute name="moduleName" value="admin/cmp/account"/>
+    </definition>
+
+    <definition name=".ExternalCMPAccount" extends=".ExternalAccount">
+        <put-attribute name="moduleName" value="cmp/myAccount"/>
+    </definition>
+
+    <definition name=".CMPAccountSearch" extends=".AccountSearch">
+        <put-attribute name="moduleName" value="admin/cmp/account"/>
+        <put-attribute name="body" value=".CMPBodyLayout"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.cmps"/>
+        <put-attribute name="titleProperty" value="cmpAccount.accounts"/>
+        <put-attribute name="taskTitle" value="CMP"/>
+    </definition>
+
+    <definition name=".CMPBodyLayout" template="/account/accountSearchBody.jsp">
+        <put-attribute name="bodyHeader" value="/account/accountSearchHead.jsp"/>
+        <put-attribute name="searchCriteria" value="/account/accountSearchCriteria.jsp"/>
+        <put-attribute name="searchResults" value="/account/cmpAccountSearchResults.jsp"/>
+    </definition>
+
+    <definition name="admin.cmp.main" extends=".CMPAccountSearch">
+        <put-attribute name="entityName" value="cmpAccount"/>
+    </definition>
+
+    <definition name="admin.cmp.view" extends=".CMPAccount">
+        <put-attribute name="body" value="/account/cmpAccountView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.cmp.edit" extends=".CMPAccount">
+        <put-attribute name="body" value="/account/cmpAccountEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.cmp.new" extends=".CMPAccount">
+        <put-attribute name="body" value="/account/cmpAccountEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.cmps"/>
+    </definition>
+
+    <definition name="admin.cmpFinance.edit" extends=".CMPAccount">
+        <put-attribute name="titleProperty" value="AccountFinance.entityName.edit"/>
+        <put-attribute name="body" value="/account/accountsPayableFinanceEdit.jsp"/>
+    </definition>
+
+    <definition name="cmp.cmpFinance.edit" extends=".ExternalCMPAccount">
+        <put-attribute name="titleProperty" value="AccountFinance.entityName.edit"/>
+        <put-attribute name="body" value="/account/accountsPayableFinanceEdit.jsp"/>
+    </definition>
+
+    <definition name="cmp.myAccount.view" extends=".ExternalCMPAccount">
+        <put-attribute name="activeMenuItemKey" value="global.menu.myAccount"/>
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/myAccount/myAccountView.jsp"/>
+    </definition>
+
+    <definition name="cmp.myAccount.edit" extends=".ExternalCMPAccount">
+        <put-attribute name="activeMenuItemKey" value="global.menu.myAccount"/>
+        <put-attribute name="body" value="/myAccount/myAccountEdit.jsp"/>
+    </definition>
+
+    <!-- Internal -->
+    <definition name=".InternalAccount" extends=".Account">
+        <put-attribute name="moduleName" value="admin/internal/account"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.admin"/>
+   </definition>
+
+    <definition name="admin.internal.main" extends=".InternalAccount">
+        <put-attribute name="titleProperty" value="InternalAccount.plural"/>
+        <put-attribute name="body" value="/admin/internalAccount/internalAccountMain.jsp"/>
+   </definition>
+
+    <definition name="admin.internal.view" extends=".InternalAccount">
+        <put-attribute name="body" value="/admin/internalAccount/internalAccountView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.internal.edit" extends=".InternalAccount">
+        <put-attribute name="body" value="/admin/internalAccount/internalAccountEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.internal.new" extends=".InternalAccount">
+        <put-attribute name="body" value="/admin/internalAccount/internalAccountEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+    <!-- terms -->
+    <definition name=".terms.add" extends=".Account">
+        <put-attribute name="body" value="/account/accountTermsAdd.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="activeMenuItemKey" value="global.submenu.account"/>
+    </definition>
+    
+    <definition name="admin.advertiser.terms.add" extends=".terms.add">
+        <put-attribute name="moduleName" value="admin/advertiser/account"/>
+        <put-attribute name="titleProperty" value="advertiserAccount.accounts"/>
+        <put-attribute name="taskTitle" value="Advertiser"/>
+    </definition>
+    <definition name="admin.publisher.terms.add" extends=".terms.add">
+        <put-attribute name="moduleName" value="admin/publisher/account"/>
+        <put-attribute name="titleProperty" value="publisherAccount.accounts"/>
+        <put-attribute name="taskTitle" value="Publisher"/>
+    </definition>
+    <definition name="admin.isp.terms.add" extends=".terms.add">
+        <put-attribute name="moduleName" value="admin/isp/account"/>
+        <put-attribute name="titleProperty" value="ispAccount.accounts"/>
+        <put-attribute name="taskTitle" value="ISP"/>
+    </definition>
+    <definition name="admin.cmp.terms.add" extends=".terms.add">
+        <put-attribute name="moduleName" value="admin/cmp/account"/>
+        <put-attribute name="titleProperty" value="cmpAccount.accounts"/>
+        <put-attribute name="taskTitle" value="CMP"/>
+    </definition>
+
+    <!-- AuctionSettings -->
+    <definition name=".AuctionSettings" extends=".InternalAccount">
+        <put-attribute name="titleProperty" value="AuctionSettings.title"/>
+    </definition>
+    <definition name="admin.internal.auctionSettings.view" extends=".AuctionSettings">
+        <put-attribute name="body" value="/admin/internalAccount/auctionSettingsView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+    <definition name="admin.internal.auctionSettings.edit" extends=".AuctionSettings">
+        <put-attribute name="body" value="/admin/internalAccount/auctionSettingsEdit.jsp"/>
+    </definition>
+
+
+
+</tiles-definitions>

@@ -1,0 +1,679 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the reporting package. -->
+    <package name="reporting" extends="foros-default" abstract="true">
+        <action name="cancel" class="com.foros.action.reporting.CancellablePageReportingAction" method="cancel"/>
+
+        <action name="cancelAsync" class="com.foros.action.reporting.CancellablePageReportingAction" method="cancelAsync"/>
+
+        <action name="run" class="com.foros.action.reporting.CancellablePageReportingAction" method="showCancellableView">
+            <result name="success" type="tiles">reporting.cancellable</result>
+        </action>
+    </package>
+
+    <!-- Referrer Report -->
+    <package name="referrer" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.referrer.ViewReferrerReportingAction" method="view">
+            <result name="success" type="tiles">reporting.Referrer.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.referrer.RunReferrerReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/referrer/referrerResult.jsp</result>
+            <result name="input" >/reporting/referrer/referrerResult.jsp</result>
+        </action>
+    </package>
+    <package name="referrer-admin" extends="referrer" namespace="/admin/reporting/referrer"/>
+    <package name="referrer-publisher" extends="referrer" namespace="/publisher/reporting/referrer"/>
+
+    <!-- Custom Report -->
+    <package name="custom" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.custom.ViewOlapCustomReportingAction" method="view">
+            <result name="success" type="tiles">reporting.Custom.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.custom.RunOlapCustomReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/reporting/custom/olapCustomResult.jsp</result>
+            <result name="detailsOnly">/reporting/custom/olapCustomDetails.jsp</result>
+            <result name="input">/reporting/custom/olapCustomResult.jsp</result>
+        </action>
+
+    </package>
+    <package name="custom-admin" extends="custom" namespace="/admin/reporting/custom"/>
+
+    <!-- Channel Triggers Report -->
+    <package name="channelTriggers" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.channeltriggers.ViewChannelTriggersReportingAction" method="view">
+            <result name="success" type="tiles">reporting.ChannelTriggers.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.channeltriggers.RunChannelTriggersReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/reporting/channelTriggers/channelTriggersResult.jsp</result>
+            <result name="input">/reporting/channelTriggers/channelTriggersResult.jsp</result>
+        </action>
+
+        <action name="sortUrls" class="com.foros.action.reporting.channeltriggers.RunChannelTriggersReportingAction" method="executeSort">
+            <param name="triggerType">URL</param>
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/reporting/channelTriggers/urlsDetails.jsp</result>
+        </action>
+
+        <action name="sortPageKeywords" class="com.foros.action.reporting.channeltriggers.RunChannelTriggersReportingAction" method="executeSort">
+            <param name="triggerType">PAGE_KEYWORD</param>
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/reporting/channelTriggers/pageKeywordsDetails.jsp</result>
+        </action>
+
+        <action name="sortSearchKeywords" class="com.foros.action.reporting.channeltriggers.RunChannelTriggersReportingAction" method="executeSort">
+            <param name="triggerType">SEARCH_KEYWORD</param>
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/reporting/channelTriggers/searchKeywordsDetails.jsp</result>
+        </action>
+
+        <action name="sortUrlKeywords" class="com.foros.action.reporting.channeltriggers.RunChannelTriggersReportingAction" method="executeSort">
+            <param name="triggerType">URL_KEYWORD</param>
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/reporting/channelTriggers/urlKeywordsDetails.jsp</result>
+        </action>
+
+    </package>
+    <package name="channelTriggers-admin" extends="channelTriggers" namespace="/admin/reporting/channelTriggers"/>
+    <package name="channelTriggers-advertiser" extends="channelTriggers" namespace="/advertiser/reporting/channelTriggers"/>
+    <package name="channelTriggers-cmp" extends="channelTriggers" namespace="/cmp/reporting/channelTriggers"/>
+
+    <!-- Display Advertiser Report -->
+    <package name="displayAdvertising" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.advertiser.ViewOlapDisplayAdvertiserReportAction" method="view">
+            <result name="success" type="tiles">reporting.DisplayAdvertiser.view</result>
+        </action>
+
+        <action name="changeReportType" class="com.foros.action.reporting.advertiser.ViewOlapDisplayAdvertiserReportAction" method="changeReportType">
+            <result name="success" type="tiles">reporting.DisplayAdvertiser.manageColumns</result>
+        </action>
+
+        <action name="changeDateTime" class="com.foros.action.reporting.advertiser.ViewOlapDisplayAdvertiserReportAction" method="changeDateTime">
+            <result name="success" type="tiles">reporting.DisplayAdvertiser.manageColumns</result>
+        </action>
+
+        <action name="redrawColumns" class="com.foros.action.reporting.advertiser.ViewOlapDisplayAdvertiserReportAction" method="redrawColumns">
+            <result name="success">/reporting/advertiser/reportColumns.jsp</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.advertiser.RunOlapDisplayAdvertiserReportAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/advertiser/olapAdvertiserResult.jsp</result>
+            <result name="input" >/reporting/advertiser/olapAdvertiserResult.jsp</result>
+        </action>
+    </package>
+    <package name="displayAdvertising-admin" extends="displayAdvertising" namespace="/admin/reporting/displayAdvertising"/>
+    <package name="displayAdvertising-advertiser" extends="displayAdvertising" namespace="/advertiser/reporting/displayAdvertising"/>
+
+    <!-- Video Advertiser Report -->
+    <package name="videoAdvertising" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.advertiser.ViewOlapVideoAdvertiserReportAction" method="view">
+            <result name="success" type="tiles">reporting.VideoAdvertiser.view</result>
+        </action>
+
+        <action name="changeReportType" class="com.foros.action.reporting.advertiser.ViewOlapVideoAdvertiserReportAction" method="changeReportType">
+            <result name="success" type="tiles">reporting.VideoAdvertiser.manageColumns</result>
+        </action>
+
+        <action name="changeDateTime" class="com.foros.action.reporting.advertiser.ViewOlapVideoAdvertiserReportAction" method="changeDateTime">
+            <result name="success" type="tiles">reporting.VideoAdvertiser.manageColumns</result>
+        </action>
+
+        <action name="redrawColumns" class="com.foros.action.reporting.advertiser.ViewOlapVideoAdvertiserReportAction" method="redrawColumns">
+            <result name="success">/reporting/advertiser/reportColumns.jsp</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.advertiser.RunOlapVideoAdvertiserReportAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/advertiser/olapAdvertiserResult.jsp</result>
+            <result name="input" >/reporting/advertiser/olapAdvertiserResult.jsp</result>
+        </action>
+    </package>
+    <package name="videoAdvertising-admin" extends="videoAdvertising" namespace="/admin/reporting/videoAdvertising"/>
+    <package name="videoAdvertising-advertiser" extends="videoAdvertising" namespace="/advertiser/reporting/videoAdvertising"/>
+
+    <!--Text Advertiser Report -->
+    <package name="textAdvertising" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.advertiser.ViewOlapTextAdvertiserReportAction" method="view">
+            <result name="success" type="tiles">reporting.TextAdvertiser.view</result>
+        </action>
+
+        <action name="changeReportType" class="com.foros.action.reporting.advertiser.ViewOlapTextAdvertiserReportAction" method="changeReportType">
+            <result name="success" type="tiles">reporting.TextAdvertiser.manageColumns</result>
+        </action>
+
+        <action name="changeDateTime" class="com.foros.action.reporting.advertiser.ViewOlapTextAdvertiserReportAction" method="changeDateTime">
+            <result name="success" type="tiles">reporting.TextAdvertiser.manageColumns</result>
+        </action>
+
+        <action name="redrawColumns" class="com.foros.action.reporting.advertiser.ViewOlapTextAdvertiserReportAction" method="redrawColumns">
+            <result name="success">/reporting/advertiser/reportColumns.jsp</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.advertiser.RunOlapTextAdvertiserReportAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/reporting/advertiser/olapAdvertiserResult.jsp</result>
+            <result name="input" >/reporting/advertiser/olapAdvertiserResult.jsp</result>
+        </action>
+    </package>
+    <package name="textAdvertising-admin" extends="textAdvertising" namespace="/admin/reporting/textAdvertising"/>
+    <package name="textAdvertising-advertiser" extends="textAdvertising" namespace="/advertiser/reporting/textAdvertising"/>
+
+    <!-- General Advertiser Report -->
+    <package name="generalAdvertising" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.advertiser.ViewOlapGeneralAdvertiserReportAction" method="view">
+            <result name="success" type="tiles">reporting.GeneralAdvertiser.view</result>
+        </action>
+
+        <action name="changeReportType" class="com.foros.action.reporting.advertiser.ViewOlapGeneralAdvertiserReportAction" method="changeReportType">
+            <result name="success" type="tiles">reporting.GeneralAdvertiser.manageColumns</result>
+        </action>
+
+        <action name="changeDateTime" class="com.foros.action.reporting.advertiser.ViewOlapGeneralAdvertiserReportAction" method="changeDateTime">
+            <result name="success" type="tiles">reporting.GeneralAdvertiser.manageColumns</result>
+        </action>
+
+        <action name="redrawColumns" class="com.foros.action.reporting.advertiser.ViewOlapGeneralAdvertiserReportAction" method="redrawColumns">
+            <result name="success">/reporting/advertiser/reportColumns.jsp</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.advertiser.RunOlapGeneralAdvertiserReportAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/advertiser/olapAdvertiserResult.jsp</result>
+            <result name="input" >/reporting/advertiser/olapAdvertiserResult.jsp</result>
+        </action>
+    </package>
+    <package name="generalAdvertising-admin" extends="generalAdvertising" namespace="/admin/reporting/generalAdvertising"/>
+    <package name="generalAdvertising-advertiser" extends="generalAdvertising" namespace="/advertiser/reporting/generalAdvertising"/>
+
+    <!--Text and Display Advertiser Report Tree Filter -->
+    <package name="advertisingTreeFilter" extends="foros-default" abstract="true">
+        <action name="advertisers" class="com.foros.action.reporting.advertiser.treeFilter.AdvertisersTreeFilterAction"
+             method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp?childAction=campaigns</result>
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=campaigns</result>
+        </action>
+
+        <action name="campaigns" class="com.foros.action.reporting.advertiser.treeFilter.CampaignsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp?childAction=groups</result>
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=groups</result>
+        </action>
+
+        <action name="groups" class="com.foros.action.reporting.advertiser.treeFilter.GroupsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp?childAction=creatives</result>
+        </action>
+
+        <action name="creatives" class="com.foros.action.reporting.advertiser.treeFilter.CreativesTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp</result>
+        </action>
+    </package>
+
+    <package name="advertisingTreeFilter-text-admin" extends="advertisingTreeFilter" namespace="/admin/reporting/textAdvertising/treeFilter"/>
+    <package name="advertisingTreeFilter-text-advertiser" extends="advertisingTreeFilter" namespace="/advertiser/reporting/textAdvertising/treeFilter"/>
+
+    <package name="advertisingTreeFilter-display-admin" extends="advertisingTreeFilter" namespace="/admin/reporting/displayAdvertising/treeFilter"/>
+    <package name="advertisingTreeFilter-display-advertiser" extends="advertisingTreeFilter" namespace="/advertiser/reporting/displayAdvertising/treeFilter"/>
+
+    <!--Video Advertiser Report Tree Filter -->
+    <package name="videoAdvertisingTreeFilter" extends="foros-default" abstract="true">
+        <action name="advertisers" class="com.foros.action.reporting.advertiser.treeFilter.VideoAdvertisersTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp?childAction=campaigns</result>
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=campaigns</result>
+        </action>
+
+        <action name="campaigns" class="com.foros.action.reporting.advertiser.treeFilter.VideoCampaignsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp?childAction=groups</result>
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=groups</result>
+        </action>
+
+        <action name="groups" class="com.foros.action.reporting.advertiser.treeFilter.VideoGroupsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp?childAction=creatives</result>
+        </action>
+
+        <action name="creatives" class="com.foros.action.reporting.advertiser.treeFilter.VideoCreativesTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp</result>
+        </action>
+    </package>
+
+    <package name="advertisingTreeFilter-video-admin" extends="videoAdvertisingTreeFilter" namespace="/admin/reporting/videoAdvertising/treeFilter"/>
+    <package name="advertisingTreeFilter-video-advertiser" extends="videoAdvertisingTreeFilter" namespace="/advertiser/reporting/videoAdvertising/treeFilter"/>
+
+    <!--General Advertiser Report Tree Filter -->
+    <package name="generalAdvertisingTreeFilter" extends="foros-default" abstract="true">
+        <action name="advertisers" class="com.foros.action.reporting.advertiser.treeFilter.GeneralAdvertisersTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp?childAction=campaigns</result>
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=campaigns</result>
+        </action>
+
+        <action name="campaigns" class="com.foros.action.reporting.advertiser.treeFilter.GeneralCampaignsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp?childAction=groups</result>
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=groups</result>
+        </action>
+
+        <action name="groups" class="com.foros.action.reporting.advertiser.treeFilter.GroupsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp?childAction=creatives</result>
+        </action>
+
+        <action name="creatives" class="com.foros.action.reporting.advertiser.treeFilter.CreativesTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp</result>
+        </action>
+    </package>
+
+    <package name="advertisingTreeFilter-general-admin" extends="generalAdvertisingTreeFilter" namespace="/admin/reporting/generalAdvertising/treeFilter"/>
+    <package name="advertisingTreeFilter-general-advertiser" extends="generalAdvertisingTreeFilter" namespace="/advertiser/reporting/generalAdvertising/treeFilter"/>
+
+    <!-- Publisher Report -->
+    <package name="publisher" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.publisher.ViewPublisherReportingAction" method="view">
+            <result name="success" type="tiles">reporting.Publisher.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.publisher.RunPublisherReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/publisher/publisherResult.jsp</result>
+            <result name="input" >/reporting/publisher/publisherResult.jsp</result>
+        </action>
+    </package>
+    <package name="publisher-admin" extends="publisher" namespace="/admin/reporting/publisher"/>
+    <package name="publisher-publisher" extends="publisher" namespace="/publisher/reporting/publisher"/>
+
+    <!-- Sites Channel Report -->
+    <package name="siteChannels" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.siteChannels.ViewSiteChannelsReportingAction" method="view">
+            <result name="success" type="tiles">reporting.SiteChannels.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.siteChannels.RunSiteChannelsReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/siteChannels/siteChannelsResult.jsp</result>
+            <result name="input" >/reporting/siteChannels/siteChannelsResult.jsp</result>
+        </action>
+    </package>
+    <package name="siteChannels-admin" extends="siteChannels" namespace="/admin/reporting/siteChannels"/>
+
+    <!-- Channel Sites Report -->
+    <package name="channelSites" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.channelSites.ViewChannelSitesReportingAction" method="view">
+            <result name="success" type="tiles">reporting.ChannelSites.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.channelSites.RunChannelSitesReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/channelSites/channelSitesResult.jsp</result>
+            <result name="input" >/reporting/channelSites/channelSitesResult.jsp</result>
+        </action>
+    </package>
+    <package name="channelSites-admin" extends="channelSites" namespace="/admin/reporting/channelSites"/>
+
+    <!-- Channel Usage Report -->
+    <package name="channelUsage" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.channelUsage.ViewChannelUsageReportingAction" method="view">
+             <result name="success" type="tiles">reporting.ChannelUsage.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.channelUsage.RunChannelUsageReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/reporting/channelUsage/channelUsageResult.jsp</result>
+            <result name="input">/reporting/channelUsage/channelUsageResult.jsp</result>
+        </action>
+    </package>
+    <package name="channelUsage-admin" extends="channelUsage" namespace="/admin/reporting/channelUsage" />
+    <package name="channelUsage-cmp" extends="channelUsage" namespace="/cmp/reporting/channelUsage" />
+
+    <!-- Channel Inventory Forecast Report -->
+    <package name="channelInventory" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.channelInventoryForecast.ViewChannelInventoryForecastReportAction" method="view">
+             <result name="success" type="tiles">reporting.ChannelInventory.view</result>
+        </action>
+        <action name="run" class="com.foros.action.reporting.channelInventoryForecast.CancellableChannelInventoryForecastReportAction"
+                method="showCancellableView">
+            <result name="success" type="tiles">reporting.ChannelInventory.cancellable</result>
+        </action>
+        <action name="cancellableRun" class="com.foros.action.reporting.channelInventoryForecast.RunChannelInventoryForecastReportAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/reporting/channelInventory/channelInventoryResult.jsp</result>
+            <result name="input">/reporting/channelInventory/channelInventoryResult.jsp</result>
+        </action>
+    </package>
+    <package name="channelInventory-admin" extends="channelInventory" namespace="/admin/reporting/channelInventory" />
+    <package name="channelInventory-advertiser" extends="channelInventory" namespace="/advertiser/reporting/channelInventory" />
+
+    <!-- Campaign Allocation History Report -->
+    <package name="campaignAllocationHistory" extends="reporting" abstract="true">
+        <action name="run" class="com.foros.action.reporting.campaignAllocationHistory.CancellableCampaignAllocationHistoryReportingAction"
+                method="showCancellableView">
+            <result name="success" type="tiles">reporting.CampaignAllocationHistory.cancellable</result>
+        </action>
+        <action name="cancellableRun" class="com.foros.action.reporting.campaignAllocationHistory.RunCampaignAllocationHistoryReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/reporting/campaignAllocationHistory/campaignAllocationHistoryResult.jsp</result>
+            <result name="input">/reporting/campaignAllocationHistory/campaignAllocationHistoryResult.jsp</result>
+        </action>
+    </package>
+    <package name="campaignAllocationHistory-admin" extends="campaignAllocationHistory" namespace="/admin/reporting/campaignAllocationHistory"/>
+
+    <!-- User Agents Report -->
+    <package name="userAgents" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.userAgents.ViewUserAgentsReportingAction" method="view">
+            <result name="success" type="tiles">reporting.userAgents.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.userAgents.RunUserAgentsReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/userAgents/userAgentsResult.jsp</result>
+            <result name="input" >/reporting/userAgents/userAgentsResult.jsp</result>
+        </action>
+    </package>
+    <package name="userAgents-admin" extends="userAgents" namespace="/admin/reporting/userAgents"/>
+
+    <!-- Conversions Report -->
+    <package name="conversions" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.conversions.ViewConversionsReportingAction" method="view">
+            <result name="success" type="tiles">reporting.conversions.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.conversions.RunConversionsReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/conversions/conversionsResult.jsp</result>
+            <result name="input" >/reporting/conversions/conversionsResult.jsp</result>
+        </action>
+    </package>
+    <package name="conversions-admin" extends="conversions" namespace="/admin/reporting/conversions"/>
+    <package name="conversions-advertiser" extends="conversions" namespace="/advertiser/reporting/conversions"/>
+
+    <!-- Conversion Pixels Report -->
+    <package name="conversionPixels" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.conversionPixels.ViewConversionPixelsReportingAction" method="view">
+            <result name="success" type="tiles">reporting.conversionPixels.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.conversionPixels.RunConversionPixelsReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/conversionPixels/conversionPixelsResult.jsp</result>
+            <result name="input" >/reporting/conversionPixels/conversionPixelsResult.jsp</result>
+        </action>
+    </package>
+    <package name="conversionPixels-admin" extends="conversionPixels" namespace="/admin/reporting/conversionPixels"/>
+    <package name="conversionPixels-advertiser" extends="conversionPixels" namespace="/advertiser/reporting/conversionPixels"/>
+
+    <!-- Conversion Pixels Report Tree Filter -->
+    <package name="conversionPixelsTreeFilter" extends="foros-default" abstract="true">
+        <action name="advertisers" class="com.foros.action.reporting.conversionPixels.treeFilter.AdvertisersTreeFilterAction"
+                method="process">
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=conversions</result>
+        </action>
+
+        <action name="conversions" class="com.foros.action.reporting.conversionPixels.treeFilter.ConversionsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp</result>
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp</result>
+        </action>
+    </package>
+
+    <package name="conversionPixelsTreeFilter-admin" extends="conversionPixelsTreeFilter" namespace="/admin/reporting/conversionPixels/treeFilter"/>
+    <package name="conversionPixelsTreeFilter-advertiser" extends="conversionPixelsTreeFilter" namespace="/advertiser/reporting/conversionPixels/treeFilter"/>
+
+    <!--Conversions Report Tree Filter -->
+    <package name="conversionsTreeFilter" extends="foros-default" abstract="true">
+        <action name="advertisersByConversions" class="com.foros.action.reporting.conversionPixels.treeFilter.AdvertisersTreeFilterAction"
+                method="process">
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=conversions</result>
+        </action>
+
+        <action name="conversions" class="com.foros.action.reporting.conversionPixels.treeFilter.ConversionsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp</result>
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp</result>
+        </action>
+    </package>
+
+    <package name="conversionsTreeFilter-admin" extends="conversionsTreeFilter" namespace="/admin/reporting/conversions/treeFilter"/>
+    <package name="conversionsTreeFilter-advertiser" extends="conversionsTreeFilter" namespace="/advertiser/reporting/conversions/treeFilter"/>
+
+    <package name="advertiserConversionsTreeFilter" extends="foros-default" abstract="true">
+        <action name="advertisersByCampaigns" class="com.foros.action.reporting.conversions.treeFilter.AdvertisersTreeFilterAction"
+                method="process">
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=campaigns</result>
+        </action>
+
+        <action name="campaigns" class="com.foros.action.reporting.conversions.treeFilter.CampaignsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp?childAction=groups</result>
+            <result name="root">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=groups</result>
+        </action>
+
+        <action name="groups" class="com.foros.action.reporting.conversions.treeFilter.GroupsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp?childAction=creatives</result>
+        </action>
+
+        <action name="creatives" class="com.foros.action.reporting.conversions.treeFilter.CreativesTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp</result>
+        </action>
+    </package>
+
+    <package name="advertiserConversionsTreeFilter-admin" extends="advertiserConversionsTreeFilter" namespace="/admin/reporting/conversions/treeFilter"/>
+    <package name="advertiserConversionsTreeFilter-advertiser" extends="advertiserConversionsTreeFilter" namespace="/advertiser/reporting/conversions/treeFilter"/>
+
+    <!-- ISP Report -->
+    <package name="ispReport" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.isp.ViewISPReportingAction" method="view">
+            <result name="success" type="tiles">reporting.isp.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.isp.RunISPReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/isp/ispResult.jsp</result>
+            <result name="input" >/reporting/isp/ispResult.jsp</result>
+        </action>
+    </package>
+    <package name="ispReport-admin" extends="ispReport" namespace="/admin/reporting/isp"/>
+    <package name="ispReport-isp" extends="ispReport" namespace="/isp/reporting/isp"/>
+
+    <!-- ISP Invitations Report -->
+    <package name="invitations" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.invitations.ViewInvitationsReportingAction" method="view">
+            <result name="success" type="tiles">reporting.invitations.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.invitations.RunInvitationsReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/invitations/invitationsResult.jsp</result>
+            <result name="input" >/reporting/invitations/invitationsResult.jsp</result>
+        </action>
+    </package>
+    <package name="invitations-admin" extends="invitations" namespace="/admin/reporting/invitations"/>
+    <package name="invitations-isp" extends="invitations" namespace="/isp/reporting/invitations"/>
+    <package name="invitations-admin-isp" extends="invitations" namespace="/admin/isp/reporting/invitations"/>
+
+    <!--  Channel Report -->
+
+    <package name="channel" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.channel.ViewChannelReportingAction" method="view">
+            <result name="success" type="tiles">reporting.channel.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.channel.RunChannelReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/channel/channelResult.jsp</result>
+            <result name="input" >/reporting/channel/channelResult.jsp</result>
+        </action>
+    </package>
+    <package name="channel-admin" extends="channel" namespace="/admin/reporting/channel"/>
+    <package name="channel-cmp" extends="channel" namespace="/cmp/reporting/channel"/>
+    <package name="channel-admin-cmp" extends="channel" namespace="/admin/cmp/reporting/channel"/>
+    <package name="channel-advertiser" extends="channel" namespace="/advertiser/reporting/channel"/>
+    <package name="channel-admin-advertiser" extends="channel" namespace="/admin/advertiser/reporting/channel"/>
+
+    <!-- Webwise Report -->
+    <package name="webwiseReport" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.webwise.ViewWebwiseReportAction" method="view">
+            <result name="success" type="tiles">reporting.webwise.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.webwise.RunWebwiseReportAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/webwise/webwiseResult.jsp</result>
+            <result name="input" >/reporting/webwise/webwiseResult.jsp</result>
+        </action>
+    </package>
+    <package name="webwiseReport-admin" extends="webwiseReport" namespace="/admin/reporting/webwise"/>
+    <package name="webwiseReport-isp" extends="webwiseReport" namespace="/isp/reporting/webwise"/>
+    <package name="webwiseReport-admin-isp" extends="webwiseReport" namespace="/admin/isp/reporting/webwise"/>
+
+    <!--  InventoryEstimation Report-->
+    <package name="inventoryEstimation" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.inventoryEstimation.ViewInventoryEstimationReportingAction" method="view">
+            <result name="success" type="tiles">reporting.inventoryEstimation.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.inventoryEstimation.RunInventoryEstimationReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/inventoryEstimation/inventoryEstimationResult.jsp</result>
+            <result name="input" >/reporting/inventoryEstimation/inventoryEstimationResult.jsp</result>
+        </action>
+    </package>
+    <package name="inventoryEstimation-admin" extends="inventoryEstimation" namespace="/admin/reporting/inventoryEstimation"/>
+    <package name="inventoryEstimation-publisher" extends="inventoryEstimation" namespace="/publisher/reporting/inventoryEstimation"/>
+
+    <!-- Active Advertisers Report -->
+    <package name="activeAdvertisers" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.activeAdvertisers.ViewActiveAdvertisersReportingAction" method="view">
+            <result name="success" type="tiles">reporting.activeAdvertisers.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.activeAdvertisers.RunActiveAdvertisersReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/activeAdvertisers/activeAdvertisersResult.jsp</result>
+            <result name="input" >/reporting/activeAdvertisers/activeAdvertisersResult.jsp</result>
+        </action>
+    </package>
+    <package name="activeAdvertisersReport-isp" extends="activeAdvertisers" namespace="/isp/reporting/activeAdvertisers"/>
+    <package name="activeAdvertisersReport-admin" extends="activeAdvertisers" namespace="/admin/isp/reporting/activeAdvertisers"/>
+
+    <!-- Campaign Overview Report -->
+    <package name="campaignOverview" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.campaignOverview.ViewCampaignOverviewReportingAction" method="view">
+            <result name="success" type="tiles">reporting.campaignOverview.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.campaignOverview.RunCampaignOverviewReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/campaignOverview/campaignOverviewResult.jsp</result>
+            <result name="input" >/reporting/campaignOverview/campaignOverviewResult.jsp</result>
+        </action>
+    </package>
+    <package name="campaignOverviewReport-isp" extends="campaignOverview" namespace="/isp/reporting/campaignOverview"/>
+    <package name="campaignOverviewReport-admin" extends="campaignOverview" namespace="/admin/isp/reporting/campaignOverview"/>
+
+    <!-- Publisher Overview Report -->
+    <package name="publisherOverview" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.publisherOverview.ViewPublisherOverviewReportingAction" method="view">
+            <result name="success" type="tiles">reporting.publisherOverview.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.publisherOverview.RunPublisherOverviewReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/publisherOverview/publisherOverviewResult.jsp</result>
+            <result name="input" >/reporting/publisherOverview/publisherOverviewResult.jsp</result>
+        </action>
+    </package>
+    <package name="publisherOverviewReport-isp" extends="publisherOverview" namespace="/isp/reporting/publisherOverview"/>
+    <package name="publisherOverviewReport-admin" extends="publisherOverview" namespace="/admin/isp/reporting/publisherOverview"/>
+
+    <!-- Profiling Report -->
+    <package name="profiling" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.profiling.ViewProfilingReportingAction" method="view">
+            <result name="success" type="tiles">reporting.profiling.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.profiling.RunProfilingReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/profiling/profilingResult.jsp</result>
+            <result name="input" >/reporting/profiling/profilingResult.jsp</result>
+        </action>
+    </package>
+    <package name="profilingReport-isp" extends="profiling" namespace="/isp/reporting/profiling"/>
+    <package name="profilingReport-admin" extends="profiling" namespace="/admin/isp/reporting/profiling"/>
+
+    <!-- Waterfall Report -->
+    <package name="waterfallReport" extends="reporting" abstract="true">
+        <action name="run" class="com.foros.action.reporting.waterfall.CancellableWaterfallReportAction" method="showCancellableView">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">reporting.waterfall.cancellable</result>
+        </action>
+        
+        <action name="cancellableRun" class="com.foros.action.reporting.waterfall.RunWaterfallReportAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/reporting/waterfall/waterfallResult.jsp</result>
+            <result name="input">/reporting/waterfall/waterfallResult.jsp</result>
+        </action>
+    </package>
+    <package name="waterfallReport-admin" extends="waterfallReport" namespace="/admin/reporting/waterfall"/>
+
+    <!-- Selection Failures Report -->
+    <package name="selectionFailuresReport" extends="reporting" abstract="true">
+        <action name="run" class="com.foros.action.reporting.waterfall.CancellableSelectionFailuresReportAction" method="showCancellableView">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">reporting.selectionFailures.cancellable</result>
+        </action>
+    
+        <action name="cancellableRun" class="com.foros.action.reporting.waterfall.RunSelectionFailuresReportAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/waterfall/selectionFailuresResult.jsp</result>
+            <result name="input" >/reporting/waterfall/selectionFailuresResult.jsp</result>
+        </action>
+    </package>
+    <package name="selectionFailuresReport-admin" extends="selectionFailuresReport" namespace="/admin/reporting/selectionFailures"/>
+
+    <!-- Selection Failures Trend Report -->
+    <package name="selectionFailuresTrendReport" extends="reporting" abstract="true">
+        <action name="run" class="com.foros.action.reporting.waterfall.CancellableSelectionFailuresTrendReportAction" method="showCancellableView">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">reporting.selectionFailuresTrend.cancellable</result>
+        </action>
+    
+        <action name="cancellableRun" class="com.foros.action.reporting.waterfall.RunSelectionFailuresTrendReportAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/waterfall/selectionFailuresTrendResult.jsp</result>
+            <result name="input" >/reporting/waterfall/selectionFailuresTrendResult.jsp</result>
+        </action>
+    </package>
+    <package name="selectionFailuresTrendReport-admin" extends="selectionFailuresTrendReport" namespace="/admin/reporting/selectionFailuresTrend"/>
+
+    <!-- Publisher Advertising Report -->
+    <package name="pubAdvertising" extends="reporting" abstract="true">
+        <action name="options" class="com.foros.action.reporting.pubAdvertising.ViewPubAdvertisingReportingAction" method="view">
+            <result name="success" type="tiles">reporting.pubAdvertising.view</result>
+        </action>
+
+        <action name="cancellableRun" class="com.foros.action.reporting.pubAdvertising.RunPubAdvertisingReportingAction" method="execute">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" >/reporting/pubAdvertising/pubAdvertisingResult.jsp</result>
+            <result name="input" >/reporting/pubAdvertising/pubAdvertisingResult.jsp</result>
+        </action>
+    </package>
+    <package name="pubAdvertisingReport-publisher" extends="pubAdvertising" namespace="/publisher/reporting/pubAdvertising"/>
+    <package name="pubAdvertisingReport-admin" extends="pubAdvertising" namespace="/admin/publisher/reporting/pubAdvertising"/>
+
+</struts>

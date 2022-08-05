@@ -1,0 +1,69 @@
+<div *ngIf="advertiser$ | async as advertiser, else showPreloader" class="main-title">
+  <i class="material-icons" appDisplayStatus [displayStatus]="advertiser.displayStatus">lens</i>
+  {{'advertiserAccount.accountFlights' | translate}}: {{advertiser.name}}
+  <button *ngIf="canCreateFlight$ | async as canCreate"
+          (click)="flightAdd()"
+          mat-raised-button>
+    {{'advertiserAccount.createFlight' | translate}}
+  </button>
+</div>
+
+<ui-date-range options="TOT Y T WTD MTD QTD YTD LW LM LQ LY"
+               defaultValue="TOT"
+               (dateRangeChange)="changeDate$.next($event)"></ui-date-range>
+
+<ng-container *ngIf="flightList$ | async as flightList, else showPreloader">
+
+  <ng-template #noFlights>
+    <ui-info-panel type="info">
+      {{'messages.nothingFound' | translate}}
+    </ui-info-panel>
+  </ng-template>
+
+  <div class="table-container" *ngIf="flightList.length, else noFlights">
+    <table mat-table [dataSource]="flightList">
+
+      <ng-container matColumnDef="object">
+        <th mat-header-cell *matHeaderCellDef>{{'flight.object' | translate}}</th>
+        <td mat-cell *matCellDef="let flight">
+        <span class="long-name-wrap">
+          <i class="material-icons" appDisplayStatus [displayStatus]="flight.displayStatus">lens</i>
+          <a [routerLink]="['/flight', flight.id]">{{flight.name}}</a>
+        </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="imps">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.imps' | translate}}</th>
+        <td mat-cell *matCellDef="let flight">{{flight.impressions}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="clicks">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.clicks' | translate}}</th>
+        <td mat-cell *matCellDef="let flight">{{flight.clicks}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ctr">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.ctr' | translate}}</th>
+        <td mat-cell *matCellDef="let flight">{{flight.ctr.toFixed(2)}}%</td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalCost">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.totalCost' | translate}}</th>
+        <td mat-cell *matCellDef="let flight">{{flight.totalCost | currency:currencyCode:'symbol':'1.2-2'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ecpm">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.ecpm' | translate}}</th>
+        <td mat-cell *matCellDef="let flight">{{flight.ecpm | currency:currencyCode:'symbol':'1.2-2'}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</ng-container>
+
+<ng-template #showPreloader>
+  <ui-loading></ui-loading>
+</ng-template>

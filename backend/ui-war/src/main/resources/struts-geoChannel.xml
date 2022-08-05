@@ -1,0 +1,37 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="geoChannel" extends="foros-default" namespace="">
+        <action name="admin/GeoChannel/main" class="com.foros.action.admin.geoChannel.SearchGeoChannelsAction" method="main">
+            <result name="success" type="tiles">admin.geoChannel.main</result>
+        </action>
+        <action name="admin/GeoChannel/search" class="com.foros.action.admin.geoChannel.SearchGeoChannelsAction" method="search">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.geoChannel.list</result>
+            <result name="input" type="redirect">admin/GeoChannel/search.action</result>
+        </action>
+        <action name="admin/GeoChannel/view" class="com.foros.action.admin.geoChannel.ViewGeoChannelAction" method="view">
+            <result name="success" type="tiles">admin.geoChannel.view</result>
+        </action>
+
+        <action name="admin/GeoChannel/delete" class="com.foros.action.admin.geoChannel.StatusGeoChannelAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/GeoChannel/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/GeoChannel/undelete" class="com.foros.action.admin.geoChannel.StatusGeoChannelAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/GeoChannel/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

@@ -1,0 +1,130 @@
+<ui-loading *ngIf="waitStats"></ui-loading>
+
+<ng-template [ngIf]="!waitStats">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            {{pageHeader}}
+        </h2>
+    </div>
+
+    <div class="form-group">
+        <label>_L10N_(agentReport.status):</label>
+        {{L10nReportStatuses[status]}}
+    </div>
+
+    <form *ngIf="monthlyStats && monthlyStats.length > 0" (submit)="doSubmit($event)">
+
+        <ui-table-filter *ngIf="report" tableId="report"></ui-table-filter>
+        <div class="table-responsive ex-table-scrollable">
+            <table #report id="report" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>_L10N_(agentReport.monthly.advertiser)</th>
+                    <th>_L10N_(agentReport.monthly.contractNumber)</th>
+                    <th>_L10N_(agentReport.monthly.client)</th>
+                    <th>_L10N_(agentReport.monthly.campaign)</th>
+                    <th>_L10N_(agentReport.monthly.rateType)</th>
+                    <th>_L10N_(agentReport.monthly.rateValue)</th>
+                    <th>_L10N_(agentReport.monthly.inventory)</th>
+                    <th>_L10N_(agentReport.monthly.inventoryConfirmed)</th>
+                    <th>_L10N_(agentReport.monthly.inventoryComment)</th>
+                    <th>_L10N_(agentReport.monthly.invoiceNumber)</th>
+                    <th>_L10N_(agentReport.monthly.totalAmount)</th>
+                    <th>_L10N_(agentReport.monthly.totalAmountConfirmed)</th>
+                    <th>_L10N_(agentReport.monthly.pubAmount)</th>
+                    <th>_L10N_(agentReport.monthly.pubAmountConfirmed)</th>
+                    <th>_L10N_(agentReport.monthly.pubAmountComment)</th>
+                    <th>_L10N_(agentReport.monthly.agentAmount)</th>
+                    <th>_L10N_(agentReport.monthly.principalAmount)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let stat of monthlyStats; let i = index">
+                    <td>{{stat.advertiserName}}</td>
+                    <td>{{stat.contractNumber}}</td>
+                    <td>{{stat.clientName}}</td>
+                    <td>{{stat.campaignName}}</td>
+                    <td>{{stat.rateType}}</td>
+                    <td class="number">{{stat.rateValue}}</td>
+                    <td class="number">{{stat.inventoryAmount}}</td>
+
+                    <td *ngIf="canEdit && status !== 'CLOSED'" [ngClass]="{'has-error':hasError(i, 'inventoryAmountConfirmed')}">
+                            <input [(ngModel)]="stat.inventoryAmountConfirmed" [ngModelOptions]="{standalone: true}" type="text" class="form-control">
+                            <p *ngIf="hasError(i, 'inventoryAmountConfirmed')" class="help-block">{{errors.rows[i].inventoryAmountConfirmed}}</p>
+                    </td>
+                    <td *ngIf="!canEdit || status === 'CLOSED'" class="number">{{stat.inventoryAmountConfirmed}}</td>
+
+                    <td *ngIf="canEdit && status !== 'CLOSED'" [ngClass]="{'has-error':hasError(i, 'inventoryAmountComment')}">
+                        <textarea class="form-control" [(ngModel)]="stat.inventoryAmountComment" [ngModelOptions]="{standalone: true}"></textarea>
+                        <p *ngIf="hasError(i, 'inventoryAmountComment')" class="help-block">{{errors.rows[i].inventoryAmountComment}}</p>
+                    </td>
+                    <td *ngIf="!canEdit || status === 'CLOSED'">{{stat.inventoryAmountComment}}</td>
+
+                    <td *ngIf="canEdit && status !== 'CLOSED'" [ngClass]="{'has-error':hasError(i, 'invoiceNumber')}">
+                        <input [(ngModel)]="stat.invoiceNumber" [ngModelOptions]="{standalone: true}" type="text" class="form-control">
+                        <p *ngIf="hasError(i, 'invoiceNumber')" class="help-block">{{errors.rows[i].invoiceNumber}}</p>
+                    </td>
+                    <td *ngIf="!canEdit || status === 'CLOSED'" class="number">{{stat.invoiceNumber}}</td>
+
+                    <td class="number">{{stat.totalAmount}}</td>
+                    <td class="number">{{stat.totalAmountConfirmed}}</td>
+                    <td class="number">{{stat.pubAmount}}</td>
+
+                    <td *ngIf="canEdit && status !== 'CLOSED'" [ngClass]="{'has-error':hasError(i, 'pubAmountConfirmed')}">
+                        <input [(ngModel)]="stat.pubAmountConfirmed" [ngModelOptions]="{standalone: true}" type="text" class="form-control">
+                        <p *ngIf="hasError(i, 'pubAmountConfirmed')" class="help-block">{{errors.rows[i].pubAmountConfirmed}}</p>
+                    </td>
+                    <td *ngIf="!canEdit || status === 'CLOSED'" class="number">{{stat.pubAmountConfirmed}}</td>
+
+                    <td *ngIf="canEdit && status !== 'CLOSED'" [ngClass]="{'has-error':hasError(i, 'pubAmountComment')}">
+                        <textarea class="form-control" [(ngModel)]="stat.pubAmountComment" [ngModelOptions]="{standalone: true}"></textarea>
+                        <p *ngIf="hasError(i, 'pubAmountComment')" class="help-block">{{errors.rows[i].pubAmountComment}}</p>
+                    </td>
+                    <td *ngIf="!canEdit || status === 'CLOSED'">{{stat.pubAmountComment}}</td>
+
+                    <td class="number">{{stat.agentAmount}}</td>
+                    <td class="number">{{stat.principalAmount}}</td>
+                </tr>
+                <tr>
+                    <td class="number">_L10N_(agentReport.monthly.total)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="number">{{total.inventoryAmount}}</td>
+                    <td class="number">{{total.inventoryAmountConfirmed}}</td>
+                    <td></td>
+                    <td></td>
+                    <td class="number">{{total.totalAmount}}</td>
+                    <td class="number">{{total.totalAmountConfirmed}}</td>
+                    <td class="number">{{total.pubAmount}}</td>
+                    <td class="number">{{total.pubAmountConfirmed}}</td>
+                    <td></td>
+                    <td class="number">{{total.agentAmount}}</td>
+                    <td class="number">{{total.principalAmount}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <button *ngIf="canEdit && status !== 'CLOSED'" [disabled]="waitSubmit" type="submit" class="btn btn-primary">
+            <ui-icon *ngIf="waitSubmit" [fw]="true" [spin]="true" [icon]="'spinner'"></ui-icon>
+            _L10N_(button.save)
+        </button>
+        <button *ngIf="canEdit && status !== 'CLOSED'" (click)="closePeriod($event)" class="btn btn-primary">
+            <ui-icon *ngIf="waitSubmit" [fw]="true" [spin]="true" [icon]="'spinner'"></ui-icon>
+            _L10N_(agentReport.monthly.closeButton)
+        </button>
+        <button *ngIf="status === 'CLOSED'" (click)="downloadFile($event)" class="btn btn-primary">
+            <ui-icon *ngIf="waitDl" [fw]="true" [spin]="true" [icon]="'spinner'"></ui-icon>
+            _L10N_(agentReport.total.report)
+        </button>
+        <a class="hidden" #downloadBtn [href]="downloadUrl" target="_blank" [download]="downloadName">{{downloadName}}</a>
+        <div class="has-error" *ngIf="actionErrors">
+            <p *ngFor="let error of actionErrors" class="text-danger">{{error}}</p>
+        </div>
+        <a *ngIf="!waitSubmit" [routerLink]="backUrl" class="btn btn-default">_L10N_(button.cancel)</a>
+    </form>
+
+</ng-template>

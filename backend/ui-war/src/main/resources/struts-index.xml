@@ -1,0 +1,40 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="indexPages" extends="foros-default" namespace="/">
+        <action name="index" class="com.foros.action.security.IndexPageAction" method="dispatch">
+            <result name="internal" type="redirectAction">admin/index</result>
+            <result name="agency" type="redirectAction">advertiser/index</result>
+            <result name="advertiser" type="redirectAction">advertiser/index</result>
+            <result name="publisher" type="redirectAction">publisher/index</result>
+            <result name="isp" type="redirectAction">isp/index</result>
+            <result name="cmp" type="redirectAction">cmp/index</result>
+            <result name="anonymous" type="redirectAction">login</result>
+        </action>
+        <action name="*/index" class="com.foros.action.security.IndexPageAction" method="index">
+            <result name="advertisers" type="redirectAction">{1}/advertiser/account/main</result>
+            <result name="cmps" type="redirectAction">{1}/cmp/account/main</result>
+            <result name="publishers" type="redirectAction">{1}/publisher/account/main</result>
+            <result name="isps" type="redirectAction">{1}/isp/account/main</result>
+            <result name="adOpsDashboard" type="redirectAction">{1}/AdopsDashboard/main</result>
+            <result name="mySettings" type="redirectAction">{1}/myPreferences/view</result>
+
+            <!-- advertiser -->
+            <result name="campaigns" type="redirect">{1}/campaign/campaigns.action</result>
+
+            <result name="agency" type="redirect">{1}/campaign/advertisers.action</result>
+
+            <!-- cmp -->
+            <result name="channels" type="redirect">{1}/channel/contextMain.action</result>
+
+            <!-- isp -->
+            <result name="reports" type="redirectAction">{1}/report/main</result>
+
+            <!-- publisher -->
+            <result name="sites" type="redirect">{1}/site/main.action</result>
+        </action>
+
+    </package>
+</struts>

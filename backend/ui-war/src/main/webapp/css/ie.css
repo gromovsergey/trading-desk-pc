@@ -1,0 +1,51 @@
+select.date{
+    width:85px;
+}
+select.smallLengthNumber{
+    width:30px;
+}
+select.middleLengthNumber{
+    width:75px;
+}
+select.smallLengthText{
+    width:85px;
+}
+select.smallLengthText1{
+    width:155px;
+}
+select.smallLengthText2{
+    width:225px;
+}
+select.middleLengthText{
+    width:305px;
+}
+select.middleLengthText1{
+    width:455px;
+}
+select.bigLengthText{
+    width:605px;
+}
+
+table.formFields td.fieldName label.mandatory{
+    padding-right:3px;
+    margin-right:7px;
+}
+
+td.field label input, 
+td.field label select{
+    top:2px;
+}
+td.field table.formFields > tbody > tr:first-child > td input[type="radio"]:first-child {
+    padding-top:6px;
+}
+
+* + html td.field label input {  /* IE7 bug */
+    position:static;
+}
+* + html table.formFields   {
+    position:relative;
+    zoom:1;
+}
+.optionTransfer select option {
+    padding: auto;
+}

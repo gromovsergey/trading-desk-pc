@@ -1,0 +1,41 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+    <p *ngIf="!(userList && userList.length)">_L10N_(flight.notification.userListIsEmpty)</p>
+
+    <div class="table-responsive" *ngIf="userList && userList.length">
+        <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <th>_L10N_(agencyAccount.user.name)</th>
+                <th>_L10N_(agencyAccount.user.email)</th>
+                <th>_L10N_(agencyAccount.user.role)</th>
+                <th *ngIf="showAdvertisers">_L10N_(agencyAccount.user.advertisersAccess)</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of userList">
+                <td>
+                    <ui-icon [displayStatus]="user.displayStatus"></ui-icon>&nbsp;{{user.firstName}}&nbsp;{{user.lastName}}
+                </td>
+                <td>{{user.email}}</td>
+                <td>{{L10nUserRoles[user.roleName.split(' ').join('')]}}</td>
+                <td *ngIf="showAdvertisers">
+                    {{user.advertiserIds.length > 0 ? '_L10N_(agencyAccount.user.specificAdvertisers)' : '_L10N_(agencyAccount.user.allAdvertisers)'}}
+                    <ui-hint *ngIf="canEditUsers && user.advertiserIds.length > 0" [text]="user.advertisers"></ui-hint>
+                </td>
+                <td class="text-right">
+                    <ui-display-status-toggle *ngIf="canEditUsers" (onStatusChange)="changeStatus($event)"
+                                              [status]="user.displayStatus" [statusObject]="user"></ui-display-status-toggle>
+
+                    <button *ngIf="canEditUsers" [disabled]="user.displayStatus === 'DELETED'"
+                            class="btn btn-default" title="_L10N_(button.edit)" [routerLink]="[editUrl+user.id+'/edit']">
+                        <ui-icon [icon]="'pencil-square-o'"></ui-icon>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

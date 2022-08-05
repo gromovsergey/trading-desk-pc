@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator Config 1.0//EN"
+        "http://struts.apache.org/dtds/xwork-validator-config-1.0.dtd">
+
+<validators>
+    <validator name="decimal" class="com.foros.framework.struts2validator.DecimalFieldValidator"/>
+    <validator name="double" class="com.foros.framework.struts2validator.DoubleRangeFieldValidator"/>
+    <validator name="conversion" class="com.foros.framework.struts2validator.CustomConversionErrorFieldValidator"/>
+    <validator name="requiredstring" class="com.foros.framework.struts2validator.RequiredStringValidator"/>
+    <validator name="required" class="com.foros.framework.struts2validator.RequiredFieldValidator"/>
+    <validator name="regex" class="com.foros.framework.struts2validator.RegexFieldValidator"/>
+    <validator name="stringlength" class="com.foros.framework.struts2validator.StringLengthFieldValidator"/>
+    <validator name="pair" class="com.foros.framework.struts2validator.PairFieldValidator"/>
+    <validator name="captcha" class="com.foros.framework.struts2validator.CaptchaFieldValidator"/>
+    <validator name="int" class="com.foros.framework.struts2validator.LongRangeFieldValidator"/>
+    <validator name="email" class="com.foros.framework.struts2validator.EmailValidator"/>
+    <!--<validator name="url-validation" class="com.foros.framework.struts2validator.UrlFieldValidator"/>-->
+    <validator name="fileLength" class="com.foros.framework.struts2validator.FileLengthValidator"/>
+    <validator name="convtransform" class="com.foros.framework.struts2validator.ConversionErrorsTransformator"/>
+    <validator name="custconversion" class="com.foros.framework.struts2validator.CustomConversionErrorFieldValidator"/>
+</validators>

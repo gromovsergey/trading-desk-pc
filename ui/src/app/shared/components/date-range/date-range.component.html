@@ -1,0 +1,21 @@
+<mat-form-field class="mr-2 date-selector">
+  <mat-label>{{'report.dateRange' | translate}}</mat-label>
+  <mat-select [(ngModel)]="defaultValue"
+              [formControl]="optionSelector"
+              (valueChange)="dateRangeChangeHandler($event)">
+    <mat-option *ngFor="let option of optionsList"
+                [value]="option">{{L10nDateRanges[option] | translate}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<ng-container *ngIf="optionsList.includes('R')">
+  <mat-form-field appearance="standard">
+    <mat-label>{{'flight.blockName.startDate' | translate}}</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input matStartDate [formControl]="dateStart" (blur)="changeDateRange($event, 'dateStart')">
+      <input matEndDate [formControl]="dateEnd" (blur)="changeDateRange($event, 'dateEnd')">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker (closed)="changeDateRange()"></mat-date-range-picker>
+  </mat-form-field>
+</ng-container>

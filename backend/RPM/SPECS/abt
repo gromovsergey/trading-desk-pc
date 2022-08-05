@@ -1,0 +1,22 @@
+pkgName='foros-ui'
+specFile='foros-ui.spec'
+jiraKey='OUI'
+vcsModules[$vcsModule]=$modBuild
+
+vcsModules[unixcommons]=`svnCat "" unixcommons.version "" 1`
+
+rpmMacros=( "" "-D '__target noarch'" )
+
+function copyPackagesToBuildbox {
+  printDBG "invoking $0"
+
+  local _i;
+  for (( _i=2; _i<=${#packageList[@]}; _i+=1 )); do
+    execCmd "scp ${packageList[$_i]} buildbox:/$buildboxStorageDir"
+  done
+}
+
+if [ -n "$buildboxStorageDir" ]; then
+  stage[71]='copyPackagesToBuildbox'
+fi
+

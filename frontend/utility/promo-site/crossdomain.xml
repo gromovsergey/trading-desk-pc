@@ -1,0 +1,7 @@
+  <cross-domain-policy>
+    <site-control permitted-cross-domain-policies="master-only"/>
+    <allow-access-from domain="*.new-programmatic.com"/>
+    <allow-access-from domain="new-programmatic.com"/>
+    <allow-access-from domain="www.new-programmatic.com"/>
+    <allow-http-request-headers-from domain="*.new-programmatic.com" headers="*"/>
+  </cross-domain-policy>

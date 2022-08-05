@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name=".CampaignGroup" extends=".mainLayout">
+        <put-attribute name="taskTitle" value="page.title.campaignGroup" type="string"/>
+    </definition>
+
+    <definition name=".AdminCampaignGroup" extends=".CampaignGroup">
+        <put-attribute name="moduleName" value="admin/campaign/group"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.campaigns"/>
+    </definition>
+
+    <definition name=".AdvertiserCampaignGroup" extends=".CampaignGroup">
+        <put-attribute name="moduleName" value="advertiser/campaign/group"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.campaigns"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.viewDisplay" extends=".AdminCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupDisplayView.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.viewDisplay" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupDisplayView.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.viewText" extends=".AdminCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupTextView.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.viewText" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupTextView.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.viewExpressionPerformance" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="title" value="/campaign/ccg/targeting/expressionPerformanceTitle.jsp"/>
+        <put-attribute name="body" value="/campaign/ccg/targeting/viewExpressionPerformance.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.viewExpressionPerformance" extends=".AdminCampaignGroup">
+        <put-attribute name="title" value="/campaign/ccg/targeting/expressionPerformanceTitle.jsp"/>
+        <put-attribute name="body" value="/campaign/ccg/targeting/viewExpressionPerformance.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.editDisplay" extends=".AdminCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupDisplayEdit.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.editDisplay" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupDisplayEdit.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.editText" extends=".AdminCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupTextEdit.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.editText" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupTextEdit.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.newDisplay" extends=".AdminCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupDisplayEdit.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.newDisplay" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupDisplayEdit.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.newDisplayWizardTarget" extends=".AdminCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupWizardTarget.jsp"/>
+        <put-attribute name="titleProperty" value="DisplayCampaignCreativeGroupWizard.entityName.new"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="entityName" value="DisplayWizard"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.newDisplayWizardTarget" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupWizardTarget.jsp"/>
+        <put-attribute name="titleProperty" value="DisplayCampaignCreativeGroupWizard.entityName.new"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="entityName" value="DisplayWizard"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.newDisplayWizardSettings" extends=".AdminCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupDisplayEdit.jsp"/>
+        <put-attribute name="titleProperty" value="DisplayCampaignCreativeGroupWizard.entityName.new"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="entityName" value="DisplayWizard"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.newDisplayWizardSettings" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupDisplayEdit.jsp"/>
+        <put-attribute name="titleProperty" value="DisplayCampaignCreativeGroupWizard.entityName.new"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="entityName" value="DisplayWizard"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.newText" extends=".AdminCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupTextEdit.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.newText" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupTextEdit.jsp"/>
+        <put-attribute name="title" value="/campaign/groupEntityTitle.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.newTextWizardTarget" extends=".AdminCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupWizardTarget.jsp"/>
+        <put-attribute name="titleProperty" value="ChannelTextCampaignCreativeGroupWizard.entityName.new"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="entityName" value="ChannelTargetedTextWizard"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.newTextWizardTarget" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupWizardTarget.jsp"/>
+        <put-attribute name="titleProperty" value="ChannelTextCampaignCreativeGroupWizard.entityName.new"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="entityName" value="ChannelTargetedTextWizard"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.newTextWizardSettings" extends=".AdminCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupTextEdit.jsp"/>
+        <put-attribute name="titleProperty" value="ChannelTextCampaignCreativeGroupWizard.entityName.new"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="entityName" value="ChannelTargetedTextWizard"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.newTextWizardSettings" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="body" value="/campaign/groupTextEdit.jsp"/>
+        <put-attribute name="titleProperty" value="ChannelTextCampaignCreativeGroupWizard.entityName.new"/>
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="entityName" value="ChannelTargetedTextWizard"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.editKeywords" extends=".AdminCampaignGroup">
+        <put-attribute name="titleProperty" value="ccg.keyword.list.edit"/>
+        <put-attribute name="body" value="/campaign/ccg/editKeywords.jsp"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.editKeywords" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="titleProperty" value="ccg.keyword.list.edit"/>
+        <put-attribute name="body" value="/campaign/ccg/editKeywords.jsp"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.editTarget" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="title" value="/campaign/groupTargetTitle.jsp"/>
+        <put-attribute name="body" value="/campaign/groupTargetEdit.jsp"/>
+        <put-attribute name="entityName" value="target" type="string"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.editTarget" extends=".AdminCampaignGroup">
+        <put-attribute name="title" value="/campaign/groupTargetTitle.jsp"/>
+        <put-attribute name="body" value="/campaign/groupTargetEdit.jsp"/>
+        <put-attribute name="entityName" value="target" type="string"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.editGeoTarget" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="title" value="/campaign/groupGeoTargetTitle.jsp"/>
+        <put-attribute name="body" value="/campaign/groupGeoTargetEdit.jsp"/>
+        <put-attribute name="entityName" value="geoTarget" type="string"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.editGeoTarget" extends=".AdminCampaignGroup">
+        <put-attribute name="title" value="/campaign/groupGeoTargetTitle.jsp"/>
+        <put-attribute name="body" value="/campaign/groupGeoTargetEdit.jsp"/>
+        <put-attribute name="entityName" value="geoTarget" type="string"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.editUserSampleGroups" extends=".AdminCampaignGroup">
+        <put-attribute name="title" value="/campaign/groupUserSampleGroupsTitle.jsp"/>
+        <put-attribute name="body" value="/campaign/groupUserSampleGroupsEdit.jsp"/>
+        <put-attribute name="entityName" value="userSampleGroups" type="string"/>
+    </definition>
+
+    <definition name="admin.campaignGroup.editDeviceTargeting" extends=".AdminCampaignGroup">
+        <put-attribute name="title" value="/campaign/groupDeviceTargetingTitle.jsp"/>
+        <put-attribute name="body" value="/campaign/groupDeviceTargetingEdit.jsp"/>
+        <put-attribute name="entityName" value="deviceTargeting" type="string"/>
+    </definition>
+
+    <definition name="advertiser.campaignGroup.editDeviceTargeting" extends=".AdvertiserCampaignGroup">
+        <put-attribute name="title" value="/campaign/groupDeviceTargetingTitle.jsp"/>
+        <put-attribute name="body" value="/campaign/groupDeviceTargetingEdit.jsp"/>
+        <put-attribute name="entityName" value="deviceTargeting" type="string"/>
+    </definition>
+
+</tiles-definitions>

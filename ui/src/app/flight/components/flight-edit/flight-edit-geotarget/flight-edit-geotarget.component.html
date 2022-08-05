@@ -1,0 +1,233 @@
+<mat-form-field class="width-full">
+  <mat-label>{{'blockName.country' | translate}}</mat-label>
+  <input matInput readonly value="{{L10nCountries[countryCode] | translate}}">
+</mat-form-field>
+
+<div class="form-group mb-2" >
+  <label>{{'flight.blockName.addedLocations' | translate}}</label>
+
+  <div *ngIf="!waitGeoData && (locations?.length || addresses?.length)"
+       class="geo-list-group">
+    <div class="geo-list-group-item" *ngFor="let location of locations" >
+      <div class="geo-action">
+        <button matTooltip="{{'button.exclude' | translate}}"
+                matTooltipPosition="above"
+                mat-icon-button
+                color="accent"
+                type="button"
+                (click)="excludeLocation(location)">
+          <i class="material-icons">remove_circle_outline</i>
+        </button>
+        <button matTooltip="{{'button.delete' | translate}}"
+                matTooltipPosition="above"
+                mat-icon-button
+                type="button"
+                color="primary"
+                (click)="deleteLocation(location)">
+          <i class="material-icons">delete</i>
+        </button>
+      </div>
+      <div class="geo-place">{{location.name}}</div>
+    </div>
+
+    <div class="geo-list-group-item" *ngFor="let address of addresses">
+      <div class="geo-action">
+        <button matTooltip="{{'button.exclude' | translate}}"
+                matTooltipPosition="above"
+                mat-icon-button
+                color="accent"
+                type="button"
+                (click)="excludeAddress(address)">
+          <i class="material-icons">remove_circle_outline</i>
+        </button>
+        <button matTooltip="{{'button.delete' | translate}}"
+                matTooltipPosition="above"
+                mat-icon-button
+                type="button"
+                color="primary"
+                (click)="deleteAddress(address)">
+          <i class="material-icons">delete</i>
+        </button>
+      </div>
+      <div class="geo-place">
+        {{'flight.notification.address.withinRadius' | translate}}
+        {{address.radius}}
+        {{L10nDistanceUnits[address.radiusUnits] | translate}}
+        {{'flight.notification.address.of' | translate}}
+        {{address.address}}
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="!waitGeoData && !locations.length && !addresses.length">
+    {{'flight.notification.noLocationsAdded' | translate}}
+  </p>
+
+  <ui-info-panel type="danger" *ngIf="!waitGeoData && locationsError !== null">
+    {{locationsError}}
+  </ui-info-panel>
+</div>
+
+<div class="form-group">
+  <label>{{'flight.blockName.excludedLocations' | translate}}</label>
+
+  <div *ngIf="!waitExcludedGeoData && (excludedLocations?.length || excludedAddresses?.length)"
+       class="geo-list-group">
+
+    <div class="geo-list-group-item" *ngFor="let location of excludedLocations">
+      <div class="geo-action">
+        <button matTooltip="{{'button.add' | translate}}"
+                matTooltipPosition="above"
+                mat-icon-button
+                color="accent"
+                type="button"
+                (click)="addLocation(location)">
+          <i class="material-icons">add_circle_outline</i>
+        </button>
+        <button matTooltip="{{'button.delete' | translate}}"
+                matTooltipPosition="above"
+                mat-icon-button
+                type="button"
+                color="primary"
+                (click)="deleteExcludedLocation(location)">
+          <i class="material-icons">delete</i>
+        </button>
+      </div>
+      <div class="geo-place">{{location.name}}</div>
+    </div>
+
+    <div class="geo-list-group-item" *ngFor="let address of excludedAddresses">
+      <div class="geo-action">
+        <button matTooltip="{{'button.add' | translate}}"
+                matTooltipPosition="above"
+                mat-icon-button
+                color="accent"
+                type="button"
+                (click)="addAddress(address)">
+          <i class="material-icons">add_circle_outline</i>
+        </button>
+        <button matTooltip="{{'button.delete' | translate}}"
+                matTooltipPosition="above"
+                mat-icon-button
+                type="button"
+                color="primary"
+                (click)="deleteExcludedAddress(address)">
+          <i class="material-icons">delete</i>
+        </button>
+      </div>
+      <div class="geo-place">
+        {{'flight.notification.address.withinRadius' | translate}}
+        {{address.radius}}
+        {{L10nDistanceUnits[address.radiusUnits] | translate}}
+        {{'flight.notification.address.of' | translate}}
+        {{address.address}}
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="!waitExcludedGeoData && !excludedLocations.length && !excludedAddresses.length">
+    {{'flight.notification.noLocationsExcluded' | translate}}
+  </p>
+
+  <ui-info-panel type="danger" *ngIf="!waitExcludedGeoData && excludedLocationsError !== null">
+    {{excludedLocationsError}}
+  </ui-info-panel>
+</div>
+
+
+
+<div class="form-group">
+  <div>
+    <label>{{'flight.blockName.addLocation' | translate}}</label>
+  </div>
+
+  <mat-radio-group *ngIf="canChangeAddresses"
+                   class="radio-column"
+                   (change)="radioVal = !radioVal"
+                   [value]="radioVal">
+    <mat-radio-button class="mt-1" [value]="true">{{'flight.notification.stateOrCity' | translate}}</mat-radio-button>
+    <mat-radio-button *ngIf="false" class="mt-1" [value]="false">{{'flight.notification.address' | translate}}</mat-radio-button>
+  </mat-radio-group>
+  <p *ngIf="!canChangeAddresses">{{'flight.notification.stateOrCity' | translate}}</p>
+</div>
+
+<div class="form-group" *ngIf="radioVal">
+  <mat-form-field class="width-full">
+    <mat-label>{{'blockName.search' | translate}}...</mat-label>
+    <input #searchInput matInput
+           (input)="geoSearch$.next($event.target.value)"
+           [matAutocomplete]="auto">
+    <mat-spinner *ngIf="waitSearch" diameter="20" matSuffix></mat-spinner>
+    <mat-autocomplete #auto="matAutocomplete"
+                      [displayWith]="displayByName"
+                      (optionSelected)="addChannel($event.option.value)">
+      <mat-option *ngFor="let item of autocomplete" [value]="item">
+        {{item.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+
+<div class="form-group" *ngIf="!radioVal">
+  <div class="form-group-row">
+    <mat-form-field>
+      <label>{{'blockName.search' | translate}}...</label>
+      <input matInput
+             [(ngModel)]="geoCode"
+             (keydown.enter)="findAddress($event)"
+             [disabled]="waitAddress">
+    </mat-form-field>
+    <button type="button"
+            mat-icon-button
+            matSuffix
+            title="{{'button.find' | translate}}"
+            [disabled]="waitAddress"
+            (click)="findAddress($event)">
+      <mat-spinner *ngIf="waitAddress" diameter="24"></mat-spinner>
+      <i *ngIf="!waitAddress" class="material-icons">search</i>
+    </button>
+  </div>
+  <ul *ngIf="searchAddress && !!foundAddresses.length" class="list-group">
+    <li class="list-group-item" *ngFor="let address of foundAddresses">
+      <div class="btn-group btn-badge">
+        <button title="{{'button.add' | translate}}"
+                class="btn btn-md btn-default"
+                type="button"
+                (click)="showPopup(address)"
+                [disabled]="checkAddress(address)">
+          {{'button.add' | translate}}
+        </button>
+      </div>
+      {{address.address}}
+    </li>
+  </ul>
+  <ui-info-panel type="info" class="mt-1" *ngIf="searchAddress && !foundAddresses.length">
+    {{'messages.nothingFound' | translate}}
+  </ui-info-panel>
+</div>
+
+<ui-popup *ngIf="false" [visible]="popupVisible" (popupClose)="popupHide()"
+          (save)="popupSave()" [options]="popupOptions" closeBtnTitle="{{'button.close' | translate}}">
+  <div #modal>
+    <p>{{selectedAddress.address}}</p>
+    <div class="form-inline">
+      <div class="form-group">
+        {{'flight.notification.radiusTargeting' | translate}}
+        <div class="input-group" [ngClass]="{'has-error':radiusError}">
+          <input type="text" class="form-control" [(ngModel)]="selectedAddress.radius" size="5"/>
+        </div>
+        <div class="input-group">
+          <select class="form-control" [(ngModel)]="selectedAddress.radiusUnits">
+            <option value="m">{{'messages.address.units.m' | translate}}</option>
+            <option value="km">{{'messages.address.units.km' | translate}}</option>
+          </select>
+        </div>
+        <div class="input-group" [ngClass]="{'has-error':radiusError}">
+          <p class="help-block">{{radiusError}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ui-popup>
+
+<ui-loading *ngIf="waitGeoData" [overlay]="true"></ui-loading>

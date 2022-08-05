@@ -1,0 +1,43 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            {{title}}
+        </h2>
+    </div>
+    <ui-report [meta]="meta"
+               [reportParameters]="reportParameters"
+               [reportService]="reportService"
+               [downloadNamePrefix]="'Referrer Report for ' + accountName"
+               [canSelectColumns]="false"
+               [dateRangeOptions]="'Y T WTD MTD LW LM R'">
+        <div #params>
+            <div *ngIf="accounts" class="form-group">
+                <label>_L10N_(report.publisherReport.account)</label>
+                <div>
+                    <select [(ngModel)]="reportParameters.accountId" name="accountId" class="form-control" (ngModelChange)="onAccountChange($event)">
+                        <option *ngFor="let item of accounts" [value]="item.id">{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>_L10N_(report.referrerReport.site)</label>
+                <div>
+                    <select class="form-control" (change)="onSiteChange($event)">
+                        <option *ngFor="let item of sites" [value]="item.id">{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>_L10N_(report.referrerReport.tag)</label>
+                <div>
+                    <select class="form-control" (change)="onTagChange($event)">
+                        <option value="-1">_L10N_(report.referrerReport.tag.all)</option>
+                        <option *ngFor="let item of tags" [value]="item.id">{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </ui-report>
+</section>

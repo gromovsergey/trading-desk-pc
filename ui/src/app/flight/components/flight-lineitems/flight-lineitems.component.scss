@@ -1,0 +1,20 @@
+
+.settings-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.custom-preloader {
+  display: flex;
+  min-height: 200px;
+  & > * {
+    display: inline-block;
+    margin: auto;
+  }
+}
+
+::ng-deep .mat-tooltip {
+  font-size: 15px !important;
+}

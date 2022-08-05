@@ -1,0 +1,47 @@
+<ui-panel [title]="sectionName" [collapsible]="true" [collapsed]="triggers.positive?.length === 0">
+    <div #body>
+        <div class="form-group" [ngClass]="{'has-error':errors[triggersErrorKeyByType()]?.positive}">
+            <textarea class="form-control h-vertical-resize"
+                      name="triggers"
+                      [value]="triggers?.positive?.join('\n')"
+                      [placeholder]="sectionName"
+                      (change)="updatePositiveTriggers($event)"
+                      rows="10">
+            </textarea>
+            <p *ngFor="let error of errors[triggersErrorKeyByType()]?.positive" class="help-block">{{error}}</p>
+        </div>
+
+        <div class="table-responsive" [ngClass]="{'has-error':errors[behavioralParametersErrorKeyByType()]}">
+            <table class="table table-hover">
+                <tr>
+                    <td><label>_L10N_(channel.blockName.keywords.matchingCriteria):</label></td>
+                    <td>
+                        <select class="form-control" name="minVisit" [(ngModel)]="behavioralParameters.minimumVisits" [disabled]="behavioralParameters.timeFrom === 0">
+                            <option [value]="visit" *ngFor="let visit of visitsValues">{{visit}}</option>
+                        </select>
+                    </td>
+                    <td>_L10N_(channel.blockName.keywords.timesBetween)</td>
+                    <td>
+                        <select class="form-control" name="timeFrom" [(ngModel)]="behavioralParameters.timeFrom">
+                            <option [value]="day*60*60*24" *ngFor="let day of daysValues">{{day === 0 ? '_L10N_(messages.now)' : day}}</option>
+                        </select>
+                    </td>
+                    <td>_L10N_(messages.and)</td>
+                    <td>
+                        <select class="form-control" name="timeTo" [(ngModel)]="behavioralParameters.timeTo">
+                            <option [value]="day*60*60*24" *ngFor="let day of daysValues">{{day === 0 ? '_L10N_(messages.now)' : day}}</option>
+                        </select>
+                    </td>
+                    <td>{{behavioralParameters.timeTo !== 0 ? '_L10N_(channel.blockName.keywords.calendarDaysAgo)' : ''}}</td>
+                    <td>
+                        <div *ngIf="!errors[behavioralParametersErrorKeyByType()]?.minimumVisits">
+                        <p *ngFor="let error of errors[behavioralParametersErrorKeyByType()]" class="help-block">{{error}}</p>
+                        </div>
+                        <p *ngFor="let error of errors[behavioralParametersErrorKeyByType()]?.minimumVisits" class="help-block">{{error}}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</ui-panel>

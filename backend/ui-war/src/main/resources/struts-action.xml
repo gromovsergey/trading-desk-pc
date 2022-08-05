@@ -1,0 +1,98 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="action" extends="foros-default" namespace="/">
+
+        <action  name="*/Action/list" class="com.foros.action.action.ListActionAction" method="list">
+          <result name="success" type="tiles">{1}.action.main</result>
+        </action>
+
+        <action name="*/Action/createLinks" class="com.foros.action.action.ActionLinksAction" method="showGroups">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/action/link/groups.jsp</result>
+        </action>
+
+        <action name="*/Action/saveLinks" class="com.foros.action.action.ActionLinksAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/action/link/closeDialog.jsp</result>
+            <result name="input">/action/link/errors.jsp</result>
+        </action>
+
+        <action  name="*/Action/new" class="com.foros.action.action.EditActionAction" method="create">
+          <result name="success" type="tiles">{1}.action.create</result>
+        </action>
+
+        <action  name="admin/Action/edit" class="com.foros.action.action.EditActionAction" method="edit">
+          <result name="success" type="tiles">admin.action.edit</result>
+        </action>
+
+        <action  name="advertiser/Action/edit" class="com.foros.action.action.EditActionAction" method="edit">
+          <result name="success" type="tiles">advertiser.action.edit</result>
+        </action>
+
+        <action  name="admin/Action/view" class="com.foros.action.action.ViewActionAction" method="view">
+          <result name="success" type="tiles">admin.action.view</result>
+        </action>
+
+        <action  name="advertiser/Action/view" class="com.foros.action.action.ViewActionAction" method="view">
+          <result name="success" type="tiles">advertiser.action.view</result>
+        </action>
+
+        <action name="*/Action/update" class="com.foros.action.action.SaveActionAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/Action/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">{1}.action.edit</result>
+            <result name="version">
+                <param name="location">/{1}/Action/edit.action</param>
+            </result>
+        </action>
+
+        <action name="*/Action/create" class="com.foros.action.action.SaveActionAction" method="create">
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">{1}/Action/view</param>
+            <param name="id">${id}</param>
+          </result>
+          <result name="input" type="tiles">{1}.action.create</result>
+        </action>
+
+        <action name="*/Action/delete" class="com.foros.action.action.StatusActionAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/Action/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="successExternal" type="redirect">
+                <param name="location">{1}/Action/list.action${getAccountParam('?advertiserId')}</param>
+            </result>
+        </action>
+
+        <action name="admin/Action/undelete" class="com.foros.action.action.StatusActionAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/Action/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+    </package>
+
+    <!--Conversions Links Tree Filter -->
+    <package name="actionLinksTreeFilter" extends="foros-default" abstract="true">
+        <action name="campaigns" class="com.foros.action.action.treefilter.CampaignsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=groups</result>
+        </action>
+
+        <action name="groups" class="com.foros.action.action.treefilter.GroupsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp</result>
+        </action>
+    </package>
+
+    <package name="actionLinksTreeFilter-admin" extends="actionLinksTreeFilter" namespace="/admin/Action/treeFilter"/>
+    <package name="actionLinksTreeFilter-advertiser" extends="actionLinksTreeFilter" namespace="/advertiser/Action/treeFilter"/>
+</struts>

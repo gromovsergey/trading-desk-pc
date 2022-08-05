@@ -1,0 +1,221 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<ng-template [ngIf]="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [fw]="true" [displayStatus]="advertiser.displayStatus"></ui-icon> {{title}}
+
+            <div class="btn-group" *ngIf="canCreateCreative">
+                <button class="btn btn-default" [disabled]="wizardDisabled" (click)="showWizardTemplates($event)">_L10N_(creative.createNewCreative)</button>
+                <button (click)="selectFile($event)" class="btn btn-default" [disabled]="btnDisable">
+                    <ui-icon [icon]="'spinner'" [spin]="true" *ngIf="wait"></ui-icon>
+                    _L10N_(button.upload)
+                </button>
+            </div>
+
+            <input type="file" (change)="uploadZip($event)" #fileUpload class="h-file-hidden">
+            <div class="help-block" *ngIf="errors && errors.length">
+                <p *ngFor="let error of errors" class="text-danger">{{error}}</p>
+            </div>
+        </h2>
+    </div>
+
+    <ui-loading *ngIf="waitCreatives || !creativeList"></ui-loading>
+
+    <p *ngIf="!waitCreatives && creativeList && creativeList.length === 0">
+        _L10N_(flight.notification.creativeListEmpty)
+    </p>
+
+    <div class="table-responsive" *ngIf="!waitCreatives && creativeList && creativeList.length > 0">
+        <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <th>_L10N_(blockName.name)</th>
+                <th>
+                    _L10N_(creative.blockName.size)
+                </th>
+                <th>
+                    _L10N_(creative.blockName.template)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let creative of creativeList">
+                <td>
+                    <ui-icon [fw]="true" [displayStatus]="creative.displayStatus"></ui-icon>
+                    {{creative.name}}
+                </td>
+                <td>{{creative.sizeName}}</td>
+                <td>{{creative.templateName}}</td>
+                <td class="text-right">
+                    <ui-display-status-toggle *ngIf="canUpdateCreative" (onStatusChange)="changeStatus($event)"
+                                              [status]="creative.displayStatus" [statusObject]="creative"></ui-display-status-toggle>
+
+                    <button class="btn btn-default" title="_L10N_(button.preview)" (click)="preview($event, creative)">
+                        <ui-icon [icon]="'search-plus'"></ui-icon>
+                    </button>
+
+                    <a *ngIf="canUpdateCreative" class="btn btn-default" title="_L10N_(button.edit)"
+                       [routerLink]="['/advertiser/'+advertiser.id+'/creative/'+creative.id+'/edit']">
+                        <ui-icon [icon]="'pencil-square-o'"></ui-icon>
+                    </a>
+
+                    <button *ngIf="canUpdateCreative" class="btn btn-default" title="_L10N_(button.delete)"
+                            (click)="deleteCreative($event, creative)">
+                        <ui-icon [icon]="'trash'"></ui-icon>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ui-creative-preview [creative]="creativePreview" [show]="(creativePreview)" (onClose)="onPreviewClose()"></ui-creative-preview>
+
+    <ui-popup [visible]="wizardTemplates"
+              [options]="wizardTemplatesOpts"
+              (close)="closeWizardTemplates($event)"
+              (save)="openWizardNext($event)"
+              [closeBtnTitle]="'_L10N_(button.close)'">
+        <div #modal class="modal-body-scroll">
+            <div class="list-group" *ngIf="templateList && templateList.length > 0">
+                <a href="#" (click)="selectTemplate($event, item)" class="list-group-item"
+                   *ngFor="let item of templateList" [ngClass]="{active: template && template.id === item.id}">
+                    {{item.name}}
+                </a>
+            </div>
+
+            <div class="alert alert-warning" *ngIf="!templateList || templateList.length === 0">
+                _L10N_(creative.notification.templateListEmpty)
+            </div>
+        </div>
+    </ui-popup>
+
+    <ui-popup [visible]="wizardSizes"
+              [blocked]="wizardSizesBlocked"
+              [options]="wizardSizesOpts"
+              (close)="closeWizardSizes($event)"
+              (save)="wizardSizeBack($event)"
+              [closeBtnTitle]="'_L10N_(button.close)'">
+        <div #modal class="modal-body-scroll">
+            <div class="list-group" *ngIf="sizeList && sizeList.length > 0">
+                <a href="#" (click)="selectSize($event, item)" class="list-group-item"
+                   *ngFor="let item of sizeList" [ngClass]="{active: size && size.id === item.id}">
+                    {{item.name}}
+                </a>
+            </div>
+
+            <div class="alert alert-warning" *ngIf="sizeList && sizeList.length === 0">
+                _L10N_(creative.notification.sizeListEmpty)
+            </div>
+        </div>
+    </ui-popup>
+
+    <ui-popup [visible]="showCreativeUpload"
+              [blocked]="waitSubmit"
+              [options]="creativeUploadOpts"
+              (close)="closeCreativeUpload($event)"
+              (save)="uploadCreatives($event)"
+              [closeBtnTitle]="'_L10N_(button.close)'">
+        <div #modal class="modal-body-scroll">
+
+            <div class="form-group" *ngIf="altTextOption && creativeUpload" [ngClass]="{'has-error':uploadErrors && uploadErrors.options && uploadErrors.options[altTextOption.id]}">
+                <label>
+                    {{altTextOption.defaultName}}
+                    <ui-hint *ngIf="altTextOption.defaultLabel" [text]="altTextOption.defaultLabel"></ui-hint>:
+                    <ui-icon-required *ngIf="altTextOption.required"></ui-icon-required>
+                </label>
+                <div>
+                    <input type="text" placeholder="{{altTextOption.defaultName}}" [(ngModel)]="creativeUpload.altText"
+                           maxlength="2000" class="form-control">
+                </div>
+                <div *ngIf="uploadErrors && uploadErrors.options && uploadErrors.options[altTextOption.id]">
+                    <p *ngFor="let err of uploadErrors.options[altTextOption.id].value" class="help-block">{{err}}</p>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="clickUrlOption && creativeUpload" [ngClass]="{'has-error':uploadErrors && uploadErrors.options && uploadErrors.options[clickUrlOption.id]}">
+                <label>
+                    {{clickUrlOption.defaultName}}
+                    <ui-hint *ngIf="clickUrlOption.defaultLabel" [text]="clickUrlOption.defaultLabel"></ui-hint>:
+                    <ui-icon-required *ngIf="clickUrlOption.required"></ui-icon-required>
+                </label>
+                <div>
+                    <input type="text" placeholder="{{clickUrlOption.defaultName}}" [(ngModel)]="creativeUpload.clickUrl"
+                           maxlength="2000" class="form-control">
+                </div>
+                <div *ngIf="uploadErrors && uploadErrors.options && uploadErrors.options[clickUrlOption.id]">
+                    <p *ngFor="let err of uploadErrors.options[clickUrlOption.id].value" class="help-block">{{err}}</p>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="landingPageUrlOption && creativeUpload" [ngClass]="{'has-error':uploadErrors && uploadErrors.options && uploadErrors.options[landingPageUrlOption.id]}">
+                <label>
+                    {{landingPageUrlOption.defaultName}}
+                    <ui-hint *ngIf="landingPageUrlOption.defaultLabel" [text]="landingPageUrlOption.defaultLabel"></ui-hint>:
+                    <ui-icon-required *ngIf="landingPageUrlOption.required"></ui-icon-required>
+                </label>
+                <div>
+                    <input type="text" placeholder="{{landingPageUrlOption.defaultName}}" [(ngModel)]="creativeUpload.landingPageUrl"
+                           maxlength="2000" class="form-control">
+                </div>
+                <div *ngIf="uploadErrors && uploadErrors.options && uploadErrors.options[landingPageUrlOption.id]">
+                    <p *ngFor="let err of uploadErrors.options[landingPageUrlOption.id].value" class="help-block">{{err}}</p>
+                </div>
+            </div>
+
+            <ui-panel title="_L10N_(creative.blockName.contentCategories)"
+                    [ngClass]="{'has-error':uploadErrors && uploadErrors.contentCategories}"
+                    [collapsible]="true"
+                    [collapsed]="!uploadErrors || !uploadErrors.contentCategories">
+                <div #body>
+                    <ui-option-transfer *ngIf="categories" [options]="categories.contentCategories"
+                            [selected]="selectedCategories"
+                            (onChange)="setContentCategories($event)"
+                            [customSort]="sort"
+                            [availableMsg]="'_L10N_(messages.optionTransfer.available)'"
+                            [selectedMsg]="'_L10N_(messages.optionTransfer.selected)'"
+                            [selectAllMsg]="'_L10N_(messages.optionTransfer.selectAll)'"
+                            [deselectAllMsg]="'_L10N_(messages.optionTransfer.deselectAll)'">
+                    </ui-option-transfer>
+                    <div *ngIf="uploadErrors">
+                        <p *ngFor="let error of uploadErrors.contentCategories" class="help-block">{{error}}</p>
+                    </div>
+                </div>
+            </ui-panel>
+
+            <div class="table-responsive" *ngIf="creativeUpload && creativeUpload.imagesList && creativeUpload.imagesList.length > 0">
+                <table class="table table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th class="h-td__chbx">
+                            <input type="checkbox" (click)="toggleCheckedAll($event);">
+                        </th>
+                        <th>_L10N_(blockName.name)</th>
+                        <th>
+                            _L10N_(creative.blockName.size)
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let image of creativeUpload.imagesList">
+                        <td><input type="checkbox" [disabled]="!image.sizeExist" [(ngModel)]="image.checked"></td>
+                        <td>
+                            {{image.name}}
+                        </td>
+                        <td>
+                            {{image.dimensions.width}} х {{image.dimensions.height}}
+                            <ui-hint [icon]="'warning'" *ngIf="!image.sizeExist" [text]="'_L10N_(creative.upload.noSizeHint)'"></ui-hint>
+                        </td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive" *ngIf="creativeUpload && (!creativeUpload.imagesList || creativeUpload.imagesList.length === 0)">
+                _L10N_(creative.upload.noimages)
+            </div>
+        </div>
+    </ui-popup>
+</ng-template>

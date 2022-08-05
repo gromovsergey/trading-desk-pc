@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <definition name=".ChannelListMain" extends=".mainLayout">
+        <put-attribute name="moduleName" value="admin/discoverChannelList"/>
+        <put-attribute name="taskTitle" value="page.title.admin.channels" type="string"/>
+        <put-attribute name="menu" value="/menu/internalMenu.jsp"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.admin"/>
+        <put-attribute name="contextName" value="global.menu.admin"/>
+        <put-attribute name="entityName" value="DiscoverChannelList" type="string"/>
+    </definition>
+
+    <definition name=".DiscoverChannelList" extends=".ChannelListMain">
+    </definition>
+
+    <definition name=".AdminDiscoverChannelList" extends=".DiscoverChannelList">
+        <put-attribute name="titleProperty" value="channel.searchDiscoverLists"/>
+        <put-attribute name="body" value="/admin/discoverChannelList/discoverChannelListMain.jsp"/>
+    </definition>
+
+    <definition name="admin.discoverChannelList.main" extends=".AdminDiscoverChannelList">
+    </definition>
+
+    <definition name="admin.discoverChannelList.list" template="/admin/discoverChannelList/discoverSearchList.jsp"/>
+
+    <definition name="admin.discoverChannelList.view" extends=".DiscoverChannelList">
+        <put-attribute name="body" value="/admin/discoverChannelList/discoverChannelListView.jsp"/>
+        <put-attribute name="entityName" value="DiscoverChannelList" type="string"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.discoverChannelList.edit" extends=".DiscoverChannelList">
+        <put-attribute name="body" value="/admin/discoverChannelList/discoverChannelListEdit.jsp"/>
+    </definition>
+</tiles-definitions>

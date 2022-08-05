@@ -1,0 +1,47 @@
+<mat-dialog-content class="mat-typography">
+  <ui-loading *ngIf="wait, else showContent"></ui-loading>
+  <ng-template #showContent>
+    <h2>{{'channel.blockName.keywords.statistics' | translate}}</h2>
+
+    <div class="table-container mb-2" *ngIf="stats?.channelStat?.length, else noStats">
+      <table mat-table [dataSource]="stats.keywordHitsStat">
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>{{'blockName.date' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{moment(stat.date).format(dateFormatShort)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalUniques">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.channel.totalUniques' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.totalUniques}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="activeDailyUniques">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.channel.activeDailyUniques' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.activeDailyUniques}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="bids">
+          <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.bids' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.imps}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="clicks">
+          <th mat-header-cell *matHeaderCellDef>{{'blockName.clicks' | translate}}</th>
+          <td mat-cell *matCellDef="let stat">{{stat.clicks}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+      </table>
+    </div>
+
+    <ng-template #noStats>
+      <ui-info-panel type="info">
+        {{'channel.notification.keywords.statEmpty' | translate}}
+      </ui-info-panel>
+    </ng-template>
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{'button.close' | translate}}</button>
+</mat-dialog-actions>

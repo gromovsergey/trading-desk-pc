@@ -1,0 +1,7 @@
+<div class="c-cgroup" *ngIf="showGroup">
+    <h3 class="c-cgroup__label">{{group.defaultName}}</h3>
+    <div class="c-group__options">
+        <ui-creative-option *ngFor="let option of group.options" (onChange)="onOptionChange($event)"
+                            [option]="option" [errors]="errors && errors[option.id] ?  errors[option.id].value: null"></ui-creative-option>
+    </div>
+</div>

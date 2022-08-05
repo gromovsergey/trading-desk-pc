@@ -1,0 +1,214 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Include webwork default (from the Struts JAR). -->
+    <include file="struts-default.xml"/>
+
+    <bean type="com.opensymphony.xwork2.ObjectFactory" name="testSpring" class="com.foros.framework.struts.StrutsSpringObjectFactory" />
+    <bean type="com.opensymphony.xwork2.validator.ActionValidatorManager" name="forosValidationManager" class="com.foros.framework.struts.AnnotationActionValidatorManager" />
+    <bean type="ognl.PropertyAccessor" name="com.foros.framework.struts.ForosCompoundRootAccessor" class="com.foros.framework.struts.ForosCompoundRootAccessor" />
+    <bean type="ognl.MethodAccessor" name="com.foros.framework.struts.ForosCompoundRootAccessor" class="com.foros.framework.struts.ForosCompoundRootAccessor" />
+
+    <constant name="struts.objectFactory" value="testSpring"/>
+    <constant name="struts.actionValidatorManager" value="forosValidationManager"/>
+    <constant name="struts.devMode" value="false"/>
+    <constant name="struts.serve.static" value="true"/>
+    <constant name="struts.serve.static.browserCache" value="false"/>
+    <constant name="struts.objectFactory.spring.autoWire" value="no"/>
+    <constant name="struts.ui.theme" value="simple"/>
+    <constant name="struts.custom.i18n.resources" value="resource/applicationResource"/>
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+    <!--
+        2Gb - 1 - max value for apache LimitRequestBody http://httpd.apache.org/docs/2.2/mod/core.html#limitrequestbody
+        But in reality, i.e. when a request is coming through Apache Balancer, the upper limit is defined
+        at the Apache Balancer side (going from CMS). The idea is do not restrict the limit at Struts side,
+        so when the CMS value is changed, Struts isn't needed to change.
+     -->
+    <constant name="struts.multipart.maxSize" value="2147483647"/>
+    <constant name="struts.locale" value="en_US"/>
+    <constant name="struts.allowed.action.names" value="[a-zA-Z/]+"/>
+
+    <!-- Configuration for the default package. -->
+    <package name="foros-default" extends="struts-default" namespace="/">
+        <result-types>
+            <!--<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>-->
+            <result-type name="tiles" class="com.foros.framework.CustomTilesResult"/>
+            <result-type name="input" class="com.foros.framework.InputResult"/>
+            <result-type name="httperror" class="com.foros.framework.ErrorSupportingHttpHeaderResult"/>
+            <result-type name="ajax-xml-result" class="com.foros.action.xml.result.SimpleXmlResult"/>
+            <result-type name="ajax-xml-options-result" class="com.foros.action.xml.result.OptionsXmlResult"/>
+            <result-type name="ajax-xml-error-result" class="com.foros.action.xml.result.ExceptionXmlResult"/>
+            <result-type name="ajax-xml-input-result" class="com.foros.action.xml.result.ValidationXmlResult"/>
+            <result-type name="ajax-json-result" class="com.foros.action.json.result.SimpleJsonResult"/>
+            <result-type name="download-file" class="com.foros.action.download.FileDownloadResult"/>
+            <result-type name="content-result" class="com.foros.action.download.ContentSourceResult"/>
+            <result-type name="forosChain" class="com.foros.framework.ChangeableParamsChainResult"/>
+            <result-type name="clearContextDispatch" class="com.foros.framework.ClearContextDispatcherResult"/>
+            <result-type name="simple-text-result" class="com.foros.framework.SimpleTextResult"/>
+            <result-type name="empty-result" class="com.foros.framework.EmptyResult"/>
+        </result-types>
+
+        <interceptors>
+            <interceptor name="security" class="com.foros.framework.SecurityInterceptor"/>
+            <!--<interceptor name="input" class="com.foros.framework.InputInterceptor"/>-->
+            <interceptor name="businessError" class="com.foros.framework.BusinessExceptionInterceptor"/>
+            <interceptor name="conversionError" class="com.foros.framework.CustomConvErrorInterceptor"/>
+            <interceptor name="viewValidation" class="com.foros.framework.ViewValidationInterceptor"/>
+            <interceptor name="trimming" class="com.foros.framework.TrimmingInterceptor"/>
+            <interceptor name="i18n" class="com.opensymphony.xwork2.interceptor.I18nInterceptor"/>
+            <interceptor name="csrf" class="com.foros.framework.CSRFInterceptor"/>
+            <interceptor name="requestStore" class="com.foros.framework.MessageStoreInterceptor"/>
+            <interceptor name="contextsAware" class="com.foros.framework.ContextsInterceptor">
+                <param name="skippedResults">403,404</param>
+            </interceptor>
+            <interceptor name="selfIdentifier" class="com.foros.framework.SelfIdentifierInterceptor"/>
+            <interceptor name="modelDriven" class="com.foros.framework.ModelDrivenInterceptor">
+                <param name="refreshModelBeforeResult">true</param>
+            </interceptor>
+            <interceptor name="fileUpload" class="com.foros.framework.CustomFileUploadInterceptor"/>
+            <interceptor name="validation" class="com.foros.framework.ValidateAnnotationInterceptor"/>
+
+            <interceptor name="forosException" class="com.foros.framework.ForosExceptionMappingInterceptor">
+                <param name="logEnabled">true</param>
+                <param name="logLevel">info</param>
+                <param name="excludeExceptions">javax.persistence.EntityNotFoundException,com.foros.action.account.ContextNotSetException,com.foros.restriction.AccessRestrictedException</param>
+                <param name="oneLineExceptions">java.lang.SecurityException,java.security.AccessControlException</param>
+            </interceptor>
+
+            <interceptor name="params" class="com.opensymphony.xwork2.interceptor.ParametersInterceptor">
+                <param name="acceptParamNames">\w+((\.\w+)|(\[\d+[lL]?\])|(\(\d+[lL]?\))|(\['\w+'\])|(\('\w+'\)))*</param>
+            </interceptor>
+
+            <interceptor-stack name="defaultForosStack">
+                <interceptor-ref name="forosException"/>
+                <interceptor-ref name="csrf"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="requestStore"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="trimming"/>
+                <interceptor-ref name="params"/>
+                <interceptor-ref name="selfIdentifier"/>
+                <interceptor-ref name="security"/>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="contextsAware"/>
+                <interceptor-ref name="viewValidation"/>
+            </interceptor-stack>
+
+            <interceptor-stack name="saveStack">
+                <interceptor-ref name="defaultForosStack"/>
+                <interceptor-ref name="validation"/>
+                <interceptor-ref name="workflow"/>
+                <interceptor-ref name="businessError"/>
+            </interceptor-stack>
+
+        </interceptors>
+
+        <!-- Default interceptor stack. -->
+        <default-interceptor-ref name="defaultForosStack"/>
+
+        <global-results>
+            <result name="input_view" type="tiles">Global.viewInputError</result>
+            <result name="403" type="httperror">
+                <param name="errorCode">403</param>
+            </result>
+            <result name="404" type="httperror">
+                <param name="errorCode">404</param>
+            </result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.SecurityException" result="403"/>
+        </global-exception-mappings>
+
+    </package>
+
+    <!-- C o m m o n -->
+    <include file="struts-error.xml"/>
+    <include file="struts-login.xml"/>
+    <include file="struts-report.xml"/>
+    <include file="struts-reporting.xml"/>
+    <include file="struts-fileman.xml"/>
+    <include file="struts-user.xml"/>
+    <include file="struts-AdopsDashboard.xml"/>
+    <include file="struts-index.xml"/>
+    <include file="struts-switchContext.xml"/>
+    <include file="struts-forgotPassword.xml"/>
+    <include file="struts-ajax.xml"/>
+    <include file="struts-resource.xml"/>
+    <include file="struts-support.xml"/>
+
+
+    <!-- A d m i n -->
+    <include file="struts-admin.xml"/>
+    <include file="struts-account.xml"/>
+    <include file="struts-account-internal.xml"/>
+    <include file="struts-accountType.xml"/>
+    <include file="struts-applicationFormat.xml"/>
+    <include file="struts-categoryChannel.xml"/>
+    <include file="struts-country.xml"/>
+    <include file="struts-creativeCategory.xml"/>
+    <include file="struts-currency.xml"/>
+    <include file="struts-currencyExchange.xml"/>
+    <include file="struts-sizeType.xml"/>
+    <include file="struts-creativeSize.xml"/>
+    <include file="struts-creativeTemplate.xml"/>
+    <include file="struts-creativeTemplateFile.xml"/>
+    <include file="struts-deviceChannel.xml"/>
+    <include file="struts-discoverChannel.xml"/>
+    <include file="struts-discoverChannelList.xml"/>
+    <include file="struts-discoverTemplate.xml"/>
+    <include file="struts-fraudConditions.xml"/>
+    <include file="struts-geoChannel.xml"/>
+    <include file="struts-globalParam.xml"/>
+    <include file="struts-keywordChannel.xml"/>
+    <include file="struts-KWMTool.xml"/>
+    <include file="struts-notices.xml"/>
+    <include file="struts-option.xml"/>
+    <include file="struts-optionGroup.xml"/>
+    <include file="struts-termsOfUse.xml"/>
+    <include file="struts-triggers.xml"/>
+    <include file="struts-triggerList.xml"/>
+    <include file="struts-userRole.xml"/>
+    <include file="struts-walledGarden.xml"/>
+    <include file="struts-WDFrequencyCaps.xml"/>
+    <include file="struts-WDRequestMapping.xml"/>
+    <include file="struts-behavioralParameters.xml"/>
+    <include file="struts-searchEngine.xml"/>
+    <include file="struts-platform.xml"/>
+    <include file="struts-placementsBlacklist.xml"/>
+
+    <!-- A d v e r t i s e r -->
+    <include file="struts-account-advertiser.xml"/>
+    <include file="struts-action.xml"/>
+    <include file="struts-campaign.xml"/>
+    <include file="struts-campaignGroup.xml"/>
+    <include file="struts-campaignGroup-bulk.xml"/>
+    <include file="struts-campaignCreative.xml"/>
+    <include file="struts-campaignCredit.xml"/>
+    <include file="struts-creative.xml"/>
+    <include file="struts-channel.xml"/>
+    <!--Commented by OUI-28825-->
+    <!--<include file="struts-invoice.xml"/>-->
+    <include file="struts-opportunity.xml"/>
+
+    <!-- I S P -->
+    <include file="struts-account-isp.xml"/>
+    <include file="struts-colocation.xml"/>
+
+    <!-- P u b l i s h e r -->
+    <include file="struts-account-publisher.xml"/>
+    <include file="struts-site.xml"/>
+    <include file="struts-tag.xml"/>
+    <include file="struts-WDTag.xml"/>
+    <include file="struts-siteCreativesApproval.xml"/>
+
+    <!-- C M P -->
+    <include file="struts-account-cmp.xml"/>
+
+</struts>
+

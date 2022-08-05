@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Target RTB</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link id='appFavicon' rel="icon" type="image/x-icon" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,600,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style type="text/css">
+    .preloader {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      flex-direction: column;
+      align-items: center;
+      background: #fff;
+    }
+    .preloader > img {
+      margin: auto;
+    }
+  </style>
+</head>
+<body class="theme mat-typography">
+  <ui-root>
+    <div class="preloader">
+      <img src="/assets/preloader.svg" alt="preloader">
+    </div>
+  </ui-root>
+</body>
+</html>

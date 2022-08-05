@@ -1,0 +1,123 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.foros.ui</groupId>
+    <artifactId>rs-client</artifactId>
+    <version>trunk</version>
+    <packaging>pom</packaging>
+
+    <name>${artifactId}</name>
+
+    <modules>
+        <module>java</module>
+        <module>php</module>
+    </modules>
+
+    <properties>
+        <deploy.version>${version}</deploy.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>4.0.3.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.foros.ui</groupId>
+                            <artifactId>rs-model</artifactId>
+                            <version>${version}</version>
+                        </dependency>
+
+                        <dependency>
+                            <groupId>com.foros.ui</groupId>
+                            <artifactId>model-generator</artifactId>
+                            <version>${version}</version>
+                        </dependency>
+
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>RemoteInstall</id>
+            <activation>
+                <property>
+                    <name>remoteInstall</name>
+                </property>
+            </activation>
+
+            <distributionManagement>
+                <repository>
+                    <id>foros</id>
+                    <name>Foros Repository</name>
+                    <url>http://maven.ocslab.com/nexus/content/repositories/foros</url>
+                </repository>
+                <snapshotRepository>
+                    <id>foros-snapshots</id>
+                    <name>Foros Snapshots Repository</name>
+                    <url>http://maven.ocslab.com/nexus/content/repositories/foros-snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
+
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <archive>
+                                <manifest/>
+                                <manifestEntries>
+                                    <Package-Name>${artifactId}</Package-Name>
+                                    <Package-Version>${deploy.version}</Package-Version>
+                                    <Release-Date>${maven.build.timestamp}</Release-Date>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>2.8.2</version>
+                        <configuration>
+                           <skip>true</skip>
+                        </configuration>
+                        <executions/>
+                    </plugin>
+
+                </plugins>
+            </build>
+
+        </profile>
+    </profiles>
+
+</project>

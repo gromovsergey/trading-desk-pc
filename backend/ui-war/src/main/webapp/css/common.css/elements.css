@@ -1,0 +1,708 @@
+.pageHeading > *{
+    float:left;
+}
+a.button{
+    font-weight:bold;
+    white-space:nowrap;
+}
+a.button + *, 
+a.button + script + *{
+    margin-left:10px;
+}
+a.button + table.formFields{
+    margin-left:0;
+}
+a.dashed {
+    border-bottom-width: 1px;
+    border-bottom-style: dashed;
+    text-decoration: none;
+}
+
+.paginationHeader a.button{
+    font-weight:normal;
+}
+.paginationHeader a.button + *{
+    margin-left:0;
+}
+
+.paginationHeader .delimiter{
+    padding:1px;
+}
+
+table.fieldAndAccessories td.withButton a.button{
+    margin:0;
+}
+span.simpleText.entityName .text, .preText, .ui-autocomplete .ui-menu-item a, #breadCrumbs .contentBody a {
+    white-space:pre;
+}
+span.simpleText.date{
+    white-space:nowrap;
+}
+span.simpleText.fixedMinLen1{
+    min-width:200px;
+}
+span.simpleText.level1{
+    font-weight:bold;
+}
+span.simpleText.level2{
+    margin-left:20px;
+}
+span.simpleText + a.button{
+    margin-left:10px;
+}
+span.simpleText a.button{
+    margin-right:0;
+}
+td.withField span.simpleText{
+    white-space:nowrap;
+}
+td.withField .ui-datepicker-trigger {
+    margin: 0 4px;
+    position: relative;
+    top: 3px;
+}
+.pageHeading h1 ~ a.button, 
+.pageHeading h1 ~ .groupOfButtons{
+    margin-top:10px;
+}
+.pageHeading h2 ~ a.button, 
+.pageHeading h2 ~ .groupOfButtons{
+    margin-top:3px;
+}
+a.action{
+    font-weight:bold;
+}
+
+a #applicationLogo{
+    cursor:hand;
+}
+
+.displayStatus{
+    width:15px;
+    height:15px;
+    background-position: center center;
+    font-size:0;
+}
+div.withDisplayStatus .displayStatus{
+    position:absolute;
+    left:0;
+    top: 0;
+}
+table.dataView.collapsing tbody.child > tr > td > .withDisplayStatus{
+    margin-left:18px;
+}
+
+.displayStatus.Green{
+    background:url(/images/displayStatusGreen.gif);
+}
+.displayStatus.Amber{
+    background:url(/images/displayStatusAmber.gif);
+}
+.displayStatus.Red{
+    background:url(/images/displayStatusRed.gif);
+}
+.displayStatus.Gray{
+    background:url(/images/displayStatusGray.gif);
+}
+
+.displayStatus.GreenTest{
+    background:url(/images/displayStatusGreenTest.gif);
+}
+.displayStatus.AmberTest{
+    background:url(/images/displayStatusAmberTest.gif);
+}
+.displayStatus.RedTest{
+    background:url(/images/displayStatusRedTest.gif);
+}
+.displayStatus.GrayTest{
+    background:url(/images/displayStatusGrayTest.gif);
+}
+
+.preview{
+    width:700px;
+    height:90px;
+    border:none;
+}
+
+span.errors, .validation_error{
+    display:block;
+    color:red;
+}
+td.withError span.errors, td.withError .validation_error{
+    white-space:nowrap;
+}
+td.field > span.errors, td.field > .validation_error{
+    margin-bottom: 6px;
+}
+
+span.errors + span.errors, .validation_error + .validation_error{
+    margin-top:auto !important;
+}
+span.infos{
+    clear:both;
+    display:block;
+    color:green;
+}
+
+/* Used in a fileManager's table */
+.withIcon{
+    display:block;
+    height:16px;
+    padding: 0 0 1px 22px;
+    background-position:left top;
+    background-repeat:no-repeat;
+    white-space:nowrap;
+}
+.withIcon.folder{
+    background-image:url(/images/icon_folder.gif);
+}
+.withIcon.file{
+    background-image:url(/images/icon_file.gif);
+}
+
+.withIcon.delete{
+    background-image:url(/images/icon_delete.gif);
+}
+.withIcon.download{
+    background-image:url(/images/icon_download.gif);
+}
+.withIcon.convert{
+    background-image:url(/images/icon_convert.gif);
+}
+.withIcon.select{
+    background-image:url(/images/icon_select.gif);
+}
+
+.path{
+    margin:auto auto 5px 0px;
+    clear:both;
+}
+.path:after{
+    content:'';
+    height:0;
+    margin:0;
+    padding:0;
+    display:block;
+    clear:both;
+}
+.path a, 
+.path .fileName, 
+.path .delimiter{
+    display:inline;
+    padding:0;
+    margin:0;
+}
+.path .delimiter{
+    margin:0 2px;
+}
+
+/* TODO replace "table.grouping td.withSpan" with cells of "table.fieldAndAccessories" */
+td.withSpan span.simpleText{
+    padding:0 5px;
+    white-space:nowrap;
+}
+
+tr.collapsingRow td{
+    height:22px;
+}
+
+/* group of ".move" buttons */
+.moving{
+    position:relative;
+    margin:auto;
+    position:relative;
+}
+.moving.twoButtons{
+    width:28px;
+}
+.moving.fourButtons{
+    width:58px;
+}
+
+/* buttons with arrow symbols for moving row up or down (countryEdit.jsp) */
+.move{
+    width:13px;
+    height:16px;
+    font-size: 0px;
+    background-repeat: no-repeat;
+    position:absolute;
+}
+.move.down{
+    background-image: url(/images/arrow_down.gif);
+}
+.moving.twoButtons .move.down{
+    left:15px;
+}
+.moving.fourButtons .move.down{
+    left:30px;
+}
+.move.up{
+    background-image: url(/images/arrow_up.gif);
+}
+.moving.twoButtons .move.up{
+    left:0;
+}
+.moving.fourButtons .move.up{
+    left:15px;
+}
+.move.top{
+    background-image: url(/images/arrow_top.gif);
+}
+.moving.fourButtons .move.top{
+    left:0;
+}
+.move.bottom{
+    background-image: url(/images/arrow_bottom.gif);
+}
+.moving.fourButtons .move.bottom{
+    left:45px;
+}
+
+/* delimiter between <ui:fieldGroup> elements */
+div.sectionName{
+    margin-top:15px;
+    margin-bottom:11px;
+    font-size: 14px;
+    font-weight:bold;
+    color:#333;
+}
+
+.colorInput {
+    display:block;
+    width:130px;
+    overflow:hidden;
+}
+.colorInput .colorBox {
+    margin-left: 4px;
+    border: 1px solid #666666;
+    width: 18px;
+    cursor: default;
+}
+
+/* used in localizedField.tag */
+div.markerIconContainer span.simpleText{
+    float:left;
+    margin-right:3px;
+}
+
+div.markerIconContainer .markerIcon {
+    margin-top:5px;
+    width:12px;
+    height:12px;
+    cursor: pointer;
+    background-image:url(/images/multilingual_marker.gif);
+    background-position:center;
+    background-repeat:no-repeat;
+    float:left;
+    margin-top:3px;
+}
+td.field > div.markerIconContainer .markerIcon{
+    margin-top:1px;
+}
+
+table.fieldset .legend{
+    background-color:white;
+    color:#333;
+    float:left;
+    font-size:14px;
+    font-weight:bold;
+    padding-left:2px;
+    padding-right:2px;
+    margin-top:-22px;
+    position:relative; /* for visibility inner 'hintContainer', that has position:absolute; */
+    white-space:nowrap;
+}
+
+table.fieldset .legend.mandatory{
+    padding-right:9px;
+    background-image: url(/images/mandatory_legend.gif);
+    background-repeat: no-repeat;
+    background-position: right 3px;
+}
+
+/* groupOfLinks used in main admin page (links grouped into columns) */
+table.fieldset .groupOfLinks a{
+    display:block;
+    margin-bottom:7px;
+}
+table.fieldset table.fieldset{
+    margin-top: 5px;
+}
+table.fieldset > .errors{
+    margin-bottom: 6px;
+}
+
+/* horizontal grouping of fieldsets ("Edit Behavioral Channel" page) */
+table.grouping.fieldsets td.singleFieldset table.fieldset{
+    margin:0;
+}
+
+table.grouping.groupOfButtons a.button {
+    margin-right: 10px;
+}
+
+.collapsingButton{
+    width:10px;
+    height:10px;
+    background-image:url(/images/minus.gif);
+    background-position:50%;
+    cursor:pointer;
+    cursor:hand;
+}
+.collapsingButton.closed{
+    background-image:url(/images/plus.gif);
+}
+
+/* tree of checkboxes on "Edit Account Type" page */
+ul.chBoxesTree{
+    padding:0;
+    margin:0;
+}
+ul.chBoxesTree li{
+    list-style-type: none;
+}
+ul.chBoxesTree li label{
+    font-weight: normal;
+}
+
+/* UI Hint Style */
+.hintSign{
+    width:14px;
+    height:14px;
+    background-image:url(/images/tip.gif);
+}
+.toolTip {
+    font:12px Arial,Helvetica,sans-serif;
+    position:absolute;
+    z-index:10000;
+    border:1px solid gray;
+    background-color:#FFFF99;
+    padding:10px;
+    overflow:hidden;
+    max-height:500px;
+    min-width:100px;
+    max-width:500px;
+    overflow:hidden;
+    display:none;
+}
+
+.toolTip a {
+    display:block;
+}
+
+/* container of text and hint sign (for example, used in "th" elements on a "Edit Expressional Channel" page) */
+.textWithHint{
+    position:relative;
+    padding-right:17px
+}
+    th > .textWithHint {
+        display:block;
+    }
+.textWithHint > .hintContainer{
+    margin-top: -8px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+}
+.textWithHint > .hintContainer .hintSign{
+    background-image:url(/images/tip2.gif)
+}
+.textWithHint.white > .hintContainer .hintSign{
+    background-image:url(/images/tip.gif)
+}
+
+
+table.formFields td.fieldName label{
+    white-space:nowrap;
+    margin-right:10px;
+}
+table.formFields td.field label{
+    font-weight: normal;
+    display:block;
+    text-align:left;
+    min-width:10px;
+    line-height:16px;
+}
+table.formFields td .nomargin label, table.formFields td.nomargin label {
+    margin:0;
+}
+table.formFields td.field label.narrowSet{
+    display:inline;
+    position:relative;
+    top:-4px;
+    margin-right:1em;
+}
+table.formFields td.field .withField > label.narrowSet {
+    top:-2px;
+}
+table.formFields label.mandatory{
+    background-image:url("/images/mandatory.gif");
+    background-position:right 3px;
+    background-repeat:no-repeat;
+    padding-right:6px;
+}
+table.formFields td.fieldName label.mandatory{
+    margin-right:4px;
+}
+table.grouping.optionTransfer label{
+    margin-bottom:4px;
+    float:left;
+    font-weight:bold !important;
+    max-width:180px;
+    overflow:hidden;
+}
+
+/* lables with checkboxes, that aligned horizontally (
+    for example, used in "th" elements on a "Edit Expressional Channel" page) */
+table.formFields td.field label.withCheckbox{
+    display:inline;
+    margin-right:6px;
+}
+
+/* TODO: Investigate, whether we need class "linkButton" */
+a.linkButton {
+    margin-left: 10px;
+}
+a.linkButton div {
+    display: inline; 
+}
+
+h1 span.attributeName{
+    padding-right:5px;
+    white-space:nowrap;
+}
+
+h1 div.displayStatus{
+    margin-right:5px;
+}
+
+.pageHeading h1, 
+.pageHeading h2{
+    margin-top:0;
+    margin-right:15px;
+    margin-bottom:0;
+}
+
+table.dataView + label.withInput{
+    top:0;
+}
+
+.dialog{
+    position:absolute;
+    background-color:white;
+    z-index:1000;
+    padding:10px;
+    border: 1px solid #666666;
+}
+
+.fixing{
+    width:0;
+    height:0;
+    font-size: 0px;
+    clear:both;
+    margin:0 !important;
+}
+
+.datepicker_wrap{
+    white-space:nowrap;
+}
+
+.selTip{
+    background-color: white;
+    padding:2px 0;
+    white-space:nowrap;
+    position:absolute;
+}
+
+#error-storage-exception-panel{
+    display:none; 
+    position:absolute; 
+    height:384px;
+    width:408px; 
+    border:2px solid #cecece; 
+    z-index:2;
+    padding:12px; 
+    font-size:13px; 
+    background-color:white;
+    overflow:auto;
+}
+
+.collapsible .collapseButt{
+    position:relative;
+    font-size:14px;
+    white-space:nowrap;
+    zoom:1;
+}
+.collapsible table.block .collapseButt{
+    float:left;
+    background-color:white;
+    padding:0 5px;
+    display:block;
+    margin:-24px auto auto -6px;
+    margin-bottom:7px;
+    zoom:1;
+}
+.collapsible.withChBox table.block .collapseButt{
+    margin-left: 8px;
+}
+.collapsible.collapsed table.block .collapseButt.collapse{
+    display:none; 
+}
+
+.collapsible.collapsed > .collapsible-chbx.main {
+    position:relative;
+    top:-5px;
+}
+.collapsible.collapsed > .collapseButt.expand {
+    display : auto;
+    position: relative;
+    top: -8px;
+}
+
+.collapsible.expanded > .collapsible-chbx.main {
+    position:relative;
+    top:-5px;
+    left:4px;
+}
+.collapsible.expanded > .collapseButt.expand {
+    display : none;
+}
+.collapsible.collapsed.hasPersistent > .collapseButt.expand{
+    display : none;
+}
+
+.collapsible.expanded table.block .collapseButt.expand{
+    display : none;
+}
+.collapsible.collapsed.hasPersistent table.block .collapseButt.expand{
+    display : block;
+}
+
+.collapsible.expanded .collapseButt.collapse {
+    display : auto;
+}
+.collapsible.collapsed .collapseButt.collapse {
+    display : none;
+}
+
+.legend .collapseButt + * {
+    padding-left: 2em;
+}
+
+.legend .collapseButt {
+    font-family: monospace;
+    font-weight: normal;
+    position: absolute;
+    text-decoration: none;
+    top: 3px;
+}
+
+.fieldset.collapsed {
+    border-color: transparent;
+    margin: 10px 0px;
+}
+
+#globalBlocker .waitBox{
+    background-image: url(/images/wait-animation-half.gif);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -30px;
+    margin-left: -30px;
+}
+
+.waitBox{
+    background-image: url(/images/wait-animation-half.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color:white;
+    position: absolute;
+    opacity: 0.5;
+    cursor: wait;
+}
+.waitBox.small{
+    background-image: url(/images/wait-animation-small.gif);
+    background-position: right center;
+}
+
+h1 .attribute{
+    white-space:pre;
+}
+
+.withWarning{
+    padding-right: 18px;
+    background-image: url(/images/icon_warning.gif);
+    background-position: right center;
+    background-repeat:no-repeat;
+}
+.withWarningBig {
+    background: url(/images/icon_warning_big.gif) no-repeat center left;
+    line-height: 1.5em;
+    min-height: 25px;
+    padding-left: 45px;
+    padding-top: 5px;
+}
+
+.withDisplayStatus .simpleText{
+    white-space:nowrap;
+}
+.withDisplayStatus .simpleText .text{
+    zoom:1;
+}
+
+*.last, 
+*.last > *{
+    margin-bottom:0 !important;
+}
+
+table.formFields .tableTriggers td.field label{
+    display:inline;
+    margin-right:10px;
+}
+
+.list .simpleText{
+    display:block;
+}
+
+table.formFields td.field .rowWithButton > label{
+    display:inline-block;
+}
+
+table.formFields td.field .rowWithButton > input:not([type="hidden"]){
+    display:inline-block;
+}
+
+.withDisplayStatusInline, .withDisplayStatusInline > div {
+    display:inline;
+    margin-right: .5em;
+}
+
+.b-expicon {
+    display:inline;
+    background:url(/images/expression_icons.png) no-repeat;
+    line-height: 20px;
+    margin-right: .7em;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    line-height: 2.5em;
+}
+.b-expicon__and {
+    padding-left: 49px;
+    background-position: 0 0;
+}
+.b-expicon__or {
+    padding-left: 47px;
+    background-position: -49px 0;
+}
+.b-expicon__andnot {
+    padding-left: 79px;
+    background-position: -97px 0px;
+}
+.b-expicon__lb {
+    padding-left: 33px;
+    background-position: -175px 0px;
+}
+.b-expicon__rb {
+    padding-left: 33px;
+    background-position: -209px 0px;
+}

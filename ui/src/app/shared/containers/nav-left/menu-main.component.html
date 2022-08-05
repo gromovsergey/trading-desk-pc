@@ -1,0 +1,146 @@
+<ui-loading *ngIf="wait, else leftMenu"></ui-loading>
+
+<ng-template #leftMenu>
+  <mat-nav-list class="nav-menu">
+    <a *ngIf="canViewAdvertiserEntity && (userSession.role === 'INTERNAL' || agencySession.hasData())"
+       mat-list-item
+       routerLink="/agency/dashboard"
+       [routerLinkActive]='getRouterLinkActive()'>
+      <i class="material-icons mr-1">speed</i>
+      <span class="nav-list-title">{{'mainMenu.blockName.dashboard' | translate}}</span>
+    </a>
+    <a *ngIf="canSearchChannels"
+       mat-list-item
+       routerLink="/channel/search"
+       [routerLinkActive]='getRouterLinkActive()'
+    >
+      <i class="material-icons mr-1">gps_fixed</i>
+      <span class="nav-list-title">{{'channel.blockName.channels' | translate}}</span>
+    </a>
+    <a *ngIf="canViewAgentReport"
+       mat-list-item
+       routerLink="/agent-report"
+       [routerLinkActive]='getRouterLinkActive()'
+    >
+      <i class="material-icons mr-1">insert_chart_outlined</i>
+      <span class="nav-list-title">{{'mainMenu.blockName.agentReport' | translate}}</span>
+    </a>
+    <a *ngIf="canViewAudienceResearch"
+       mat-list-item
+       routerLink="/audience-research/list"
+       routerLinkActive="active"
+       [routerLinkActive]='getRouterLinkActive()'
+    >
+      <i class="material-icons mr-1">insert_chart_outlined</i>
+      <span class="nav-list-title">{{'audienceResearch.list' | translate}}</span>
+    </a>
+    <a *ngIf="canRunPublisherReport"
+       mat-list-item
+       [routerLink]="'/report/publisher' + (userSession.isInternal() ? '' : '/' + userSession.accountId)"
+       [routerLinkActive]='getRouterLinkActive()'
+    >
+      <i class="material-icons mr-1">insert_chart_outlined</i>
+      <span class="nav-list-title">{{'mainMenu.blockName.publisherReport' | translate}}</span>
+    </a>
+    <a *ngIf="canRunReferrerReport"
+       mat-list-item
+       [routerLink]="'/report/referrer' + (userSession.isInternal() ? '' : '/' + userSession.accountId)"
+       [routerLinkActive]='getRouterLinkActive()'
+    >
+      <i class="material-icons mr-1">insert_chart_outlined</i>
+      <span class="nav-list-title">{{'mainMenu.blockName.referrerReport' | translate}}</span>
+    </a>
+    <a *ngIf="userSession.role === 'INTERNAL'"
+       mat-list-item
+       [routerLink]="'/report/detailed' + (userSession.isInternal() ? '' : '/' + userSession.accountId)"
+       [routerLinkActive]='getRouterLinkActive()'
+    >
+      <i class="material-icons mr-1">insert_chart_outlined</i>
+      <span class="nav-list-title">{{'mainMenu.blockName.detailedReport' | translate}}</span>
+    </a>
+    <a *ngIf="userSession.role === 'INTERNAL'"
+       mat-list-item
+       routerLink="/agency/select"
+       [routerLinkActive]='getRouterLinkActive()'
+    >
+      <i class="material-icons mr-1">swap_horiz</i>
+      <span class="nav-list-title">{{'mainMenu.blockName.selectAccount' | translate}}</span>
+    </a>
+
+    <ng-container *ngIf="agencySession.hasData() && canViewAdvertisingAccount">
+      <a mat-list-item
+         class="item-highlighted"
+         [routerLinkActive]='getRouterLinkActive()'
+         [routerLink]="['/agency', agencySession.id, 'account']">
+        <i class="material-icons mr-1" appDisplayStatus [displayStatus]="agencySession.displayStatus">lens</i>
+        <span title="{{agencySession.name}}" class="nav-list-title">{{agencySession.name}}</span>
+      </a>
+      <a mat-list-item
+         [routerLinkActive]='getRouterLinkActive()'
+         [routerLink]="['/agency', agencySession.id, 'channels']">
+        <i class="material-icons mr-1">gps_fixed</i>
+        <span class="nav-list-title">{{'flight.blockName.channels' | translate}}</span>
+      </a>
+      <a mat-list-item
+         [routerLinkActive]='getRouterLinkActive()'
+         [routerLink]="['/agency', agencySession.id, 'advertisers']">
+        <i class="material-icons mr-1">swap_horiz</i>
+        <span class="nav-list-title">{{'mainMenu.blockName.allAdvertisers' | translate}}</span>
+      </a>
+    </ng-container>
+
+    <ng-container *ngIf="advertiserSession.hasData() && ((!agencySession.hasData() && canViewAdvertisingAccount) || (agencySession.hasData() && canViewAgencyAdvertiserAccount))">
+      <a mat-list-item
+         [routerLinkActive]='getRouterLinkActive()'
+         class="item-highlighted"
+         [routerLink]="['/advertiser', advertiserSession.id, 'account']">
+        <i class="material-icons" appDisplayStatus [displayStatus]="advertiserSession.displayStatus">lens</i>
+        <span title="{{advertiserSession.name}}" class="nav-list-title">{{advertiserSession.name}}</span>
+      </a>
+      <a mat-list-item
+         [routerLinkActive]='getRouterLinkActive()'
+         [routerLink]="['/advertiser', advertiserSession.id, 'flights']">
+        <i class="material-icons mr-1">swap_horiz</i>
+        {{'mainMenu.blockName.allFlights' | translate}}
+      </a>
+      <a mat-list-item
+         [class.active]="routeData?.active === 'creatives'"
+         [routerLink]="['/advertiser', advertiserSession.id, 'creatives']"
+         [routerLinkActive]='getRouterLinkActive()'
+      >
+        <i class="material-icons mr-1">image</i>
+        {{'flight.blockName.creatives' | translate}}
+      </a>
+      <a mat-list-item
+         [routerLinkActive]='getRouterLinkActive()'
+         [routerLink]="['/advertiser', advertiserSession.id, 'conversions']">
+        <i class="material-icons mr-1">shopping_cart</i>
+        {{'mainMenu.blockName.conversions' | translate}}
+      </a>
+      <a mat-list-item
+         [routerLinkActive]='getRouterLinkActive()'
+         [routerLink]="['/advertiser', advertiserSession.id, 'report']">
+        <i class="material-icons mr-1">insert_chart_outlined</i>
+        {{'mainMenu.blockName.report' | translate}}
+      </a>
+      <a mat-list-item
+         [routerLinkActive]='getRouterLinkActive()'
+         [routerLink]="['/advertiser', advertiserSession.id, 'conversionsReport']">
+        <i class="material-icons mr-1">insert_chart_outlined</i>
+        {{'mainMenu.blockName.conversionsReport' | translate}}
+      </a>
+      <a mat-list-item
+         [routerLinkActive]='getRouterLinkActive()'
+         [routerLink]="['/advertiser', advertiserSession.id, 'domainsReport']">
+        <i class="material-icons mr-1">insert_chart_outlined</i>
+        {{'report.domainsReport' | translate}}
+      </a>
+      <a mat-list-item *ngIf="userSession.role === 'INTERNAL'"
+         [routerLinkActive]='getRouterLinkActive()'
+         [routerLink]="['/advertiser', advertiserSession.id, 'segmentsReport']">
+        <i class="material-icons mr-1">insert_chart_outlined</i>
+        {{'mainMenu.blockName.segmentsReport' | translate}}
+      </a>
+    </ng-container>
+  </mat-nav-list>
+</ng-template>

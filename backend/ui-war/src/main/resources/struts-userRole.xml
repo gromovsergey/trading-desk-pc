@@ -1,0 +1,62 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="userRole" extends="foros-default" namespace="/">
+        <action name="admin/UserRole/main" class="com.foros.action.admin.userRole.ListUserRoleAction" method="list">
+            <result name="success" type="tiles">UserRole.main</result>
+        </action>
+
+        <action name="admin/UserRole/view" class="com.foros.action.admin.userRole.ViewUserRoleAction" method="view">
+            <result name="success" type="tiles">UserRole.view</result>
+        </action>
+
+        <action name="admin/UserRole/edit" class="com.foros.action.admin.userRole.EditUserRoleAction" method="edit">
+            <result name="success" type="tiles">UserRole.edit</result>
+        </action>
+
+        <action name="admin/UserRole/new" class="com.foros.action.admin.userRole.EditUserRoleAction" method="create">
+            <result name="success" type="tiles">UserRole.create</result>
+        </action>
+
+        <action name="admin/UserRole/create" class="com.foros.action.admin.userRole.SaveUserRoleAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+              <param name="actionName">admin/UserRole/view</param>
+              <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">UserRole.create</result>
+        </action>
+
+        <action name="admin/UserRole/update" class="com.foros.action.admin.userRole.SaveUserRoleAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/UserRole/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">UserRole.edit</result>
+            <result name="version">
+                <param name="location">/admin/UserRole/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/UserRole/Permissions/edit" class="com.foros.action.admin.userRole.EditPermissionsAction"
+                method="edit">
+            <result name="success" type="tiles">Permissions.edit</result>
+        </action>
+
+        <action name="admin/UserRole/Permissions/save" class="com.foros.action.admin.userRole.SavePermissionsAction"
+                method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/UserRole/view</param>
+                <param name="id">${userRole.id}</param>
+            </result>
+            <result name="input" type="tiles">Permissions.edit</result>
+            <result name="version">
+                <param name="location">/admin/UserRole/Permissions/edit.action</param>
+            </result>
+        </action>
+    </package>
+</struts>

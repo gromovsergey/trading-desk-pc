@@ -1,0 +1,12 @@
+<project basedir=".">
+    <target name="make.zip">
+        <zip destfile="target/resource-utility.zip">
+            <fileset dir="target">
+                <include name="*.jar"/>
+            </fileset>
+	    <fileset dir="${basedir}">
+	        <include name="resource-utility.sh"/>
+	    </fileset>
+        </zip>
+    </target>
+</project>

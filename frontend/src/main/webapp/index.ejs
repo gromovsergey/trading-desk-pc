@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="<%= htmlWebpackPlugin.options._lang %>">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+    <title>Target RTB UI</title>
+    <link rel="icon" href="img/favicon.png" />
+    <link rel="shortcut icon" href="img/favicon.png" />
+    <link rel="stylesheet" href="main_<%= htmlWebpackPlugin.options._hash %>.css">
+    <script src="head_<%= htmlWebpackPlugin.options._hash %>.js"></script>
+  </head>
+  <body>
+    <ui-app>
+      <div class="container">
+        <div class="c-loading">
+          <img src="img/programmatic_small.png" class="c-loading__img" alt="Target RTB Logo">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:100%"><span class="sr-only">Loading</span></div>
+          </div>
+        </div>
+      </div>
+    </ui-app>
+    <script src="main_<%= htmlWebpackPlugin.options._hash %>.js"></script>
+  </body>
+</html>

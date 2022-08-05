@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!-- properties -->
+        <property name="hibernate.cache.region.factory_class">com.foros.cache.jbc.ForosCacheRegionFactory</property>
+        <property name="hibernate.cache.region_prefix">foros</property>
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.use_query_cache">false</property>
+        <property name="hibernate.cache.region.jbc2.query.localonly">true</property>
+        <property name="hibernate.cache.region.jbc2.configs">jbc2-configs.xml</property>
+        <property name="hibernate.cache.region.jbc2.cfg.multiplexer.stacks">jgroups-stacks.xml</property>
+        <property name="hibernate.cache.region.jbc2.cfg.entity">foros-hibernate-cache</property>
+        <property name="hibernate.jdbc.sql_exception_converter">com.foros.persistence.hibernate.ForosExceptionConverter</property>
+
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">false</property>
+
+        <property name="hibernate.session_factory_name">java:hibernate/com.foros.SessionFactory</property>
+
+        <property name="hibernate.jdbc.batch_size">20</property>
+
+        <property name="hibernate.order_inserts">true</property>
+        <property name="hibernate.order_updates">true</property>
+
+        <!-- Common entities -->
+
+        <class-cache class="com.foros.model.ClobParam" usage="transactional"/>
+
+        <class-cache class="com.foros.model.Country" usage="transactional"/>
+        <class-cache class="com.foros.model.Timezone" usage="transactional"/>
+        <class-cache class="com.foros.model.currency.Currency" usage="transactional"/>
+
+        <class-cache class="com.foros.model.security.AccountType" usage="transactional"/>
+        <collection-cache collection="com.foros.model.security.AccountType.templates" usage="transactional"/>
+        <collection-cache collection="com.foros.model.security.AccountType.creativeSizes" usage="transactional"/>
+        <collection-cache collection="com.foros.model.security.AccountType.ccgTypes" usage="transactional"/>
+        <collection-cache collection="com.foros.model.security.AccountType.deviceChannels" usage="transactional"/>
+
+        <class-cache class="com.foros.model.security.AccountTypeCCGType" usage="transactional"/>
+
+        <class-cache class="com.foros.model.creative.CreativeSize" usage="transactional"/>
+        <collection-cache collection="com.foros.model.creative.CreativeSize.optionGroups" usage="transactional"/>
+        <collection-cache collection="com.foros.model.creative.CreativeSize.expansions" usage="transactional"/>
+        <class-cache class="com.foros.model.creative.SizeType" usage="transactional"/>
+
+        <class-cache class="com.foros.model.template.ApplicationFormat" usage="transactional"/>
+        <class-cache class="com.foros.model.template.TemplateFile" usage="transactional"/>
+
+        <class-cache class="com.foros.model.template.Option" usage="transactional"/>
+        <class-cache class="com.foros.model.template.OptionFileType" usage="transactional"/>
+        <class-cache class="com.foros.model.template.OptionEnumValue" usage="transactional"/>
+        <collection-cache collection="com.foros.model.template.Option.fileTypes" usage="transactional"/>
+        <collection-cache collection="com.foros.model.template.Option.values" usage="transactional"/>
+
+        <class-cache class="com.foros.model.template.OptionGroup" usage="transactional"/>
+        <collection-cache collection="com.foros.model.template.OptionGroup.options" usage="transactional"/>
+
+        <class-cache class="com.foros.model.template.Template" usage="transactional"/>
+        <collection-cache collection="com.foros.model.template.Template.optionGroups" usage="transactional"/>
+        <collection-cache collection="com.foros.model.template.Template.templateFiles" usage="transactional"/>
+
+        <collection-cache collection="com.foros.model.template.CreativeTemplate.categories" usage="transactional"/>
+
+        <class-cache class="com.foros.model.template.OptionFileType" usage="transactional"/>
+
+        <class-cache class="com.foros.model.template.OptionEnumValue" usage="transactional"/>
+
+        <!-- Major entities -->
+
+        <class-cache class="com.foros.model.account.Account" usage="transactional"/>
+        <class-cache class="com.foros.model.account.AccountAuctionSettings" usage="transactional"/>
+        <collection-cache collection="com.foros.model.account.Account.users" usage="transactional"/>
+        <class-cache class="com.foros.model.security.UserCredential" usage="transactional"/>
+
+        <class-cache class="com.foros.model.security.AccountAddress" usage="transactional"/>
+
+        <class-cache class="com.foros.model.security.User" usage="transactional"/>
+<!--        <collection-cache collection="com.foros.model.security.User.advertisers" usage="transactional"/> -->
+
+        <class-cache class="com.foros.model.security.UserRole" usage="transactional"/>
+        <collection-cache collection="com.foros.model.security.UserRole.accessAccountIds" usage="transactional"/>
+
+        <class-cache class="com.foros.model.account.AccountFinancialSettings" usage="transactional" region="financialSettings"/>
+        <class-cache class="com.foros.model.finance.Invoice" usage="transactional" region="financialSettings"/>
+        <!-- Advertiser entities -->
+
+        <!-- used in CreativeTemplate.categories (EAGER) -->
+        <class-cache class="com.foros.model.creative.CreativeCategory" usage="transactional"/>
+
+        <class-cache class="com.foros.model.creative.CreativeCategoryTypeEntity" usage="transactional"/>
+
+        <class-cache class="com.foros.model.campaign.Campaign" usage="transactional"/>
+        <collection-cache collection="com.foros.model.campaign.Campaign.invoices" usage="transactional"/>
+        <collection-cache collection="com.foros.model.campaign.Campaign.campaignSchedules" usage="transactional"/>
+        <collection-cache collection="com.foros.model.campaign.Campaign.excludedChannels" usage="transactional"/>
+
+        <class-cache class="com.foros.model.campaign.CampaignCreativeGroup" usage="transactional"/>
+        <collection-cache collection="com.foros.model.campaign.CampaignCreativeGroup.sites" usage="transactional"/>
+        <collection-cache collection="com.foros.model.campaign.CampaignCreativeGroup.ccgSchedules" usage="transactional"/>
+        <collection-cache collection="com.foros.model.campaign.CampaignCreativeGroup.campaignCreatives" usage="transactional"/>
+        <collection-cache collection="com.foros.model.campaign.CampaignCreativeGroup.actions" usage="transactional"/>
+        <collection-cache collection="com.foros.model.campaign.CampaignCreativeGroup.deviceChannels" usage="transactional"/>
+        <collection-cache collection="com.foros.model.campaign.CampaignCreativeGroup.geoChannels" usage="transactional"/>
+        <collection-cache collection="com.foros.model.campaign.CampaignCreativeGroup.geoChannelsExcluded" usage="transactional"/>
+
+        <class-cache class="com.foros.model.creative.CreativeOptGroupState" usage="transactional"/>
+
+        <class-cache class="com.foros.model.creative.Creative" usage="transactional"/>
+        <collection-cache collection="com.foros.model.creative.Creative.categories" usage="transactional"/>
+        <collection-cache collection="com.foros.model.creative.Creative.options" usage="transactional"/>
+        <collection-cache collection="com.foros.model.creative.Creative.groupStates" usage="transactional"/>
+
+        <class-cache class="com.foros.model.creative.CreativeOptionValue" usage="transactional"/>
+
+        <class-cache class="com.foros.model.campaign.CampaignCreative" usage="transactional"/>
+        <class-cache class="com.foros.model.campaign.CcgRate" usage="transactional"/>
+
+        <class-cache class="com.foros.model.channel.Channel" usage="transactional"/>
+
+        <collection-cache collection="com.foros.model.channel.BehavioralChannel.behavioralParameters" usage="transactional"/>
+
+        <class-cache class="com.foros.model.action.Action" usage="transactional"/>
+        <class-cache class="com.foros.model.FrequencyCap" usage="transactional"/>
+
+        <class-cache class="com.foros.model.channel.Platform" usage="transactional"/>
+        <collection-cache collection="com.foros.model.channel.Platform.platformDetectors" usage="transactional"/>
+
+        <!-- Publisher entities -->
+
+        <class-cache class="com.foros.model.site.Site" usage="transactional"/>
+        <collection-cache collection="com.foros.model.site.Site.categoryExclusions" usage="transactional"/>
+        <collection-cache collection="com.foros.model.site.Site.tags" usage="transactional"/>
+        <collection-cache collection="com.foros.model.site.Site.wdTags" usage="transactional"/>
+        
+        <class-cache class="com.foros.model.site.SiteCreativeCategoryExclusion" usage="transactional"/>
+        <class-cache class="com.foros.model.site.TagPricing" usage="transactional"/>
+
+        <class-cache class="com.foros.model.site.Tag" usage="transactional"/>
+        <collection-cache collection="com.foros.model.site.Tag.tagPricings" usage="transactional"/>
+        <collection-cache collection="com.foros.model.site.Tag.options" usage="transactional"/>
+        <class-cache class="com.foros.model.site.TagOptionValue" usage="transactional"/>
+        
+
+        <class-cache class="com.foros.model.site.WDTag" usage="transactional"/>
+        <collection-cache collection="com.foros.model.site.WDTag.options" usage="transactional"/>
+        <class-cache class="com.foros.model.site.WDTagOptionValue" usage="transactional"/>
+
+        <!-- ISP entities -->
+
+        <class-cache class="com.foros.model.isp.Colocation" usage="transactional"/>
+        <class-cache class="com.foros.model.isp.ColocationRate" usage="transactional"/>
+
+        <event type="flush">
+            <listener class="com.foros.persistence.hibernate.ExceptionManagementFlushEventListener"/>
+        </event>
+        <event type="flush-entity">
+            <listener class="org.hibernate.event.def.DefaultFlushEntityEventListener"/>
+        </event>
+        <event type="lock">
+            <listener class="org.hibernate.event.def.DefaultLockEventListener"/>
+            <listener class="com.foros.session.cache.ForceCacheUpdateEventListener"/>
+        </event>
+        <event type="load">
+            <listener class="org.hibernate.event.def.DefaultLoadEventListener"/>
+            <listener class="com.foros.session.FindEventListener"/>
+        </event>
+        <event type="merge">
+            <listener class="com.foros.persistence.hibernate.ChangesMergeEventListener"/>
+        </event>
+        <event type="create">
+            <listener class="org.hibernate.ejb.event.EJB3PersistEventListener"/>
+            <listener class="com.foros.persistence.hibernate.CreatedEntityListener"/>
+        </event>
+
+    </session-factory>
+
+</hibernate-configuration>

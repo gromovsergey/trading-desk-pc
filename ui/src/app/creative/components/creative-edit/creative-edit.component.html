@@ -1,0 +1,121 @@
+<ui-loading *ngIf="wait || mainWait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">
+    {{(mode === 'edit' ? 'creative.editCreative' : 'creative.addNewCreative') | translate}}
+  </h1>
+
+  <ui-info-panel type="danger" *ngIf="errors.actionError">
+    <p *ngFor="let error of errors.actionError">{{error}}</p>
+  </ui-info-panel>
+
+  <form (submit)="doSubmit($event)">
+
+    <ui-panel class="form-panel" title="{{'blockName.main' | translate}}">
+      <mat-form-field class="width-full">
+        <mat-label>{{'blockName.name' | translate}}</mat-label>
+        <input name="name" matInput required
+               [errorStateMatcher]="matcher(errors?.name)"
+               [(ngModel)]="creative.name" type="text">
+        <mat-error *ngFor="let error of errors?.name">{{error}}</mat-error>
+      </mat-form-field>
+
+      <!--
+       <section *ngIf="templateStats.expandable && sizeStats.expansions && sizeStats.expansions.length">
+           <div class="form-group" [ngClass]="{'has-error':errors.name}">
+               <label>Expandable</label>
+               <div>
+                   No <button (click)="toggleExpandable($event)" class="btn btn-toggle">
+                       <i class="fa" [ngClass]="{'fa-toggle-on': creative.expandable,'fa-toggle-off': !creative.expandable}"></i>
+                   </button> Yes
+                   <span *ngIf="creative.expandable"> (max expanded size: {{sizeStats.maxWidth}} X {{sizeStats.maxHeight}} pixels)</span>
+               </div>
+           </div>
+           <div class="form-group" *ngIf="creative.expandable">
+               <label>Direction of Expansion</label>
+               <div>
+                   <select *ngIf="creative.expandable" class="form-control"
+                           [(ngModel)]="creative.expansion" (change)="updateLivePreview()">
+                       <option *ngFor="let dir of sizeStats.expansions" [value]="dir">{{dir}}</option>
+                   </select>
+               </div>
+           </div>
+       </section>
+       -->
+    </ui-panel>
+
+    <ui-panel class="form-panel" title="{{'creative.blockName.livePreview' | translate}}">
+      <ui-creative-live-preview [rnd]="rnd"
+                                [creative]="creative"></ui-creative-live-preview>
+    </ui-panel>
+
+
+    <ui-panel [class.hidden]="!templateStatsVisible"
+              class="form-panel"
+              title="{{'creative.blockName.templateOptions' | translate}}">
+      <ui-creative-option-group *ngFor="let group of templateStats.optionGroups"
+                                [group]="group" (optionGroupChange)="onOptionGroupChange($event)"
+                                [errors]="errors.options"></ui-creative-option-group>
+      <ui-info-panel type="danger" *ngIf="errors.template">
+        <p *ngFor="let error of errors.template">{{error}}</p>
+      </ui-info-panel>
+    </ui-panel>
+
+    <ui-panel [class.hidden]="!sizeStatsVisible"
+              class="form-panel"
+              title="{{'creative.blockName.creativeSizeOptions' | translate}}">
+      <ui-info-panel type="danger" *ngIf="errors.size">
+        <p *ngFor="let error of errors.size">{{error}}</p>
+      </ui-info-panel>
+      <ui-creative-option-group *ngFor="let group of sizeStats.optionGroups"
+                                (optionGroupChange)="onOptionGroupChange($event)"
+                                [group]="group"
+                                [errors]="errors.options"></ui-creative-option-group>
+    </ui-panel>
+
+    <ui-panel title="{{'creative.blockName.contentCategories' | translate}}"
+              class="form-panel"
+              [collapsible]="true"
+              [collapsed]="!errors.contentCategories">
+      <ui-info-panel type="danger" *ngIf="errors?.contentCategories">
+        <p *ngFor="let error of errors.contentCategories">{{error}}</p>
+      </ui-info-panel>
+      <ui-option-transfer [options]="categories.contentCategories"
+                          [selected]="creative.contentCategories"
+                          (transferChange)="setContentCategories($event)"
+                          [customSort]="sort">
+      </ui-option-transfer>
+    </ui-panel>
+
+    <ui-panel title="{{'creative.blockName.visualCategories' | translate}}"
+              class="form-panel"
+              [collapsible]="true"
+              [collapsed]="!errors.visualCategories">
+      <ui-info-panel type="danger" *ngIf="errors?.visualCategories">
+        <p *ngFor="let error of errors.visualCategories">{{error}}</p>
+      </ui-info-panel>
+
+      <ul *ngIf="templateStats?.visualCategories?.length, else showTransfer" class="visual-category-list">
+        <li *ngFor="let item of templateStats.visualCategories"
+            class="visual-category-item">{{item.name}}</li>
+      </ul>
+
+      <ng-template #showTransfer>
+        <ui-option-transfer [options]="categories.visualCategories"
+                            [selected]="creative.visualCategories"
+                            (transferChange)="setVisualCategories($event)"
+                            [customSort]="sort">
+        </ui-option-transfer>
+      </ng-template>
+    </ui-panel>
+
+    <div class="form-footer mb-2">
+      <ui-submit-button title="{{(mode === 'add' ? 'button.add' : 'button.save') | translate}}"
+                        [wait]="waitSubmit"></ui-submit-button>
+      <button *ngIf="!waitSubmit"
+              mat-flat-button
+              type="button"
+              [routerLink]="backUrl">{{'button.cancel' | translate}}</button>
+    </div>
+  </form>
+</ng-template>

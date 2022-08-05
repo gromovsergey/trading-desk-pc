@@ -1,0 +1,58 @@
+<ui-loading *ngIf="wait1 || wait2"></ui-loading>
+<section class="cinemagoers">
+    <h1>{{title}}</h1>
+    <p class="text" *ngIf="!actionErrors && noData">
+        _L10N_(audienceResearch.noStat)
+    </p>
+    <div *ngIf="!!actionErrors">
+        <p class="cinemagoers-chart-error" *ngFor="let error of actionErrors">{{error}}</p>
+        <button class="btn btn-default" (click)="loadStat()">_L10N_(messages.tryAgain)</button>
+    </div>
+    <div *ngIf="!actionErrors && !noData" class="cinemagoers-container" [ngClass]="{'cinemagoers-container-row': inOneRow, 'cinemagoers-container-column': !inOneRow}">
+        <div class="cinemagoers-chart-container">
+            <div [id]="containerId1" class="cinemagoers-chart {{template}}" oncontextmenu="return false">
+                <div *ngIf="!!error1" class="cinemagoers-chart-error">{{error1.message || '_L10N_(messages.error)'}}
+                </div>
+            </div>
+            <div *ngIf="!wait1">
+                <span class="cinemagoers-chart-comments">
+                    _L10N_(audienceResearch.comments)
+                </span>
+                <span *ngIf="canEdit" class="cinemagoers-chart-comments-control">
+                    <i class="fa fa-pencil cinemagoers-image-link" title="Редактировать" (click)="editYesterdayComment($event)"></i>
+                </span>
+                <div class="cinemagoers-chart-comments">
+                    <textarea [(ngModel)]="yesterdayComment" (change)="onYesterdayCommentChange($event)"
+                              readonly="true"></textarea>
+                </div>
+            </div>
+            <a class="cinemagoers-image-link cinemagoers-chart-photo" [ngClass]="{'hidden': wait1 || !!error1}" href="about:blank"
+               [attr.download]="title + '.png'" [title]="'_L10N_(audienceResearch.saveChartAsImage)'"
+               (click)="chart1.toImage($event)">
+                <i class="fa fa-camera" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="cinemagoers-chart-container">
+            <div [id]="containerId2" class="cinemagoers-chart LINE_TIME" oncontextmenu="return false">
+                <div *ngIf="!!error2" class="cinemagoers-chart-error">{{error2.message || '_L10N_(messages.error)'}}
+                </div>
+            </div>
+            <div *ngIf="!wait2">
+              <span class="cinemagoers-chart-comments">
+                  _L10N_(audienceResearch.comments)
+              </span>
+                <span *ngIf="canEdit" class="cinemagoers-chart-comments-control">
+                    <i class="fa fa-pencil cinemagoers-image-link" title="Редактировать" (click)="editTotalComment($event)"></i>
+                </span>
+                <div class="cinemagoers-chart-comments">
+                    <textarea [(ngModel)]="totalComment" (change)="onTotalCommentChange($event)" readonly="true"></textarea>
+                </div>
+            </div>
+            <a class="cinemagoers-image-link cinemagoers-chart-photo" [ngClass]="{'hidden': wait2 || !!error2}" href="about:blank"
+               [attr.download]="title + '.png'" [title]="'_L10N_(audienceResearch.saveChartAsImage)'"
+               (click)="chart2.toImage($event)">
+                <i class="fa fa-camera" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+</section>

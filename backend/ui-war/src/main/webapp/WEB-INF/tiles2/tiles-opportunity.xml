@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <definition name=".Opportunity" extends=".mainLayout">
+        <put-attribute name="taskTitle" value="page.title.opportunities"/>
+        <put-attribute name="entityName" value="opportunity"/>
+        <put-attribute name="moduleName" value="admin/opportunity"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.opportunities"/>
+    </definition>
+
+    <definition name="opportunity.main" extends=".Opportunity">
+        <put-attribute name="titleProperty" value="opportunity.title"/>
+        <put-attribute name="body" value="/opportunity/opportunityMain.jsp"/>
+    </definition>
+
+    <definition name="opportunity.view" extends=".Opportunity">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/opportunity/opportunityView.jsp"/>
+    </definition>
+
+    <definition name="opportunity.edit" extends=".Opportunity">
+        <put-attribute name="body" value="/opportunity/opportunityEdit.jsp"/>
+    </definition>
+
+    <definition name=".InsertionOrder" extends=".mainLayout">
+        <put-attribute name="entityName" value="insertionOrder"/>
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/opportunity/insertionOrderView.jsp"/>
+    </definition>
+
+    <definition name="admin.insertionOrder.view" extends=".InsertionOrder">
+        <put-attribute name="activeMenuItemKey" expression="${not empty action.campaign ? 'global.menu.campaigns' :
+                       not empty action.invoice ? 'global.submenu.account' : 'global.menu.opportunities'}"/>
+    </definition>
+
+    <definition name="advertiser.insertionOrder.view" extends=".InsertionOrder">
+        <put-attribute name="activeMenuItemKey" expression="${not empty action.campaign ? 'global.menu.campaigns' : 'global.menu.myAccount'}"/>
+    </definition>
+</tiles-definitions>

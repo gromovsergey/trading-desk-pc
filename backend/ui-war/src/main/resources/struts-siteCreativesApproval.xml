@@ -1,0 +1,43 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <package abstract="true" name="creativesApproval" extends="foros-default">
+
+        <action name="search" class="com.foros.action.site.SearchSiteCreativesApprovalAction" method="search">
+            <result name="success">/site/creativesApprovalSearchResult.jsp</result>
+        </action>
+
+        <action name="approve" class="com.foros.action.site.SaveSiteCreativesApprovalAction" method="approve">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/site/creativesApprovalElem.jsp</result>
+            <result name="version">
+                <param name="location">view.action</param>
+            </result>
+        </action>
+
+        <action name="reject" class="com.foros.action.site.SaveSiteCreativesApprovalAction" method="reject">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/site/creativesApprovalElem.jsp</result>
+            <result name="version">
+                <param name="location">view.action</param>
+            </result>
+            <result name="input">/site/creativesApprovalRejectDialog.jsp</result>
+        </action>
+
+        <action name="view" class="com.foros.action.site.SaveSiteCreativesApprovalAction" method="view">
+            <result name="success">/site/creativesApprovalElem.jsp</result>
+        </action>
+
+        <action name="main" class="com.foros.action.site.SearchSiteCreativesApprovalAction" method="main">
+            <result name="success" type="tiles">creativesApproval.main</result>
+        </action>
+
+    </package>
+
+    <package namespace="/admin/site/creativesApproval" name="creativesApprovalAdmin" extends="creativesApproval"/>
+    <package namespace="/publisher/site/creativesApproval" name="creativesApprovalPublisher" extends="creativesApproval"/>
+
+</struts>

@@ -1,0 +1,35 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<ng-template [ngIf]="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [fw]="true" [displayStatus]="agency.displayStatus"></ui-icon> _L10N_(accountSearch.account): {{agency.name}}
+            <div *ngIf="documentsViewAllowed" class="btn-group">
+                <button *ngIf="!documentsExist" class="btn btn-default" (click)="showDocuments($event)">_L10N_(account.documents)</button>
+                <button *ngIf="documentsExist" class="btn btn-primary" (click)="showDocuments($event)">_L10N_(account.documents)</button>
+            </div>
+        </h2>
+    </div>
+
+    <ui-panel [title]="'_L10N_(blockName.generalProperties)'">
+        <div #body>
+            <ui-agency-properties [agencyId]="agency.id" [showSelfServiceCommission]="financeViewAllowed"></ui-agency-properties>
+        </div>
+    </ui-panel>
+
+    <div class="page-header">
+        <h3 class="c-pagetitle">
+            <ui-icon [icon]="'user'"></ui-icon> _L10N_(agencyAccount.users)
+            <div class="btn-group" *ngIf="canCreateUser">
+                <a class="btn btn-default" [routerLink]="['/agency/'+agency.id+'/user/add']">_L10N_(button.createNew)</a>
+            </div>
+        </h3>
+    </div>
+    <ui-user-list [accountId]="agency.id" [showAdvertisers]="true"></ui-user-list>
+
+    <ui-account-documents *ngIf="documents"
+                          [accountId]="agency.id"
+                          [accountName]="agency.name"
+                          (close)="onDocumentsClose($event)">
+    </ui-account-documents>
+</ng-template>

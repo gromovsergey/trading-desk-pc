@@ -1,0 +1,51 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="triggerList" extends="foros-default" namespace="/">
+        <action name="admin/TriggerListNoAdvChannel/view" class="com.foros.action.admin.bannedChannel.ViewNoAdvChannelAction"
+                method="view">
+            <result name="success" type="tiles">TriggerListNoAdvChannel.view</result>
+        </action>
+
+        <action name="admin/TriggerListNoTrackChannel/view" class="com.foros.action.admin.bannedChannel.ViewNoTrackChannelAction"
+                method="view">
+            <result name="success" type="tiles">TriggerListNoTrackChannel.view</result>
+        </action>
+
+        <action name="admin/TriggerListNoAdvChannel/edit" class="com.foros.action.admin.bannedChannel.EditNoAdvChannelAction"
+                method="edit">
+            <result name="success" type="tiles">TriggerListNoAdvChannel.edit</result>
+        </action>
+
+        <action name="admin/TriggerListNoTrackChannel/edit" class="com.foros.action.admin.bannedChannel.EditNoTrackChannelAction"
+                method="edit">
+            <result name="success" type="tiles">TriggerListNoTrackChannel.edit</result>
+        </action>
+
+        <action name="admin/TriggerListNoAdvChannel/save" class="com.foros.action.admin.bannedChannel.SaveBannedChannelAction"
+                method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/TriggerListNoAdvChannel/view</param>
+            </result>
+            <result name="input" type="tiles">TriggerListNoAdvChannel.edit</result>
+             <result name="version">
+                <param name="location">/admin/TriggerListNoAdvChannel/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/TriggerListNoTrackChannel/save" class="com.foros.action.admin.bannedChannel.SaveBannedChannelAction"
+                method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/TriggerListNoTrackChannel/view</param>
+            </result>
+            <result name="input" type="tiles">TriggerListNoTrackChannel.edit</result>
+            <result name="version">
+                <param name="location">/admin/TriggerListNoTrackChannel/edit.action</param>
+            </result>
+        </action>
+    </package>
+</struts>

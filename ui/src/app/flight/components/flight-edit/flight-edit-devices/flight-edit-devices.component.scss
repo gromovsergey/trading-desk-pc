@@ -1,0 +1,31 @@
+@import "src/scss/variables";
+
+.device-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  .device-info {
+    width: 50%;
+
+    &:first-child {
+      padding-right: $gen-spacing;
+    }
+
+    .device-title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+}
+.mat-selection-list {
+  border: 1px solid #f0f0f0;
+  margin-top: $gen-gap;
+  padding-top: 0;
+}
+.delimiter {
+  width: 100%;
+  border-top: 1px solid #f0f0f0;
+  margin: $gen-spacing 0;
+}

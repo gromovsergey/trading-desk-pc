@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.22" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 3.7.1.v20110905 Build &lt;3.7.1.v20110905-1820></property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <parameters>
+        <scalar-parameter name="rp_ccg_id" id="428">
+            <property name="hidden">false</property>
+            <text-property name="promptText">Channel Targeted Text Group ID</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">decimal</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_tag_id" id="1857">
+            <property name="hidden">false</property>
+            <text-property name="promptText">Publisher Tag ID</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">decimal</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source" id="7">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://stat-dev0.ocslab.com/ui_dev_19</property>
+            <property name="odaUser">oix</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">YWRzZXJ2ZXI=</encrypted-property>
+            <property name="odaJndiName">jdbc/birt</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="report_var" id="1859">
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">dsp_ccg_id</property>
+                    <property name="paramName">rp_ccg_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">campaign_id</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">country_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">imps_left</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">random_mode</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">campaign_id</property>
+                    <property name="nativeName">campaign_id</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">country_code</property>
+                    <property name="nativeName">country_code</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">imps_left</property>
+                    <property name="nativeName">imps_left</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">random_mode</property>
+                    <property name="nativeName">random_mode</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select ccg.campaign_id,
+       ccg.country_code,
+       coalesce(h.imps, 0) - case cr.rate_type when 'CPA' then c.cpa_random_imps when 'CPC' then c.cpc_random_imps else 0 end imps_left,
+       'Group is in Random Mode, '||abs(coalesce(h.imps, 0) - case cr.rate_type when 'CPA' then c.cpa_random_imps when 'CPC' then c.cpc_random_imps else 0 end)||' impressions left' random_mode
+from CampaignCreativeGroup ccg
+     join ccgrate cr using (ccg_rate_id)
+     join ctralgorithm c using (country_code)
+     left join historyctrstatstotal h on (h.ccg_id = ccg.ccg_id and h.ctr_reset_id = ccg.ctr_reset_id)
+where ccg.ccg_id = ? /* dsp_ccg_id */]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="main report" id="1882">
+            <property name="nullsOrdering">nulls lowest</property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">log_type</property>
+                    <property name="alias">log_type</property>
+                    <property name="analysis">attribute</property>
+                </structure>
+                <structure>
+                    <property name="columnName">imps</property>
+                    <property name="alias">imps</property>
+                    <property name="analysis">measure</property>
+                </structure>
+                <structure>
+                    <property name="columnName">clicks</property>
+                    <property name="alias">clicks</property>
+                    <property name="analysis">measure</property>
+                </structure>
+                <structure>
+                    <property name="columnName">ctr</property>
+                    <property name="alias">ctr</property>
+                    <property name="analysis">attribute</property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">dsp_ccg_id</property>
+                    <property name="paramName">rp_ccg_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">log_type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">imps</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">clicks</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">ctr</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">log_type</property>
+                    <property name="nativeName">log_type</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">imps</property>
+                    <property name="nativeName">imps</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">clicks</property>
+                    <property name="nativeName">clicks</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">ctr</property>
+                    <property name="nativeName">ctr</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select 'TG' log_type,
+       round(imps) imps,
+       round(clicks) clicks,
+       to_char(ctr*100, '990.000')||'%' ctr
+  from ctr.CCGHistoryCTR l
+ where ccg_id = ? /*dsp_ccg_id*/]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="pub tag adj" id="1911">
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">dsp_tag_id</property>
+                    <property name="paramName">rp_tag_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_country_code</property>
+                    <property name="dataType">string</property>
+                    <property name="position">2</property>
+                    <expression name="defaultValue" type="javascript">reportContext.getGlobalVariable("rp_country_code")</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">log_type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">imps</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">clicks</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">ctr</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">sort_by</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">log_type</property>
+                    <property name="nativeName">log_type</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">imps</property>
+                    <property name="nativeName">imps</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">clicks</property>
+                    <property name="nativeName">clicks</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">ctr</property>
+                    <property name="nativeName">ctr</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">sort_by</property>
+                    <property name="nativeName">sort_by</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[with pub_ as (
+  select s.site_id,
+         t.tag_id,
+         s.account_id
+    from tags t,
+         site s
+   where t.tag_id = ? /*dsp_tag_id*/
+     and t.site_id = s.site_id
+)
+select case log_type when 'PTA: SYSTEM' then 'System'
+                     when 'PTA: PUBLISHER' then 'Publisher'
+                     when 'PTA: SITE' then 'Site'
+                     when 'PTA: TAG' then 'Tag'
+       end log_type,
+       round(imps) imps,
+       round(clicks) clicks,
+       to_char(ctr*100, '990.000')||'%' ctr,
+       case log_type when 'PTA: SYSTEM' then 1
+                     when 'PTA: PUBLISHER' then 2
+                     when 'PTA: SITE' then 3
+                     when 'PTA: TAG' then 4
+       end sort_by
+  from ctr.ctrlog l,
+       pub_
+ where (log_type = 'PTA: SYSTEM' and country_code = ? /*dsp_p_country_code*/)
+       or
+       (log_type = 'PTA: SITE' and id = pub_.site_id)
+       or
+       (log_type = 'PTA: PUBLISHER' and id = pub_.account_id)
+       or
+       (log_type = 'PTA: TAG' and id = pub_.tag_id)
+order by 5]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="final calc" id="3674">
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">dsp_ccg_id</property>
+                    <property name="paramName">rp_ccg_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">reportContext.getGlobalVariable("rp_ccg_keyword_id")</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_tag_id</property>
+                    <property name="paramName">rp_tag_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">2</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">title</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">ctr</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">ctr_</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">order_by</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">title</property>
+                    <property name="nativeName">title</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">ctr</property>
+                    <property name="nativeName">ctr</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">ctr_</property>
+                    <property name="nativeName">ctr_</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">order_by</property>
+                    <property name="nativeName">order_by</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[with sum_ as (
+select 'TG CTR' title, ctr, to_char(ctr*100, '990.000')||'%' ctr_, 1 order_by
+  from ctr.CCGHistoryCTR where ccg_id= ? /*dsp_ccg_id*/
+union all
+select 'Tag CTR Adjustment' title, adjustment, to_char(adjustment, '990.000')||'%', 3
+  from ctr.TagCTR where tag_id= ? /*dsp_tag_id*/
+),
+min_ as (
+select min(ctr) ctr from sum_
+)
+select * from sum_
+union all
+select 'Final TG CTR for Auction', 1, to_char(least(case when min_.ctr = 0 then 0 else exp (sum (case when min_.ctr = 0 then 0 else ln(sum_.ctr) end)) end *100,100), '990.000')||'%' mul, 4
+   from sum_, min_ 
+group by min_.ctr
+order by 4]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">"Verdana"</property>
+            <property name="fontSize">10pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab_custom" id="6">
+            <property name="fontSize">8pt</property>
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab_currency" id="80">
+            <structure name="numberFormat">
+                <property name="category">Currency</property>
+                <property name="pattern">$#,##0.00</property>
+            </structure>
+        </style>
+        <style name="cell_border" id="2730">
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">thin</property>
+            <property name="borderLeftStyle">none</property>
+            <property name="borderLeftWidth">thin</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">thin</property>
+            <property name="borderTopStyle">none</property>
+            <property name="borderTopWidth">thin</property>
+        </style>
+        <style name="head_border" id="2731">
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">medium</property>
+            <property name="borderLeftStyle">none</property>
+            <property name="borderLeftWidth">medium</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">medium</property>
+            <property name="borderTopStyle">none</property>
+            <property name="borderTopWidth">medium</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">custom</property>
+            <property name="height">100in</property>
+            <property name="width">18.9in</property>
+            <property name="orientation">landscape</property>
+            <property name="leftMargin">0.25in</property>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <grid id="1939">
+            <property name="height">6.083333333333333in</property>
+            <property name="width">18.13888888888889in</property>
+            <column id="1940">
+                <property name="width">18.13888888888889in</property>
+            </column>
+            <row id="3753">
+                <property name="height">0.3888888888888889in</property>
+                <cell id="3754">
+                    <property name="fontSize">8pt</property>
+                    <property name="verticalAlign">bottom</property>
+                    <text id="3755">
+                        <property name="fontSize">10pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="fontStyle">italic</property>
+                        <property name="textUnderline">underline</property>
+                        <property name="contentType">auto</property>
+                        <text-property name="content"><![CDATA[Channel Targeted CPC Text Group CTR Calculation]]></text-property>
+                    </text>
+                </cell>
+            </row>
+            <row id="1941">
+                <property name="height">1.9305555555555556in</property>
+                <cell id="1942">
+                    <property name="fontSize">8pt</property>
+                    <property name="verticalAlign">bottom</property>
+                    <text id="3750">
+                        <property name="fontSize">9pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="textUnderline">underline</property>
+                        <property name="contentType">auto</property>
+                        <text-property name="content"><![CDATA[Report Parameters:]]></text-property>
+                    </text>
+                    <table id="1860">
+                        <property name="fontSize">8pt</property>
+                        <property name="textAlign">left</property>
+                        <property name="width">3.4027777777777777in</property>
+                        <property name="dataSet">report_var</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">CAMPAIGN_ID</property>
+                                <text-property name="displayName">CAMPAIGN_ID</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["campaign_id"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">COUNTRY_CODE</property>
+                                <text-property name="displayName">COUNTRY_CODE</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["country_code"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">RP_TAG_ID</property>
+                                <expression name="expression" type="javascript">params["rp_tag_id"].value</expression>
+                                <property name="dataType">decimal</property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                            <structure>
+                                <property name="name">RP_CCG_ID</property>
+                                <expression name="expression" type="javascript">params["rp_ccg_id"].value</expression>
+                                <property name="dataType">decimal</property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                            <structure>
+                                <property name="name">RANDOM_MODE</property>
+                                <text-property name="displayName">RANDOM_MODE</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["random_mode"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">IMPS_LEFT</property>
+                                <text-property name="displayName">IMPS_LEFT</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["imps_left"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                        </list-property>
+                        <method name="onCreate"><![CDATA[reportContext.setGlobalVariable( "rp_country_code" , this.getRowData().getColumnValue("COUNTRY_CODE") == null? "BLA": this.getRowData().getColumnValue("COUNTRY_CODE") );
+reportContext.setGlobalVariable( "rp_campaign_id" , this.getRowData().getColumnValue("CAMPAIGN_ID") == null? 0: this.getRowData().getColumnValue("CAMPAIGN_ID") );
+]]></method>
+                        <column id="1879">
+                            <property name="width">2.3055555555555554in</property>
+                            <property name="fontWeight">bold</property>
+                        </column>
+                        <column id="1880">
+                            <property name="width">1.0972222222222223in</property>
+                        </column>
+                        <detail>
+                            <row id="1868">
+                                <property name="color">black</property>
+                                <property name="textLineThrough">none</property>
+                                <property name="textAlign">left</property>
+                                <cell id="1869">
+                                    <property name="style">cell_border</property>
+                                    <label id="3735">
+                                        <text-property name="text">Country Code</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1871">
+                                    <property name="style">cell_border</property>
+                                    <data id="1872">
+                                        <property name="resultSetColumn">COUNTRY_CODE</property>
+                                    </data>
+                                </cell>
+                            </row>
+                            <row id="3719">
+                                <property name="color">black</property>
+                                <property name="textLineThrough">none</property>
+                                <property name="textAlign">left</property>
+                                <cell id="3720">
+                                    <property name="style">cell_border</property>
+                                    <label id="3736">
+                                        <text-property name="text">Channel Targeted Text Group ID</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="3721">
+                                    <property name="style">cell_border</property>
+                                    <data id="3749">
+                                        <property name="resultSetColumn">RP_CCG_ID</property>
+                                    </data>
+                                </cell>
+                            </row>
+                            <row id="3745">
+                                <property name="color">black</property>
+                                <property name="textLineThrough">none</property>
+                                <property name="textAlign">left</property>
+                                <cell id="3746">
+                                    <property name="style">cell_border</property>
+                                    <label id="3748">
+                                        <text-property name="text">Campaign ID</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="3747">
+                                    <property name="style">cell_border</property>
+                                    <data id="1870">
+                                        <property name="resultSetColumn">CAMPAIGN_ID</property>
+                                    </data>
+                                </cell>
+                            </row>
+                            <row id="3727">
+                                <property name="color">black</property>
+                                <property name="textLineThrough">none</property>
+                                <property name="textAlign">left</property>
+                                <cell id="3728">
+                                    <property name="style">cell_border</property>
+                                    <label id="3738">
+                                        <text-property name="text">Publisher Tag ID</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="3729">
+                                    <property name="style">cell_border</property>
+                                    <data id="3741">
+                                        <property name="resultSetColumn">RP_TAG_ID</property>
+                                    </data>
+                                </cell>
+                            </row>
+                            <row id="3760">
+                                <property name="color">black</property>
+                                <property name="textLineThrough">none</property>
+                                <property name="textAlign">left</property>
+                                <cell id="3761">
+                                    <property name="colSpan">2</property>
+                                    <property name="rowSpan">1</property>
+                                    <property name="style">cell_border</property>
+                                    <data id="3764">
+                                        <property name="color">red</property>
+                                        <list-property name="visibility">
+                                            <structure>
+                                                <property name="format">all</property>
+                                                <expression name="valueExpr" type="javascript">row["IMPS_LEFT"]>0</expression>
+                                            </structure>
+                                        </list-property>
+                                        <property name="resultSetColumn">RANDOM_MODE</property>
+                                    </data>
+                                </cell>
+                            </row>
+                        </detail>
+                    </table>
+                </cell>
+            </row>
+            <row id="3751">
+                <property name="height">1.1111111111111112in</property>
+                <cell id="3752">
+                    <property name="fontSize">8pt</property>
+                    <property name="verticalAlign">bottom</property>
+                    <table id="1883">
+                        <property name="fontSize">8pt</property>
+                        <property name="width">7.722222222222222in</property>
+                        <property name="dataSet">main report</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">LOG_TYPE</property>
+                                <text-property name="displayName">LOG_TYPE</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["log_type"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">IMPS</property>
+                                <text-property name="displayName">IMPS</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["imps"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">CLICKS</property>
+                                <text-property name="displayName">CLICKS</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["clicks"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">CTR</property>
+                                <text-property name="displayName">CTR</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["ctr"]</expression>
+                                <property name="dataType">string</property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                        </list-property>
+                        <column id="1907">
+                            <property name="width">2.0833333333333335in</property>
+                        </column>
+                        <column id="1908">
+                            <property name="width">2.513888888888889in</property>
+                        </column>
+                        <column id="1909">
+                            <property name="width">2.125in</property>
+                        </column>
+                        <column id="1910">
+                            <property name="width">1in</property>
+                        </column>
+                        <header>
+                            <row id="1884">
+                                <property name="fontSize">8pt</property>
+                                <property name="fontWeight">bold</property>
+                                <property name="borderBottomColor">#000000</property>
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">medium</property>
+                                <cell id="1885">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                </cell>
+                                <cell id="1887">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <label id="1888">
+                                        <text-property name="text">History Adjusted Impressions</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1889">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <label id="1890">
+                                        <text-property name="text">History Adjusted Clicks</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1891">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <label id="1892">
+                                        <text-property name="text">CTR</text-property>
+                                    </label>
+                                </cell>
+                            </row>
+                        </header>
+                        <detail>
+                            <row id="1893">
+                                <property name="fontSize">8pt</property>
+                                <property name="borderBottomColor">#000000</property>
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <cell id="1894">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <property name="borderRightWidth">thin</property>
+                                    <data id="1895">
+                                        <property name="resultSetColumn">LOG_TYPE</property>
+                                    </data>
+                                </cell>
+                                <cell id="1896">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <property name="borderRightWidth">thin</property>
+                                    <data id="1897">
+                                        <property name="textAlign">right</property>
+                                        <property name="resultSetColumn">IMPS</property>
+                                    </data>
+                                </cell>
+                                <cell id="1898">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <property name="borderRightWidth">thin</property>
+                                    <data id="1899">
+                                        <property name="textAlign">right</property>
+                                        <property name="resultSetColumn">CLICKS</property>
+                                    </data>
+                                </cell>
+                                <cell id="1900">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <property name="borderRightWidth">thin</property>
+                                    <data id="1901">
+                                        <property name="textAlign">right</property>
+                                        <property name="resultSetColumn">CTR</property>
+                                    </data>
+                                </cell>
+                            </row>
+                        </detail>
+                        <footer>
+                            <row id="1902">
+                                <cell id="1903"/>
+                                <cell id="1904"/>
+                                <cell id="1905"/>
+                                <cell id="1906"/>
+                            </row>
+                        </footer>
+                    </table>
+                </cell>
+            </row>
+            <row id="1945">
+                <property name="height">1.375in</property>
+                <cell id="1946">
+                    <property name="fontSize">8pt</property>
+                    <property name="verticalAlign">bottom</property>
+                    <text id="1951">
+                        <property name="fontSize">9pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="textUnderline">underline</property>
+                        <property name="contentType">auto</property>
+                        <text-property name="content"><![CDATA[Publisher Tag Adjustments]]></text-property>
+                    </text>
+                    <table id="1912">
+                        <property name="fontSize">8pt</property>
+                        <property name="width">7.722222222222222in</property>
+                        <property name="dataSet">pub tag adj</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">LOG_TYPE</property>
+                                <text-property name="displayName">LOG_TYPE</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["log_type"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">IMPS</property>
+                                <text-property name="displayName">IMPS</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["imps"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">CLICKS</property>
+                                <text-property name="displayName">CLICKS</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["clicks"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">CTR</property>
+                                <text-property name="displayName">CTR</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["ctr"]</expression>
+                                <property name="dataType">string</property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                            <structure>
+                                <property name="name">SORT_BY</property>
+                                <text-property name="displayName">SORT_BY</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["sort_by"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                        </list-property>
+                        <column id="1935">
+                            <property name="width">2.0833333333333335in</property>
+                        </column>
+                        <column id="1936">
+                            <property name="width">2.513888888888889in</property>
+                        </column>
+                        <column id="1937">
+                            <property name="width">2.125in</property>
+                        </column>
+                        <column id="1938">
+                            <property name="width">1in</property>
+                        </column>
+                        <header>
+                            <row id="1913">
+                                <property name="fontSize">8pt</property>
+                                <property name="fontWeight">bold</property>
+                                <property name="borderBottomColor">#000000</property>
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">medium</property>
+                                <cell id="1914">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                </cell>
+                                <cell id="1915">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <label id="1916">
+                                        <text-property name="text">History Adjusted Impressions</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1917">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <label id="1918">
+                                        <text-property name="text">History Adjusted Clicks</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1919">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <label id="1920">
+                                        <text-property name="text">CTR</text-property>
+                                    </label>
+                                </cell>
+                            </row>
+                        </header>
+                        <detail>
+                            <row id="1921">
+                                <property name="style">cell_border</property>
+                                <property name="fontSize">8pt</property>
+                                <property name="borderBottomColor">#000000</property>
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <cell id="1922">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <property name="borderRightWidth">thin</property>
+                                    <data id="1923">
+                                        <property name="resultSetColumn">LOG_TYPE</property>
+                                    </data>
+                                </cell>
+                                <cell id="1924">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <property name="borderRightWidth">thin</property>
+                                    <data id="1925">
+                                        <property name="textAlign">right</property>
+                                        <property name="resultSetColumn">IMPS</property>
+                                    </data>
+                                </cell>
+                                <cell id="1926">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <property name="borderRightWidth">thin</property>
+                                    <data id="1927">
+                                        <property name="textAlign">right</property>
+                                        <property name="resultSetColumn">CLICKS</property>
+                                    </data>
+                                </cell>
+                                <cell id="1928">
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <property name="borderRightWidth">thin</property>
+                                    <data id="1929">
+                                        <property name="textAlign">right</property>
+                                        <property name="resultSetColumn">CTR</property>
+                                    </data>
+                                </cell>
+                            </row>
+                        </detail>
+                        <footer>
+                            <row id="1930">
+                                <cell id="1931"/>
+                                <cell id="1932"/>
+                                <cell id="1933"/>
+                                <cell id="1934"/>
+                            </row>
+                        </footer>
+                    </table>
+                </cell>
+            </row>
+            <row id="3206">
+                <property name="height">1.125in</property>
+                <cell id="3207">
+                    <property name="fontSize">8pt</property>
+                    <property name="verticalAlign">bottom</property>
+                    <text id="3673">
+                        <property name="fontSize">8pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="textUnderline">underline</property>
+                        <property name="contentType">auto</property>
+                        <text-property name="content"><![CDATA[Final Calculation]]></text-property>
+                    </text>
+                    <table id="3675">
+                        <property name="width">3.7083333333333335in</property>
+                        <property name="dataSet">final calc</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">TITLE</property>
+                                <text-property name="displayName">TITLE</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["title"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">CTR</property>
+                                <text-property name="displayName">CTR</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["ctr"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">CTR_</property>
+                                <text-property name="displayName">CTR_</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["ctr_"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">ORDER_BY</property>
+                                <text-property name="displayName">ORDER_BY</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["order_by"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                        </list-property>
+                        <column id="3699">
+                            <property name="width">2.5833333333333335in</property>
+                        </column>
+                        <column id="3701">
+                            <property name="width">1.125in</property>
+                        </column>
+                        <detail>
+                            <row id="3685">
+                                <property name="fontSize">8pt</property>
+                                <property name="textAlign">right</property>
+                                <cell id="3686">
+                                    <property name="style">cell_border</property>
+                                    <data id="3687">
+                                        <property name="textAlign">left</property>
+                                        <property name="resultSetColumn">TITLE</property>
+                                    </data>
+                                </cell>
+                                <cell id="3690">
+                                    <property name="style">cell_border</property>
+                                    <data id="3691">
+                                        <property name="resultSetColumn">CTR_</property>
+                                    </data>
+                                </cell>
+                            </row>
+                        </detail>
+                        <footer>
+                            <row id="3694">
+                                <cell id="3695"/>
+                                <cell id="3697"/>
+                            </row>
+                        </footer>
+                    </table>
+                </cell>
+            </row>
+        </grid>
+    </body>
+    <property name="pageVariables">
+        <variable-element name="rp_campaign_id">
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="rp_country_code">
+            <property name="type">report</property>
+        </variable-element>
+    </property>
+</report>

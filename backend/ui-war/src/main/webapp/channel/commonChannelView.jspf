@@ -1,0 +1,194 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/ad/serverUI" prefix="ad" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="ui" %>
+<%@ taglib uri="/struts-tags" prefix="s" %>
+
+<%@ include file="/regularchecks/logChecksPopupJS.jsp" %>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#logChecksButton').click(function(event) {
+            popupLogChecks(${channel.channelType == 'B' ? "'BehavioralChannel'" : (channel.channelType == 'E' ? "'ExpressionChannel'" : "'AudienceChannel'")}, ${id}, event);
+        });
+        if (window.location.hash == '#error:version'){
+            $('<span></span>').addClass('errors').text('<fmt:message key="checks.errors.version"/>').appendTo('#popupVersionError');
+            $("#popupVersionError").addClass('wrapper');
+            window.location.hash = '';
+        }
+    });
+</script>
+
+<c:choose>
+    <c:when test="${account.role == 'INTERNAL'}">
+        <c:set var="accountName" value="account.internalAccount"/>
+    </c:when>
+    <c:when test="${account.role == 'AGENCY'}">
+        <c:set var="accountName" value="agencyAccount.account"/>
+    </c:when>
+    <c:when test="${account.role == 'ADVERTISER'}">
+        <c:set var="accountName" value="advertiserAccount.account"/>
+    </c:when>
+    <c:when test="${account.role == 'CMP'}">
+        <c:set var="accountName" value="cmpAccount.account"/>
+    </c:when>
+</c:choose>
+
+<ui:field labelKey="${accountName}">
+    <ui:accountLink account="${account}"/>
+</ui:field>
+<c:if test="${account.role == 'CMP'}">
+    <c:choose>
+        <c:when test="${not empty account.cmpContact}">
+            <c:set var="cmp" value="${account.cmpContact}"/>
+
+            <ui:field labelKey="cmpAccount.contactDetails">
+                    <c:if test="${account.cmpContactShowPhone}">
+                        <c:set var="textVal">
+                            ${cmp.firstName} ${cmp.lastName},
+                        </c:set>
+                        <ui:text text="${pageScope.textVal}"/>
+                        <a href="mailto:${cmp.email}">${cmp.email}</a>, ${cmp.phone}
+                    </c:if>
+                    <c:if test="${not account.cmpContactShowPhone}">
+                        <c:set var="textVal">
+                            ${cmp.firstName} ${cmp.lastName},
+                        </c:set>
+                        <ui:text text="${pageScope.textVal}"/>
+                        <a href="mailto:${cmp.email}">${cmp.email}</a>
+                    </c:if>
+            </ui:field>
+        </c:when>
+        <c:otherwise>
+            <ui:field labelKey="cmpAccount.contactDetails">
+                <ui:text textKey="cmpAccount.notProvided"/>
+            </ui:field>
+        </c:otherwise>
+    </c:choose>
+
+</c:if>
+
+<c:if test="${not empty channel.description}">
+    <ui:simpleField labelKey="channel.description" value="${channel.description}"/>
+</c:if>
+
+<c:if test="${account.international}">
+    <ui:field labelKey="channel.country">
+        <ui:countryLink countryCode="${channel.country.countryCode}"/>
+    </ui:field>
+</c:if>
+
+<c:if test="${not empty language}">
+    <ui:field labelKey="channel.language">
+        <ad:resolveGlobal resource="language" id="${channel.language}"/>
+    </ui:field>
+</c:if>
+
+<c:if test="${account.role == 'CMP' || account.role == 'INTERNAL'}">
+    <ui:field labelKey="channel.visibility" >
+        <table class="fieldAndAccessories">
+            <tr>
+                <td class="withField">
+                    <c:set var="textVal">
+                        <fmt:message key="channel.visibility.${channel.visibility}"/>
+                    </c:set>
+                    <ui:text text="${pageScope.textVal}"/>
+                </td>
+                <td class="withButton">
+                    <c:if test="${ad:isPermitted('AdvertisingChannel.makePublic', channel)}">
+                        <script type="text/javascript">
+                            function submitPublicForm() {
+                                if (!confirm('${ad:formatMessage('channel.confirmPublic')}')) {
+                                    return false;
+                                }
+                                $('#publicForm').submit();
+                                return true;
+                            }
+                        </script>
+                        <s:form action="%{#makePublicAction}" id="publicForm" styleClass="hide">
+                            <s:hidden name="id"/>
+                            <s:hidden name="version"/>
+                        </s:form>
+
+                        <ui:button message="channel.makePublic" onclick="submitPublicForm();"/>
+
+                     </c:if>
+                    <c:if test="${ad:isPermitted('AdvertisingChannel.makePrivate', channel)}">
+                        <script type="text/javascript">
+                            function submitPrivateForm() {
+                                if (!confirm('${ad:formatMessage('channel.confirmPrivate')}')) {
+                                    return false;
+                                }
+                                $('#privateForm').submit();
+                                return true;
+                            }
+                        </script>
+                        <s:form action="%{#makePrivateAction}" id="privateForm" styleClass="hide">
+                            <s:hidden name="id"/>
+                            <s:hidden name="version"/>
+                        </s:form>
+
+                        <ui:button message="channel.makePrivate" onclick="submitPrivateForm();"/>
+
+                     </c:if>
+                     <c:if test="${ad:isPermitted('AdvertisingChannel.submitToCmp', channel)}">
+                         <ui:button message="channel.submitToCmp" href="${submitToCmpUrl}?id=${channel.id}"/>
+                     </c:if>
+                </td>
+            </tr>
+        </table>
+    </ui:field>
+</c:if>
+
+<ui:field labelKey="channel.status">
+    <ui:statusButtonGroup
+        customClass="statusFieldGroup"
+        descriptionKey="${channel.displayStatus.description}"
+        entity="${channel}" restrictionEntity="AdvertisingChannel"
+        activatePage="${activateUrl}" inactivatePage="${inactivateUrl}"
+        deletePage="${deleteUrl}" undeletePage="${undeleteUrl}">
+        <c:if test="${channel.qaStatus.letter == 'D'}">
+            <ui:qaStatusButons entity="${channel}" restrictionEntity="AdvertisingChannel"/>
+        </c:if>
+    </ui:statusButtonGroup>
+</ui:field>
+
+<c:if test="${ad:isPermitted('AdvertisingChannel.viewChannelCheck', channel)}">
+    <ui:field labelKey="checks.checkStatus">
+        ${checkStatusCaption}
+        <c:if test="${ad:isPermitted('AdvertisingChannel.updateChannelCheck', channel)}">
+            <ui:button id="logChecksButton" message="checks.logChecks" type="link" />
+        </c:if>
+    </ui:field>
+</c:if>
+
+<c:if test="${channel.visibility == 'CMP'}">
+    <ui:field labelKey="channel.rate">
+        <c:set var="textVal">
+            <c:if test="${not empty channel.channelRate}">
+                ${ad:formatCurrencyExt(channel.channelRate.rate, account.currency.currencyCode, 2)}
+                <fmt:message key="enum.RateType.${channel.channelRate.rateType}"/>
+            </c:if>
+        </c:set>
+        <ui:text text="${pageScope.textVal}"/>
+    </ui:field>
+</c:if>
+
+<c:set var="supersededByChannel" value="${channel.supersededByChannel}"/>
+<c:if test="${not empty supersededByChannel}">
+    <ui:field labelKey="channel.supersededByChannel" tipKey="channel.supersededByChannel.tooltip.view">
+        <c:choose>
+            <c:when test="${ad:isPermitted('AdvertisingChannel.view', supersededByChannel)}">
+                <ui:button action="view?id=${supersededByChannel.id}" type="link">
+                    <ui:nameWithStatus entityStatus="${supersededByChannel.status}" entityName="${supersededByChannel.name}"/>
+                </ui:button>
+            </c:when>
+            <c:otherwise>
+                <ui:nameWithStatus entityStatus="${supersededByChannel.status}" entityName="${supersededByChannel.name}"/>
+            </c:otherwise>
+        </c:choose>
+    </ui:field>
+</c:if>
+
+<c:if test="${ad:isPermitted('Channel.viewCategories', channel)}">
+    <%@include file="channelCategoriesView.jsp" %>
+</c:if>

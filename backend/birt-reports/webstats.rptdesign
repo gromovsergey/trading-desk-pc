@@ -1,0 +1,1628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.22" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 3.7.1.v20110905 Build &lt;3.7.1.v20110905-1820></property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <parameters>
+        <scalar-parameter name="rp_StartDate" id="10">
+            <text-property name="promptText">Start Date</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="isRequired">true</property>
+            <property name="dataSetName">Date List</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["available_date"]</expression>
+            <property name="dataType">date</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">BirtDateTime.year( BirtDateTime.addDay(BirtDateTime.today(),-8) )+"-"&#13;
++BirtDateTime.month( BirtDateTime.addDay(BirtDateTime.today(),-8) )+"-"&#13;
++BirtDateTime.day( BirtDateTime.addDay(BirtDateTime.today(),-8) )</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_EndDate" id="11">
+            <text-property name="promptText">End Date</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="isRequired">true</property>
+            <property name="dataSetName">Date List</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["available_date"]</expression>
+            <property name="dataType">date</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">BirtDateTime.year( BirtDateTime.addDay(BirtDateTime.today(),-1) )+"-"&#13;
++BirtDateTime.month( BirtDateTime.addDay(BirtDateTime.today(),-1) )+"-"&#13;
++BirtDateTime.day( BirtDateTime.addDay(BirtDateTime.today(),-1) )</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_UnitOfTime" id="496">
+            <text-property name="promptText">Unit of Time</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">DATE</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">SUMMARY</property>
+                    <property name="label">Summary</property>
+                </structure>
+                <structure>
+                    <property name="value">DATE</property>
+                    <property name="label">Date</property>
+                </structure>
+                <structure>
+                    <property name="value">DATEHOUR</property>
+                    <property name="label">Date and Hour</property>
+                </structure>
+                <structure>
+                    <property name="value">HOUR</property>
+                    <property name="label">Hour</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_ISP" id="320">
+            <text-property name="promptText">ISP</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="isRequired">true</property>
+            <property name="dataSetName">Active ISP</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["account_id"]</expression>
+            <expression name="labelExpr" type="javascript">dataSetRow["name"]</expression>
+            <property name="dataType">integer</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <property name="autoSuggestThreshold">1</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_Application" id="416">
+            <text-property name="promptText">Application</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="isRequired">true</property>
+            <property name="dataSetName">Application</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["name"]</expression>
+            <expression name="labelExpr" type="javascript">dataSetRow["name"]</expression>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_Test" id="417">
+            <text-property name="promptText">Test Requests</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">EXCL</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">EXCL</property>
+                    <property name="label">Exclude</property>
+                </structure>
+                <structure>
+                    <property name="value">INCL</property>
+                    <property name="label">Include</property>
+                </structure>
+                <structure>
+                    <property name="value">ONLY</property>
+                    <property name="label">Only Test Requests</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_Cohor" id="418">
+            <text-property name="promptText">Cohort Details</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">HIDE</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">HIDE</property>
+                    <property name="label">Hide</property>
+                </structure>
+                <structure>
+                    <property name="value">SHOW</property>
+                    <property name="label">Show</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_OS_Browser" id="419">
+            <text-property name="promptText">OS and Browser Details</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">HIDE</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">HIDE</property>
+                    <property name="label">Hide</property>
+                </structure>
+                <structure>
+                    <property name="value">SHOW</property>
+                    <property name="label">Show</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_Site" id="499">
+            <text-property name="promptText">Site Details</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">HIDE</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">HIDE</property>
+                    <property name="label">Hide</property>
+                </structure>
+                <structure>
+                    <property name="value">SHOW</property>
+                    <property name="label">Show</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="rp_CC" id="513">
+            <text-property name="promptText">Campaign Details</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">HIDE</value>
+            </simple-property-list>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">HIDE</property>
+                    <property name="label">Hide</property>
+                </structure>
+                <structure>
+                    <property name="value">SHOW</property>
+                    <property name="label">Show</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Stats Data Source" id="100">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://localhost:25432/stat</property>
+            <property name="odaUser">ui</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">SEpnMjZGaWFNTWFIM3NX</encrypted-property>
+            <property name="odaJndiName">jdbc/birt</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Stats Data Set" id="101">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">test</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">test</text-property>
+                    <text-property name="heading">test</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">stimestamp</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">stimestamp</text-property>
+                    <text-property name="heading">stimestamp</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">source</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">source</text-property>
+                    <text-property name="heading">source</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">operation</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">operation</text-property>
+                    <text-property name="heading">operation</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">user_status</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">user_status</text-property>
+                    <text-property name="heading">user_status</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">cohort</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">cohort</text-property>
+                    <text-property name="heading">cohort</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">current_cohort</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">current_cohort</text-property>
+                    <text-property name="heading">current_cohort</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">os</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">os</text-property>
+                    <text-property name="heading">os</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">browser</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">browser</text-property>
+                    <text-property name="heading">browser</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">result</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">result</text-property>
+                    <text-property name="heading">result</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">count</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">count</text-property>
+                    <text-property name="heading">count</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">app</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">app</text-property>
+                    <text-property name="heading">app</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">site_name</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">site_name</text-property>
+                    <text-property name="heading">site_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">cc_id</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">cc_id</text-property>
+                    <text-property name="heading">cc_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">cc_name</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">cc_name</text-property>
+                    <text-property name="heading">cc_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">site_id</property>
+                    <text-property name="displayName">site_id</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">param_1</property>
+                    <property name="paramName">rp_StartDate</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">93</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">param_2</property>
+                    <property name="paramName">rp_EndDate</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">93</property>
+                    <property name="position">2</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">param_3</property>
+                    <property name="paramName">rp_ISP</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">2</property>
+                    <property name="position">3</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">dsp_app</property>
+                    <property name="paramName">rp_Application</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                    <property name="position">4</property>
+                    <property name="isOptional">false</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">param_5</property>
+                    <property name="paramName">rp_Test</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                    <property name="position">5</property>
+                    <property name="isOptional">false</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">test</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">stimestamp</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">source</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">operation</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">user_status</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">cohort</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">current_cohort</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">os</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">browser</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">result</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">count</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">app</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">site_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">cc_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">cc_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">site_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[queryString = " select stimestamp,";
+if (params["rp_UnitOfTime"].value.equals("DATE"))
+ queryString = " select to_char(stimestamp, 'Mon DD, YYYY') stimestamp,";
+
+if (params["rp_UnitOfTime"].value.equals("DATEHOUR"))
+ queryString = " select to_char(stimestamp, 'Mon DD, YYYY HH24') stimestamp,";
+
+
+queryString = queryString + "source,operation,user_status,cohort,current_cohort,site_name,site_id,cc_name,cc_id,os,browser,result,count,app from ("; 
+
+queryString = queryString + "select stimestamp,source,operation,user_status,"; 
+
+if ( reportContext.getParameterValue("rp_Cohor").equals("HIDE") )
+   queryString = queryString + "'1' cohort,'1' current_cohort,"; 
+else
+   queryString = queryString + "cohort,current_cohort,";
+
+if ( reportContext.getParameterValue("rp_Site").equals("HIDE") )
+   queryString = queryString + "'1' site_name, 1 site_id,"; 
+else
+   queryString = queryString + "a.name site_name, a.site_id site_id,";
+
+if ( reportContext.getParameterValue("rp_CC").equals("HIDE") )
+   queryString = queryString + "'1' cc_name, 1 cc_id, "; 
+else
+   queryString = queryString + "cc.name cc_name,av.cc_id cc_id,";
+
+if ( reportContext.getParameterValue("rp_OS_Browser").equals("HIDE") )
+   queryString = queryString + "'1' os,'1' browser,"; 
+else
+   queryString = queryString + "os,browser,";
+
+queryString = queryString + "result,sum(count) count,app from (";
+
+
+queryString = queryString + this.queryText;
+
+queryString = queryString + ") av /*replace for rp_Site=SHOW and rp_CC=SHOW*/ group by 1,2,3,4,5,6,7,8,9,10,11,12,13,15 order by 1,2,3,5,6 ) avv";
+
+this.queryText = queryString ;
+
+
+replace_string = ' ';
+if ( reportContext.getParameterValue("rp_Site").equals("SHOW") )
+    replace_string = "left join ( SELECT t.tag_id, s.name, s.site_id FROM tags t, site s WHERE s.site_id = t.site_id ) a on a.tag_id = av.tag_id ";
+
+if ( reportContext.getParameterValue("rp_CC").equals("SHOW") )
+    replace_string = replace_string + " left join ( select ccc.cc_id, c.name from campaigncreative ccc, creative c where ccc.creative_id = c.creative_id ) cc on cc.cc_id = av.cc_id ";
+
+this.queryText = this.queryText.replace("/*replace for rp_Site=SHOW and rp_CC=SHOW*/", replace_string);
+
+
+unitOfTime = "date_trunc('day',stimestamp) stimestamp,";
+
+if (params["rp_UnitOfTime"].value.equals("SUMMARY"))
+ unitOfTime = "1";
+
+if (params["rp_UnitOfTime"].value.equals("DATE"))
+ unitOfTime = "date_trunc('day',stimestamp)";
+
+if (params["rp_UnitOfTime"].value.equals("DATEHOUR"))
+ unitOfTime = "date_trunc('hour',stimestamp)";
+
+if (params["rp_UnitOfTime"].value.equals("HOUR"))
+ unitOfTime = "extract(hour from stimestamp)";
+
+this.queryText = this.queryText.replace("/*replace it in beforeOpen*/", unitOfTime);
+]]></method>
+            <method name="afterOpen"><![CDATA[importPackage(Packages.java.lang);
+var qry = this.queryText;
+
+reportContext.setGlobalVariable("myquery", qry);]]></method>
+            <property name="dataSource">Stats Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">test</property>
+                    <property name="nativeName">test</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">stimestamp</property>
+                    <property name="nativeName">stimestamp</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">source</property>
+                    <property name="nativeName">source</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">operation</property>
+                    <property name="nativeName">operation</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">user_status</property>
+                    <property name="nativeName">user_status</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">cohort</property>
+                    <property name="nativeName">cohort</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">current_cohort</property>
+                    <property name="nativeName">current_cohort</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">os</property>
+                    <property name="nativeName">os</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">browser</property>
+                    <property name="nativeName">browser</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">result</property>
+                    <property name="nativeName">result</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">count</property>
+                    <property name="nativeName">count</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">app</property>
+                    <property name="nativeName">app</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">site_name</property>
+                    <property name="nativeName">site_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">cc_id</property>
+                    <property name="nativeName">cc_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">cc_name</property>
+                    <property name="nativeName">cc_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">site_id</property>
+                    <property name="nativeName">site_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[
+select 
+/*replace it in beforeOpen*/ stimestamp,
+wo.source,
+wo.operation,
+case user_status when 'U' then 'Undefined'
+                 when 'O' then 'Opted Out' 
+                 when 'I' then 'Opted In'
+                 when 'P' then 'Probe'
+                 when 'N' then 'no RTB ID'
+ end user_status,
+ct cohort,
+curct current_cohort,
+op.value os,
+bp.value browser,
+case result when 'S' then 'Success'
+            when 'F' then 'Failure' 
+            when 'U' then 'Undefined'
+ end result,
+count,
+wo.app,
+'1' site_name,
+w.tag_id tag_id,
+'1' cc_name,
+w.cc_id cc_id
+  from webstats w
+       left join weboperation wo on w.web_operation_id = wo.web_operation_id
+       left join userproperty bp on (bp.user_property_id = w.browser_property_id)
+       left join userproperty op on (op.user_property_id = w.os_property_id),
+       colocation c,
+       (select ?::date as dsp_StartDate,
+               ?::date as dsp_EndDate,
+               ?::integer as dsp_ISP,
+               ?::varchar as dsp_Application,
+               ?::varchar as dsp_Test
+       ) param
+ where stimestamp >= param.dsp_StartDate and stimestamp < param.dsp_EndDate + 1
+   and w.colo_id = c.colo_id
+   and c.account_id = param.dsp_ISP
+   and wo.app = param.dsp_Application
+   and ( (param.dsp_Test = 'EXCL' and w.test = 'N')
+         or (param.dsp_Test = 'INCL' and 1 = 1)
+         or (param.dsp_Test = 'ONLY' and w.test = 'Y')
+      )
+]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <DataSetParameters>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name></design:name>
+            <design:position>1</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+          <design:precision>0</design:precision>
+          <design:scale>0</design:scale>
+          <design:nullability>Unknown</design:nullability>
+        </design:attributes>
+      </design:ParameterDefinition>
+    </parameter>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name></design:name>
+            <design:position>2</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+          <design:precision>0</design:precision>
+          <design:scale>0</design:scale>
+          <design:nullability>Unknown</design:nullability>
+        </design:attributes>
+      </design:ParameterDefinition>
+    </parameter>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name></design:name>
+            <design:position>3</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+          <design:precision>0</design:precision>
+          <design:scale>0</design:scale>
+          <design:nullability>Unknown</design:nullability>
+        </design:attributes>
+      </design:ParameterDefinition>
+    </parameter>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name></design:name>
+            <design:position>5</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+          <design:precision>0</design:precision>
+          <design:scale>0</design:scale>
+          <design:nullability>Unknown</design:nullability>
+        </design:attributes>
+      </design:ParameterDefinition>
+    </parameter>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name></design:name>
+            <design:position>6</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+          <design:precision>0</design:precision>
+          <design:scale>0</design:scale>
+          <design:nullability>Unknown</design:nullability>
+        </design:attributes>
+      </design:ParameterDefinition>
+    </parameter>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name></design:name>
+            <design:position>7</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+          <design:precision>0</design:precision>
+          <design:scale>0</design:scale>
+          <design:nullability>Unknown</design:nullability>
+        </design:attributes>
+      </design:ParameterDefinition>
+    </parameter>
+  </DataSetParameters>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>original_trigger</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2048</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>original_trigger</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>original_trigger</design:label>
+            <design:formattingHints>
+              <design:displaySize>2048</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>channel_id</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>channel_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>channel_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ch_nm</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>512</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ch_nm</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ch_nm</design:label>
+            <design:formattingHints>
+              <design:displaySize>512</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>tr_ht</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>tr_ht</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>tr_ht</design:label>
+            <design:formattingHints>
+              <design:displaySize>131089</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ch_ht</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>ch_ht</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ch_ht</design:label>
+            <design:formattingHints>
+              <design:displaySize>131089</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>tr_pc</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>tr_pc</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>tr_pc</design:label>
+            <design:formattingHints>
+              <design:displaySize>131089</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Active ISP" id="328">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">name</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">name</text-property>
+                    <text-property name="heading">name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">account_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">account_id</text-property>
+                    <text-property name="heading">account_id</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">account_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Stats Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">name</property>
+                    <property name="nativeName">name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">account_id</property>
+                    <property name="nativeName">account_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select name, account_id
+from account
+where role_id = 3
+and status = 'A'
+order by name]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>name</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>200</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>200</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>account_id</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>2</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>account_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACCOUNT_ID</design:label>
+            <design:formattingHints>
+              <design:displaySize>22</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Application" id="329">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">name</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">name</text-property>
+                    <text-property name="heading">name</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Stats Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">name</property>
+                    <property name="nativeName">name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select distinct app as name from weboperation order by app]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>name</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>1024</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NAME</design:label>
+            <design:formattingHints>
+              <design:displaySize>1024</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Date List" id="415">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">available_date</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">available_date</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">available_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Stats Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">available_date</property>
+                    <property name="nativeName">available_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select current_date - generate_series(0, 180) as available_date]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>1.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:name>available_date</design:name>
+            <design:position>1</design:position>
+            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+            <design:precision>0</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>AVAILABLE_DATE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>available_date</design:label>
+            <design:formattingHints>
+              <design:displaySize>7</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">"Verdana"</property>
+            <property name="fontSize">10pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="6">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">us-letter</property>
+            <property name="topMargin">0.25in</property>
+            <property name="leftMargin">0.25in</property>
+            <property name="bottomMargin">0.25in</property>
+            <property name="rightMargin">0.25in</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <text id="495">
+            <property name="fontWeight">bold</property>
+            <property name="contentType">auto</property>
+            <text-property name="content"><![CDATA[WebStats]]></text-property>
+        </text>
+        <table id="420">
+            <property name="width">98%</property>
+            <property name="dataSet">Stats Data Set</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">stimestamp</property>
+                    <text-property name="displayName">stimestamp</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["stimestamp"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">source</property>
+                    <text-property name="displayName">source</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["source"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">operation</property>
+                    <text-property name="displayName">operation</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["operation"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">user_status</property>
+                    <text-property name="displayName">user_status</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["user_status"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">cohort</property>
+                    <text-property name="displayName">cohort</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["cohort"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">current_cohort</property>
+                    <text-property name="displayName">current_cohort</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["current_cohort"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">os</property>
+                    <text-property name="displayName">os</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["os"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">browser</property>
+                    <text-property name="displayName">browser</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["browser"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">result</property>
+                    <text-property name="displayName">result</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["result"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">count</property>
+                    <text-property name="displayName">count</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["count"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">app</property>
+                    <text-property name="displayName">app</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["app"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">site_name</property>
+                    <text-property name="displayName">site_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["site_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">cc_name</property>
+                    <text-property name="displayName">cc_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["cc_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">site_id</property>
+                    <text-property name="displayName">site_id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["site_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">cc_id</property>
+                    <text-property name="displayName">cc_id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["cc_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+            </list-property>
+            <column id="485">
+                <property name="width">0.7in</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["rp_UnitOfTime"].value.equals("SUMMARY")</expression>
+                    </structure>
+                </list-property>
+                <property name="textAlign">center</property>
+            </column>
+            <column id="486">
+                <property name="width">0.5in</property>
+                <property name="textAlign">center</property>
+            </column>
+            <column id="487">
+                <property name="width">0.8in</property>
+                <property name="textAlign">center</property>
+            </column>
+            <column id="488">
+                <property name="width">0.9in</property>
+                <property name="textAlign">left</property>
+            </column>
+            <column id="489">
+                <property name="width">1in</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["rp_Cohor"].value=="HIDE"</expression>
+                    </structure>
+                </list-property>
+                <property name="textAlign">left</property>
+            </column>
+            <column id="490">
+                <property name="width">1in</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["rp_Cohor"].value=="HIDE"</expression>
+                    </structure>
+                </list-property>
+                <property name="textAlign">left</property>
+            </column>
+            <column id="491">
+                <property name="width">1in</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["rp_OS_Browser"].value=="HIDE"</expression>
+                    </structure>
+                </list-property>
+                <property name="textAlign">left</property>
+            </column>
+            <column id="492">
+                <property name="width">1in</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["rp_OS_Browser"].value=="HIDE"</expression>
+                    </structure>
+                </list-property>
+                <property name="textAlign">left</property>
+            </column>
+            <column id="503">
+                <property name="width">1in</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["rp_Site"].value=="HIDE"</expression>
+                    </structure>
+                </list-property>
+                <property name="textAlign">left</property>
+            </column>
+            <column id="510">
+                <property name="width">1in</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["rp_CC"].value=="HIDE"</expression>
+                    </structure>
+                </list-property>
+                <property name="textAlign">left</property>
+            </column>
+            <column id="493">
+                <property name="width">0.5in</property>
+                <property name="textAlign">center</property>
+            </column>
+            <column id="494">
+                <property name="width">0.5in</property>
+                <property name="textAlign">right</property>
+            </column>
+            <header>
+                <row id="421">
+                    <property name="fontSize">9pt</property>
+                    <property name="fontWeight">bold</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <cell id="424">
+                        <label id="425">
+                            <structure name="toc"/>
+                            <method name="onPrepare"><![CDATA[this.text = params["rp_UnitOfTime"].displayText;]]></method>
+                            <text-property name="text">Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="426">
+                        <label id="427">
+                            <text-property name="text">Source</text-property>
+                        </label>
+                    </cell>
+                    <cell id="428">
+                        <label id="429">
+                            <text-property name="text">Operation</text-property>
+                        </label>
+                    </cell>
+                    <cell id="430">
+                        <label id="431">
+                            <text-property name="text">User Status</text-property>
+                        </label>
+                    </cell>
+                    <cell id="432">
+                        <label id="433">
+                            <text-property name="text">Cohort</text-property>
+                        </label>
+                    </cell>
+                    <cell id="434">
+                        <label id="435">
+                            <text-property name="text">Current Cohort</text-property>
+                        </label>
+                    </cell>
+                    <cell id="436">
+                        <label id="437">
+                            <text-property name="text">OS</text-property>
+                        </label>
+                    </cell>
+                    <cell id="438">
+                        <label id="439">
+                            <text-property name="text">Browser</text-property>
+                        </label>
+                    </cell>
+                    <cell id="500">
+                        <label id="504">
+                            <text-property name="text">Site</text-property>
+                        </label>
+                    </cell>
+                    <cell id="507">
+                        <label id="511">
+                            <text-property name="text">Campaign Creative</text-property>
+                        </label>
+                    </cell>
+                    <cell id="440">
+                        <label id="441">
+                            <text-property name="text">Result</text-property>
+                        </label>
+                    </cell>
+                    <cell id="442">
+                        <label id="443">
+                            <text-property name="text">Count</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="446">
+                    <property name="fontSize">9pt</property>
+                    <cell id="449">
+                        <data id="450">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Unformatted</property>
+                            </structure>
+                            <property name="resultSetColumn">stimestamp</property>
+                        </data>
+                    </cell>
+                    <cell id="451">
+                        <data id="452">
+                            <property name="resultSetColumn">source</property>
+                        </data>
+                    </cell>
+                    <cell id="453">
+                        <data id="454">
+                            <property name="resultSetColumn">operation</property>
+                        </data>
+                    </cell>
+                    <cell id="455">
+                        <data id="456">
+                            <property name="resultSetColumn">user_status</property>
+                        </data>
+                    </cell>
+                    <cell id="457">
+                        <data id="458">
+                            <property name="resultSetColumn">cohort</property>
+                        </data>
+                    </cell>
+                    <cell id="459">
+                        <data id="460">
+                            <property name="resultSetColumn">current_cohort</property>
+                        </data>
+                    </cell>
+                    <cell id="461">
+                        <data id="462">
+                            <property name="resultSetColumn">os</property>
+                        </data>
+                    </cell>
+                    <cell id="463">
+                        <data id="464">
+                            <property name="resultSetColumn">browser</property>
+                        </data>
+                    </cell>
+                    <cell id="501">
+                        <data id="505">
+                            <property name="resultSetColumn">site_name</property>
+                            <list-property name="action">
+                                <structure>
+                                    <property name="linkType">hyperlink</property>
+                                    <expression name="uri" type="javascript">'/admin/site/view.action?id='+row["site_id"]</expression>
+                                    <property name="targetWindow">_blank</property>
+                                </structure>
+                            </list-property>
+                        </data>
+                    </cell>
+                    <cell id="508">
+                        <data id="512">
+                            <property name="resultSetColumn">cc_name</property>
+                            <list-property name="action">
+                                <structure>
+                                    <property name="linkType">hyperlink</property>
+                                    <expression name="uri" type="javascript">'/admin/campaign/group/creative/lookup.action?id='+row["cc_id"]</expression>
+                                    <property name="targetWindow">_blank</property>
+                                </structure>
+                            </list-property>
+                        </data>
+                    </cell>
+                    <cell id="465">
+                        <data id="466">
+                            <property name="resultSetColumn">result</property>
+                        </data>
+                    </cell>
+                    <cell id="467">
+                        <data id="468">
+                            <property name="resultSetColumn">count</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="471">
+                    <cell id="473"/>
+                    <cell id="474"/>
+                    <cell id="475"/>
+                    <cell id="476"/>
+                    <cell id="477"/>
+                    <cell id="478"/>
+                    <cell id="479"/>
+                    <cell id="480"/>
+                    <cell id="502"/>
+                    <cell id="509"/>
+                    <cell id="481"/>
+                    <cell id="482"/>
+                </row>
+            </footer>
+        </table>
+        <text id="498">
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">true</expression>
+                </structure>
+            </list-property>
+            <property name="contentType">html</property>
+            <text-property name="content"><![CDATA[<VALUE-OF>reportContext.getGlobalVariable("myquery");</VALUE-OF>]]></text-property>
+        </text>
+    </body>
+</report>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+   <definition name=".Admin.BehavioralParametersList" extends=".mainLayout">
+     <put-attribute name="moduleName" value="admin/behavioralParameters"/>
+     <put-attribute name="activeMenuItemKey" value="global.menu.admin"/>
+   </definition>
+
+    <definition name="admin.behavioralParameters.list" extends=".Admin.BehavioralParametersList">
+     <put-attribute name="titleProperty" value="channel.params.list"/>
+     <put-attribute name="body" value="/admin/behavioralParameters/behavioralParamsList.jsp"/>
+   </definition>
+
+   <definition name="admin.behavioralParameters.view" extends=".Admin.BehavioralParametersList">
+     <put-attribute name="body" value="/admin/behavioralParameters/behavioralParamsView.jsp"/>
+     <put-attribute name="entityName" value="BehavioralParamsList" type="string"/>
+     <put-attribute name="isViewPage" value="true"/>
+   </definition>
+
+   <definition name="admin.behavioralParameters.edit" extends=".Admin.BehavioralParametersList">
+     <put-attribute name="entityName" value="BehavioralParamsList" type="string"/>
+     <put-attribute name="body" value="/admin/behavioralParameters/behavioralParamsEdit.jsp"/>
+   </definition>
+
+   <definition name="admin.behavioralParameters.new" extends=".Admin.BehavioralParametersList">
+     <put-attribute name="isCreatePage" value="true"/>
+     <put-attribute name="entityName" value="BehavioralParamsList" type="string"/>
+     <put-attribute name="body" value="/admin/behavioralParameters/behavioralParamsEdit.jsp"/>
+   </definition>
+
+
+</tiles-definitions>

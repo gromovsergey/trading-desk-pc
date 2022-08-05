@@ -1,0 +1,23 @@
+<ui-loading *ngIf="wait2, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">
+    {{'agencyAccount.channels' | translate}}
+    <ui-dropdown-btn *ngIf="canCreateChannel"
+                     title="{{'button.createNew' | translate}}"
+                     [menu]="createMenu"></ui-dropdown-btn>
+    <ui-channel-report-upload *ngIf="canDownloadReports"
+                              [accountId]="agency.id"></ui-channel-report-upload>
+  </h1>
+  <h2>
+    <i class="material-icons" appDisplayStatus [displayStatus]="agency.displayStatus">lens</i>
+    {{agency.name}}
+  </h2>
+
+  <ui-channel-list [channels]="channels"
+                   [showAccountColumn]="false"
+                   [showVisibilityColumn]="false"
+                   [canUpdateChannels]="canUpdateChannels"
+                   [canLocalize]="false">
+  </ui-channel-list>
+</ng-template>

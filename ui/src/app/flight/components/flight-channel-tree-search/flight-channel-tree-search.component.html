@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>{{'Используемые аудиторные сегменты' | translate}}</h2>
+<mat-dialog-content class="mat-typography">
+    <div #customContent></div>
+    <div #tree>
+
+        <div class="dropdown" #modal>
+            <div class="form-control dropdown form-control-div clearfix">
+                <input #textInput
+                       [disabled]="popupWait"
+                       (click)="hideAutocomplete()"
+                       (keyup)="textInputChange()"
+                       (paste)="textInputChange()"
+                       class="form-control-clear form--input"
+                />
+                <div *ngIf="autocomplete && autocomplete.length">
+                    <p class="form--p">Найденные элементы</p>
+                    <ol class="dropdown-menu dropdown-menu-autocomplete show form--ol">
+                        <li *ngFor="let item of autocomplete"><a (click)="addChannel(item)">{{item.name}}</a></li>
+                    </ol>
+                </div>
+                <a (click)="hideAutocomplete()" *ngIf="autocomplete && autocomplete.length === 0"><i>{{'messages.nothingFound' | translate}}</i></a>
+
+                <div class="form-control-container" *ngIf="channelsLink && channelsLink.length">
+                    <p class="form--p">Добавленные элементы</p>
+                    <ol class="dropdown-menu dropdown-menu-autocomplete show form--ol">
+                        <li *ngFor="let item of channelsLink" class="badge-channel__buttons">
+                            <span>{{item.name}}</span>
+                            <i title="{{'button.remove' | translate}}" (click)="removeChannel($event, item.id)"
+                               class="material-icons badge-channel__buttons--close">close</i>
+
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="saveChannelsLink()">{{'button.link' | translate}}</button>
+    <button mat-button mat-dialog-close>{{'button.close' | translate}}</button>
+</mat-dialog-actions>

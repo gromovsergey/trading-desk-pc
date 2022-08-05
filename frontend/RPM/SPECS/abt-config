@@ -1,0 +1,17 @@
+pkgName=foros-spa-ui-configuration-$configType
+specFile=RPM/SPECS/foros-spa-ui-config.spec
+vcsModules[$vcsModule]=$modBuild
+distCheckout='True'
+
+function modifyPackageName {
+    printDBG "invoking $0"
+    printDBG "Building for colo '$configType'"
+    execCmd "sed -re 's/##SPA_UI_COLO##/$configType/g;' -i $targetDir/RPM/SPECS/foros-spa-ui-config.spec"
+}
+
+stage[29]='modifyPackageName'
+
+if [ -z "$configType" ]; then
+    echo "$configType env variable is NOT set" >&2
+    exit 1
+fi

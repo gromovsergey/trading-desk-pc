@@ -1,0 +1,138 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<ng-template [ngIf]="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [displayStatus]="flight.displayStatus"></ui-icon>
+            {{title}}
+            <div class="btn-group">
+                <button *ngIf="canEditFlight && flight.displayStatus !== 'DELETED'" class="btn btn-default"
+                        [routerLink]="['/flight/'+flight.id+'/edit']">_L10N_(button.edit)</button>
+                <button *ngIf="canCreateLineItem && flight.displayStatus !== 'DELETED' && lineItems && lineItems.length === 1"
+                        class="btn btn-default" [routerLink]="['/flight/' + flight.id + '/lineitem/add']">_L10N_(flight.button.createLineItem)</button>
+                <button class="btn btn-default" (click)="showScanIo($event)">_L10N_(flight.button.scanIo)</button>
+            </div>
+        </h2>
+    </div>
+
+    <ui-flight-tabs [canCreate]="canCreateLineItem" [flightId]="flight.id" [lineItems]="lineItems"></ui-flight-tabs>
+
+    <div class="row">
+        <div class="col-xs-12 h-margin-td">
+            <ui-panel title="_L10N_(blockName.summary)" [icon]="'list'">
+                <div #body>
+                    <ui-flight-summary [statusChangeable]="canChangeStatusFlight" [flight]="flight" (onStatusChange)="refreshStatus()"></ui-flight-summary>
+                </div>
+            </ui-panel>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 h-margin-td">
+            <ui-panel title="_L10N_(blockName.chart)" [icon]="'line-chart'">
+                <div #body>
+                    <ui-chart [flightId]="flight.id"></ui-chart>
+                </div>
+            </ui-panel>
+        </div>
+    </div>
+
+    <ng-template [ngIf]="lineItems && lineItems.length === 1">
+        <div class="row">
+            <div class="col-xs-12 h-margin-td">
+                <ui-panel [title]="'_L10N_(flight.blockName.channels)'" [icon]="'crosshairs'">
+                    <div #body>
+                        <ui-flight-channels *ngIf="!waitSpecialChannelLoad"
+                                            (onStatusChange)="refreshStatus()"
+                                            [flightId]="flight.id"
+                                            [readonly]="!canEditFlight"
+                                            [specialChannelId]="specialChannelId"
+                                            [linkSpecialChannelFlag]="flight.specialChannelLinked">
+                        </ui-flight-channels>
+                    </div>
+                </ui-panel>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 h-margin-td">
+                <ui-panel [title]="'_L10N_(flight.blockName.sites)'" [icon]="'desktop'">
+                    <div #body>
+                        <ui-flight-sites [flightId]="flight.id" [readonly]="!canEditFlight"></ui-flight-sites>
+                    </div>
+                </ui-panel>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 h-margin-td">
+                <ui-panel [title]="'_L10N_(flight.blockName.creatives)'" [icon]="'photo'">
+                    <div #body>
+                        <ui-flight-creatives (onStatusChange)="refreshStatus()" [flightId]="flight.id"
+                                             [readonly]="!canEditFlight"></ui-flight-creatives>
+                    </div>
+                </ui-panel>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template [ngIf]="lineItems && lineItems.length > 1">
+        <div class="row">
+            <div class="col-xs-12 h-margin-td">
+                <ui-panel title="_L10N_(blockName.defaultSettings)" [icon]="'cog'" [collapsed]="true" [collapsible]="true">
+                    <div #body>
+                        <div class="row">
+                            <div class="col-xs-12 h-margin-td">
+                                <ui-panel [title]="'_L10N_(flight.blockName.channels)'" [icon]="'crosshairs'">
+                                    <div #body>
+                                        <ui-flight-channels *ngIf="!waitSpecialChannelLoad"
+                                                            (onStatusChange)="refreshStatus()"
+                                                            [short]="true"
+                                                            [readonly]="!canEditFlight"
+                                                            [flightId]="flight.id"
+                                                            [specialChannelId]="specialChannelId"
+                                                            [linkSpecialChannelFlag]="flight.specialChannelLinked">
+                                            <div #channelsNotifications>
+                                                <div *ngIf="flight.specialChannelLinked" class="h-notification-green">
+                                                    <ui-hint [text]="'_L10N_(flight.notification.specialChannelCheckedHint)'"></ui-hint>&nbsp;
+                                                    _L10N_(flight.notification.specialChannelChecked)
+                                                </div>
+                                            </div>
+                                        </ui-flight-channels>
+                                    </div>
+                                </ui-panel>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 h-margin-td">
+                                <ui-panel [title]="'_L10N_(flight.blockName.sites)'" [icon]="'desktop'">
+                                    <div #body>
+                                        <ui-flight-sites [readonly]="!canEditFlight" [flightId]="flight.id" [short]="true"></ui-flight-sites>
+                                    </div>
+                                </ui-panel>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 h-margin-td">
+                                <ui-panel [title]="'_L10N_(flight.blockName.creatives)'" [icon]="'photo'">
+                                    <div #body>
+                                        <ui-flight-creatives (onStatusChange)="refreshStatus()" [short]="true"
+                                                             [readonly]="!canEditFlight" [flightId]="flight.id"></ui-flight-creatives>
+                                    </div>
+                                </ui-panel>
+                            </div>
+                        </div>
+                    </div>
+                </ui-panel>
+            </div>
+        </div>
+    </ng-template>
+
+    <ui-flight-lineitems (onLoad)="lineItemsOnLoad($event)"
+                         (onStatusChange)="refreshStatus($event)"
+                         [canCreate]="canCreateLineItem"
+                         [flightId]="flight.id"></ui-flight-lineitems>
+
+    <ui-flight-scan-io *ngIf="scanIo" [flightId]="flight.id" (close)="onScanIoClose($event)"
+                       [readonly]="flight.displayStatus === 'DELETED' || !canEditFlight"></ui-flight-scan-io>
+</ng-template>

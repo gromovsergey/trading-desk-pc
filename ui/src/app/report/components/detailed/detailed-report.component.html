@@ -1,0 +1,34 @@
+<ng-template #showPreloader>
+  <ui-loading></ui-loading>
+</ng-template>
+
+<h1 class="main-title">{{'report.detailedReport' | translate}}</h1>
+
+<form [formGroup]="accountGroup"
+      *ngIf="publisherAccounts$ | async as publisherAccounts, else showPreloader">
+  <ng-container *ngIf="advertiserAccounts$ | async as advertiserAccounts, else showPreloader">
+    <ui-report *ngIf="meta$ | async as meta, else showPreloader"
+               [meta]="meta"
+               [reportParameters]="reportParameters"
+               [reportService]="reportService"
+               downloadNamePrefix="Detailed Advertiser Report">
+
+      <mat-form-field class="mat-form-field-max">
+        <mat-label>{{'report.publisherReport.account' | translate}}</mat-label>
+        <mat-select [formControl]="publisherAccountCtrl">
+          <mat-option *ngFor="let item of publisherAccounts"
+                      [value]="item">{{item.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="mat-form-field-max">
+        <mat-label>{{'advertiserAccount.advertiserAccount' | translate}}</mat-label>
+        <mat-select [formControl]="advertiserAccountCtrl">
+          <mat-option *ngFor="let item of advertiserAccounts"
+                      [value]="item">{{item.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </ui-report>
+  </ng-container>
+</form>

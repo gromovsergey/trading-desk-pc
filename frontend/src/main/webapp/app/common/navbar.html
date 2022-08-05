@@ -1,0 +1,50 @@
+<nav class="navbar navbar-default navbar-fixed-top l-navbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" (click)="xsMenuShow($event)" class="navbar-toggle c-navbar__button">
+                <ui-icon [icon]="'bars'"></ui-icon>
+            </button>
+            <a class="hidden-xs" [routerLink]="['/']"><img src="/img/programmatic.png" class="c-navbar__logo"></a>
+            <a class="visible-xs pull-left" [routerLink]="['/']"><img src="/img/programmatic.png" class="c-navbar__logo c-navbar__logo-small"></a>
+        </div>
+        <div class="navbar-collapse collapse pull-right" *ngIf="userData.isLogged()">
+            <div class="navbar-form-custom c-quicksearch pull-left" *ngIf="isInternalView()" role="search">
+                <ui-icon [icon]="'spinner'" [spin]="true" [ngClass]="{'hidden': !quickSearchWait, 'c-quicksearch__preloader': true}"></ui-icon>
+                <div class="form-group dropdown show">
+                    <input type="text" (keyup)="quickSearch()" [(ngModel)]="quickSearchText" size="30" class="form-control" placeholder="_L10N_(blockName.search)">
+
+                    <div *ngIf="quickSearchData && quickSearchData.length > 0" class="dropdown-menu dropdown-messages pull-right c-quicksearch__menu show">
+                        <div class="media c-quicksearch__section" *ngFor="let qsSection of quickSearchData">
+                            <div class="media-left c-quicksearch__title">
+                                {{L10nSearchTypes[qsSection.type]}}
+                            </div>
+                            <div class="media-body c-quicksearch__body list-group">
+                                <a [routerLink]="[getLinkByTypeAndId(qsItem.type, qsItem.id)]" *ngFor="let qsItem of qsSection.items" class="list-group-item c-quicksearch__item"><ui-icon *ngIf="qsItem.displayStatus" [displayStatus]="qsItem.displayStatus"></ui-icon>  {{qsItem.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="quickSearchData && quickSearchData.length === 0" class="dropdown-menu dropdown-messages pull-right c-quicksearch__menu c-quicksearch__menu-nothing show">
+                        _L10N_(messages.nothingFound)
+                    </div>
+                </div>
+            </div>
+            <ul class="nav pull-left">
+                <li class="dropdown">
+                    <a (click)="showUserMenu()" id="{{userBtnId}}" class="b-navbtn" aria-expanded="false">
+                        <i class="fa fa-2x fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages pull-right" (blur)="hideMenus()" [ngClass]="{'show': menuUserVisible}">
+                        <li class="divider"></li>
+                        <li>
+                            <a class="dropdown-messages-box" [routerLink]="['/my/settings']"><ui-icon [icon]="'cog'" [fw]="true"></ui-icon>&nbsp;&nbsp;_L10N_(blockName.mySettings)</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="dropdown-messages-box" [routerLink]="['/logout']"><ui-icon [icon]="'sign-out'" [fw]="true"></ui-icon>&nbsp;&nbsp;_L10N_(blockName.logout)</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,20 @@
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  overflow: hidden;
+
+  .spinner {
+    margin: auto;
+  }
+  .spinner-genius.mat-progress-spinner::ng-deep  circle {
+    stroke: #172e56;
+  }
+
+  //.spinner-genius circle {
+  //  margin: auto;
+  //  stroke: #3fb53f;
+  //}
+}

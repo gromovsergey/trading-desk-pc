@@ -1,0 +1,49 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="discoverChannelList" extends="foros-default" namespace="">
+        <action name="admin/DiscoverChannelList/main" class="com.foros.action.admin.discoverChannelList.SearchDiscoverChannelListsAction" method="main">
+            <result name="success" type="tiles">admin.discoverChannelList.main</result>
+        </action>
+        <action name="admin/DiscoverChannelList/search" class="com.foros.action.admin.discoverChannelList.SearchDiscoverChannelListsAction" method="search">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.discoverChannelList.list</result>
+            <result name="input" type="redirect">admin/DiscoverChannelList/search.action</result>
+        </action>
+        <action name="admin/DiscoverChannelList/view" class="com.foros.action.admin.discoverChannelList.ViewDiscoverChannelListAction" method="view">
+            <result name="success" type="tiles">admin.discoverChannelList.view</result>
+        </action>
+
+        <action name="admin/DiscoverChannelList/create" class="com.foros.action.admin.discoverChannelList.EditDiscoverChannelListAction" method="create">
+            <result name="success" type="tiles">admin.discoverChannelList.edit</result>
+        </action>
+        <action name="admin/DiscoverChannelList/edit" class="com.foros.action.admin.discoverChannelList.EditDiscoverChannelListAction" method="edit">
+            <result name="success" type="tiles">admin.discoverChannelList.edit</result>
+        </action>
+        <action name="admin/DiscoverChannelList/save" class="com.foros.action.admin.discoverChannelList.SaveDiscoverChannelListAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/DiscoverChannelList/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.discoverChannelList.edit</result>
+            <result name="version">
+                <param name="location">/admin/DiscoverChannelList/edit.action</param>
+            </result>
+        </action>
+        <action name="admin/DiscoverChannelList/*" class="com.foros.action.admin.discoverChannelList.StatusDiscoverChannelListAction" method="{1}">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/DiscoverChannelList/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="chain">
+                <param name="actionName">admin/DiscoverChannelList/view</param>
+            </result>
+        </action>
+    </package>
+</struts>

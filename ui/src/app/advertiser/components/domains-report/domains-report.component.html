@@ -1,0 +1,20 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">
+    {{'report.domainsReport' | translate}}
+  </h1>
+
+  <ui-report [meta]="meta"
+             [reportParameters]="reportParameters"
+             [reportService]="reportService"
+             [downloadNamePrefix]="'Domains Report for ' + advertiser.name">
+    <mat-form-field *ngIf="accounts">
+      <mat-label>{{'report.publisherReport.account'| translate}}</mat-label>
+      <mat-select [(value)]="reportParameters.accountId"
+                  (valueChange)="onAccountChange()">
+        <mat-option *ngFor="let item of accounts" [value]="item.id">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ui-report>
+</ng-template>

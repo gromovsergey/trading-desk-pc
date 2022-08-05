@@ -1,0 +1,21 @@
+<div class="panel panel-default c-panel">
+    <div class="panel-heading c-panel__title" (click)="toggle($event)" [ngClass]="{'c-panel__title-collapsible': collapsible}">
+        <h3 class="panel-title">
+            <span *ngIf="collapsible">
+                <ui-icon *ngIf="collapsed" [fw]="true" [icon]="'plus-square'"></ui-icon>
+                <ui-icon *ngIf="!collapsed" [fw]="true" [icon]="'minus-square'"></ui-icon>
+            </span>
+
+			      <span *ngIf="!collapsible && !!icon">
+                <ui-icon [fw]="true" [icon]="icon"></ui-icon>&nbsp;
+            </span>
+			      {{title}}
+            <ui-hint *ngIf="hint" [text]="hint"></ui-hint>
+            <span *ngIf="required">
+                <sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup>
+            </span>
+            <div class="pull-right c-panel__right" #titlePanel></div>
+          </h3>
+    </div>
+    <div class="panel-body c-panel__title" [ngClass]="{'hidden': collapsed}" #body></div>
+</div>

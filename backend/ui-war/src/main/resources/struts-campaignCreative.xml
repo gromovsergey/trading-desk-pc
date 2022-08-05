@@ -1,0 +1,113 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="campaignCreative" extends="foros-default" namespace="/">
+        <action name="*/campaign/group/creative/view" class="com.foros.action.campaign.creative.ViewCampaignCreativeAction" method="view">
+            <result name="success" type="tiles">{1}.campaign.creative.view</result>
+        </action>
+
+        <action name="*/campaign/group/creative/edit" class="com.foros.action.campaign.creative.EditCampaignCreativeAction" method="edit">
+            <result name="success" type="tiles">{1}.campaign.creative.edit</result>
+        </action>
+
+        <action name="*/campaign/group/creative/new" class="com.foros.action.campaign.creative.EditCampaignCreativeAction" method="create">
+            <result name="success" type="tiles">{1}.campaign.creative.create</result>
+        </action>
+
+        <action name="*/campaign/group/creative/changeCreative" class="com.foros.action.campaign.creative.SaveCampaignCreativeAction" method="changeCreative">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">{1}.campaign.creative.create</result>
+            <result name="success" type="tiles">{1}.campaign.creative.create</result>
+        </action>
+
+        <action name="*/campaign/group/creative/update" class="com.foros.action.campaign.creative.SaveCampaignCreativeAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/campaign/group/creative/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">{1}.campaign.creative.edit</result>
+            <result name="version">
+                <param name="location">/{1}/campaign/group/creative/edit.action</param>
+            </result>
+        </action>
+
+        <action name="*/campaign/group/creative/create" class="com.foros.action.campaign.creative.SaveCampaignCreativeAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/campaign/group/creative/view</param>
+                <param name="id">${id}</param>
+                <param name="showNewMessage">true</param>
+            </result>
+            <result name="input" type="tiles">{1}.campaign.creative.create</result>
+        </action>
+
+        <action name="*/campaign/group/creative/*" class="com.foros.action.campaign.creative.StatusCampaignCreativeAction"
+                method="{2}">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/campaign/group/creative/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="successExternal" type="redirectAction">
+                <param name="actionName">{1}/campaign/group/view${creativeGroup.ccgType.pageExtension}</param>
+                <param name="id">${creativeGroup.id}</param>
+            </result>
+            <result name="version" type="forosChain">
+                <param name="actionName">{1}/campaign/group/creative/view</param>
+                <param name="parameters">id=${id}</param>
+            </result>
+        </action>
+        
+        <action name="*/campaign/group/creative/bulk/insertLastSet" class="com.foros.action.campaign.creative.BulkCampaignCreativeAction" method="insertCreativesToLastSet">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/campaign/group/view${creativeGroup.ccgType.pageExtension}</param>
+                <param name="id">${ccgId}</param>
+            </result>
+            <result name="version" type="forosChain">
+                <param name="actionName">{1}/campaign/group/view${creativeGroup.ccgType.pageExtension}</param>
+                <param name="parameters">id=${ccgId}</param>
+            </result>
+        </action>
+
+        <action name="*/campaign/group/creative/bulk/insertSet" class="com.foros.action.campaign.creative.BulkCampaignCreativeAction" method="insertCreativesToSet">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/campaign/group/view${creativeGroup.ccgType.pageExtension}</param>
+                <param name="id">${ccgId}</param>
+            </result>
+            <result name="version" type="forosChain">
+                <param name="actionName">{1}/campaign/group/view${creativeGroup.ccgType.pageExtension}</param>
+                <param name="parameters">id=${ccgId}</param>
+            </result>
+        </action>
+
+        <action name="*/campaign/group/creative/bulk/moveToSet" class="com.foros.action.campaign.creative.BulkCampaignCreativeAction" method="moveCreativesToExistingSet">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/campaign/group/view${creativeGroup.ccgType.pageExtension}</param>
+                <param name="id">${ccgId}</param>
+            </result>
+            <result name="version" type="forosChain">
+                <param name="actionName">{1}/campaign/group/view${creativeGroup.ccgType.pageExtension}</param>
+                <param name="parameters">id=${ccgId}</param>
+            </result>
+        </action>
+
+        <action name="*/campaign/group/creative/bulk/*" class="com.foros.action.campaign.creative.StatusCampaignCreativeBulkAction"
+                method="{2}">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/campaign/group/creativesStats</param>
+                <param name="id">${creativeGroup.id}</param>
+            </result>
+            <result name="version" type="forosChain">
+                <param name="actionName">{1}/campaign/group/creativesStats</param>
+                <param name="parameters">id=${creativeGroup.id}</param>
+            </result>
+        </action>
+    </package>
+</struts>

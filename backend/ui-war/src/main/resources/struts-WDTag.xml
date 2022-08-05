@@ -1,0 +1,87 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="WDTag" extends="foros-default" namespace="/">
+
+        <action name="*/site/WDTag/edit" class="com.foros.action.site.EditWDTagAction" method="edit">
+            <result name="success" type="tiles">{1}.WDTag.edit</result>
+        </action>
+
+        <action name="*/site/WDTag/create" class="com.foros.action.site.EditWDTagAction" method="create">
+            <result name="success" type="tiles">{1}.WDTag.create</result>
+        </action>
+
+        <action name="*/site/WDTag/changeTemplate" class="com.foros.action.site.EditWDTagAction" method="changeTemplate">
+           <result name="success">/site/wdTagsOptions.jsp</result>
+        </action>
+
+        <action name="*/site/WDTag/save" class="com.foros.action.site.SaveWDTagAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/site/WDTag/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">{1}.WDTag.edit</result>
+            <result name="version">
+                <param name="location">/{1}/site/WDTag/edit.action</param>
+            </result>
+        </action>
+
+        <action name="*/site/WDTag/saveNew" class="com.foros.action.site.SaveWDTagAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/site/WDTag/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">{1}.WDTag.create</result>
+            <result name="version">
+                <param name="location">/{1}/site/WDTag/create.action</param>
+            </result>
+        </action>
+
+        <action name="*/site/WDTag/view" class="com.foros.action.site.ViewWDTagAction" method="view">
+            <result name="success" type="tiles">{1}.WDTag.view</result>
+        </action>
+
+        <action name="*/site/WDTag/delete" class="com.foros.action.site.StatusWDTagAction" method="delete">
+            <result name="success-admin" type="redirectAction">
+                <param name="actionName">{1}/site/WDTag/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="success-publisher" type="redirect">
+                <param name="location">{1}/site/view.action?id=${site.id}</param>
+            </result>
+        </action>
+
+        <action name="*/site/WDTag/undelete" class="com.foros.action.site.StatusWDTagAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/site/WDTag/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="*/site/WDTag/preview/content" class="com.foros.action.site.PreviewWDTagAction" method="previewContent">
+            <interceptor-ref name="exception">
+                <param name="logEnabled">true</param>
+                <param name="logLevel">error</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <exception-mapping exception="java.lang.Exception" result="error"/>
+            <result name="success" type="content-result">
+                <param name="contentType">text/html</param>
+            </result>
+            <result name="error" type="dispatcher">/site/wdTagPreviewNotAvailable.jsp</result>
+        </action>
+
+        <action name="*/site/WDTag/preview/livePreview" class="com.foros.action.site.PreviewWDTagAction" method="livePreview">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="content-result">
+                <param name="contentType">text/xml</param>
+            </result>
+            <result name="input" type="dispatcher">/site/wdTagLivePreviewNotAvailable.jsp</result>
+        </action>
+
+    </package>
+</struts>

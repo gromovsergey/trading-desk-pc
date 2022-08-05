@@ -1,0 +1,186 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="cmpAccount" extends="foros-default" namespace="/">
+        <action name="admin/cmp/account/view" class="com.foros.action.account.ViewCMPAccountAction" method="view">
+            <result name="success" type="tiles">admin.cmp.view</result>
+        </action>
+
+        <action name="admin/cmp/account/edit" class="com.foros.action.account.EditCMPAccountAction" method="edit">
+            <result name="success" type="tiles">admin.cmp.edit</result>
+        </action>
+
+        <action name="admin/cmp/account/new" class="com.foros.action.account.EditCMPAccountAction" method="create">
+            <result name="success" type="tiles">admin.cmp.new</result>
+        </action>
+
+        <action name="admin/cmp/account/changeCountry" class="com.foros.action.account.EditCMPAccountAction" method="changeCountry">
+            <result name="success">/account/addressEditSection.jsp</result>
+        </action>
+
+        <action name="admin/cmp/account/update" class="com.foros.action.account.SaveCMPAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/cmp/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.cmp.edit</result>
+            <result name="version">
+                <param name="location">/admin/cmp/account/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/cmp/account/create" class="com.foros.action.account.SaveCMPAccountAction" method="create">
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/cmp/account/view</param>
+            <param name="id">${id}</param>
+          </result>
+          <result name="input" type="tiles">admin.cmp.new</result>
+        </action>
+
+        <action name="admin/cmp/account/activate" class="com.foros.action.account.StatusAccountAction" method="activate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/cmp/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/cmp/account/inactivate" class="com.foros.action.account.StatusAccountAction" method="inactivate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/cmp/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/cmp/account/delete" class="com.foros.action.account.StatusAccountAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/cmp/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/cmp/account/undelete" class="com.foros.action.account.StatusAccountAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/cmp/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/cmp/account/terms/add" class="com.foros.action.account.terms.AddAccountTermsAction" method="edit">
+            <result name="success" type="tiles">admin.cmp.terms.add</result>
+        </action>
+
+        <action name="admin/cmp/account/terms/save" class="com.foros.action.account.terms.AddAccountTermsAction" method="save">
+          <interceptor-ref name="fileUpload">
+            <param name="allowedTypes">image/jpeg,image/pjpeg,image/png,image/x-png,image/gif,application/pdf,image/tiff,image/tiff-fx</param>
+          </interceptor-ref>
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/cmp/account/view</param>
+            <param name="id">${id}</param>
+          </result>
+            <result name="input" type="tiles">admin.cmp.terms.add</result>
+        </action>
+
+        <action name="admin/cmp/account/editFinance" class="com.foros.action.account.EditAccountsPayableFinanceAction" method="edit">
+            <result name="success" type="tiles">admin.cmpFinance.edit</result>
+        </action>
+
+        <action name="admin/cmp/account/updateFinance" class="com.foros.action.account.SaveAccountsPayableFinanceAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/cmp/account/view</param>
+                <param name="id">${accountId}</param>
+            </result>
+            <result name="input" type="tiles">admin.cmpFinance.edit</result>
+            <result name="version">
+                <param name="location">/admin/cmp/account/editFinance.action</param>
+            </result>
+        </action>
+
+        <action name="admin/cmp/account/main" class="com.foros.action.account.SwitchContextCMPAction" method="main">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success.channel" type="redirect">
+                <param name="location">admin/channel/contextMain.action?accountId=${accountId}</param>
+            </result>
+            <result name="success.account" type="redirect">
+                <param name="location">admin/cmp/account/view.action?id=${accountId}</param>
+            </result>
+            <result name="input" type="tiles">admin.cmp.main</result>
+        </action>
+
+         <action name="admin/cmp/account/search" class="com.foros.action.account.SwitchContextCMPAction"
+                method="search">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.cmp.main</result>
+            <result name="input" type="tiles">admin.cmp.main</result>
+        </action>
+
+        <action name="admin/cmp/account/selectAccount" class="com.foros.action.account.SwitchContextCMPAction"
+                method="selectAccount">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success.channel" type="redirect">
+                <param name="location">admin/channel/contextMain.action?accountId=${accountId}</param>
+            </result>
+            <result name="success.account" type="redirect">
+                <param name="location">admin/cmp/account/view.action?id=${accountId}</param>
+            </result>
+        </action>
+
+        <action name="admin/cmp/account/switch" class="com.foros.action.account.SwitchContextCMPAction"
+                method="switchContext">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.cmp.main</result>
+        </action>
+
+        <action name="cmp/myAccount/myAccountView" class="com.foros.action.account.ViewMyCMPAccountAction" method="view">
+            <result name="success" type="tiles">cmp.myAccount.view</result>
+        </action>
+
+        <action name="cmp/myAccount/myAccountEdit" class="com.foros.action.account.EditMyCMPAccountAction" method="edit">
+            <result name="success" type="tiles">cmp.myAccount.edit</result>
+        </action>
+
+        <action name="cmp/myAccount/myAccountUpdate" class="com.foros.action.account.SaveMyCMPAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">cmp/myAccount/myAccountView</param>
+            </result>
+            <result name="input" type="tiles">cmp.myAccount.edit</result>
+            <result name="version">
+                <param name="location">/cmp/myAccount/myAccountEdit.action</param>
+            </result>
+        </action>
+
+        <action name="cmp/myAccount/editFinance" class="com.foros.action.account.EditAccountsPayableFinanceAction" method="edit">
+            <result name="success" type="tiles">cmp.cmpFinance.edit</result>
+        </action>
+
+        <action name="cmp/myAccount/updateFinance" class="com.foros.action.account.SaveAccountsPayableFinanceAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">cmp/myAccount/myAccountView</param>
+            </result>
+            <result name="input" type="tiles">cmp.cmpFinance.edit</result>
+            <result name="version">
+                <param name="location">/cmp/myAccount/editFinance.action</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

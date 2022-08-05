@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+    <http security="none" pattern="/ajax/**"/>
+    <http security="none" pattern="/styles/**"/>
+    <http security="none" pattern="/images/**"/>
+
+    <http auto-config="false" use-expressions="true"
+          authentication-manager-ref="authenticationManager"
+          entry-point-ref="entryPoint" once-per-request="true"
+          security-context-repository-ref="securityContextRepository"
+          create-session="always">
+
+        <custom-filter ref="tokenAuthenticationFilter" position="PRE_AUTH_FILTER"/>
+        <custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="principalValidationAuthenticationFilter"/>
+
+        <intercept-url pattern="/**" access="!isAnonymous()"/>
+
+        <access-denied-handler ref="accessDeniedHandler"/>
+
+    </http>
+
+</beans:beans>

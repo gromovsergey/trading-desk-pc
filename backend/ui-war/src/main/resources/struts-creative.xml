@@ -1,0 +1,358 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="displayCreative" extends="foros-default" namespace="/">
+
+        <!-- ADMIN -->
+        <action name="admin/creative/main" class="com.foros.action.creative.display.ListCreativesAction" method="list">
+            <result name="success" type="tiles">admin.creative.main</result>
+        </action>
+
+        <action name="admin/creative/search" class="com.foros.action.creative.display.ListCreativesAction" method="search">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">admin.creative.list</result>
+        </action>
+
+        <action name="admin/creative/createLinks" class="com.foros.action.creative.display.CreativeLinksAction" method="showGroups">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/creative/link/groups.jsp</result>
+        </action>
+        
+        <action name="admin/creative/saveLinks" class="com.foros.action.creative.display.CreativeLinksAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/creative/link/closeDialog.jsp</result>
+            <result name="input">/creative/link/errors.jsp</result>
+        </action>
+
+        <action name="admin/creative/clickUrls" class="com.foros.action.creative.display.CreativeClickUrlsAction" method="edit">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/creative/clicks/creativeBulkClickUrls.jsp</result>
+        </action>
+
+        <action name="admin/creative/saveclickUrls" class="com.foros.action.creative.display.CreativeClickUrlsAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/creative/clicks/closeDialog.jsp</result>
+            <result name="input">/creative/clicks/creativeBulkClickUrls.jsp</result>
+        </action>
+
+        <action name="admin/creative/updates" class="com.foros.action.creative.display.UpdateListCreativesAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/creative/main</param>
+                <param name="advertiserId">${account.id}</param>
+                <param name="searchParams.campaignId">${searchParams.campaignId}</param>
+                <param name="searchParams.sizeId">${searchParams.sizeId}</param>
+                <param name="displayStatusId">${searchParams.displayStatusId}</param>
+                <param name="searchParams.orderBy">${searchParams.orderBy}</param>
+                <param name="searchParams.page">${searchParams.page}</param>
+                <param name="suppressEmptyParameters">true</param>
+            </result>
+        </action>
+
+        <action name="admin/creative/view" class="com.foros.action.creative.ViewCreativeAction" method="view">
+            <result name="success" type="tiles">admin.creative.view</result>
+        </action>
+
+        <action name="admin/creative/newDisplay" class="com.foros.action.creative.display.EditCreativeAction" method="createDisplay">
+            <result name="success" type="tiles">admin.creative.edit</result>
+        </action>
+
+        <action name="admin/creative/newText" class="com.foros.action.creative.display.EditCreativeAction" method="createText">
+            <result name="success" type="tiles">admin.creative.edit</result>
+        </action>
+
+        <action name="admin/creative/new" class="com.foros.action.creative.display.EditCreativeAction" method="create">
+            <result name="success" type="tiles">admin.creative.edit</result>
+        </action>
+
+        <action name="admin/creative/edit" class="com.foros.action.creative.display.EditCreativeAction" method="edit">
+            <result name="success" type="tiles">admin.creative.edit</result>
+        </action>
+
+        <action name="admin/creative/copy" class="com.foros.action.creative.display.EditCreativeAction" method="copy">
+            <result name="success" type="tiles">admin.creative.edit</result>
+        </action>
+
+        <action name="admin/creative/changeTemplate" class="com.foros.action.creative.display.EditCreativeAction" method="changeTemplate">
+             <result name="success">/creative/creativeOptions.jsp</result>
+        </action>
+
+        <action name="admin/creative/changeSize" class="com.foros.action.creative.display.EditCreativeAction" method="changeSize">
+             <result name="success">/creative/creativeSizeOptions.jsp</result>
+        </action>
+
+        <action name="admin/creative/update" class="com.foros.action.creative.display.SaveCreativeAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">admin/creative/view.action?id=${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.creative.edit</result>
+            <result name="version">
+                <param name="location">/admin/creative/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/creative/create" class="com.foros.action.creative.display.SaveCreativeAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">admin/creative/view.action?id=${id}&amp;createNew=true</param>
+            </result>
+            <result name="success.byCCG" type="redirect">
+                <param name="location">admin/creative/view.action?id=${id}&amp;createNew=true${ccgIds}</param>
+            </result>
+            <result name="input" type="tiles">admin.creative.edit</result>
+        </action>
+
+        <action name="admin/creative/activate" class="com.foros.action.creative.display.UpdateCreativeStatusAction" method="activate">
+            <result name="success" type="redirect">
+                <param name="location">admin/creative/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/creative/inactivate" class="com.foros.action.creative.display.UpdateCreativeStatusAction" method="inactivate">
+            <result name="success" type="redirect">
+                <param name="location">admin/creative/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/creative/delete" class="com.foros.action.creative.display.UpdateCreativeStatusAction" method="delete">
+            <result name="success" type="redirect">
+                <param name="location">admin/creative/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/creative/undelete" class="com.foros.action.creative.display.UpdateCreativeStatusAction" method="undelete">
+            <result name="success" type="redirect">
+                <param name="location">admin/creative/view.action?id=${id}</param>
+            </result>
+        </action>
+
+
+        <action name="admin/creative/approve" class="com.foros.action.creative.display.UpdateCreativeStatusAction" method="approve">
+            <result name="success" type="redirect">
+                <param name="location">admin/creative/view.action?id=${id}</param>
+            </result>
+        </action>
+
+
+        <action name="admin/creative/decline" class="com.foros.action.creative.display.UpdateCreativeStatusAction" method="decline">
+            <result name="success" type="redirect">
+                <param name="location">admin/creative/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <!-- ADVERTISER -->
+
+        <action name="advertiser/creative/main" class="com.foros.action.creative.display.ListCreativesAction" method="list">
+            <result name="success" type="tiles">advertiser.creative.main</result>
+        </action>
+
+        <action name="advertiser/creative/search" class="com.foros.action.creative.display.ListCreativesAction" method="search">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">advertiser.creative.list</result>
+        </action>
+        
+        <action name="advertiser/creative/createLinks" class="com.foros.action.creative.display.CreativeLinksAction" method="showGroups">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/creative/link/groups.jsp</result>
+        </action>
+        
+        <action name="advertiser/creative/saveLinks" class="com.foros.action.creative.display.CreativeLinksAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/creative/link/closeDialog.jsp</result>
+            <result name="input">/creative/link/errors.jsp</result>
+        </action>
+        
+
+        <action name="advertiser/creative/clickUrls" class="com.foros.action.creative.display.CreativeClickUrlsAction" method="edit">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/creative/clicks/creativeBulkClickUrls.jsp</result>
+        </action>
+
+        <action name="advertiser/creative/saveclickUrls" class="com.foros.action.creative.display.CreativeClickUrlsAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/creative/clicks/closeDialog.jsp</result>
+            <result name="input">/creative/clicks/creativeBulkClickUrls.jsp</result>
+        </action>
+
+        <action name="advertiser/creative/updates" class="com.foros.action.creative.display.UpdateListCreativesAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/creative/main</param>
+                <param name="advertiserId">${account.id}</param>
+                <param name="searchParams.campaignId">${searchParams.campaignId}</param>
+                <param name="searchParams.sizeId">${searchParams.sizeId}</param>
+                <param name="displayStatusId">${searchParams.displayStatusId}</param>
+                <param name="suppressEmptyParameters">true</param>
+            </result>
+        </action>
+
+        <action name="advertiser/creative/view" class="com.foros.action.creative.ViewCreativeAction" method="view">
+            <result name="success" type="tiles">advertiser.creative.view</result>
+        </action>
+
+        <action name="advertiser/creative/newDisplay" class="com.foros.action.creative.display.EditCreativeAction" method="createDisplay">
+            <result name="success" type="tiles">advertiser.creative.edit</result>
+        </action>
+
+        <action name="advertiser/creative/newText" class="com.foros.action.creative.display.EditCreativeAction" method="createText">
+            <result name="success" type="tiles">advertiser.creative.edit</result>
+        </action>
+
+        <action name="advertiser/creative/new" class="com.foros.action.creative.display.EditCreativeAction" method="create">
+            <result name="success" type="tiles">advertiser.creative.edit</result>
+        </action>
+
+
+        <action name="advertiser/creative/edit" class="com.foros.action.creative.display.EditCreativeAction" method="edit">
+            <result name="success" type="tiles">advertiser.creative.edit</result>
+        </action>
+
+        <action name="advertiser/creative/copy" class="com.foros.action.creative.display.EditCreativeAction" method="copy">
+            <result name="success" type="tiles">advertiser.creative.edit</result>
+        </action>
+
+        <action name="advertiser/creative/changeTemplate" class="com.foros.action.creative.display.EditCreativeAction" method="changeTemplate">
+            <result name="success">/creative/creativeOptions.jsp</result>
+        </action>
+
+        <action name="advertiser/creative/changeSize" class="com.foros.action.creative.display.EditCreativeAction" method="changeSize">
+             <result name="success">/creative/creativeSizeOptions.jsp</result>
+        </action>
+
+        <action name="advertiser/creative/update" class="com.foros.action.creative.display.SaveCreativeAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">advertiser/creative/view.action?id=${id}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.creative.edit</result>
+            <result name="version">
+                <param name="location">/advertiser/creative/edit.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/creative/create" class="com.foros.action.creative.display.SaveCreativeAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirect">
+                <param name="location">advertiser/creative/view.action?id=${id}&amp;createNew=true</param>
+            </result>
+            <result name="success.byCCG" type="redirect">
+                <param name="location">advertiser/creative/view.action?id=${id}&amp;createNew=true${ccgIds}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.creative.edit</result>
+        </action>
+
+        <action name="advertiser/creative/activate" class="com.foros.action.creative.display.UpdateCreativeStatusAction" method="activate">
+            <result name="success" type="redirect">
+                <param name="location">advertiser/creative/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="advertiser/creative/inactivate" class="com.foros.action.creative.display.UpdateCreativeStatusAction" method="inactivate">
+            <result name="success" type="redirect">
+                <param name="location">advertiser/creative/view.action?id=${id}</param>
+            </result>
+        </action>
+
+        <action name="advertiser/creative/delete" class="com.foros.action.creative.display.UpdateCreativeStatusAction" method="delete">
+            <result name="success" type="redirect">
+                <param name="location">advertiser/creative/main.action?advertiserId=${advertiserId}</param>
+            </result>
+        </action>
+                
+        <!-- Dynamic preview -->
+        <action name="dcreative" class="com.foros.action.creative.display.DynamicPreviewAction" method="preview">
+            <result name="success" type="content-result">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>
+
+        <action name="generateCreativePreview" class="com.foros.action.creative.CreativePreviewAction" method="generate">
+            <result name="success" type="content-result">
+                <param name="contentType">text/html</param>
+            </result>
+            <result name="404">
+                /creative/creativePreview404.jsp
+            </result>
+        </action>
+
+        <action name="clickTracking" class="com.opensymphony.xwork2.ActionSupport" method="execute">
+            <interceptor-ref name="defaultForosStack">
+                <param name="csrf.readOnly">true</param>
+            </interceptor-ref>
+            <result name="success" type="tiles">creative.clickTracking</result>
+        </action>
+
+        <action name="liveCreativePreviewGenerator" class="com.foros.action.creative.display.LivePreviewCreativeGeneratorAction"  method="process">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">creative.edit.preview</result>
+        </action>
+
+        <action name="liveCreativePreviewGet" class="com.foros.action.creative.display.LivePreviewCreativeGetAction"  method="process">
+            <result name="success" type="content-result">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>
+
+        <action name="*/creative/reset" class="com.foros.action.creative.ResetCreativeApprovalAction" method="reset">
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/creative/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <!-- Bulk creative export/upload -->
+
+        <action name="*/creative/export" class="com.foros.action.creative.display.ExportCreativesAction" method="export">
+            <interceptor-ref name="saveStack"/>
+            <result name="input">
+                <param name="location">/{1}/creative/main.action</param>
+            </result>
+        </action>
+
+        <action name="*/creative/upload/main" class="com.foros.action.creative.display.upload.MainUploadCreativesAction"
+                method="main">
+            <result name="success" type="tiles">{1}.creative.upload</result>
+        </action>
+
+        <action name="*/creative/upload/validate" class="com.foros.action.creative.display.upload.ValidateUploadCreativesAction"
+                method="validateFile">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">31457280</param>
+            </interceptor-ref>
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">{1}.creative.upload</result>
+        </action>
+
+        <action name="*/creative/upload/export" class="com.foros.action.creative.display.upload.DownloadCreativesAction"
+                method="export"/>
+
+        <action name="*/creative/upload/template" class="com.foros.action.creative.display.upload.DownloadCreativesAction"
+                method="template"/>
+
+        <action name="*/creative/upload/submit" class="com.foros.action.creative.display.upload.SubmitUploadCreativesAction"
+                method="submit">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">{1}.creative.upload</result>
+        </action>
+
+    </package>
+    
+    <!--Creative Links Tree Filter -->
+    <package name="creativeLinksTreeFilter" extends="foros-default" abstract="true">
+        <action name="campaigns" class="com.foros.action.creative.display.treefilter.CampaignsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterRoot.jsp?childAction=groups</result>
+        </action>
+
+        <action name="groups" class="com.foros.action.creative.display.treefilter.GroupsTreeFilterAction"
+                method="process">
+            <result name="success">/WEB-INF/tags/treeFilter/treeFilterElem.jsp</result>
+        </action>
+    </package>
+
+    <package name="creativeLinksTreeFilter-admin" extends="creativeLinksTreeFilter" namespace="/admin/creative/treeFilter"/>
+    <package name="creativeLinksTreeFilter-advertiser" extends="creativeLinksTreeFilter" namespace="/advertiser/creative/treeFilter"/>
+</struts>

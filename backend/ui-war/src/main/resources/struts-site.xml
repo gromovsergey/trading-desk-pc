@@ -1,0 +1,230 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="site" extends="foros-default" namespace="/">
+
+        <action name="admin/site/main" class="com.foros.action.reporting.dashboard.SiteDashboardAction" method="execute">
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.sites.main</result>
+        </action>
+
+        <action name="publisher/site/main" class="com.foros.action.reporting.dashboard.SiteDashboardAction" method="execute">
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">publisher.sites.main</result>
+        </action>
+
+        <action name="admin/dashboard/siteStats" class="com.foros.action.reporting.dashboard.SiteDashboardAction" method="execute">
+            <result name="success">/dashboard/siteStats.jsp</result>
+        </action>
+
+        <action name="publisher/dashboard/siteStats" class="com.foros.action.reporting.dashboard.SiteDashboardAction" method="execute">
+            <result name="success">/dashboard/siteStats.jsp</result>
+        </action>
+        
+        <action name="admin/dashboard/tagStats" class="com.foros.action.reporting.dashboard.TagDashboardAction" method="execute">
+            <result name="success">/dashboard/tagStats.jsp</result>
+        </action>
+
+        <action name="publisher/dashboard/tagStats" class="com.foros.action.reporting.dashboard.TagDashboardAction" method="execute">
+            <result name="success">/dashboard/tagStats.jsp</result>
+        </action>
+
+        <action name="admin/site/view" class="com.foros.action.site.ViewSiteAction" method="view">
+            <result name="success" type="tiles">admin.site.view</result>
+        </action>
+
+        <action name="publisher/site/view" class="com.foros.action.site.ViewSiteAction" method="view">
+            <result name="success" type="tiles">publisher.site.view</result>
+        </action>
+
+        <action name="admin/site/edit" class="com.foros.action.site.EditSiteAction" method="edit">
+            <result name="success" type="tiles">admin.site.edit</result>
+        </action>
+
+        <action name="publisher/site/edit" class="com.foros.action.site.EditSiteAction" method="edit">
+            <result name="success" type="tiles">publisher.site.edit</result>
+        </action>
+
+        <action name="admin/site/new" class="com.foros.action.site.EditSiteAction" method="create">
+            <result name="success" type="tiles">admin.site.new</result>
+            <result name="error" type="httperror">
+                <param name="errorCode">404</param>
+            </result>
+        </action>
+
+        <action name="publisher/site/new" class="com.foros.action.site.EditSiteAction" method="create">
+            <result name="success" type="tiles">publisher.site.new</result>
+            <result name="error" type="httperror">
+                <param name="errorCode">404</param>
+            </result>
+        </action>
+
+        <action name="admin/site/update" class="com.foros.action.site.SaveSiteAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/site/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.site.edit</result>
+            <result name="version">
+                <param name="location">/admin/site/edit.action</param>
+            </result>
+        </action>
+
+        <action name="publisher/site/update" class="com.foros.action.site.SaveSiteAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">publisher/site/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">publisher.site.edit</result>
+            <result name="version">
+                <param name="location">/publisher/site/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/site/create" class="com.foros.action.site.SaveSiteAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/site/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.site.new</result>
+        </action>
+
+        <action name="publisher/site/create" class="com.foros.action.site.SaveSiteAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">publisher/site/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">publisher.site.new</result>
+        </action>
+
+        <action name="admin/site/approve" class="com.foros.action.site.StatusSiteAction" method="approve">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/site/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/site/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/site/decline" class="com.foros.action.site.StatusSiteAction" method="decline">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/site/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/site/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/site/delete" class="com.foros.action.site.StatusSiteAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/site/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/site/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/site/undelete" class="com.foros.action.site.StatusSiteAction" method="undelete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/site/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/site/view.action</param>
+            </result>
+        </action>
+
+        <action name="publisher/site/delete" class="com.foros.action.site.StatusSiteAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">publisher/site/main</param>
+            </result>
+            <result name="version">
+                <param name="location">/publisher/site/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/site/export" class="com.foros.action.site.csv.ExternalSiteExportAction" method="export">
+            <result name="input">
+                <param name="location">/admin/site/main.action?account.id=${publisherId}</param>
+            </result>
+        </action>
+
+        <action name="admin/publisher/prepareExportSites" class="com.foros.action.site.csv.PrepareSiteExportAction" method="prepareExport">
+            <result name="success" type="simple-text-result"/>
+            <result name="input" type="simple-text-result"/>
+        </action>
+
+        <action name="admin/publisher/exportSites" class="com.foros.action.site.csv.InternalSiteExportAction" method="export">
+            <result name="input">
+                <param name="location">/admin/publisher/account/main.action</param>
+            </result>
+        </action>
+
+
+        <action name="publisher/site/export" class="com.foros.action.site.csv.ExternalSiteExportAction" method="export">
+            <result name="input">
+                <param name="location">/publisher/site/main.action?account.id=${publisherId}</param>
+            </result>
+        </action>
+
+        <action name="admin/site/selectForUpload" class="com.foros.action.site.csv.ViewSiteUploadAction" method="selectUpload">
+            <result name="successPublishers" type="tiles">admin.publishers.site.upload</result>
+            <result name="success" type="tiles">admin.site.upload</result>
+        </action>
+
+        <action name="publisher/site/selectForUpload" class="com.foros.action.site.csv.ViewSiteUploadAction" method="selectUpload">
+            <result name="success" type="tiles">publisher.site.upload</result>
+        </action>
+
+        <action name="admin/site/validateUpload" class="com.foros.action.site.csv.SiteCSVProcessorAction" method="validateCsv">
+            <interceptor-ref name="fileUpload"/>
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">admin.site.upload</result>
+            <result name="input" type="tiles">admin.site.upload</result>
+            <result name="successPublishers" type="tiles">admin.publishers.site.upload</result>
+            <result name="inputPublishers" type="tiles">admin.publishers.site.upload</result>
+        </action>
+
+        <action name="publisher/site/validateUpload" class="com.foros.action.site.csv.SiteCSVProcessorAction" method="validateCsv">
+            <interceptor-ref name="fileUpload"/>
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">publisher.site.upload</result>
+            <result name="input" type="tiles">publisher.site.upload</result>
+        </action>
+
+        <action name="admin/site/submitUpload" class="com.foros.action.site.csv.SubmitSiteCSVFileAction" method="submitUpload">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">admin.site.upload</result>
+            <result name="input" type="tiles">admin.site.upload</result>
+            <result name="successPublishers" type="tiles">admin.publishers.site.upload</result>
+            <result name="inputPublishers" type="tiles">admin.publishers.site.upload</result>
+            
+        </action>
+
+        <action name="publisher/site/submitUpload" class="com.foros.action.site.csv.SubmitSiteCSVFileAction" method="submitUpload">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="tiles">publisher.site.upload</result>
+            <result name="input" type="tiles">publisher.site.upload</result>
+        </action>
+
+        <action name="admin/site/exportResult" class="com.foros.action.site.csv.SiteExportValidationResultAction" method="export">
+        </action>
+
+        <action name="publisher/site/exportResult" class="com.foros.action.site.csv.SiteExportValidationResultAction" method="export">
+        </action>
+    </package>
+</struts>

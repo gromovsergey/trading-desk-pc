@@ -1,0 +1,31 @@
+<div class="file-upload">
+  <button mat-flat-button
+          color="accent"
+          type="button"
+          class="mr-1"
+          (click)="selectFile($event)"
+          [disabled]="btnDisable">
+    <mat-spinner *ngIf="wait" diameter="24"></mat-spinner>
+    {{title}}
+  </button>
+  <ui-hint *ngIf="hint" [text]="hint"></ui-hint>
+
+  <ng-container *ngIf="uploadData">
+    <a [href]="uploadData.url" target="_blank" *ngIf="uploadData.url && uploadData.name">{{uploadData.name}}</a>
+    <span *ngIf="!uploadData.url && uploadData.name">{{uploadData.name}}</span>
+    <button type="button"
+            mat-icon-button
+            color="accent"
+            *ngIf="uploadData.name"
+            [title]="clearBtnTitle"
+            (click)="clearField($event)">
+      <i class="material-icons">clear</i>
+    </button>
+  </ng-container>
+  <input type="file" (change)="doUpload($event)" #fileUpload class="hidden">
+</div>
+
+<ui-info-panel type="danger" *ngIf="errors?.length || actionErrors?.length">
+  <p *ngFor="let error of errors">{{error}}</p>
+  <p *ngFor="let error of actionErrors">{{error}}</p>
+</ui-info-panel>

@@ -1,0 +1,144 @@
+<ui-loading *ngIf="wait || mainWait"></ui-loading>
+
+<section *ngIf="!mainWait && !!creative">
+    <form (submit)="doSubmit($event)">
+        <div class="page-header page-header-first">
+            <h2 class="c-pagetitle">
+                <ui-icon *ngIf="mode === 'edit'" [fw]="true" [displayStatus]="creative.displayStatus"></ui-icon> {{title}}
+            </h2>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+
+                <div *ngIf="errors.actionError" class="alert alert-danger has-error" role="alert">
+                    <p *ngFor="let error of errors.actionError">{{error}}</p>
+                </div>
+
+                <ui-panel title="_L10N_(blockName.main)">
+                    <div #body>
+                        <div class="form-group" [ngClass]="{'has-error':errors.name}">
+                            <label>_L10N_(blockName.name)<ui-icon-required></ui-icon-required></label>
+                            <div>
+                                <input name="name" [(ngModel)]="creative.name" type="text" placeholder="_L10N_(blockName.name)" class="form-control">
+                            </div>
+                            <p *ngFor="let error of errors.name" class="help-block">{{error}}</p>
+                        </div>
+                        <!--
+                        <section *ngIf="templateStats.expandable && sizeStats.expansions && sizeStats.expansions.length">
+                            <div class="form-group" [ngClass]="{'has-error':errors.name}">
+                                <label>Expandable</label>
+                                <div>
+                                    No <button (click)="toggleExpandable($event)" class="btn btn-toggle">
+                                        <i class="fa" [ngClass]="{'fa-toggle-on': creative.expandable,'fa-toggle-off': !creative.expandable}"></i>
+                                    </button> Yes
+                                    <span *ngIf="creative.expandable"> (max expanded size: {{sizeStats.maxWidth}} X {{sizeStats.maxHeight}} pixels)</span>
+                                </div>
+                            </div>
+                            <div class="form-group" *ngIf="creative.expandable">
+                                <label>Direction of Expansion</label>
+                                <div>
+                                    <select *ngIf="creative.expandable" class="form-control"
+                                            [(ngModel)]="creative.expansion" (change)="updateLivePreview()">
+                                        <option *ngFor="let dir of sizeStats.expansions" [value]="dir">{{dir}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </section>
+                        -->
+                    </div>
+                </ui-panel>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <ui-panel title="_L10N_(creative.blockName.livePreview)">
+                    <div #body>
+                        <ui-creative-live-preview [rnd]="rnd" [creative]="creative"></ui-creative-live-preview>
+                    </div>
+                </ui-panel>
+            </div>
+        </div>
+        <div class="row" [ngClass]="{hidden: !templateStatsVisible}">
+            <div class="col-lg-8">
+                <div *ngIf="errors.template" class="alert alert-danger has-error" role="alert">
+                    <p *ngFor="let error of errors.template">{{error}}</p>
+                </div>
+                <ui-panel title="_L10N_(creative.blockName.templateOptions)">
+                    <div #body>
+                        <ui-creative-option-group *ngFor="let group of templateStats.optionGroups"
+                                                  [group]="group" (onChange)="onOptionGroupChange($event)"
+                                                  [errors]="errors.options"></ui-creative-option-group>
+                    </div>
+                </ui-panel>
+            </div>
+        </div>
+        <div class="row" [ngClass]="{hidden: !sizeStatsVisible}">
+            <div class="col-lg-8">
+                <div *ngIf="errors.size" class="alert alert-danger has-error" role="alert">
+                    <p *ngFor="let error of errors.size">{{error}}</p>
+                </div>
+                <ui-panel title="_L10N_(creative.blockName.creativeSizeOptions)">
+                    <div #body>
+                        <ui-creative-option-group *ngFor="let group of sizeStats.optionGroups"
+                                                  (onChange)="onOptionGroupChange($event)" [group]="group"
+                                                  [errors]="errors.options"></ui-creative-option-group>
+                    </div>
+                </ui-panel>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <ui-panel title="_L10N_(creative.blockName.contentCategories)" [ngClass]="{'has-error':errors.contentCategories}" [collapsible]="true" [collapsed]="!errors.contentCategories">
+                    <div #body>
+                        <ui-option-transfer [options]="categories.contentCategories"
+                                            [selected]="creative.contentCategories"
+                                            (onChange)="setContentCategories($event)"
+                                            [customSort]="sort"
+                                            [availableMsg]="'_L10N_(messages.optionTransfer.available)'"
+                                            [selectedMsg]="'_L10N_(messages.optionTransfer.selected)'"
+                                            [selectAllMsg]="'_L10N_(messages.optionTransfer.selectAll)'"
+                                            [deselectAllMsg]="'_L10N_(messages.optionTransfer.deselectAll)'">
+                        </ui-option-transfer>
+                        <p *ngFor="let error of errors.contentCategories" class="help-block">{{error}}</p>
+                    </div>
+                </ui-panel>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <ui-panel title="_L10N_(creative.blockName.visualCategories)" [ngClass]="{'has-error':errors.visualCategories}" [collapsible]="true" [collapsed]="!errors.visualCategories">
+                    <div #body>
+                        <div class="row" *ngIf="templateStats.visualCategories && templateStats.visualCategories.length">
+                            <div class="col-xs-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item" *ngFor="let item of templateStats.visualCategories">{{item.name}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <ui-option-transfer *ngIf="!(templateStats.visualCategories && templateStats.visualCategories.length)"
+                                            [options]="categories.visualCategories"
+                                            [selected]="creative.visualCategories"
+                                            (onChange)="setVisualCategories($event)"
+                                            [customSort]="sort"
+                                            [availableMsg]="'_L10N_(messages.optionTransfer.available)'"
+                                            [selectedMsg]="'_L10N_(messages.optionTransfer.selected)'"
+                                            [selectAllMsg]="'_L10N_(messages.optionTransfer.selectAll)'"
+                                            [deselectAllMsg]="'_L10N_(messages.optionTransfer.deselectAll)'">
+                        </ui-option-transfer>
+                        <p *ngFor="let error of errors.visualCategories" class="help-block">{{error}}</p>
+                    </div>
+                </ui-panel>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <button [disabled]="waitSubmit" type="submit" class="btn btn-primary">
+                    <ui-icon *ngIf="waitSubmit" [fw]="true" [spin]="true" [icon]="'spinner'"></ui-icon>
+                    {{mode === 'add' ? '_L10N_(button.add)' : '_L10N_(button.save)'}}
+                </button>
+                <a *ngIf="!waitSubmit" [routerLink]="[backUrl]" class="btn btn-default">_L10N_(button.cancel)</a>
+            </div>
+        </div>
+    </form>
+</section>

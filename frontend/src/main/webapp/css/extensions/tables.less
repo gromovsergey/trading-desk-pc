@@ -1,0 +1,79 @@
+/* Reset some bootstrap styles: .table-responsive */
+/* Class names with ex- prefix */
+@frame-color: #aaa;
+@head-background-color: #fcdd8f;
+@first-row-background-color: #eee;
+@row-border-color: #bbb;
+@cell-hover-color: red;
+@cell-width: 12em;
+@row-filter-width: 20em;
+
+.ex-table-scrollable {
+  @media screen {
+    overflow: auto;
+  }
+  border: 1px solid @frame-color;
+
+  table {
+    table-layout: fixed;
+    border: 0 none !important;
+    margin-bottom: 0 !important;
+  }
+
+  thead {
+    position: sticky;
+    top: 0;
+    background-color: @head-background-color;
+    z-index: 1;
+  }
+
+  thead, tbody {
+    display: inline-block;
+  }
+
+  tr {
+    display: flex;
+  }
+
+  th, td {
+    width: @cell-width;
+    border: 1px solid white !important;
+    border-left: 0 none !important;
+    border-bottom: 1px solid @row-border-color !important;
+    word-break: break-all;
+    overflow: hidden;
+  }
+
+  th:first-child, td:first-child {
+    position: sticky;
+    left: 0;
+    border-left: 1px solid white !important;
+  }
+
+  th:first-child {
+    background-color: @head-background-color;
+  }
+
+  td:first-child {
+    background-color: @first-row-background-color;
+    border-right: 1px solid @row-border-color !important;
+  }
+
+  td:hover {
+    border: 1px solid @cell-hover-color !important;
+  }
+
+  textarea {
+    min-height: 2em;
+    resize: vertical;
+  }
+
+  td.number {
+    text-align: right;
+  }
+}
+
+.ex-row-filter {
+  width: @row-filter-width;
+  margin-bottom: 1em;
+}

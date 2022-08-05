@@ -1,0 +1,9 @@
+<div *ngIf="!hidden" [class.hidden]="hidden" [ngClass]="['panel', type && classIconList[type] || null]">
+  <i *ngIf="type && classIconList[type]" class="icon material-icons mr-1">{{classIconList[type]}}</i>
+  <div class="body">
+    <ng-content></ng-content>
+  </div>
+  <i title="{{'button.close' | translate}}"
+     (click)="onClose()"
+     class="material-icons dismiss">clear</i>
+</div>

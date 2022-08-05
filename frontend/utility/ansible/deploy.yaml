@@ -1,0 +1,23 @@
+- hosts: webserver
+  gather_facts: false
+  vars:
+    run_dir: /opt/foros/new-ui
+    archive_name: archive.zip
+
+  tasks:
+
+  - name: copy package from control host to running host
+    copy: src=/home/maint/{{ archive_name }} dest={{ run_dir }}/{{ archive_name }} group=uiuser
+
+  - name: extract files and restart
+    command: chdir={{ run_dir }} {{ item }}
+    with_items:
+    - unzip -o {{ archive_name }}
+    - chmod -R 774 bin
+    - bin/stop.sh
+    - bin/start.sh {{ profile }}
+    become: true
+    become_user: uiuser
+
+  - name: cleanup
+    file: state=absent path={{ run_dir }}/{{ archive_name }}

@@ -1,0 +1,25 @@
+<mat-button-toggle-group class="custom-button-toggle mt-2 mb-2" appearance="standard">
+  <mat-button-toggle routerLinkActive="active" [routerLink]="['/flight', flightId]">
+    {{'blockName.summary' | translate}}
+  </mat-button-toggle>
+
+  <ng-container *ngIf="lineItems?.length && lineItems?.length > 1">
+    <mat-button-toggle *ngFor="let item of lineItems"
+                       [routerLink]="['/lineitem', item.id]"
+                       routerLinkActive="active">
+      {{item.name}}
+      <button mat-icon-button [matMenuTriggerFor]="menuEdit" (click)="$event.stopPropagation()">
+        <i class="material-icons">keyboard_arrow_down</i>
+      </button>
+      <mat-menu #menuEdit="matMenu">
+        <button [disabled]="userRole === 'AGENCY'" mat-menu-item [routerLink]="['/lineitem', item.id, 'edit']">{{'button.edit' | translate}}</button>
+      </mat-menu>
+
+    </mat-button-toggle>
+  </ng-container>
+
+  <mat-button-toggle *ngIf="canCreate" [routerLink]="['/flight', flightId, 'lineitem', 'add']">
+    <i class="material-icons">add</i>
+    {{'button.add' | translate}}
+  </mat-button-toggle>
+</mat-button-toggle-group>

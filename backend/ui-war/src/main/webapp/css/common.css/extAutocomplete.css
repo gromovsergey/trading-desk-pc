@@ -1,0 +1,83 @@
+.ui-autocomplete-input{
+    border: 0 none;
+    height: 20px;
+    outline: medium none;
+}
+
+.autocompleteContainer {
+    border: 1px solid gray;
+    overflow:hidden;
+    position: relative;
+    overflow:hidden;
+    *padding-right:2px;
+    padding-right:2px\9;
+}
+
+.tokenKeeper .chosenOption {
+    float:left;
+    background-color: #eee;
+    border: 1px solid #333;
+    border-radius: 4px 4px 4px 4px;
+    color: #333;
+    display: block;
+    margin: 2px 1px 0 2px;
+    padding: 1px 15px 1px 4px;
+    position: relative;
+    overflow-x: hidden;
+}
+.tokenKeeper .chosenOption .textContainer{
+    white-space:nowrap;
+}
+
+.chosenOption .threeDots{
+    position: absolute;
+    background-color: #eee;
+    display: block;
+    height: 13px;
+    right: 0;
+    top: 2px;
+    width: 27px;
+}
+
+.chosenOption .close {
+    background: url("/images/flexbox-icons.png") no-repeat scroll right top transparent;
+    display: block;
+    height: 13px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 12px;
+}
+
+.comboButton{
+    background: #eee url("/images/flexbox-icons.png") no-repeat 0 0;
+    background-attachment: scroll;
+    border-left: 1px solid #aaa;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 16px;
+}
+
+.ui-autocomplete.ui-menu{
+    max-height:400px;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+.ui-autocomplete.ui-menu .ui-menu-item.creator + .ui-menu-item a{
+    border-top: 1px solid #ddd;
+}
+.ui-menu .ui-menu-item a {
+    font-weight: normal;
+    border: none !important;
+}
+.b-menu__bulk {
+    background: #f6f6f6 !important;
+    border:1px solid #999 !important;
+}
+    .b-menu__bulk .ui-menu-divider {
+        border-top: 1px solid #999;
+    }

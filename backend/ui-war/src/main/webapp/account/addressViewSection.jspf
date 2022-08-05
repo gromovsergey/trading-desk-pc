@@ -1,0 +1,14 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="ad" uri="/ad/serverUI" %>
+<%@ taglib prefix="ui" tagdir="/WEB-INF/tags" %>
+
+<s:if test="billingAddress.id != null">
+    <ui:field labelKey="account.billingAddress">
+        <ui:formatAddress value="${billingAddress}" addressFields="${addressFields}"/>
+    </ui:field>
+</s:if>
+<s:if test="legalAddress.id != null">
+    <ui:field labelKey="account.legalAddress">
+        <ui:formatAddress value="${legalAddress}" addressFields="${addressFields}"/>
+    </ui:field>
+</s:if>

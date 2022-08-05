@@ -1,0 +1,30 @@
+@import "~src/scss/variables";
+
+:host {
+  position: relative;
+  display: block;
+
+  .overlay {
+    position: absolute;
+    z-index: 1000;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: transparentize(#fff, 0.5);
+  }
+
+  .restore-zoom {
+    position: absolute;
+    right: 0;
+    top: -10px;
+  }
+}
+
+.option-container {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+
+  .option-field {
+    margin: $gen-spacing $gen-gap;
+  }
+}

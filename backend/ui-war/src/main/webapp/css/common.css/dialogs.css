@@ -1,0 +1,33 @@
+#stButtons  {
+    margin: 1em 0;
+}
+#ccgDialog #site_targeting_section, #ccgDialog #frequency_caps {
+    border: none;
+}
+#ccgDialog #site_targeting_section .legend, #ccgDialog #frequency_caps .legend {
+    display: none;
+}
+#ccgDialog #site_targeting_section .fieldsetCell, #ccgDialog #frequency_caps .fieldsetCell{
+    padding: 0;
+}
+.b-panel {
+    margin-top: 1em;
+    clear: left; 
+    float: left
+}
+.ui-dialog .ui-tabs {
+    border: none;
+}
+.ui-dialog .ui-tabs-nav {
+    background: none;
+    border: none;
+}
+.ui-dialog .ui-tabs-panel {
+    border: 1px solid #ddd!important;
+}
+.ui-dialog .fieldset {
+    margin-bottom: 0;
+}
+.ui-dialog .ui-dialog-buttonpane {
+    border: none!important;
+}

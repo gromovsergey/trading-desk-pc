@@ -1,0 +1,6 @@
+2022-08-03 01:20:42 [main] INFO  a.programmatic.ui.ApplicationManager - Starting ApplicationManager using Java 17.0.2 on MBP16inch2021 with PID 6016 (/Users/sagromov/projects/programmatic/programmatic-ui/target/classes started by sagromov in /Users/sagromov/projects/programmatic/programmatic-ui)
+2022-08-03 01:20:42 [main] INFO  a.programmatic.ui.ApplicationManager - No active profile set, falling back to default profiles: default
+2022-08-03 01:20:44 [main] WARN  org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): app.programmatic.ui.localization.dao.model.LocalizationId
+2022-08-03 01:20:44 [main] WARN  org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): app.programmatic.ui.localization.dao.model.LocalizationId
+2022-08-03 01:20:45 [main] WARN  io.undertow.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2022-08-03 01:20:51 [main] INFO  a.programmatic.ui.ApplicationManager - Started ApplicationManager in 8.662 seconds (JVM running for 13.398)

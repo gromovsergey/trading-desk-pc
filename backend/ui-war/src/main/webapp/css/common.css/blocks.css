@@ -1,0 +1,514 @@
+table.fieldset{
+    clear:both;
+    border-collapse:collapse;
+    border: 1px solid #BFBFBF;
+    position:relative;
+    margin-bottom:30px;
+}
+table.fieldset.message td.fieldsetCell{
+    padding-left:53px;
+    background-repeat: no-repeat;
+    background-position:7px center;
+    height:50px;
+}
+table.fieldset.message.warning td.fieldsetCell{
+    background-image: url(/images/icon_warning_big.gif);
+}
+table.fieldset td.fieldsetCell{
+    padding:14px 15px 10px;
+}
+
+table.formFields{
+    border-collapse:collapse;
+    clear:both;
+    margin-bottom:10px;
+}
+
+td.field table.formFields{
+    margin-bottom:0;
+}
+
+table.formFields > tbody > tr > td {
+    padding: 6px 2px;
+}
+table.formFields > tbody > tr > td.fieldName {
+    padding-top:6px;
+}
+.valignFix td.field {
+    padding-top:2px;
+}
+
+table.formFields td.optionTransferControls{
+    vertical-align:middle;
+}
+table.formFields tr.withButton > td{
+    padding-top:10px;
+    text-align:left;
+}
+
+table.formFields td.fieldName{
+    text-align:right;
+    padding-left:0;
+    vertical-align:top;
+}
+table.formFields table.formFields td.fieldName{
+    text-align:left;
+}
+td.field table.formFields > tbody > tr:first-child > td{
+    padding-top:0;
+}
+
+table.formFields tr.subsectionRow td{
+    color:#333;
+    text-align:left;
+    font-size:14px;
+    padding-bottom:5px;
+    padding-top:21px;
+}
+
+table.grouping.optionTransfer select{
+    width:180px;
+    clear:both;
+    height:155px;
+    font-size:13px;
+}
+    table.grouping.optionTransfer select.wide{
+        width:324px;
+    }
+    .widest table.formFields, .widest table.formFields .field, .widest .grouping, .widest .grouping{
+        width:100%;
+    }
+    .widest .grouping td{
+        width:50%;
+    }
+    .widest .optionTransfer select {
+        width:100%!important;
+    }
+    .widest .optionTransfer .optionTransferControls {
+        width:50px;
+    }
+.optionTransfer select option {
+    padding: 1px 0px 1px 2px;
+}
+
+.optionTransferControls table.buttonsContainer{
+    text-align:center;
+    width:30px;
+}
+
+/* horizontal group of optionTransfers (admin/report/custom.do) */
+table.optionTransferGroup th{
+    padding:7px 5px 3px;
+    background-color:#EEE;
+    border-right:2px solid #FFF;
+    border-left:2px solid #FFF;
+}
+
+.optionTransferGroup table.grouping.optionTransfer{
+    margin:0 5px;
+}
+
+table.grouping{
+    border-collapse:collapse;
+}
+table.grouping > tbody > tr > td{
+    border:none;
+    padding:0;
+}
+
+/* for horizontal groupping ui:fieldGroup elements */
+table.grouping.fieldGroups > tbody > tr > td{
+    padding-left:50px;
+    vertical-align:top;
+}
+table.grouping.fieldGroups > tbody > tr > td:first-child{
+    padding-left:0;
+}
+
+/* scrolable zone in a fieldset with tabs */
+.dataViewInnerSection{
+    overflow-x:hidden;
+    overflow-y:auto;
+    padding-left:1px;
+    max-height :250px;
+    position:relative;
+    padding-right:17px;
+}
+
+/* is necessary? */
+.dataViewInnerSection table.dataView{
+    width:auto;
+}
+
+table.fieldAndAccessories{
+    border-collapse:collapse;
+    margin:0;
+}
+td.field table.fieldAndAccessories, td.withField table.fieldAndAccessories {
+    line-height:23px;
+    margin-bottom:-4px;
+    margin-top:-4px;
+}
+td.field table.fieldAndAccessories .CodeMirror {
+    margin: 4px 0;
+}
+table.fieldAndAccessories table.fieldAndAccessories{
+    margin-top:0;
+    margin-bottom:0;
+}
+td.field > select {
+    margin-top:-2px;
+}
+td.field > input {
+    margin-top:-4px;
+}
+table.fieldAndAccessories > tbody > tr > td{
+    border:none;
+    padding:4px 0 0 4px;
+}
+table.fieldAndAccessories > tbody > tr:first-child > td{
+    padding-top:0;
+}
+table.fieldAndAccessories > tbody > tr > td:first-child, 
+table.fieldAndAccessories > tbody > tr > td.first{
+    padding-left:0 !important;
+}
+table.fieldAndAccessories > tbody > tr > td.conditionType{
+    padding-top:4px !important;
+}
+td.conditionType .withMessage{
+    margin-top:-4px;
+}
+*+html td.conditionType .withMessage {
+    margin-top:-2px;
+}
+
+/* in "table.withTemplateRow" first row initially hidden, so we have not ability to manipulate by td:first-child */
+table.fieldAndAccessories.withTemplateRow > tbody > tr > td{
+    padding-top:0;
+    padding-bottom:4px;
+}
+
+table.fieldAndAccessories td.withTip{
+    padding-top:0;
+}
+table.fieldAndAccessories td.mandatory{
+    padding-right:7px;
+    background-image: url(/images/mandatory.gif);
+    background-repeat: no-repeat;
+    background-position: right 3px;
+}
+
+.fieldset .legend .hintContainer{
+    float:left;
+    position:absolute;
+    top:1px;
+    right:-21px;
+    background-color:white;
+    padding:0 4px 0 3px;
+}
+
+.fieldset.withTabs{
+    margin-top:20px;
+}
+/* zone with additional info at right side of fieldset ("New Expression Channel" page) */
+.fieldset.withTabs .additionalInfo{
+    display: table-cell;
+    white-space: nowrap;
+    width: 1px;
+    padding-left:15px;
+}
+.fieldset.withTabs .additionalInfo > span{
+    display: inline-block;
+}
+.fieldset.withTabs .additionalInfo .hintContainer{
+    display: inline-block;
+    margin-left: 3px;
+    margin-right: -30px;
+}
+.hintContainer.hintContainerInline {
+    display: inline-block;
+}
+.fieldset.withTabs .tabs{
+    display: table-cell;
+    white-space: nowrap;
+}
+.fieldset.withTabs .tabs .tab{
+    display: inline-block;
+    margin-right: 3px;
+    padding-right: 7px;
+    text-decoration: none;
+    text-transform: capitalize;
+    background-image: url("/images/tabRight.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+    color: #666666;
+    font-size: 12px;
+    font-weight: bold;
+}
+.fieldset.withTabs .tabs .tab:hover{
+    color:#666;
+    text-decoration:underline;
+}
+.fieldset.withTabs .tabs .tab.active{
+    background-image:url(/images/tabRightActive.gif);
+}
+.fieldset.withTabs .tabs .tab div{
+    padding: 0 0 0 7px;
+    line-height:22px;
+    background-image:url(/images/tabLeft.gif);
+    background-position:left top;
+    background-repeat:no-repeat;
+}
+
+/* zone for groupping table.formFields with corresponding filter-selects */
+table.dataViewSection{
+    border-collapse:collapse;
+    clear:both;
+    margin-bottom:30px;
+}
+table.dataViewSection > tbody > tr > td{
+    border:none;
+    padding:0;
+}
+table.dataViewSection tr.controlsZone > td{
+    padding-bottom:8px;
+}
+table.dataViewSection tr.controlsZone > td > table.grouping{
+    width:100%;
+}
+table.dataViewSection tr.controlsZone > td > table.grouping td.filterZone{
+    padding-left:10px;
+    width:1px;
+}
+
+table.dataViewSection tr.controlsZone td.withButtons table.fieldAndAccessories td.withButton{
+    padding-left:10px;
+}
+
+table.dataViewSection tr.bodyZone > td > table.dataView{
+    width:100%;
+}
+
+/* used in ui:header */
+.pageHeading{
+    clear:both;
+    float:left;
+    margin-bottom:30px;
+}
+.pageHeading.level2{
+    margin-bottom: 15px !important;
+}
+.pageHeading.level2 h2{
+    margin-bottom: 0 !important;
+}
+.pageHeading.withTip * {
+    margin: 0 5px 0 0;
+}
+.pageHeading.withTip {
+    padding-top: 15px;
+}
+
+
+.fieldset .groupOfLinks{
+    display:block;
+    margin:5px 40px auto auto;
+}
+
+/* horizontal grouping of fieldsets ("Edit Behavioral Channel" page) */
+table.grouping.fieldsets > tbody > tr > td{
+    vertical-align:top;
+    padding-right:15px;
+}
+
+/* horizontal grouping of tables ("Channel Triggers Report" page) */
+table.grouping.tables > tbody > tr > td{
+    vertical-align:top;
+    padding-right:15px;
+}
+table.grouping.tables > thead > th{
+    text-align:left;
+}
+
+table.grouping td.withGroupOfLinks{
+    vertical-align:top;
+}
+
+.wrapper{
+    clear:both;
+    margin-bottom:30px;
+}
+
+.paginationHeader{
+    margin-bottom:10px;
+}
+
+.logicalBlock{
+    margin-bottom:0 !important;
+}
+#optionsTextDiv.logicalBlock > .fieldset {
+    width:100%;
+}
+.scrollbarsY {
+    height:264px;
+    overflow-y:scroll;
+}
+
+div.withDisplayStatus{
+    position:relative;
+    padding-left:18px;
+}
+.withDisplayStatus.inline {
+    display:inline;
+}
+div.withDisplayStatus.indentLevel_1{
+    margin-left:15px;
+}
+div.withDisplayStatus.indentLevel_2{
+    margin-left:30px;
+}
+div.withDisplayStatus.indentLevel_3{
+    margin-left:45px;
+}
+div.withDisplayStatus.indentLevel_4{
+    margin-left:60px;
+}
+div.withDisplayStatus.indentLevel_5{
+    margin-left:75px;
+}
+div.withDisplayStatus.indentLevel_6{
+    margin-left:90px;
+}
+div.withDisplayStatus.indentLevel_7{
+    margin-left:105px;
+}
+div.withDisplayStatus.indentLevel_8{
+    margin-left:120px;
+}
+div.withDisplayStatus.indentLevel_9{
+    margin-left:135px;
+}
+div.withDisplayStatus.indentLevel_10{
+    margin-left:150px;
+}
+
+table.mandatoryContainer{
+    border-collapse:collapse;
+}
+table.mandatoryContainer > tbody > tr > td{
+    border:none;
+    padding:0 7px 0 0;
+    background-image: url(/images/mandatory.gif);
+    background-repeat: no-repeat;
+    background-position: right 3px;
+}
+table.mandatoryContainer input[type="radio"] {
+    margin: 3px 0.5ex !important;
+}
+
+.collapsible{
+    position:relative;
+    margin-bottom:30px;
+    min-height:30px;
+    zoom:1;
+}
+.collapsible:first-child{
+    margin-top:8px;
+}
+td.field .collapsible{
+    margin:10px 0 0
+}
+.collapsible.collapsed{
+    margin-bottom:auto;
+}
+.collapsible.collapsed.hasPersistent{
+    margin-bottom:30px;
+}
+.collapsible.collapsed.hasPersistent + .collapsible.collapsed, 
+.collapsible.collapsed + .collapsible.collapsed.hasPersistent{
+    margin-top:0;
+}
+.collapsible.collapsed + .collapsible.expanded{
+    margin-top:9px;
+}
+.collapsible table.block{
+    border-collapse:collapse;
+    border: 1px solid #BFBFBF;
+    clear:both;
+    width:100%;
+}
+.collapsible.withChBox table.block{
+    margin-top:-15px;
+}
+.collapsible.collapsed table.block{
+    display:none;
+}
+.collapsible.collapsed.hasPersistent table.block{
+    display:table;
+    *display:block;
+}
+.collapsible.collapsed.hasPersistent td.mainCell > .content > *{
+    display:none;
+}
+.collapsible.collapsed.hasPersistent table.block .persistent{
+    display:block;
+}
+.collapsible.expanded table.block{
+    display:auto;
+}
+.collapsible table.block td.mainCell{
+    padding:14px 15px 10px;
+}
+
+.ajax_loader {
+    position:fixed;
+    background:#000 url(/images/ajaxloader.gif) center no-repeat;
+    top:0;
+    left:0;
+    z-index:1000;
+    display:none;
+    opacity:0.3;
+    width:100%;
+    height:100%;
+    cursor: wait;
+    //filter:alpha(opacity=33);
+}
+.ajax_loader_container {
+    position: relative;
+}
+    .ajax_loader_container .ajax_loader {
+        position: absolute;
+    }
+
+.tableOptions{
+    padding-bottom:5px;
+}
+
+.tipContainer{
+    height:20px;
+}
+
+.input-wrapper.middleLengthText{
+    width:296px;
+}
+
+.labelsGroup label{
+    float:left;
+}
+
+.rowWithButton{
+    white-space:nowrap;
+}
+
+.fieldset.withTabs .tabsZone{
+    display: table;
+    position: absolute;
+    top: -36px;
+    left: -16px;
+    white-space: nowrap;
+    width: 100%;
+}
+
+table.fieldset td.fieldsetCell .content{
+    position:relative;
+}

@@ -1,0 +1,7 @@
+SiteName,SiteID,SiteStatus,SiteURL,TagName,TagID,Size Type,Tag Sizes,TagPricing,TagPassbackType,TagPassback,Accept Expandable Creative
+New_Site,,,http://some.site.com/,newTag.tag1,3,Banner,728x90t_225,default=0;US=2.1;AU=0.11,HTML_CODE,,N
+New_Site,,,http://some.site.com/,newTag.tag2,,Banner,728x90t_225,default=0;AU=0002.11,HTML_URL,http://fo.com,y
+SiteName_1,1,Active,http://some.site.com,newTag.tag1,3,Banner,728x90t_225,default=0;US=2.1;AU=0.11,HTML_CODE,,y
+SiteName_1,1,Active,http://some.site.com,newTag.tag2,,Banner,728x90t_225,default=0;AU=0002.11,HTML_URL,http://fo.com,n
+SiteName_1,1,Active,http://some.site.com,newTag.tag3,4,Banner,728x90t_225,DEFAULT=0;au=0002.11,HTML_CODE,"<img>test
+SomeData</img>",N

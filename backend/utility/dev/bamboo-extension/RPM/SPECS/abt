@@ -1,0 +1,11 @@
+pkgName='bamboo-extension'
+specFile='bamboo-extension.spec'
+vcsModules[$vcsModule]=$modBuild
+
+
+function modifyVersion {
+  printDBG "invoking $0"
+    execCmd "sed -i 's|version=\".*\"|version=\"$modBuild\"|' $targetDir/bamboo-extension/setup.py"
+}
+
+stage[31]='modifyVersion'

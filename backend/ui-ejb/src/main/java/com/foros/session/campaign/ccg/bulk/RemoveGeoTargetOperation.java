@@ -1,0 +1,25 @@
+package com.foros.session.campaign.ccg.bulk;
+
+import com.foros.model.campaign.CampaignCreativeGroup;
+import com.foros.model.channel.GeoChannel;
+
+import java.util.Collection;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class RemoveGeoTargetOperation extends GeoTargetOperationSupport {
+
+    public RemoveGeoTargetOperation(Collection<Long> geoChannelIds) {
+        super(geoChannelIds);
+    }
+
+    @Override
+    public void perform(CampaignCreativeGroup existing, CampaignCreativeGroup toUpdate) {
+        Set<GeoChannel> newChannels = new TreeSet<>(BY_ID_COMPARATOR);
+        newChannels.addAll(existing.getGeoChannels());
+        for (GeoChannel channel : geoChannels) {
+            newChannels.remove(channel);
+        }
+        toUpdate.setGeoChannels(newChannels);
+    }
+}

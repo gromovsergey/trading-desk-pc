@@ -1,0 +1,80 @@
+<ui-loading *ngIf="wait2, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">
+    {{'advertiserAccount.accountConversions' | translate}}
+    <button mat-raised-button *ngIf="canCreateConversion"
+            routerLink="/conversion/add">
+      {{'advertiserAccount.createConversion' | translate}}
+    </button>
+  </h1>
+
+  <ui-loading *ngIf="!conversionList, else showConversions"></ui-loading>
+
+  <ng-template #showConversions>
+    <div class="table-container" *ngIf="conversionList?.length > 0, else showList">
+      <table mat-table [dataSource]="conversionList">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>{{'blockName.name' | translate}}</th>
+          <td mat-cell *matCellDef="let conversion">
+            <i class="material-icons" appDisplayStatus [displayStatus]="conversion.displayStatus">lens</i>
+            {{conversion.conversion.name}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>{{'advertiserAccount.conversion.category' | translate}}</th>
+          <td mat-cell *matCellDef="let conversion">
+            {{L10nConversionTypes[conversion.conversion.conversionCategory] | translate}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="url">
+          <th mat-header-cell *matHeaderCellDef>{{'advertiserAccount.conversion.pageURL' | translate}}</th>
+          <td mat-cell *matCellDef="let conversion">
+            <span class="cell-url">{{conversion.conversion.url}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell class="text-right" *matCellDef="let row">
+            <button mat-icon-button
+                    color="primary"
+                    type="button"
+                    title="{{'button.preview' | translate}}"
+                    (click)="preview(row.conversion)">
+              <i class="material-icons">zoom_in</i>
+            </button>
+
+            <ng-container *ngIf="canUpdateConversions">
+              <button mat-icon-button
+                      color="primary"
+                      type="button"
+                      title="{{'button.edit' | translate}}"
+                      [routerLink]="['/conversion', row._id, 'edit']">
+                <i class="material-icons">edit</i>
+              </button>
+
+              <button mat-icon-button
+                      type="button"
+                      title="{{'button.delete' | translate}}"
+                      (click)="deleteConversion(row.conversion)">
+                <i class="material-icons">delete</i>
+              </button>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let conversion; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <ng-template #showList>
+      <ui-info-panel type="info">
+        {{'advertiserAccount.conversionListIsEmpty' | translate}}
+      </ui-info-panel>
+    </ng-template>
+  </ng-template>
+</ng-template>

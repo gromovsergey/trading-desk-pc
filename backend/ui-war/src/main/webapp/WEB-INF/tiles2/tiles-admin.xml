@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+  <definition name=".Admin" extends=".mainLayout">
+   <put-attribute name="moduleName" value="admin"/>
+   <put-attribute name="activeMenuItemKey" value="global.menu.admin"/>
+  </definition>
+
+  <definition name="admin.Admin" extends=".Admin">
+    <put-attribute name="titleProperty" value="admin"/>
+    <put-attribute name="body" value="/admin/adminTasks.jsp"/>
+  </definition>
+
+<!--======================= Category Channel =============================-->
+    <definition name=".CategoryChannel" extends=".Admin">
+        <put-attribute name="taskTitle" value="page.title.admin.channels" type="string"/>
+        <put-attribute name="moduleName" value="admin/categoryChannel"/>
+        <put-attribute name="entityName" value="CategoryChannel" type="string"/>
+        <put-attribute name="isViewPage" value="false"/>
+    </definition>
+
+    <definition name="CategoryChannel.main" extends=".CategoryChannel">
+        <put-attribute name="titleProperty" value="channel.categoryChannels"/>
+        <put-attribute name="body" value="/admin/categoryChannel/categoryChannelList.jsp"/>
+    </definition>
+
+    <definition name="CategoryChannel.view" extends=".CategoryChannel">
+        <put-attribute name="body" value="/admin/categoryChannel/categoryChannelView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="CategoryChannel.edit" extends=".CategoryChannel">
+        <put-attribute name="body" value="/admin/categoryChannel/categoryChannelEdit.jsp"/>
+    </definition>
+
+<!--======================= Device Channel =============================-->
+    <definition name=".DeviceChannel" extends=".Admin">
+        <put-attribute name="taskTitle" value="page.title.admin.channels" type="string"/>
+        <put-attribute name="moduleName" value="admin/deviceChannel"/>
+        <put-attribute name="entityName" value="DeviceChannel" type="string"/>
+        <put-attribute name="isViewPage" value="false"/>
+    </definition>
+
+    <definition name="DeviceChannel.main" extends=".DeviceChannel">
+        <put-attribute name="titleProperty" value="DeviceChannel.plural"/>
+        <put-attribute name="body" value="/admin/deviceChannel/deviceChannelMain.jsp"/>
+    </definition>
+
+    <definition name="DeviceChannel.campaigns" template="/admin/deviceChannel/deviceChannelCampaignsView.jsp">
+    </definition>
+
+    <definition name="DeviceChannel.view" extends=".DeviceChannel">
+        <put-attribute name="body" value="/admin/deviceChannel/deviceChannelView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="DeviceChannel.edit" extends=".DeviceChannel">
+        <put-attribute name="body" value="/admin/deviceChannel/deviceChannelEdit.jsp"/>
+    </definition>
+
+    <definition name="DeviceChannel.create" extends=".DeviceChannel">
+        <put-attribute name="body" value="/admin/deviceChannel/deviceChannelEdit.jsp"/>
+    </definition>
+
+<!--======================= Platform =============================-->
+    <definition name="Platform.view" extends=".Admin">
+        <put-attribute name="entityName" value="Platform"/>
+        <put-attribute name="moduleName" value="admin/platform"/>
+        <put-attribute name="body" value="/admin/platform/platformView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+<!--========================= Creative Template ===========================-->
+  <definition name=".CreativeTemplate" extends=".Admin">
+    <put-attribute name="entityName" value="CreativeTemplate"/>
+  </definition>
+
+  <definition name="CreativeTemplate.edit" extends=".CreativeTemplate">
+    <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+    <put-attribute name="body" value="/admin/creativeTemplate/templateEdit.jsp"/>
+  </definition>
+
+  <definition name="CreativeTemplate.create" extends="CreativeTemplate.edit">
+    <put-attribute name="isCreatePage" value="true"/>
+  </definition>
+
+  <definition name="CreativeTemplateFile.edit" extends=".CreativeTemplate">
+    <put-attribute name="entityName" value="CreativeTemplateFile"/>
+    <put-attribute name="body" value="/admin/creativeTemplate/templateFileEdit.jsp"/>
+    <put-attribute name="title" value="/admin/creativeTemplate/templateFileTitle.jsp"/>
+  </definition>
+
+  <definition name="CreativeTemplate.view" extends=".CreativeTemplate">
+    <put-attribute name="isViewPage" value="true"/>
+    <put-attribute name="bodyHeader" value="/admin/creativeTemplate/templateViewHeader.jsp"/>
+    <put-attribute name="body" value="/admin/creativeTemplate/templateView.jsp"/>
+  </definition>
+
+  <definition name="CreativeTemplate.main" extends=".CreativeTemplate">
+    <put-attribute name="createEntityRestriction" value="Template.create"/>
+    <put-attribute name="bodyHeader" value="/templates/mainHeaderAboveTable2.jsp"/>
+    <put-attribute name="titleProperty" value="CreativeTemplate.plural"/>
+    <put-attribute name="body" value="/admin/creativeTemplate/templateMain.jsp"/>
+  </definition>
+
+<!--========================= Discover Template ===========================-->
+  <definition name=".DiscoverTemplate" extends=".Admin">
+    <put-attribute name="entityName" value="DiscoverTemplate"/>
+  </definition>
+
+  <definition name="DiscoverTemplate.edit" extends=".DiscoverTemplate">
+    <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+    <put-attribute name="body" value="/admin/discoverTemplate/discoverTemplateEdit.jsp"/>
+  </definition>
+
+  <definition name="DiscoverTemplate.create" extends="DiscoverTemplate.edit">
+    <put-attribute name="isCreatePage" value="true"/>
+  </definition>
+
+  <definition name="DiscoverTemplateFile.edit" extends=".DiscoverTemplate">
+    <put-attribute name="entityName" value="CreativeTemplateFile"/>
+    <put-attribute name="body" value="/admin/creativeTemplate/templateFileEdit.jsp"/>
+    <put-attribute name="title" value="/admin/creativeTemplate/templateFileTitle.jsp"/>
+  </definition>
+
+  <definition name="DiscoverTemplate.view" extends=".DiscoverTemplate">
+    <put-attribute name="updateEntityRestriction" value="Template.update"/>
+    <put-attribute name="onEntityRestriction" value="true"/>
+    <put-attribute name="isViewPage" value="true"/>
+    <put-attribute name="hasAuditLog" value="true"/>
+    <put-attribute name="bodyHeader" value="/admin/discoverTemplate/discoverTemplateViewHeader.jsp"/>
+    <put-attribute name="body" value="/admin/discoverTemplate/discoverTemplateView.jsp"/>
+  </definition>
+
+  <definition name="DiscoverTemplate.main" extends=".DiscoverTemplate">
+    <put-attribute name="createEntityRestriction" value="Template.create"/>
+    <put-attribute name="bodyHeader" value="/templates/mainHeaderAboveTable2.jsp"/>
+    <put-attribute name="titleProperty" value="DiscoverTemplate.plural"/>
+    <put-attribute name="body" value="/admin/discoverTemplate/discoverTemplateMain.jsp"/>
+  </definition>
+
+<!--======================= Creative Size =============================-->
+  <definition name=".CreativeSize" extends=".Admin">
+    <put-attribute name="entityName" value="CreativeSize"/>
+  </definition>
+
+  <definition name="CreativeSize.edit" extends=".CreativeSize">
+    <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+    <put-attribute name="body" value="/admin/creativeSize/sizeEdit.jsp"/>
+  </definition>
+
+    <definition name="CreativeSize.create" extends=".CreativeSize">
+      <put-attribute name="isCreatePage" value="true"/>
+      <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+      <put-attribute name="body" value="/admin/creativeSize/sizeEdit.jsp"/>
+    </definition>
+
+  <definition name="CreativeSize.view" extends=".CreativeSize">
+    <put-attribute name="isViewPage" value="true"/>
+    <put-attribute name="onEntityRestriction" value="true"/>
+    <put-attribute name="hasAuditLog" value="true"/>
+    <put-attribute name="bodyHeader" value="/admin/creativeSize/sizeViewHeader.jsp"/>
+    <put-attribute name="body" value="/admin/creativeSize/sizeView.jsp"/>
+  </definition>
+
+  <definition name="CreativeSize.main" extends=".CreativeSize">
+    <put-attribute name="bodyHeader" value="/templates/mainHeaderAboveTable2.jsp"/>
+    <put-attribute name="titleProperty" value="CreativeSize.plural"/>
+    <put-attribute name="body" value="/admin/creativeSize/sizeMain.jsp"/>
+  </definition>
+
+<!--====================== Creative Size Type =========================-->
+  <definition name=".SizeType" extends=".Admin">
+    <put-attribute name="entityName" value="SizeType"/>
+  </definition>
+
+  <definition name="SizeType.edit" extends=".SizeType">
+    <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+    <put-attribute name="body" value="/admin/sizeType/sizeTypeEdit.jsp"/>
+  </definition>
+
+  <definition name="SizeType.create" extends=".SizeType">
+    <put-attribute name="isCreatePage" value="true"/>
+    <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+    <put-attribute name="body" value="/admin/sizeType/sizeTypeEdit.jsp"/>
+  </definition>
+
+  <definition name="SizeType.view" extends=".SizeType">
+    <put-attribute name="isViewPage" value="true"/>
+    <put-attribute name="onEntityRestriction" value="true"/>
+    <put-attribute name="hasAuditLog" value="true"/>
+    <put-attribute name="bodyHeader" value="/admin/sizeType/sizeTypeViewHeader.jsp"/>
+    <put-attribute name="body" value="/admin/sizeType/sizeTypeView.jsp"/>
+  </definition>
+
+  <definition name="SizeType.main" extends=".SizeType">
+    <put-attribute name="createEntityRestriction" value="CreativeSize.create"/>
+    <put-attribute name="bodyHeader" value="/templates/mainHeaderAboveTable2.jsp"/>
+    <put-attribute name="titleProperty" value="SizeType.plural"/>
+    <put-attribute name="body" value="/admin/sizeType/sizeTypeMain.jsp"/>
+  </definition>
+
+<!--======================= Creative Option ===========================-->
+  <definition name=".Option" extends=".Admin">
+    <put-attribute name="entityName" value="Option"/>
+  </definition>
+
+  <definition name="Option.create" extends="Option.edit">
+    <put-attribute name="isCreatePage" value="true"/>
+  </definition>
+
+  <definition name="Option.edit" extends=".Option">
+    <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+    <put-attribute name="body" value="/admin/option/optionEdit.jsp"/>
+  </definition>
+
+  <definition name="Option.view" extends=".Option">
+    <put-attribute name="isViewPage" value="true"/>
+    <put-attribute name="hasAuditLog" value="true"/>
+    <put-attribute name="bodyHeader" value="/admin/option/optionViewHeader.jsp"/>
+    <put-attribute name="body" value="/admin/option/optionView.jsp"/>
+  </definition>
+
+<!--======================= Option Group ===========================-->
+  <definition name=".OptionGroup" extends=".Admin">
+    <put-attribute name="entityName" value="OptionGroup"/>
+  </definition>
+
+  <definition name="OptionGroup.create" extends="OptionGroup.edit">
+    <put-attribute name="isCreatePage" value="true"/>
+  </definition>
+
+  <definition name="OptionGroup.edit" extends=".OptionGroup">
+    <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+    <put-attribute name="body" value="/admin/option/optionGroupEdit.jsp"/>
+  </definition>
+
+  <definition name="OptionGroup.view" extends=".OptionGroup">
+    <put-attribute name="isViewPage" value="true"/>
+    <put-attribute name="hasAuditLog" value="true"/>
+    <put-attribute name="bodyHeader" value="/admin/option/optionGroupViewHeader.jsp"/>
+    <put-attribute name="body" value="/admin/option/optionGroupView.jsp"/>
+  </definition>
+
+<!--======================= Application Format =============================-->
+    <definition name=".ApplicationFormat" extends=".Admin">
+        <put-attribute name="entityName" value="ApplicationFormat"/>
+    </definition>
+
+    <definition name="ApplicationFormat.edit" extends=".ApplicationFormat">
+        <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+        <put-attribute name="body" value="/admin/applicationFormat/applicationFormatEdit.jsp"/>
+     </definition>
+
+    <definition name="ApplicationFormat.create" extends=".ApplicationFormat">
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="body" value="/admin/applicationFormat/applicationFormatEdit.jsp"/>
+        <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+    </definition>
+
+    <definition name="ApplicationFormat.view" extends=".ApplicationFormat">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="bodyHeader" value="/templates/viewHeader.jsp"/>
+        <put-attribute name="body" value="/admin/applicationFormat/applicationFormatView.jsp"/>
+    </definition>
+
+    <definition name="ApplicationFormat.main" extends=".ApplicationFormat">
+        <put-attribute name="titleProperty" value="ApplicationFormat.plural"/>
+        <put-attribute name="bodyHeader" value="/templates/mainHeaderAboveTable2.jsp"/>
+        <put-attribute name="body" value="/admin/applicationFormat/applicationFormatMain.jsp"/>
+    </definition>
+
+
+<!--======================= Global Params =============================-->
+    <definition name=".GlobalParam" extends=".Admin">
+        <put-attribute name="entityName" value="GlobalParam"/>
+    </definition>
+
+    <definition name="GlobalParam.edit" extends=".GlobalParam">
+        <put-attribute name="titleProperty" value="GlobalParam.entityName.edit"/>
+        <put-attribute name="body" value="/admin/globalParam/globalParamsEdit.jsp"/>
+    </definition>
+
+    <definition name="GlobalParam.view" extends=".GlobalParam">
+        <put-attribute name="titleProperty" value="GlobalParam.entityName"/>
+        <put-attribute name="body" value="/admin/globalParam/globalParamsView.jsp"/>
+    </definition>
+
+<!--======================= Trigger List =============================-->
+  <definition name=".TriggerList" extends=".Admin">
+    <put-attribute name="entityName" value="TriggerList"/>
+  </definition>
+
+  <definition name="TriggerListNoAdvChannel.view" extends=".TriggerList">
+    <put-attribute name="entityName" value="TriggerList.NoAdvChannel"/>
+    <put-attribute name="title" value="/admin/triggerList/triggerListTitle.jsp"/>
+    <put-attribute name="isViewPage" value="true"/>
+    <put-attribute name="body" value="/admin/triggerList/triggerListView.jsp"/>
+  </definition>
+
+  <definition name="TriggerListNoAdvChannel.edit" extends=".TriggerList">
+    <put-attribute name="entityName" value="TriggerList.NoAdvChannel"/>
+    <put-attribute name="title" value="/admin/triggerList/triggerListTitle.jsp"/>
+    <put-attribute name="body" value="/admin/triggerList/triggerListEdit.jsp"/>
+  </definition>
+
+  <definition name="TriggerListNoTrackChannel.view" extends=".TriggerList">
+    <put-attribute name="entityName" value="TriggerList.NoTrackChannel"/>
+    <put-attribute name="title" value="/admin/triggerList/triggerListTitle.jsp"/>
+    <put-attribute name="isViewPage" value="true"/>
+    <put-attribute name="body" value="/admin/triggerList/triggerListView.jsp"/>
+  </definition>
+
+  <definition name="TriggerListNoTrackChannel.edit" extends=".TriggerList">
+    <put-attribute name="entityName" value="TriggerList.NoTrackChannel"/>
+    <put-attribute name="title" value="/admin/triggerList/triggerListTitle.jsp"/>
+    <put-attribute name="body" value="/admin/triggerList/triggerListEdit.jsp"/>
+  </definition>
+
+<!--======================= Placements Blacklist =============================-->
+  <definition name=".PlacementsBlacklist" extends=".Admin">
+      <put-attribute name="entityName" value="PlacementsBlacklistChannel"/>
+  </definition>
+
+  <definition name="PlacementsBlacklist.view" extends=".PlacementsBlacklist">
+      <put-attribute name="titleProperty" value="admin.placementsBlacklist"/>
+      <put-attribute name="body" value="/admin/country/placementsBlacklist/placementsBlacklistView.jsp"/>
+      <put-attribute name="isViewPage" value="true"/>
+  </definition>
+
+  <definition name="PlacementsBlacklist.search" template="/admin/country/placementsBlacklist/placementsBlacklistSearchResult.jsp" extends=".PlacementsBlacklist">
+  </definition>
+
+  <definition name="PlacementsBlacklist.bulkUpload" extends=".PlacementsBlacklist">
+      <put-attribute name="titleProperty" value="admin.placementsBlacklist.bulkUpload.breadcrumbs"/>
+      <put-attribute name="body" value="/admin/country/placementsBlacklist/placementsBlacklistBulkUpload.jsp"/>
+  </definition>
+
+<!--======================= Currency =============================-->
+    <definition name=".Currency" extends=".Admin">
+        <put-attribute name="entityName" value="Currency"/>
+    </definition>
+
+    <definition name="Currency.edit" extends=".Currency">
+        <put-attribute name="bodyHeader" value="/admin/currency/currencyEditHeader.jsp"/>
+        <put-attribute name="title" value="/admin/currency/currencyEditTitle.jsp"/>
+        <put-attribute name="body" value="/admin/currency/currencyEdit.jsp"/>
+    </definition>
+
+    <definition name="Currency.main" extends=".Currency">
+        <put-attribute name="titleProperty" value="Currency.plural"/>
+        <put-attribute name="bodyHeader" value="/admin/currency/currenciesHeaderAboveTable.jsp"/>
+        <put-attribute name="body" value="/admin/currency/currencyMain.jsp"/>
+    </definition>
+
+<!--======================= Currency Exchange =============================-->
+    <definition name=".CurrencyExchange" extends=".Admin">
+        <put-attribute name="entityName" value="CurrencyExchange"/>
+    </definition>
+
+    <definition name="CurrencyExchange.edit" extends=".CurrencyExchange">
+        <put-attribute name="body" value="/admin/currencyExchange/exchangeRateEdit.jsp"/>
+        <put-attribute name="titleProperty" value="CurrencyExchange.h1.edit"/>
+    </definition>
+
+    <definition name="CurrencyExchange.main" extends=".CurrencyExchange">
+        <put-attribute name="title" value="/admin/currencyExchange/exchangeRateTitle.jsp"/>
+        <put-attribute name="body" value="/admin/currencyExchange/exchangeRateMain.jsp"/>
+    </definition>
+
+<!--======================= Triggers Approval =============================-->
+    <definition name=".Triggers" extends=".Admin">
+        <put-attribute name="entityName" value="TriggersApproval"/>
+    </definition>
+
+    <definition name="Triggers.main" extends=".Triggers">
+        <put-attribute name="body" value="/admin/triggerQA/triggers.jsp"/>
+        <put-attribute name="titleProperty" value="TriggersApproval"/>
+    </definition>
+
+    <definition name="Triggers.list" template="/admin/triggerQA/triggersList.jsp">
+    </definition>
+
+<!--======================= Country =============================-->
+  <definition name=".Country" extends=".Admin">
+    <put-attribute name="entityName" value="Country"/>
+  </definition>
+
+  <definition name="Country.edit" extends=".Country">
+    <put-attribute name="bodyHeader" value="/admin/country/countryHeader.jsp"/>
+    <put-attribute name="title" value="/admin/country/countryTitle.jsp"/>
+    <put-attribute name="body" value="/admin/country/countryEdit.jsp"/>
+  </definition>
+
+  <definition name="Country.view" extends=".Country">
+    <put-attribute name="isViewPage" value="true"/>
+    <put-attribute name="bodyHeader" value="/admin/country/countryHeader.jsp"/>
+    <put-attribute name="title" value="/admin/country/countryTitle.jsp"/>
+    <put-attribute name="body" value="/admin/country/countryView.jsp"/>
+  </definition>
+
+ <definition name="Country.main" extends=".Country">
+    <put-attribute name="bodyHeader" value="/admin/country/countriesHeaderAboveTable.jsp"/>
+    <put-attribute name="titleProperty" value="Country.plural"/>
+    <put-attribute name="body" value="/admin/country/countryMain.jsp"/>
+  </definition>
+
+  <definition name="Country.CTRAlgorithm.view" extends=".Admin">
+    <put-attribute name="isViewPage" value="true"/>
+    <put-attribute name="title" value="/admin/country/ctra/ctrAlgorithmTitle.jsp"/>
+    <put-attribute name="body" value="/admin/country/ctra/ctrAlgorithmDataView.jsp"/>
+  </definition>
+
+  <definition name="Country.CTRAlgorithm.edit" extends=".Admin">
+    <put-attribute name="title" value="/admin/country/ctra/ctrAlgorithmTitle.jsp"/>
+    <put-attribute name="body" value="/admin/country/ctra/ctrAlgorithmDataEdit.jsp"/>
+  </definition>
+
+<!--======================= Creative Category =============================-->
+  <definition name=".CreativeCategory" extends=".Admin">
+    <put-attribute name="entityName" value="CreativeCategory"/>
+  </definition>
+
+ <definition name="CreativeCategory.main" extends=".CreativeCategory">
+    <put-attribute name="titleProperty" value="CreativeCategory.plural"/>
+    <put-attribute name="body" value="/admin/creativeCategory/categoryMain.jsp"/>
+  </definition>
+
+  <definition name="CreativeCategory.edit" extends=".CreativeCategory">
+    <put-attribute name="body" value="/admin/creativeCategory/categoryEdit.jsp"/>
+    <put-attribute name="title" value="/admin/creativeCategory/categoryTitle.jsp"/>
+  </definition>
+
+<!--======================= Password reminder ==========================-->
+  <definition name="ForgotPassword.main" extends=".unauthorizedLayout">
+      <put-attribute name="body" value="/admin/password/forgotPassword.jsp"/>
+      <put-attribute name="titleProperty" value="password.Assistance.title"/>
+  </definition>
+
+  <definition name="ForgotPassword.result" extends=".unauthorizedLayout">
+      <put-attribute name="body" value="/admin/password/forgotPasswordResult.jsp"/>
+      <put-attribute name="titleProperty" value="password.Assistance.title"/>
+  </definition>
+
+  <definition name="ChangePassword.main" extends=".unauthorizedLayout">
+      <put-attribute name="body" value="/admin/password/changePassword.jsp"/>
+      <put-attribute name="titleProperty" value="password.Assistance.changePassword.title"/>
+  </definition>
+
+  <definition name="ChangePassword.result" extends=".unauthorizedLayout">
+      <put-attribute name="body" value="/admin/password/changePasswordResult.jsp"/>
+      <put-attribute name="titleProperty" value="password.Assistance.changePassword.title"/>
+  </definition>
+
+<!--======================= Terms of Use ==========================-->
+    <definition name=".TermsOfUse" extends=".Admin">
+        <put-attribute name="entityName" value="TermsOfUse"/>
+    </definition>
+
+    <definition name="TermsOfUse.main" extends=".TermsOfUse">
+        <put-attribute name="body" value="/admin/terms/termsMain.jsp"/>
+        <put-attribute name="titleProperty" value="TermsOfUse.entityName"/>
+    </definition>
+
+    <definition name="TermsOfUse.edit" extends=".TermsOfUse">
+        <put-attribute name="body" value="/admin/terms/termsEdit.jsp"/>
+        <put-attribute name="title" value="/admin/terms/termsTitle.jsp"/>
+    </definition>
+
+    <definition name="TermsOfUse.view" extends=".TermsOfUse">
+        <put-attribute name="titleProperty" value="TermsOfUse.termsOfUse"/>
+        <put-attribute name="body" value="/admin/terms/termsView.jsp"/>
+    </definition>
+
+<!--======================= Notices =============================-->
+    <definition name=".Notices" extends=".Admin">
+        <put-attribute name="entityName" value="Notices"/>
+    </definition>
+
+    <definition name="Notices.main" extends=".Notices">
+        <put-attribute name="titleProperty" value="Notice.notices"/>
+        <put-attribute name="body" value="/admin/notices/noticesMain.jsp"/>
+    </definition>
+
+    <definition name="Notices.edit" extends=".Notices">
+        <put-attribute name="body" value="/admin/notices/noticesEdit.jsp"/>
+        <put-attribute name="title" value="/admin/notices/noticesTitle.jsp"/>
+    </definition>
+
+    <definition name="Notices.snapshot" template="/admin/notices/noticesSnapshot.jsp"/>
+
+<!--======================= Contacts ============================-->
+<definition name="Contacts.view" extends=".Admin">
+  <put-attribute name="entityName" value="Contacts"/>
+  <put-attribute name="titleProperty" value="contacts.contactUs"/>
+  <put-attribute name="body" value="/admin/contactsView.jsp"/>
+</definition>
+
+<!--======================= UserRole ============================-->
+
+    <definition name=".UserRole" extends=".Admin">
+        <put-attribute name="entityName" value="UserRole"/>
+    </definition>
+
+    <definition name="UserRole.edit" extends=".UserRole">
+        <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+        <put-attribute name="body" value="/admin/userRole/userRoleEdit.jsp"/>
+    </definition>
+
+    <definition name="UserRole.create" extends="UserRole.edit">
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="UserRole.view" extends=".UserRole">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="bodyHeader" value="/admin/userRole/userRoleHeader.jsp"/>
+        <put-attribute name="body" value="/admin/userRole/userRoleView.jsp"/>
+    </definition>
+
+    <definition name="UserRole.main" extends=".UserRole">
+        <put-attribute name="bodyHeader" value="/templates/mainHeaderAboveTable2.jsp"/>
+        <put-attribute name="titleProperty" value="UserRole.plural"/>
+        <put-attribute name="body" value="/admin/userRole/userRoleMain.jsp"/>
+    </definition>
+
+    <definition name=".Permissions" extends=".Admin">
+        <put-attribute name="titleProperty" value="UserRole.permissions"/>
+    </definition>
+
+    <definition name="Permissions.edit" extends=".Permissions">
+        <put-attribute name="titleProperty" value="UserRole.permissions.edit"/>
+        <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+        <put-attribute name="body" value="/admin/userRole/permissionsEdit.jsp"/>
+    </definition>
+
+<!--======================= Dynamic Resources =============================-->
+  <definition name="DynamicResource.edit" extends=".Admin">
+    <put-attribute name="entityName" value="Dynamic Resource"/>
+    <put-attribute name="body" value="/admin/dynamicResourceEdit.jsp"/>
+  </definition>
+
+<!--======================= KWMTool =============================-->
+  <definition name="kwmtool.main" extends=".Admin">
+    <put-attribute name="body" value="/admin/kwmTool/kwmToolMain.jsp"/>
+    <put-attribute name="titleProperty" value="admin.kwmToolTitle"/>
+  </definition>
+
+  <definition name="kwmtool.results" extends=".Admin">
+    <put-attribute name="body" value="/admin/kwmTool/kwmToolResults.jsp"/>
+    <put-attribute name="titleProperty" value="admin.kwmToolResultsTitle"/>
+  </definition>
+
+<!--======================= WD Request Mapping =============================-->
+    <definition name=".WDRequestMapping" extends=".Admin">
+        <put-attribute name="entityName" value="WDRequestMapping"/>
+    </definition>
+
+    <definition name="WDRequestMapping.edit" extends=".WDRequestMapping">
+        <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+        <put-attribute name="body" value="/admin/wdRequestMapping/wdRequestMappingEdit.jsp"/>
+    </definition>
+
+    <definition name="WDRequestMapping.create" extends="WDRequestMapping.edit">
+    </definition>
+
+    <definition name="WDRequestMapping.main" extends=".WDRequestMapping">
+        <put-attribute name="bodyHeader" value="/admin/wdRequestMapping/wdRequestMappingMainHeaderAboveTable.jsp"/>
+        <put-attribute name="titleProperty" value="WDRequestMapping.plural"/>
+        <put-attribute name="body" value="/admin/wdRequestMapping/wdRequestMappingMain.jsp"/>
+    </definition>
+
+<!--======================= Adops DashBoard =============================-->
+    <definition name="AdopsDashboard.main" extends=".Admin">
+        <put-attribute name="activeMenuItemKey" value="global.menu.dashboard"/>
+        <put-attribute name="body" value="/admin/adopsDashboardMain.jsp"/>
+        <put-attribute name="titleProperty" value="admin.adopsDashboardTitle"/>
+    </definition>
+
+    <definition name="AdopsDashboard.creatives" extends=".Admin">
+        <put-attribute name="activeMenuItemKey" value="global.menu.dashboard"/>
+        <put-attribute name="body" value="/admin/adopsCreativeMain.jsp"/>
+        <put-attribute name="titleProperty" value="creative.pendingForosTitle"/>
+    </definition>
+
+    <definition name="AdopsDashboard.creativesList" template="/admin/creativesList.jsp">
+    </definition>
+
+    <definition name="AdopsDashboard.regularReview.main"  extends=".Admin">
+        <put-attribute name="activeMenuItemKey" value="global.menu.dashboard"/>
+        <put-attribute name="body" value="/regularchecks/regularReviewMain.jsp"/>
+        <put-attribute name="titleProperty" value="checks.campaignsChannelsDueChecking"/>
+    </definition>
+
+    <definition name="AdopsDashboard.regularReview.list" template="/regularchecks/regularReviewList.jsp"/>
+
+<!--======================= Fraud Conditions List =============================-->
+    <definition name=".FraudConditions" extends=".Admin">
+    </definition>
+
+    <definition name="FraudConditions.main" extends=".FraudConditions">
+        <put-attribute name="titleProperty" value="fraud.fraudConditions"/>
+        <put-attribute name="body" value="/admin/fraudConditions/fraudConditionsMain.jsp"/>
+    </definition>
+
+    <definition name="FraudConditions.edit" extends=".FraudConditions">
+        <put-attribute name="titleProperty" value="fraud.fraudConditions.edit"/>
+        <put-attribute name="body" value="/admin/fraudConditions/fraudConditionsEdit.jsp"/>
+    </definition>
+
+<!--======================= Keyword Channel =============================-->
+    <definition name=".KeywordChannel" extends=".Admin">
+        <put-attribute name="entityName" value="KeywordChannel"/>
+    </definition>
+
+    <definition name="KeywordChannel.main" extends=".KeywordChannel">
+        <put-attribute name="titleProperty" value="KeywordChannel.plural"/>
+        <put-attribute name="body" value="/admin/keywordChannel/keywordChannelMain.jsp"/>
+    </definition>
+
+    <definition name="KeywordChannel.list" template="/admin/keywordChannel/keywordChannelMainList.jsp">
+    </definition>
+
+    <definition name="KeywordChannel.upload" extends=".KeywordChannel">
+        <put-attribute name="titleProperty" value="KeywordChannel.upload.title"/>
+        <put-attribute name="body" value="/admin/keywordChannel/keywordChannelUpload.jsp"/>
+    </definition>
+
+    <definition name="KeywordChannel.view" extends=".KeywordChannel">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="title" value="/admin/keywordChannel/keywordChannelTitle.jsp"/>
+        <put-attribute name="body" value="/admin/keywordChannel/keywordChannelView.jsp"/>
+    </definition>
+
+    <definition name="KeywordChannel.edit" extends=".KeywordChannel">
+        <put-attribute name="title" value="/admin/keywordChannel/keywordChannelTitle.jsp"/>
+        <put-attribute name="body" value="/admin/keywordChannel/keywordChannelEdit.jsp"/>
+    </definition>
+
+    <definition name="KeywordChannel.editDefaultSettings" extends=".KeywordChannel">
+        <put-attribute name="titleProperty" value="channel.defaultKeywordSettings"/>
+        <put-attribute name="body" value="/admin/keywordChannel/defaultKeywordSettings.jsp"/>
+    </definition>
+
+    <!--========================= Search Engine ===========================-->
+    <definition name=".SearchEngine" extends=".Admin">
+        <put-attribute name="entityName" value="SearchEngine"/>
+    </definition>
+
+    <definition name="SearchEngine.main" extends=".SearchEngine">
+        <put-attribute name="bodyHeader" value="/templates/mainHeaderAboveTable2.jsp"/>
+        <put-attribute name="titleProperty" value="SearchEngine.plural"/>
+        <put-attribute name="body" value="/admin/searchEngine/searchEngineMain.jsp"/>
+    </definition>
+
+    <definition name="SearchEngine.view" extends=".SearchEngine">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/admin/searchEngine/searchEngineView.jsp"/>
+    </definition>
+
+    <definition name="SearchEngine.create" extends=".SearchEngine">
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="body" value="/admin/searchEngine/searchEngineEdit.jsp"/>
+    </definition>
+
+    <definition name="SearchEngine.edit" extends=".SearchEngine">
+        <put-attribute name="body" value="/admin/searchEngine/searchEngineEdit.jsp"/>
+    </definition>
+
+</tiles-definitions>

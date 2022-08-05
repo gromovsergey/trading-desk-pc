@@ -1,0 +1,99 @@
+<div class="page-header page-header-first">
+    <h2 class="c-pagetitle">
+        {{title}}
+    </h2>
+</div>
+
+<form class="form-horizontal" (submit)="search()">
+    <div class="form-group">
+        <label class="col-sm-2 col-xs-12 control-label">_L10N_(accountSearch.accountName):</label>
+        <div class="col-sm-6">
+            <input name="accountName"
+                   autofocus #accountName="ngModel"
+                   class="form-control"
+                   autocomplete="off"
+                   [(ngModel)]="filter.name"
+                   placeholder="_L10N_(accountSearch.accountName)">
+        </div>
+    </div>
+
+    <section [ngClass]="{'visible': filterState, 'hidden': !filterState}" *ngIf="!waitParams">
+        <div class="form-group">
+            <label for="countryCode" class="col-sm-2 control-label">_L10N_(blockName.country):</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="countryCode" [(ngModel)]="filter.country" name="countryCode">
+                    <option value="">_L10N_(messages.optionTransfer.all)</option>
+                    <option *ngFor="let country of searchParams.countries" value="{{country.code}}">{{country.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="status" class="col-sm-2 control-label">_L10N_(blockName.status):</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="status" [(ngModel)]="filter.displayStatuses" name="status">
+                    <option *ngFor="let status of searchParams.displayStatuses" [value]="status.type">{{status.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="role" class="col-sm-2 control-label">_L10N_(blockName.type):</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="role" [(ngModel)]="filter.accountRole" name="role">
+                    <option *ngFor="let role of searchParams.accountRoles" [value]="role.roleId">{{role.name}}</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" [disabled]="wait" class="btn btn-primary">
+                <ui-icon [fw]="true" [icon]="wait?'spinner':'search'" [spin]="wait"></ui-icon>
+                _L10N_(blockName.search)
+            </button>
+            <button (click)="toggleFilter()" class="btn btn-default" *ngIf="waitParams" [disabled]="true">
+                <ui-icon [icon]="'spinner'" [spin]="true"></ui-icon> _L10N_(messages.wait)...
+            </button>
+            <button type="button" (click)="toggleFilter($event)" class="btn btn-default" *ngIf="!waitParams">
+                <ui-icon [ngClass]="{'hidden': !filterState}" [icon]="'chevron-up'" ></ui-icon>
+                <ui-icon [ngClass]="{'hidden': filterState}" [icon]="'chevron-down'"></ui-icon>
+                {{filterState?'_L10N_(button.hide)':'_L10N_(button.show)'}} _L10N_(blockName.filters)
+            </button>
+        </div>
+    </div>
+</form>
+
+<div *ngIf="agencyList && agencyList.length === 0 && !wait">
+    _L10N_(messages.nothingFound)
+</div>
+
+<div *ngIf="agencyList && agencyList.length && !wait">
+    <div class="page-header">
+        <h3 class="c-pagetitle">_L10N_(accountSearch.searchResults)</h3>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>_L10N_(accountSearch.account)</th>
+                <th>_L10N_(blockName.imps)</th>
+                <th>_L10N_(blockName.clicks)</th>
+                <th>_L10N_(blockName.ctr)</th>
+                <th>_L10N_(blockName.revenue)</th></tr></thead>
+            <tbody>
+            <tr *ngFor="let row of agencyList">
+                <td>
+                    <ui-icon [fw]="true" [displayStatus]="row.displayStatus"></ui-icon>
+                    <a *ngIf="row.agency" [routerLink]="['/agency/'+row.id+'/advertisers']">{{row.name}}</a>
+                    <a *ngIf="!row.agency" [routerLink]="['/advertiser/'+row.id+'/flights']">{{row.name}}</a>
+                </td>
+                <td class="number">{{row.impressions}}</td>
+                <td class="number">{{row.clicks}}</td>
+                <td class="number">{{row.ctr.toFixed(2)}}%</td>
+                <td class="number">{{row.revenue | currency:row.currencyCode:'symbol':'1.2-2'}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

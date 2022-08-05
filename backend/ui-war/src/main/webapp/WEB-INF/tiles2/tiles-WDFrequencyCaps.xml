@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+   <definition name=".wdFrequencyCaps" extends=".mainLayout">
+   <put-attribute name="taskTitle" value="page.title.WDFrequencyCaps"/>
+     <put-attribute name="moduleName" value="admin"/>
+     <put-attribute name="activeMenuItemKey" value="global.menu.admin"/>
+     <put-attribute name="entityName" value="WDFrequencyCaps"/>
+   </definition>
+
+    <definition name="admin.WDFrequencyCaps.view" extends=".wdFrequencyCaps">
+        <put-attribute name="titleProperty" value="WDFrequencyCaps.entityName"/>
+        <put-attribute name="body" value="/admin/wdFrequencyCaps/wdFrequencyCapsView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.WDFrequencyCaps.edit" extends=".wdFrequencyCaps">
+        <put-attribute name="titleProperty" value="WDFrequencyCaps.entityName.edit"/>
+        <put-attribute name="body" value="/admin/wdFrequencyCaps/wdFrequencyCapsEdit.jsp"/>
+    </definition>
+</tiles-definitions>

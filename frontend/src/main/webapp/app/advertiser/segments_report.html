@@ -1,0 +1,28 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [fw]="true" [displayStatus]="advertiser.displayStatus"></ui-icon>
+            {{title}}
+        </h2>
+    </div>
+    <ui-report [meta]="meta"
+               [reportParameters]="reportParameters"
+               [reportService]="reportService"
+               [downloadNamePrefix]="'Segments Report for ' + advertiser.name">
+
+        <div #params>
+
+            <div class="form-group">
+                <label>_L10N_(report.conversionsReport.lineItems)</label>
+                <div>
+                    <select name="lineItemId" class="form-control" (change)="onlineItemChange($event)">
+                        <option *ngFor="let item of lineItemIdNameList" [value]="item.id">{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </ui-report>
+</section>

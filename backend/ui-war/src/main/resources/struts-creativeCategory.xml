@@ -1,0 +1,48 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="creativeCategory" extends="foros-default" namespace="/">
+
+        <action name="admin/CreativeCategory/main" class="com.foros.action.admin.creativeCategories.ViewCreativeCategoryAction"
+                method="list">
+            <result name="success" type="tiles">CreativeCategory.main</result>
+        </action>
+
+        <action name="admin/CreativeCategory/edit" class="com.foros.action.admin.creativeCategories.EditCreativeCategoryAction"
+                method="edit">
+            <result name="success" type="tiles">CreativeCategory.edit</result>
+        </action>
+
+        <action name="admin/CreativeCategory/save" class="com.foros.action.admin.creativeCategories.SaveCreativeCategoryAction"
+                method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeCategory/main</param>
+            </result>
+            <result name="input" type="tiles">CreativeCategory.edit</result>
+            <result name="version">
+                <param name="location">/admin/CreativeCategory/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/resource/CreativeCategory/edit"
+                class="com.foros.action.admin.CreativeCategoryResourceAction" method="edit">
+            <interceptor-ref name="defaultForosStack"/>
+            <param name="entityName">CreativeCategory</param>
+            <param name="actionPath">/admin/resource/CreativeCategory/</param>
+            <result name="success">/admin/dynamicResourceEdit.jsp</result>
+        </action>
+
+        <action name="admin/resource/CreativeCategory/save"
+                class="com.foros.action.admin.CreativeCategoryResourceAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <param name="entityName">CreativeCategory</param>
+            <param name="actionPath">/admin/resource/CreativeCategory/</param>
+            <result name="input">/admin/dynamicResourceEdit.jsp</result>
+        </action>
+
+
+    </package>
+</struts>

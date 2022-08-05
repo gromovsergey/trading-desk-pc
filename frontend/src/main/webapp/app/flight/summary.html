@@ -1,0 +1,111 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<ng-template [ngIf]="!wait">
+    <div class="row">
+        <div class="col-xs-12">
+            <small class="stats-label">_L10N_(blockName.budget) _L10N_(blockName.budget.spent) / _L10N_(blockName.budget.available):</small>
+            <strong>{{stats.spentBudget | currency:currencyCode:'symbol':'1.2-2'}} / {{stats.budget | currency:currencyCode:'symbol':'1.2-2'}}</strong>
+            <h4>
+                <div class="progress">
+                    <div class="progress-bar" #budgetBar></div>
+                </div>
+            </h4>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <ui-cell title="_L10N_(blockName.status)">
+            <div #body>
+                <ui-loading *ngIf="statusWait"></ui-loading>
+                <div *ngIf="!statusWait">
+                    <ui-display-status-toggle *ngIf="statusChangeable" (onStatusChange)="changeStatus($event)"
+                                              [status]="stats.displayStatus" [statusObject]="stats"></ui-display-status-toggle>
+                    <ui-icon *ngIf="!statusChangeable" [displayStatus]="stats.displayStatus"></ui-icon>
+                    {{L10nMajorStatuses[stats.displayStatus.split('|')[0]]}}
+                </div>
+            </div>
+        </ui-cell>
+        <ui-cell title="_L10N_(blockName.dates)">
+            <div #body>
+                <span class="text-nowrap" *ngIf="dateStart">{{dateStart}} &ndash; </span>
+                <span class="text-nowrap" *ngIf="dateStart">{{dateEnd ? dateEnd : '_L10N_(flight.message.unlimited)'}}</span>
+                <span class="text-nowrap" *ngIf="!dateStart">
+                    _L10N_(flight.notification.startDateNotSet)
+                </span>
+            </div>
+        </ui-cell>
+
+        <ui-cell title="_L10N_(flight.blockName.deliveryPacing)">
+            <div #body>
+                <span *ngIf="entity.deliveryPacing === 'F'">_L10N_(flight.blockName.deliveryPacing.fixed) {{entity.dailyBudget | currency:currencyCode:'symbol':'1.2-2'}}</span>
+                <span *ngIf="entity.deliveryPacing === 'D'">_L10N_(flight.blockName.deliveryPacing.dynamic) {{getDynamicBudget() | currency:currencyCode:'symbol':'1.2-2'}}</span>
+                <span *ngIf="entity.deliveryPacing === 'U'">_L10N_(flight.blockName.deliveryPacing.unrestricted)</span>
+            </div>
+        </ui-cell>
+
+        <ui-cell title="{{L10nFlightRateTypes[entity.rateType]}}">
+            <div #body>
+                <span>{{entity.rateValue | currency:currencyCode:'symbol':'1.2-2'}}</span>
+            </div>
+        </ui-cell>
+
+      </div>
+      <div class="row">
+
+        <ui-cell title="_L10N_(blockName.frequencyCaps)">
+            <div #body>
+                <span *ngIf="!frequencyCap">_L10N_(messages.notSet)</span>
+                <ng-template [ngIf]="frequencyCap">
+                    <span class="h-comma" *ngIf="frequencyCap.period && frequencyCap.period.value > 0">
+                        1&nbsp;_L10N_(messages.per)
+                         &nbsp;{{frequencyCap.period.value}}
+                         &nbsp;{{L10nTimeUnits[frequencyCap.period.unit]}}
+                    </span>
+                    <span class="h-comma" *ngIf="frequencyCap.lifeCount">
+                        {{frequencyCap.lifeCount}}&nbsp;_L10N_(messages.lifeTotal)
+                    </span>
+                    <span class="h-comma" *ngIf="frequencyCap.windowCount && frequencyCap.windowLength.value">
+                                     _L10N_(messages.maximum)
+                               &nbsp;{{frequencyCap.windowCount}}
+                               &nbsp;_L10N_(messages.per)
+                               &nbsp;{{frequencyCap.windowLength.value}}
+                               &nbsp;{{L10nTimeUnits[frequencyCap.windowLength.unit]}}
+                    </span>
+                </ng-template>
+            </div>
+        </ui-cell>
+
+        <ui-cell title="_L10N_(blockName.imps)">
+            <div #body>
+                {{stats.impressions}}
+            </div>
+        </ui-cell>
+        <ui-cell title="_L10N_(blockName.clicks) (_L10N_(blockName.ctr))">
+            <div #body>
+                {{stats.clicks}} ({{stats.ctr.toFixed(2)}}%)
+            </div>
+        </ui-cell>
+
+        <ui-cell title="_L10N_(blockName.ecpm)">
+            <div #body>
+                {{stats.ecpm | currency:currencyCode:'symbol':'1.2-2'}}
+            </div>
+        </ui-cell>
+
+      </div>
+      <div class="row">
+        
+        <ui-cell title="_L10N_(blockName.postImpConv)">
+            <div #body>
+                {{stats.postImpConv}}
+            </div>
+        </ui-cell>
+
+        <ui-cell title="_L10N_(blockName.postClickConv)">
+            <div #body>
+                {{stats.postClickConv}}
+            </div>
+        </ui-cell>
+    </div>
+</ng-template>

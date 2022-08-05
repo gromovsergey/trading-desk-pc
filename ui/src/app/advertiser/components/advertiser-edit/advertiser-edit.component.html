@@ -1,0 +1,52 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+
+  <h1>
+    {{(this.mode === 'add' ? 'button.add' : 'button.edit') | translate}}
+    {{'advertiserAccount.advertiser.genitive' | translate}}
+  </h1>
+
+  <ui-info-panel *ngIf="errors?.actionError" type="danger">
+    <p *ngFor="let error of errors.actionError">{{error}}</p>
+  </ui-info-panel>
+
+  <form (submit)="submitForm()">
+    <div class="form-container form-container-compact">
+
+      <mat-form-field class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'blockName.name' | translate}}</mat-label>
+        <input autofocus="autofocus" matInput
+               [errorStateMatcher]="matcher(!advertiser.name || errors?.names)"
+               [(ngModel)]="advertiser.name" required
+               type="text" name="name" autocomplete="off">
+        <mat-error *ngFor="let error of errors?.name">
+          {{error}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="canEditCommission"
+                      class="mat-form-field-max" appearance="standard">
+        <mat-label>{{'advertiserAccount.commission' | translate}}(%)</mat-label>
+        <input matInput name="commission"
+               [errorStateMatcher]="matcher(errors?.commissionPercent || errors?.commission)"
+               [(ngModel)]="advertiser.commission"
+               required type="number">
+        <mat-error *ngFor="let error of errors?.commissionPercent">
+          {{error}}
+        </mat-error>
+        <mat-error *ngFor="let error of errors?.commission">
+          {{error}}
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-footer">
+        <ui-submit-button [title]="mode === 'add' ? 'button.add' : 'button.save'"
+                          [wait]="wait"></ui-submit-button>
+        <button *ngIf="!waitSubmit"
+                mat-flat-button
+                [routerLink]="backUrl">{{'button.cancel' | translate}}</button>
+      </div>
+    </div>
+  </form>
+</ng-template>

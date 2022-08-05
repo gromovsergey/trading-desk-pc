@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+       
+<tiles-definitions>
+    <definition name=".WDTag" extends=".mainLayout">
+     <put-attribute name="moduleName" value="admin/site"/>
+     <put-attribute name="activeMenuItemKey" value="global.menu.sites"/>
+     <put-attribute name="entityName" value="WDTag"/>
+    </definition>
+
+  <!--============================  WD TAG ============================-->
+    <definition name="admin.WDTag.edit" extends=".WDTag">
+      <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+      <put-attribute name="body" value="/site/wdTagsEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.WDTag.create" extends=".WDTag">
+      <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+      <put-attribute name="body" value="/site/wdTagsEdit.jsp"/>
+      <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="admin.WDTag.view" extends=".WDTag">
+      <put-attribute name="isViewPage" value="true"/>
+      <put-attribute name="body" value="/site/wdTagsView.jsp"/>
+    </definition>
+    <!--============================  WD TAG Publisher ============================-->
+    <definition name=".PublisherWDTag" extends=".WDTag">
+        <put-attribute name="moduleName" value="publisher/site"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.sites"/>
+    </definition>
+
+      <definition name="publisher.WDTag.edit" extends=".PublisherWDTag">
+        <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+        <put-attribute name="body" value="/site/wdTagsEdit.jsp"/>
+      </definition>
+
+      <definition name="publisher.WDTag.create" extends=".PublisherWDTag">
+        <put-attribute name="bodyHeader" value="/templates/editHeader.jsp"/>
+        <put-attribute name="body" value="/site/wdTagsEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+      </definition>
+
+      <definition name="publisher.WDTag.view" extends=".PublisherWDTag">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/site/wdTagsView.jsp"/>
+      </definition>
+ </tiles-definitions>

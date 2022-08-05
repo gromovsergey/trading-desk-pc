@@ -1,0 +1,901 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="campaignGroup" extends="foros-default" namespace="/">
+
+        <action name="admin/campaign/group/view" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="commonView">
+            <result name="success.display" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="success.text" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/view" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="commonView">
+            <result name="success.display" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="success.text" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/viewDisplay" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="view">
+            <result name="success" type="tiles">admin.campaignGroup.viewDisplay</result>
+        </action>
+
+        <action name="advertiser/campaign/group/viewDisplay" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="view">
+            <result name="success" type="tiles">advertiser.campaignGroup.viewDisplay</result>
+        </action>
+
+        <action name="admin/campaign/group/viewText" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="view">
+            <result name="success" type="tiles">admin.campaignGroup.viewText</result>
+        </action>
+
+        <action name="advertiser/campaign/group/viewText" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="view">
+            <result name="success" type="tiles">advertiser.campaignGroup.viewText</result>
+        </action>
+
+        <!--    stats    -->
+        <action name="admin/campaign/group/sitesWrapper" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="showSites">
+            <result name="success">/campaign/ccg/targeting/sitesData.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/group/sitesWrapper" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="showSites">
+            <result name="success">/campaign/ccg/targeting/sitesData.jsp</result>
+        </action>
+
+        <action name="admin/campaign/group/targetingWrapper" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="showTargeting">
+            <result name="success">/campaign/ccg/targeting/viewTargeting.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/group/targetingWrapper" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="showTargeting">
+            <result name="success">/campaign/ccg/targeting/viewTargeting.jsp</result>
+        </action>
+
+        <action name="admin/campaign/group/creativesStatsWrapper" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="creativesStats">
+            <result name="success">/campaign/ccg/viewLinkedCreatives.jsp</result>
+        </action>
+
+        <action name="admin/campaign/group/creativesStats" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="creativesStats">
+            <result name="success">/campaign/ccg/displayCreativeStats.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/group/creativesStatsWrapper" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="creativesStats">
+            <result name="success">/campaign/ccg/viewLinkedCreatives.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/group/creativesStats" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="creativesStats">
+            <result name="success">/campaign/ccg/displayCreativeStats.jsp</result>
+        </action>
+
+        <action name="admin/campaign/group/conversionsWrapper" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="conversionStats">
+            <result name="success">/campaign/ccg/viewLinkedConversions.jsp</result>
+        </action>
+
+        <action name="admin/campaign/group/conversionStats" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="conversionStats">
+            <result name="success">/campaign/ccg/conversionStats.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/group/conversionsWrapper" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="conversionStats">
+            <result name="success">/campaign/ccg/viewLinkedConversions.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/group/conversionStats" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="conversionStats">
+            <result name="success">/campaign/ccg/conversionStats.jsp</result>
+        </action>
+
+        <action name="admin/campaign/group/keywordsStats" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="keywordsStats">
+            <result name="success">/campaign/ccg/keywordsStats.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/group/keywordsStats" class="com.foros.action.campaign.campaignGroup.ViewCampaignGroupAction" method="keywordsStats">
+            <result name="success">/campaign/ccg/keywordsStats.jsp</result>
+        </action>
+
+        <action name="admin/campaign/group/expressionPerformanceStats" class="com.foros.action.campaign.campaignGroup.ViewExpressionPerformanceAction" method="expressionPerformanceStats">
+            <result name="success">/campaign/ccg/targeting/expressionPerformanceStats.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/group/expressionPerformanceStats" class="com.foros.action.campaign.campaignGroup.ViewExpressionPerformanceAction" method="expressionPerformanceStats">
+            <result name="success">/campaign/ccg/targeting/expressionPerformanceStats.jsp</result>
+        </action>
+
+
+        <action name="admin/campaign/group/editDisplay" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupAction" method="edit">
+            <result name="success" type="tiles">admin.campaignGroup.editDisplay</result>
+        </action>
+
+        <action name="advertiser/campaign/group/editDisplay" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupAction" method="edit">
+            <result name="success" type="tiles">advertiser.campaignGroup.editDisplay</result>
+        </action>
+
+        <action name="admin/campaign/group/editText" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupAction" method="edit">
+            <result name="success" type="tiles">admin.campaignGroup.editText</result>
+        </action>
+
+        <action name="advertiser/campaign/group/editText" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupAction" method="edit">
+            <result name="success" type="tiles">advertiser.campaignGroup.editText</result>
+        </action>
+
+        <action name="admin/campaign/group/newDisplay" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupAction" method="createDisplay">
+            <result name="success" type="tiles">admin.campaignGroup.newDisplay</result>
+        </action>
+
+        <action name="advertiser/campaign/group/newDisplay" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupAction" method="createDisplay">
+            <result name="success" type="tiles">advertiser.campaignGroup.newDisplay</result>
+        </action>
+
+        <action name="admin/campaign/group/newDisplayWizardTarget" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupWizardTargetAction" method="createDisplay">
+            <result name="success" type="tiles">admin.campaignGroup.newDisplayWizardTarget</result>
+        </action>
+
+        <action name="advertiser/campaign/group/newDisplayWizardTarget" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupWizardTargetAction" method="createDisplay">
+            <result name="success" type="tiles">advertiser.campaignGroup.newDisplayWizardTarget</result>
+        </action>
+
+        <action name="admin/campaign/group/newDisplayWizardSettings" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupWizardSettingsAction" method="createDisplay">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">admin.campaignGroup.newDisplayWizardTarget</result>
+            <result name="success" type="tiles">admin.campaignGroup.newDisplayWizardSettings</result>
+        </action>
+
+        <action name="advertiser/campaign/group/newDisplayWizardSettings" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupWizardSettingsAction" method="createDisplay">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">advertiser.campaignGroup.newDisplayWizardTarget</result>
+            <result name="success" type="tiles">advertiser.campaignGroup.newDisplayWizardSettings</result>
+        </action>
+
+        <action name="admin/campaign/group/newText" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupAction" method="createText">
+            <result name="success" type="tiles">admin.campaignGroup.newText</result>
+        </action>
+
+        <action name="advertiser/campaign/group/newText" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupAction" method="createText">
+            <result name="success" type="tiles">advertiser.campaignGroup.newText</result>
+        </action>
+
+        <action name="admin/campaign/group/newChannelTargetedText" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupAction"
+                method="createChannelTargetedText">
+            <result name="success" type="tiles">admin.campaignGroup.newText</result>
+        </action>
+
+        <action name="advertiser/campaign/group/newChannelTargetedText" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupAction"
+                method="createChannelTargetedText">
+            <result name="success" type="tiles">advertiser.campaignGroup.newText</result>
+        </action>
+
+        <action name="admin/campaign/group/newChannelTargetedTextWizardTarget" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupWizardTargetAction"
+                method="createChannelTargetedText">
+            <result name="success" type="tiles">admin.campaignGroup.newTextWizardTarget</result>
+        </action>
+
+        <action name="advertiser/campaign/group/newChannelTargetedTextWizardTarget" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupWizardTargetAction"
+                method="createChannelTargetedText">
+            <result name="success" type="tiles">advertiser.campaignGroup.newTextWizardTarget</result>
+        </action>
+
+        <action name="admin/campaign/group/newChannelTargetedTextWizardSettings" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupWizardSettingsAction"
+                method="createChannelTargetedText">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">admin.campaignGroup.newTextWizardTarget</result>
+            <result name="success" type="tiles">admin.campaignGroup.newTextWizardSettings</result>
+        </action>
+
+        <action name="advertiser/campaign/group/newChannelTargetedTextWizardSettings" class="com.foros.action.campaign.campaignGroup.EditCampaignGroupWizardSettingsAction"
+                method="createChannelTargetedText">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">advertiser.campaignGroup.newTextWizardTarget</result>
+            <result name="success" type="tiles">advertiser.campaignGroup.newTextWizardSettings</result>
+        </action>
+
+        <action name="admin/campaign/group/updateDisplay" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.campaignGroup.editDisplay</result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/editDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/updateDisplay" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.campaignGroup.editDisplay</result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/editDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/updateText" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.campaignGroup.editText</result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/editText.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/updateText" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.campaignGroup.editText</result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/editText.action</param>
+            </result>
+        </action>
+        
+        <action name="admin/campaign/group/resetDisplayCtr" class="com.foros.action.campaign.ResetCtrAction" method="resetCtr">
+            <interceptor-ref name="defaultForosStack"/>
+            <interceptor-ref name="businessError"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/resetTextCtr" class="com.foros.action.campaign.ResetCtrAction" method="resetCtr">
+            <interceptor-ref name="defaultForosStack"/>
+            <interceptor-ref name="businessError"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/createDisplay" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.campaignGroup.newDisplay</result>
+        </action>
+
+        <action name="advertiser/campaign/group/createDisplay" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.campaignGroup.newDisplay</result>
+        </action>
+
+        <action name="admin/campaign/group/createText" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.campaignGroup.newText</result>
+        </action>
+
+        <action name="advertiser/campaign/group/createText" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.campaignGroup.newText</result>
+        </action>
+
+        <action name="admin/campaign/group/createDisplayWizard" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupWizardAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${campaignId}</param>
+            </result>
+            <result name="input" type="tiles">admin.campaignGroup.newDisplayWizardSettings</result>
+        </action>
+
+        <action name="advertiser/campaign/group/createDisplayWizard" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupWizardAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/view</param>
+                <param name="id">${campaignId}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.campaignGroup.newDisplayWizardSettings</result>
+        </action>
+
+        <action name="admin/campaign/group/createChannelTargetedTextWizard" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupWizardAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${campaignId}</param>
+            </result>
+            <result name="input" type="tiles">admin.campaignGroup.newTextWizardSettings</result>
+        </action>
+
+        <action name="advertiser/campaign/group/createChannelTargetedTextWizard" class="com.foros.action.campaign.campaignGroup.SaveCampaignGroupWizardAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/view</param>
+                <param name="id">${campaignId}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.campaignGroup.newTextWizardSettings</result>
+        </action>
+
+        <action name="admin/campaign/group/activateDisplay" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="activate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/target/edit" class="com.foros.action.campaign.campaignGroup.EditTargetAction" method="edit">
+            <result name="success" type="tiles">admin.campaignGroup.editTarget</result>
+        </action>
+
+        <action name="admin/campaign/group/performance/view" class="com.foros.action.campaign.campaignGroup.ViewExpressionPerformanceAction" method="view">
+            <result name="success" type="tiles">admin.campaignGroup.viewExpressionPerformance</result>
+        </action>
+
+        <action name="admin/campaign/group/geoTarget/edit" class="com.foros.action.campaign.campaignGroup.EditGeoTargetAction" method="edit">
+            <result name="success" type="tiles">admin.campaignGroup.editGeoTarget</result>
+        </action>
+
+        <action name="admin/campaign/group/geoTarget/searchGeoCode" class="com.foros.action.campaign.campaignGroup.SearchGeoCodeAction" method="search">
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success">/campaign/geoCodeResult.jsp</result>
+        </action>
+
+        <action name="admin/campaign/group/userSampleGroups/edit" class="com.foros.action.campaign.campaignGroup.EditUserSampleGroupsAction" method="edit">
+            <result name="success" type="tiles">admin.campaignGroup.editUserSampleGroups</result>
+        </action>
+
+        <action name="admin/campaign/group/deviceTargeting/edit" class="com.foros.action.campaign.campaignGroup.EditDeviceTargetingAction" method="edit">
+            <result name="success" type="tiles">admin.campaignGroup.editDeviceTargeting</result>
+        </action>
+
+        <action name="advertiser/campaign/group/deviceTargeting/edit" class="com.foros.action.campaign.campaignGroup.EditDeviceTargetingAction" method="edit">
+            <result name="success" type="tiles">advertiser.campaignGroup.editDeviceTargeting</result>
+        </action>
+
+        <action name="admin/campaign/group/target/update" class="com.foros.action.campaign.campaignGroup.SaveTargetAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.campaignGroup.editTarget</result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/target/edit.action?id=${group.id}</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/deviceTargeting/update" class="com.foros.action.campaign.campaignGroup.SaveDeviceTargetingAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.campaignGroup.editDeviceTargeting</result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/deviceTargeting/edit.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/deviceTargeting/update" class="com.foros.action.campaign.campaignGroup.SaveDeviceTargetingAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.campaignGroup.editDeviceTargeting</result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/deviceTargeting/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/userSampleGroups/update" class="com.foros.action.campaign.campaignGroup.SaveUserSampleGroupsAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.campaignGroup.editUserSampleGroups</result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/userSampleGroups/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/geoTarget/update" class="com.foros.action.campaign.campaignGroup.SaveGeoTargetAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input">
+                <param name="location">/admin/campaign/group/geoTarget/edit.action</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/geoTarget/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/target/searchUsedChannels" class="com.foros.action.channel.UsedChannelSearchAction" method="searchUsedChannels">
+            <result name="success">/channel/searchUsedChannelsTab.jsp?channelAction=select</result>
+        </action>
+
+        <action name="admin/campaign/group/target/searchChannels" class="com.foros.action.channel.ContentChannelSearchAction" method="searchChannels">
+            <result name="success">/channel/searchChannelsTab.jsp?channelAction=select</result>
+        </action>
+
+        <action name="advertiser/campaign/group/target/edit" class="com.foros.action.campaign.campaignGroup.EditTargetAction" method="edit">
+            <result name="success" type="tiles">advertiser.campaignGroup.editTarget</result>
+        </action>
+
+        <action name="advertiser/campaign/group/performance/view" class="com.foros.action.campaign.campaignGroup.ViewExpressionPerformanceAction" method="view">
+            <result name="success" type="tiles">advertiser.campaignGroup.viewExpressionPerformance</result>
+        </action>
+
+        <action name="advertiser/campaign/group/geoTarget/edit" class="com.foros.action.campaign.campaignGroup.EditGeoTargetAction" method="edit">
+            <result name="success" type="tiles">advertiser.campaignGroup.editGeoTarget</result>
+        </action>
+
+        <action name="advertiser/campaign/group/geoTarget/searchGeoCode" class="com.foros.action.campaign.campaignGroup.SearchGeoCodeAction" method="search">
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success">/campaign/geoCodeResult.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/group/target/update" class="com.foros.action.campaign.campaignGroup.SaveTargetAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.campaignGroup.editTarget</result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/target/edit.action?id=${group.id}</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/geoTarget/update" class="com.foros.action.campaign.campaignGroup.SaveGeoTargetAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input">
+                <param name="location">/advertiser/campaign/group/geoTarget/edit.action</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/geoTarget/edit.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/target/searchUsedChannels" class="com.foros.action.channel.UsedChannelSearchAction" method="searchUsedChannels">
+            <result name="success">/channel/searchUsedChannelsTab.jsp?channelAction=select</result>
+        </action>
+
+        <action name="advertiser/campaign/group/target/searchChannels" class="com.foros.action.channel.ContentChannelSearchAction" method="searchChannels">
+            <result name="success">/channel/searchChannelsTab.jsp?channelAction=select</result>
+        </action>
+
+        <action name="advertiser/campaign/group/activateDisplay" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="activate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/activateText" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="activate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/activateText" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="activate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/inactivateDisplay" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="inactivate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/inactivateDisplay" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="inactivate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/inactivateText" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="inactivate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/inactivateText" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="inactivate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/deleteDisplay" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/deleteDisplay" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/view</param>
+                <param name="id">${campaignId}</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/deleteText" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/deleteText" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/view</param>
+                <param name="id">${campaignId}</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/undeleteDisplay" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="undelete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewDisplay.action</param>
+            </result>
+            <result name="input">
+                <param name="location">/admin/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/undeleteText" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="undelete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewText.action</param>
+            </result>
+            <result name="input">
+                <param name="location">/admin/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/approveDisplay" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="approve">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/approveText" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="approve">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/declineDisplay" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="decline">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/declineText" class="com.foros.action.campaign.campaignGroup.StatusCampaignGroupAction" method="decline">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/createCopyDisplay" class="com.foros.action.campaign.campaignGroup.CreateCopyCampaignGroupAction"
+                method="createCopy">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/editDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input">
+                <param name="location">/admin/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/createCopyDisplay" class="com.foros.action.campaign.campaignGroup.CreateCopyCampaignGroupAction"
+                method="createCopy">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/editDisplay</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input">
+                <param name="location">/advertiser/campaign/group/viewDisplay.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/createCopyText" class="com.foros.action.campaign.campaignGroup.CreateCopyCampaignGroupAction"
+                method="createCopy">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/editText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input">
+                <param name="location">/admin/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/createCopyText" class="com.foros.action.campaign.campaignGroup.CreateCopyCampaignGroupAction"
+                method="createCopy">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/editText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input">
+                <param name="location">/advertiser/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/editKeywords" class="com.foros.action.campaign.campaignGroup.EditKeywordsAction" method="edit">
+            <result name="success" type="tiles">admin.campaignGroup.editKeywords</result>
+        </action>
+
+        <action name="advertiser/campaign/group/editKeywords" class="com.foros.action.campaign.campaignGroup.EditKeywordsAction" method="edit">
+            <result name="success" type="tiles">advertiser.campaignGroup.editKeywords</result>
+        </action>
+
+        <action name="admin/campaign/group/updateKeywords" class="com.foros.action.campaign.campaignGroup.SaveKeywordsAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.campaignGroup.editKeywords</result>
+            <result name="version">
+                <param name="location">/admin/campaign/group/editKeywords.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/updateKeywords" class="com.foros.action.campaign.campaignGroup.SaveKeywordsAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">advertiser.campaignGroup.editKeywords</result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/group/editKeywords.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/activateKeywords" class="com.foros.action.campaign.campaignGroup.BulkStatusKeywordsAction" method="activate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/inactivateKeywords" class="com.foros.action.campaign.campaignGroup.BulkStatusKeywordsAction" method="inactivate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/deleteKeywords" class="com.foros.action.campaign.campaignGroup.BulkStatusKeywordsAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/group/undeleteKeywords" class="com.foros.action.campaign.campaignGroup.BulkStatusKeywordsAction" method="undelete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input">
+                <param name="location">/admin/campaign/group/viewText.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/activateKeywords" class="com.foros.action.campaign.campaignGroup.BulkStatusKeywordsAction"
+                method="activate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/inactivateKeywords" class="com.foros.action.campaign.campaignGroup.BulkStatusKeywordsAction"
+                method="inactivate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/group/deleteKeywords" class="com.foros.action.campaign.campaignGroup.BulkStatusKeywordsAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/group/viewText</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="*/campaign/group/checkDailyBudget" class="com.foros.action.campaign.CCGDailyBudgetAction"
+                method="checkDailyBudget">
+            <interceptor-ref name="exception">
+                <param name="logEnabled">true</param>
+                <param name="logLevel">error</param>
+            </interceptor-ref>
+            <interceptor-ref name="csrf">
+                <param name="readOnly">true</param>
+            </interceptor-ref>
+            <interceptor-ref name="servletConfig"/>
+            <interceptor-ref name="params"/>
+            <interceptor-ref name="validation"/>
+            <interceptor-ref name="workflow"/>
+            <result name="success" type="simple-text-result"/>
+            <result name="input" type="empty-result"/>
+        </action>
+
+        <action name="*/campaign/group/updateDynamicBudget" class="com.foros.action.campaign.CCGDailyBudgetAction"
+                method="updateDynamicBudget">
+            <interceptor-ref name="exception">
+                <param name="logEnabled">true</param>
+                <param name="logLevel">error</param>
+            </interceptor-ref>
+            <interceptor-ref name="csrf">
+                <param name="readOnly">true</param>
+            </interceptor-ref>
+            <interceptor-ref name="servletConfig"/>
+            <interceptor-ref name="params"/>
+            <interceptor-ref name="validation"/>
+            <interceptor-ref name="workflow"/>
+            <result name="success" type="simple-text-result"/>
+            <result name="input" type="empty-result"/>
+        </action>
+
+        <action name="*/campaign/group/getChannelRates" class="com.foros.action.campaign.CCGChannelRatesAction"
+                method="getChannelRates">
+            <interceptor-ref name="exception">
+                <param name="logEnabled">true</param>
+                <param name="logLevel">error</param>
+            </interceptor-ref>
+            <interceptor-ref name="csrf">
+                <param name="readOnly">true</param>
+            </interceptor-ref>
+            <interceptor-ref name="servletConfig"/>
+            <interceptor-ref name="params"/>
+            <result name="success" type="simple-text-result">
+                <param name="contentType">application/xml</param>
+            </result>
+        </action>
+
+        <action name="*/campaign/group/viewSchedule" class="com.foros.action.campaign.ViewDeliveryScheduleAction" method="viewCCG">
+            <result name="success">/campaign/viewDeliverySchedule.jsp</result>
+        </action>
+
+        <action name="*/campaign/group/logChecksPopup" class="com.foros.action.regularchecks.CcgLogCheckAction" method="edit">
+            <result name="success">/regularchecks/logChecksPopup.jsp</result>
+        </action>
+
+        <action name="*/campaign/group/logChecks" class="com.foros.action.regularchecks.CcgLogCheckAction" method="updateCCGCheck">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/regularchecks/logChecksPopup.jsp</result>
+            <result name="input">/regularchecks/logChecksPopup.jsp</result>
+        </action>
+    </package>
+</struts>

@@ -1,0 +1,160 @@
+<div class="form-group">
+    <label>_L10N_(blockName.country)</label>
+    <div>
+        <input type="text" class="form-control" readonly value="{{L10nCountries[countryCode]}}">
+    </div>
+</div>
+
+<div class="form-group">
+    <label>_L10N_(flight.blockName.addedLocations)</label>
+
+    <ul *ngIf="!waitGeoData && (!!locations.length || !!addresses.length)" class="list-group">
+        <li class="list-group-item" *ngFor="let location of locations">
+            <div class="btn-group btn-badge">
+                <button title="_L10N_(button.exclude)" (click)="excludeLocation($event, location)" class="btn btn-md btn-default">_L10N_(button.exclude)</button>
+                <button title="_L10N_(button.delete)" (click)="deleteLocation($event, location)" class="btn btn-md btn-default"><ui-icon [icon]="'trash'"></ui-icon> _L10N_(button.delete)</button>
+            </div>
+            <span class="c-geo__place">{{location.name}}</span>
+        </li>
+        <li class="list-group-item" *ngFor="let address of addresses">
+            <div class="btn-group btn-badge">
+                <button title="_L10N_(button.exclude)" (click)="excludeAddress($event, address)" class="btn btn-md btn-default">_L10N_(button.exclude)</button>
+                <button title="_L10N_(button.delete)" (click)="deleteAddress($event, address)" class="btn btn-md btn-default"><ui-icon [icon]="'trash'"></ui-icon> _L10N_(button.delete)</button>
+            </div>
+            <span class="c-geo__place">
+                {{'_L10N_(flight.notification.address.withinRadius)' + ' ' +
+                address.radius + ' ' + L10nDistanceUnits[address.radiusUnits] + ' ' +
+                '_L10N_(flight.notification.address.of)' + ' ' +
+                address.address}}
+            </span>
+        </li>
+    </ul>
+    <p *ngIf="!waitGeoData && !locations.length && !addresses.length">
+        _L10N_(flight.notification.noLocationsAdded)
+    </p>
+    <div *ngIf="!waitGeoData && locationsError !== null" class="alert alert-danger has-error" role="alert">
+        <p>{{locationsError}}</p>
+    </div>
+</div>
+
+<div class="form-group">
+    <label>_L10N_(flight.blockName.excludedLocations)</label>
+
+    <ul *ngIf="!waitExcludedGeoData && (!!excludedLocations.length || !!excludedAddresses.length)" class="list-group">
+        <li class="list-group-item" *ngFor="let location of excludedLocations">
+            <div class="btn-group btn-badge">
+                <button title="_L10N_(button.add)" (click)="addLocation($event, location)" class="btn btn-md btn-default">_L10N_(button.add)</button>
+                <button title="_L10N_(button.delete)" (click)="deleteExcludedLocation($event, location)" class="btn btn-md btn-default"><ui-icon [icon]="'trash'"></ui-icon> _L10N_(button.delete)</button>
+            </div>
+            <span class="c-geo__place">{{location.name}}</span>
+        </li>
+        <li class="list-group-item" *ngFor="let address of excludedAddresses">
+            <div class="btn-group btn-badge">
+                <button title="_L10N_(button.add)" (click)="addAddress($event, address)" class="btn btn-md btn-default">_L10N_(button.add)</button>
+                <button title="_L10N_(button.delete)" (click)="deleteExcludedAddress($event, address)" class="btn btn-md btn-default"><ui-icon [icon]="'trash'"></ui-icon> _L10N_(button.delete)</button>
+            </div>
+            <span class="c-geo__place">
+                {{'_L10N_(flight.notification.address.withinRadius)' + ' ' +
+            address.radius + ' ' + L10nDistanceUnits[address.radiusUnits] + ' ' +
+            '_L10N_(flight.notification.address.of)' + ' ' +
+            address.address}}
+            </span>
+        </li>
+    </ul>
+    <p *ngIf="!waitExcludedGeoData && !excludedLocations.length && !excludedAddresses.length">
+        _L10N_(flight.notification.noLocationsExcluded)
+    </p>
+    <div *ngIf="!waitExcludedGeoData && excludedLocationsError !== null" class="alert alert-danger has-error" role="alert">
+        <p>{{excludedLocationsError}}</p>
+    </div>
+</div>
+
+<div class="form-group">
+    <label>_L10N_(flight.blockName.addLocation)</label>
+    <div *ngIf="canChangeAddresses">
+        <div class="radio">
+            <label>
+                <input type="radio" (change)="switchType($event)" [checked]="radioVal">
+                _L10N_(flight.notification.stateOrCity)
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" (change)="switchType($event)" [checked]="!radioVal">
+                _L10N_(flight.notification.address)
+            </label>
+        </div>
+    </div>
+    <div *ngIf="!canChangeAddresses">_L10N_(flight.notification.stateOrCity)</div>
+</div>
+
+<div class="form-group" *ngIf="radioVal">
+    <div class="dropdown clearfix">
+        <input type="text" class="form-control" placeholder="_L10N_(blockName.search)..." #textInput
+               [disabled]="waitSearch" [ngClass]="{hidden: waitSearch}"
+               (click)="hideAutocomplete($event)" (keyup)="textInputChange($event)" (paste)="textInputChange($event)">
+        <div class="form-control" *ngIf="waitSearch" disabled>
+            <ui-icon [icon]="'spinner'" [spin]="true"></ui-icon> _L10N_(messages.wait)...
+        </div>
+        <ul class="dropdown-menu dropdown-menu-autocomplete dropdown-menu-autocomplete-geo show" *ngIf="autocomplete && autocomplete.length !== 0">
+            <li *ngFor="let item of autocomplete"><a (click)="addChannel($event, item)">{{item.name}}</a></li>
+        </ul>
+        <ul class="dropdown-menu dropdown-menu-autocomplete dropdown-menu-autocomplete-geo show" *ngIf="autocomplete && autocomplete.length === 0">
+            <li><a (click)="hideAutocomplete($event)"><i>_L10N_(messages.nothingFound)</i></a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="form-group" *ngIf="!radioVal">
+    <div class="form-inline">
+        <input type="text" class="form-control" placeholder="_L10N_(blockName.search)..."
+            [(ngModel)]="geoCode" (keyup.enter)="findAddress($event)"
+            (click)="$event.target.select()" [disabled]="waitAddress"/>
+        <div class="btn-group btn-badge">
+            <button title="_L10N_(button.find)" (click)="findAddress($event)" class="btn btn-md btn-default" [disabled]="waitAddress">
+              <ui-icon [fw]="true" [icon]="'spinner'" [spin]="true" [ngClass]="{'hidden':!waitAddress}"></ui-icon>
+              <ui-icon [icon]="'search'"></ui-icon>_L10N_(button.find)
+            </button>
+        </div>
+    </div>
+
+    <ul *ngIf="searchAddress && !!foundAddresses.length" class="list-group">
+        <br/>
+        <li class="list-group-item" *ngFor="let address of foundAddresses">
+            <div class="btn-group btn-badge">
+                <button title="_L10N_(button.add)" class="btn btn-md btn-default" (click)="showPopup($event, address)" [disabled]="checkAddress(address)">
+                  _L10N_(button.add)
+                </button>
+            </div>
+            {{address.address}}
+        </li>
+    </ul>
+    <p class="text" *ngIf="searchAddress && !foundAddresses.length">
+        <i>_L10N_(messages.nothingFound)</i>
+    </p>
+</div>
+
+<ui-popup [visible]="popupVisible" (close)="popupHide($event)" (save)="popupSave($event)" [options]="popupOptions" [closeBtnTitle]="'_L10N_(button.close)'">
+    <div #modal>
+        <p>{{selectedAddress.address}}</p>
+        <div class="form-inline">
+            <div class="form-group">
+                _L10N_(flight.notification.radiusTargeting)
+                <div class="input-group" [ngClass]="{'has-error':radiusError}">
+                    <input type="text" class="form-control" [(ngModel)]="selectedAddress.radius" size="5"/>
+                </div>
+                <div class="input-group">
+                    <select class="form-control" [(ngModel)]="selectedAddress.radiusUnits">
+                        <option value="m">_L10N_(messages.address.units.m)</option>
+                        <option value="km">_L10N_(messages.address.units.km)</option>
+                    </select>
+                </div>
+                <div class="input-group" [ngClass]="{'has-error':radiusError}">
+                    <p class="help-block">{{radiusError}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui-popup>
+
+<ui-loading *ngIf="waitGeoData" [overlay]="true"></ui-loading>

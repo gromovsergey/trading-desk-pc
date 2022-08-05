@@ -1,0 +1,187 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="ispAccount" extends="foros-default" namespace="/">
+
+        <action name="admin/isp/account/view" class="com.foros.action.account.ViewISPAccountAction" method="view">
+            <result name="success" type="tiles">admin.isp.view</result>
+        </action>
+
+        <action name="admin/isp/account/edit" class="com.foros.action.account.EditISPAccountAction" method="edit">
+            <result name="success" type="tiles">admin.isp.edit</result>
+        </action>
+
+        <action name="admin/isp/account/new" class="com.foros.action.account.EditISPAccountAction" method="create">
+            <result name="success" type="tiles">admin.isp.new</result>
+        </action>
+
+        <action name="admin/isp/account/changeCountry" class="com.foros.action.account.EditISPAccountAction" method="changeCountry">
+            <result name="success">/account/addressEditSection.jsp</result>
+        </action>
+
+        <action name="admin/isp/account/update" class="com.foros.action.account.SaveISPAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/isp/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.isp.edit</result>
+            <result name="version">
+                <param name="location">/admin/isp/account/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/isp/account/create" class="com.foros.action.account.SaveISPAccountAction" method="create">
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/isp/account/view</param>
+            <param name="id">${id}</param>
+          </result>
+          <result name="input" type="tiles">admin.isp.new</result>
+        </action>
+
+        <action name="admin/isp/account/activate" class="com.foros.action.account.StatusAccountAction" method="activate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/isp/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/isp/account/inactivate" class="com.foros.action.account.StatusAccountAction" method="inactivate">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/isp/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/isp/account/delete" class="com.foros.action.account.StatusAccountAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/isp/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/isp/account/undelete" class="com.foros.action.account.StatusAccountAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/isp/account/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/isp/account/terms/add" class="com.foros.action.account.terms.AddAccountTermsAction" method="edit">
+            <result name="success" type="tiles">admin.isp.terms.add</result>
+        </action>
+
+        <action name="admin/isp/account/terms/save" class="com.foros.action.account.terms.AddAccountTermsAction" method="save">
+          <interceptor-ref name="fileUpload">
+            <param name="allowedTypes">image/jpeg,image/pjpeg,image/png,image/x-png,image/gif,application/pdf,image/tiff,image/tiff-fx</param>
+          </interceptor-ref>
+          <interceptor-ref name="saveStack"/>
+          <result name="success" type="redirectAction">
+            <param name="actionName">admin/isp/account/view</param>
+            <param name="id">${id}</param>
+          </result>
+            <result name="input" type="tiles">admin.isp.terms.add</result>
+        </action>
+
+        <action name="admin/isp/account/editFinance" class="com.foros.action.account.EditAccountsPayableFinanceAction" method="edit">
+            <result name="success" type="tiles">admin.ispFinance.edit</result>
+        </action>
+
+        <action name="admin/isp/account/updateFinance" class="com.foros.action.account.SaveAccountsPayableFinanceAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/isp/account/view</param>
+                <param name="id">${accountId}</param>
+            </result>
+            <result name="input" type="tiles">admin.ispFinance.edit</result>
+            <result name="version">
+                <param name="location">/admin/isp/account/editFinance.action</param>
+            </result>
+        </action>
+
+        <action name="admin/isp/account/main" class="com.foros.action.account.SwitchContextISPAction" method="main">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success.report" type="redirect">
+                <param name="location">admin/isp/report/main.action?account.id=${accountId}</param>
+            </result>
+            <result name="success.account" type="redirect">
+                <param name="location">admin/isp/account/view.action?id=${accountId}</param>
+            </result>
+            <result name="input" type="tiles">admin.isp.main</result>
+        </action>
+
+        <action name="admin/isp/account/search" class="com.foros.action.account.SwitchContextISPAction"
+                method="search">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.isp.main</result>
+            <result name="input" type="tiles">admin.isp.main</result>
+        </action>
+
+        <action name="admin/isp/account/selectAccount" class="com.foros.action.account.SwitchContextISPAction"
+                method="selectAccount">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success.report" type="redirect">
+                <param name="location">admin/isp/report/main.action?account.id=${accountId}</param>
+            </result>
+            <result name="success.account" type="redirect">
+                <param name="location">admin/isp/account/view.action?id=${accountId}</param>
+            </result>
+        </action>
+
+        <action name="admin/isp/account/switch" class="com.foros.action.account.SwitchContextISPAction"
+                method="switchContext">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.isp.main</result>
+        </action>
+
+        <action name="isp/myAccount/myAccountView" class="com.foros.action.account.ViewMyISPAccountAction" method="view">
+            <result name="success" type="tiles">isp.myAccount.view</result>
+        </action>
+
+        <action name="isp/myAccount/myAccountEdit" class="com.foros.action.account.EditMyISPAccountAction" method="edit">
+            <result name="success" type="tiles">isp.myAccount.edit</result>
+        </action>
+
+        <action name="isp/myAccount/myAccountUpdate" class="com.foros.action.account.SaveMyISPAccountAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">isp/myAccount/myAccountView</param>
+            </result>
+            <result name="input" type="tiles">isp.myAccount.edit</result>
+            <result name="version">
+                <param name="location">/isp/myAccount/myAccountEdit.action</param>
+            </result>
+        </action>
+
+        <action name="isp/myAccount/editFinance" class="com.foros.action.account.EditAccountsPayableFinanceAction" method="edit">
+            <result name="success" type="tiles">isp.ispFinance.edit</result>
+        </action>
+
+        <action name="isp/myAccount/updateFinance" class="com.foros.action.account.SaveAccountsPayableFinanceAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">isp/myAccount/myAccountView</param>
+            </result>
+            <result name="input" type="tiles">isp.ispFinance.edit</result>
+            <result name="version">
+                <param name="location">/isp/myAccount/editFinance.action</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

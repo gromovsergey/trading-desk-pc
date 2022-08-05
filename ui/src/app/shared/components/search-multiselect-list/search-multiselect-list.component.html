@@ -1,0 +1,8 @@
+<ng-multiselect-dropdown
+        [placeholder]="placeholder"
+        [settings]="dropdownSettings"
+        [data]="data"
+        [(ngModel)]="selectedOptions"
+        (ngModelChange)="onNgModelChange()"
+        (onFilterChange)="onSearch($event)"
+></ng-multiselect-dropdown>

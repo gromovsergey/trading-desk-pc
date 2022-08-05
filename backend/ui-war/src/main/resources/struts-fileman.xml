@@ -1,0 +1,91 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="fileman" extends="foros-default" namespace="/">
+        <action name="*/fileman/fileManager" class="com.foros.action.fileman.FileManagerAction" method="fileManager">
+            <result name="success" type="tiles">{1}.fileManager</result>
+        </action>
+
+        <action name="*/fileman/fileManagerChDir" class="com.foros.action.fileman.FileManagerChDirAction" method="chDir">
+            <interceptor-ref name="saveStack"/>
+            <result name="redirectToRoot" type="redirectAction">
+                <param name="actionName">{1}/fileman/fileManager</param>
+            </result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/fileman/fileManager</param>
+                <param name="suppressEmptyParameters">true</param>
+                <param name="currDirStr">${currDirStr}</param>
+                <param name="id">${id}</param>
+                <param name="accountId">${accountId}</param>
+                <param name="mode">${mode}</param>
+                <param name="fileTypes">${fileTypes}</param>
+            </result>
+        </action>
+
+        <action name="*/fileman/fileManagerCreateFolder" class="com.foros.action.fileman.FileManagerCreateFolderAction" method="createFolder">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/fileman/fileManager</param>
+                <param name="suppressEmptyParameters">true</param>
+                <param name="currDirStr">${currDirStr}</param>
+                <param name="id">${id}</param>
+                <param name="accountId">${accountId}</param>
+                <param name="mode">${mode}</param>
+                <param name="fileTypes">${fileTypes}</param>
+            </result>
+            <result name="input" type="tiles">{1}.fileManager</result>
+        </action>
+
+        <action name="*/fileman/fileManagerUpload" class="com.foros.action.fileman.FileManagerUploadAction" method="upload">
+            <interceptor-ref name="fileUpload"/>
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/fileman/fileManager</param>
+                <param name="suppressEmptyParameters">true</param>
+                <param name="currDirStr">${currDirStr}</param>
+                <param name="id">${id}</param>
+                <param name="accountId">${accountId}</param>
+                <param name="mode">${mode}</param>
+                <param name="fileTypes">${fileTypes}</param>
+            </result>
+            <result name="input" type="tiles">{1}.fileManager</result>
+        </action>
+
+        <action name="*/fileman/fileManagerRemove" class="com.foros.action.fileman.FileManagerRemoveAction" method="remove">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">{1}/fileman/fileManager</param>
+                <param name="suppressEmptyParameters">true</param>
+                <param name="currDirStr">${currDirStr}</param>
+                <param name="id">${id}</param>
+                <param name="accountId">${accountId}</param>
+                <param name="mode">${mode}</param>
+                <param name="fileTypes">${fileTypes}</param>
+            </result>
+            <result name="input" type="tiles">{1}.fileManager</result>
+        </action>
+
+        <action name="*/fileman/download" class="com.foros.action.fileman.DownloadAction" method="download">
+            <result name="success" type="download-file"/>
+            <result name="input" type="tiles">{1}.fileManager</result>
+        </action>
+
+        <action name="*/fileman/convertDialog" class="com.foros.action.fileman.ConvertSwfAction" method="dialog">
+            <result name="success">/fileManager/convertDialog.jsp</result>
+        </action>
+
+        <action name="*/fileman/convertCheck" class="com.foros.action.fileman.ConvertSwfAction" method="check">
+            <result name="success">/fileManager/convertCheck.jsp</result>
+        </action>
+
+        <action name="*/fileman/convertRun" class="com.foros.action.fileman.ConvertSwfAction" method="convert">
+            <interceptor-ref name="saveStack"/>
+            <result name="success">/fileManager/convertResult.jsp</result>
+            <result name="warning">/fileManager/conversionWarning.jsp</result>
+            <result name="input">/fileManager/convertDialog.jsp</result>
+        </action>
+
+    </package>
+</struts>

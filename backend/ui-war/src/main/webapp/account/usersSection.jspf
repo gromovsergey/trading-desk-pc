@@ -1,0 +1,62 @@
+<%@ taglib prefix="ui" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="ad" uri="/ad/serverUI"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net/el"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
+<s:set var="editUserActionName" value="'/admin/internal/account/user/edit.action'" />
+<s:set var="createUserActionName" value="'/admin/internal/account/user/new.action'" />
+<s:set var="viewUserActionName" value="'/admin/internal/account/user/view.action'" />
+
+<s:if test="#attr.contextName == 'global.menu.advertisers'">
+    <s:set var="editUserActionName" value="'/admin/account/user/advertiserEdit.action'" />
+    <s:set var="createUserActionName" value="'/admin/account/user/advertiserNew.action'" />
+    <s:set var="viewUserActionName" value="'/admin/account/user/advertiserView.action'" />
+</s:if>
+<s:elseif test="#attr.contextName == 'global.menu.publishers'">
+    <s:set var="editUserActionName" value="'/admin/account/user/publisherEdit.action'" />
+    <s:set var="createUserActionName" value="'/admin/account/user/publisherNew.action'" />
+    <s:set var="viewUserActionName" value="'/admin/account/user/publisherView.action'" />
+</s:elseif>
+<s:elseif test="#attr.contextName == 'global.menu.isps'">
+    <s:set var="editUserActionName" value="'/admin/account/user/ispEdit.action'" />
+    <s:set var="createUserActionName" value="'/admin/account/user/ispNew.action'" />
+    <s:set var="viewUserActionName" value="'/admin/account/user/ispView.action'" />
+</s:elseif>
+<s:elseif test="#attr.contextName == 'global.menu.cmps'">
+    <s:set var="editUserActionName" value="'/admin/account/user/cmpEdit.action'" />
+    <s:set var="createUserActionName" value="'/admin/account/user/cmpNew.action'" />
+    <s:set var="viewUserActionName" value="'/admin/account/user/cmpView.action'" />
+</s:elseif>
+
+
+<ui:header styleClass="level2">
+    <h2><fmt:message key="account.headers.users" /></h2>
+    <c:if test="${ad:isPermitted('User.create', model)}">
+        <ui:button message="form.createNew" href="${createUserActionName}?accountId=${id}" />
+    </c:if>
+</ui:header>
+
+<display:table name="accountUsers" class="dataView" id="user">
+    <display:setProperty name="basic.msg.empty_list">
+        <div class="wrapper"><fmt:message key="nothing.found.to.display" />
+        </div>
+    </display:setProperty>
+    <display:column titleKey="account.table.title.name">
+        <ui:displayStatus displayStatus="${user.displayStatus}">
+            <s:if test="isInternal()">
+                <a href="${viewUserActionName}?id=${user.id}">
+                    <c:out value="${user.firstName} ${user.lastName}"/></a>
+            </s:if>
+            <s:else>
+                <a href="${_context}/myAccount/myUser/view.action?id=${user.id}">
+                    <c:out value="${user.firstName} ${user.lastName}"/></a>
+            </s:else>
+        </ui:displayStatus>
+    </display:column>
+    <display:column titleKey="account.table.title.email"><c:out value="${user.email}"/></display:column>
+    <display:column titleKey="account.table.title.role"><c:out value="${user.role.name}"/></display:column>
+    <display:column titleKey="account.table.title.jobTitle"><c:out value="${user.jobTitle}"/></display:column>
+    <display:column titleKey="account.table.title.phone"><c:out value="${user.phone}"/></display:column>
+</display:table>

@@ -1,0 +1,50 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="walledGarden" extends="foros-default" namespace="/">
+        <action name="admin/WalledGarden/edit" class="com.foros.action.admin.walledGarden.EditWalledGardenAction" method="edit">
+            <result name="success" type="tiles">walledGarden.edit</result>
+        </action>
+
+        <action name="admin/WalledGarden/create" class="com.foros.action.admin.walledGarden.EditWalledGardenAction" method="create">
+            <result name="success" type="tiles">walledGarden.create</result>
+        </action>
+
+        <action name="admin/WalledGarden/saveNew" class="com.foros.action.admin.walledGarden.SaveWalledGardenAction" method="saveNew">
+            <interceptor-ref name="saveStack">
+                <param name="validation.validateAnnotatedMethodOnly">true</param>
+            </interceptor-ref>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/WalledGarden/main</param>
+            </result>
+            <result name="input" type="tiles">walledGarden.create</result>
+        </action>
+
+        <action name="admin/WalledGarden/save" class="com.foros.action.admin.walledGarden.SaveWalledGardenAction" method="save">
+            <interceptor-ref name="saveStack">
+                <param name="validation.validateAnnotatedMethodOnly">true</param>
+            </interceptor-ref>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/WalledGarden/main</param>
+            </result>
+            <result name="input" type="tiles">walledGarden.edit</result>
+            <result name="version">
+                <param name="location">/admin/WalledGarden/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/WalledGarden/listCurrentWalledGardens" class="com.foros.action.admin.walledGarden.ListWalledGardenAction" method="listCurrent">
+            <interceptor-ref name="defaultForosStack">
+                <param name="csrf.readOnly">true</param>
+                <param name="validation.validateAnnotatedMethodOnly">true</param>
+            </interceptor-ref>
+            <result name="success">/admin/walledGarden/walledGardenCurrent.jsp</result>
+        </action>
+
+        <action name="admin/WalledGarden/main" class="com.foros.action.admin.walledGarden.ListWalledGardenAction" method="list">
+            <result name="success" type="tiles">walledGarden.main</result>
+        </action>
+    </package>
+</struts>

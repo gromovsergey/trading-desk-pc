@@ -1,0 +1,58 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="placementsBlacklist" extends="foros-default" namespace="/admin/Country/PlacementsBlacklist">
+
+        <action name="view" class="com.foros.action.admin.country.placementsBlacklist.ViewPlacementsBlacklistAction"
+                method="view">
+            <result name="success" type="tiles">PlacementsBlacklist.view</result>
+        </action>
+
+        <action name="search" class="com.foros.action.admin.country.placementsBlacklist.ViewPlacementsBlacklistAction"
+                method="search">
+            <result name="success" type="tiles">PlacementsBlacklist.search</result>
+        </action>
+
+        <action name="drop" class="com.foros.action.admin.country.placementsBlacklist.UpdatePlacementsBlacklistAction"
+                method="drop">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="id">${id}</param>
+                <param name="submitSearchNeeded">true</param>
+                <param name="searchParams.url">${searchParams.url}</param>
+                <param name="searchParams.page">1</param>
+                <param name="suppressEmptyParameters">true</param>
+            </result>
+        </action>
+
+        <action name="bulkUpload" class="com.foros.action.admin.country.placementsBlacklist.MainUploadPlacementsBlacklistAction"
+                method="main">
+            <result name="success" type="tiles">PlacementsBlacklist.bulkUpload</result>
+        </action>
+
+        <action name="bulkUpload/validate" class="com.foros.action.admin.country.placementsBlacklist.ValidateUploadPlacementsBlacklistAction"
+                method="validateFile">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">31457280</param>
+            </interceptor-ref>
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">PlacementsBlacklist.bulkUpload</result>
+        </action>
+
+        <action name="bulkUpload/export" class="com.foros.action.admin.country.placementsBlacklist.DownloadPlacementsBlacklistAction"
+                method="export"/>
+
+        <action name="bulkUpload/template" class="com.foros.action.admin.country.placementsBlacklist.DownloadPlacementsBlacklistAction"
+                method="template"/>
+
+        <action name="bulkUpload/submit" class="com.foros.action.admin.country.placementsBlacklist.SubmitUploadPlacementsBlacklistAction"
+                method="submit">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">PlacementsBlacklist.bulkUpload</result>
+        </action>
+
+    </package>
+</struts>

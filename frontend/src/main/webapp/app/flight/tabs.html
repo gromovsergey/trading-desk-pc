@@ -1,0 +1,17 @@
+<h2 class="c-tabs" *ngIf="lineItems && lineItems.length > 1">
+    <ul class="nav nav-tabs" role="tablist">
+        <li [ngClass]="{active: !lineItemId}">
+            <a [routerLink]="['/flight/'+flightId]">_L10N_(flight.object) _L10N_(blockName.summary)</a>
+        </li>
+        <li *ngFor="let lineItem of lineItems" [ngClass]="{active: lineItemId === lineItem.id}">
+            <a class="dropdown" title="{{lineItem.name}}" [routerLink]="['/lineitem/'+lineItem.id]"><span class="c-tabs__text">{{lineItem.name}}</span>
+                <ui-dropdown-btn [btnClass]="'btn-xs btn-link dd'" [isInline]="true" [menu]="lineItem.menu"></ui-dropdown-btn>
+            </a>
+        </li>
+        <li *ngIf="canCreate">
+            <a [routerLink]="['/flight/' + flightId + '/lineitem/add']">
+                <i class="fa fa-plus-circle"></i> _L10N_(button.add)
+            </a>
+        </li>
+    </ul>
+</h2>

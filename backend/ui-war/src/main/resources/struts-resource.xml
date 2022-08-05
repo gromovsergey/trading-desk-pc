@@ -1,0 +1,72 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="resource" extends="foros-default" namespace="/">
+
+        <action name="admin/resource/htmlName/edit" class="com.foros.action.admin.HtmlNameResourceAction"
+                method="edit">
+            <param name="actionPath">/admin/resource/htmlName/</param>
+            <result name="success">/admin/dynamicResourceEdit.jsp</result>
+        </action>
+
+        <action name="admin/resource/htmlName/save" class="com.foros.action.admin.HtmlNameResourceAction"
+                method="save">
+            <interceptor-ref name="saveStack"/>
+            <param name="actionPath">/admin/resource/htmlName/</param>
+            <result name="input">/admin/dynamicResourceEdit.jsp</result>
+        </action>
+
+        <action name="admin/resource/CategoryChannel/edit"
+                class="com.foros.action.admin.CategoryChannelResourceAction" method="edit">
+            <param name="entityName">CategoryChannel</param>
+            <param name="actionPath">/admin/resource/CategoryChannel/</param>
+            <result name="success">/admin/dynamicResourceEdit.jsp</result>
+        </action>
+
+        <action name="admin/resource/CategoryChannel/save"
+                class="com.foros.action.admin.CategoryChannelResourceAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <param name="entityName">CategoryChannel</param>
+            <param name="actionPath">/admin/resource/CategoryChannel/</param>
+            <result name="input">/admin/dynamicResourceEdit.jsp</result>
+        </action>
+
+        <action name="admin/resource/Option/edit"
+                class="com.foros.action.admin.OptionResourceAction" method="edit">
+            <param name="entityName">Option</param>
+            <param name="actionPath">/admin/resource/Option/</param>
+            <result name="success">/admin/dynamicResourceEdit.jsp</result>
+        </action>
+
+        <action name="admin/resource/Option/save"
+                class="com.foros.action.admin.OptionResourceAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <param name="entityName">Option</param>
+            <param name="actionPath">/admin/resource/Option/</param>
+            <result name="input">/admin/dynamicResourceEdit.jsp</result>
+        </action>
+
+        <action name="admin/DynamicResource/edit" class="com.foros.action.admin.DynamicResourceAction"
+                method="edit">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultForosStack"/>
+            <param name="actionPath">/admin/DynamicResource/</param>
+            <result name="success">/admin/dynamicResourceEdit.jsp</result>
+        </action>
+
+        <action name="admin/DynamicResource/save" class="com.foros.action.admin.DynamicResourceAction"
+                method="save">
+            <interceptor-ref name="roles">
+                <param name="allowedRoles">INTERNAL</param>
+            </interceptor-ref>
+            <interceptor-ref name="saveStack"/>
+            <param name="actionPath">/admin/DynamicResource/</param>
+            <result name="input">/admin/dynamicResourceEdit.jsp</result>
+        </action>
+
+    </package>
+</struts>

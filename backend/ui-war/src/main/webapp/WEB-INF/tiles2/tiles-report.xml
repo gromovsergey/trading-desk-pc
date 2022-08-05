@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name=".report" extends=".mainLayout">
+        <put-attribute name="activeMenuItemKey" value="global.menu.reports"/>
+        <put-attribute name="title" value="/report/reportStandartTitle.jsp"/>
+    </definition>
+
+    <!-- Report Main -->
+    <definition name=".ReportMain" extends=".report">
+        <put-attribute name="taskTitle" value="reports" type="string"/>
+    </definition>
+    <definition name="admin.ReportMain.view" extends=".ReportMain">
+        <put-attribute name="body" value="/report/reportMain.jsp"/>
+    </definition>
+    <definition name="advertiser.ReportMain.view" extends=".ReportMain">
+        <put-attribute name="body" value="/report/advertiserReportMain.jsp"/>
+    </definition>
+    <definition name="cmp.ReportMain.view" extends=".ReportMain">
+        <put-attribute name="body" value="/report/cmpReportMain.jsp"/>
+    </definition>
+    <definition name="isp.ReportMain.view" extends=".ReportMain">
+        <put-attribute name="body" value="/report/ispReportMain.jsp"/>
+    </definition>
+    <definition name="publisher.ReportMain.view" extends=".ReportMain">
+        <put-attribute name="body" value="/report/publisherReportMain.jsp"/>
+    </definition>
+    <definition name="admin.advertiser.ReportMain.view" extends=".ReportMain">
+        <put-attribute name="body" value="/report/advertiserReportMain.jsp"/>
+    </definition>
+    <definition name="admin.cmp.ReportMain.view" extends=".ReportMain">
+        <put-attribute name="body" value="/report/cmpReportMain.jsp"/>
+    </definition>
+    <definition name="admin.isp.ReportMain.view" extends=".ReportMain">
+        <put-attribute name="body" value="/report/ispReportMain.jsp"/>
+    </definition>
+    <definition name="admin.publisher.ReportMain.view" extends=".ReportMain">
+        <put-attribute name="body" value="/report/publisherReportMain.jsp"/>
+    </definition>
+
+    <!-- Birt Reports -->
+    <definition name="admin.BirtReports.edit" extends=".mainLayout">
+        <put-attribute name="body" value="/report/birtReportEdit.jsp"/>
+        <put-attribute name="taskTitle" value="reports.birtReport" type="string"/>
+        <put-attribute name="entityName" value="BirtReport"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.reports"/>
+    </definition>
+
+    <definition name="admin.BirtReports.create" extends="admin.BirtReports.edit">
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+   <definition name="BirtReports.error" extends=".mainLayout">
+       <put-attribute name="title" value="/report/birtReportTitle.jsp"/>
+       <put-attribute name="taskTitle" value="birtReports.title" type="string"/>
+       <put-attribute name="body" value="/report/birtReportError.jsp"/>
+   </definition>
+
+    <!-- Audit Report -->
+    <definition name="AuditReport.view" extends=".report">
+        <put-attribute name="body" value="/reporting/audit/auditLog.jsp"/>
+        <put-attribute name="taskTitle" value="reports.auditReport" type="string"/>
+    </definition>
+
+    <definition name="AuditReport.run" template="/reporting/audit/auditLogList.jsp"/>
+
+   <!-- Snapshot by Advertiser -->
+   <definition name="admin.SnapshotByAdvertiser.view" template="/dashboard/snapshotAdvertiser.jsp">
+     <put-attribute name="contextModule" value="/admin"/>
+     <put-attribute name="contextPath" value="/admin/advertiser"/>
+     <put-attribute name="accountModuleName" value="/admin/advertiser/account"/>
+   </definition>
+
+   <definition name="advertiser.SnapshotByAdvertiser.view" template="/dashboard/snapshotAdvertiser.jsp">
+     <put-attribute name="contextModule" value="/advertiser"/>
+     <put-attribute name="contextPath" value="/advertiser"/>
+     <put-attribute name="accountModuleName" value="/advertiser/myAccount"/>
+   </definition>
+
+   <!-- Snapshot by Campaign -->
+   <definition name="admin.SnapshotByCampaign.view" template="/dashboard/snapshotCampaign.jsp">
+     <put-attribute name="contextModule" value="/admin"/>
+     <put-attribute name="contextPath" value="/admin/advertiser"/>
+   </definition>
+
+   <definition name="advertiser.SnapshotByCampaign.view" template="/dashboard/snapshotCampaign.jsp">
+     <put-attribute name="contextModule" value="/advertiser"/>
+     <put-attribute name="contextPath" value="/advertiser"/>
+   </definition>
+
+</tiles-definitions>

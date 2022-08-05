@@ -1,0 +1,128 @@
+.mb-1 {
+  margin-bottom: $gen-gap !important;
+}
+
+.mb-2 {
+  margin-bottom: 2 * $gen-gap !important;
+}
+
+.mt-1 {
+  margin-top: $gen-gap !important;
+}
+
+.mt-2 {
+  margin-top: 2 * $gen-gap !important;
+}
+
+.mr-1 {
+  margin-right: $gen-gap !important;
+}
+
+.mr-2 {
+  margin-right: 2 * $gen-gap !important;
+}
+
+.ml-1 {
+  margin-left: $gen-gap !important;
+}
+
+.ml-2 {
+  margin-left: 2 * $gen-gap !important;
+}
+
+/* Media queries */
+@mixin gen-smaller-than($media) {
+  @if $media == xs {
+    @media only screen and (max-width: $gen-xs - 1) {
+      @content;
+    }
+  } @else if $media == sm {
+    @media only screen and (max-width: $gen-sm - 1) {
+      @content;
+    }
+  } @else if $media == md {
+    @media only screen and (max-width: $gen-md - 1) {
+      @content;
+    }
+  } @else if $media == lg {
+    @media only screen and (max-width: $gen-lg - 1) {
+      @content;
+    }
+  } @else if $media == xl {
+    @media only screen and (max-width: $gen-xl - 1) {
+      @content;
+    }
+  }
+}
+
+@mixin gen-bigger-than($media) {
+  // xs is default
+  @if $media == sm {
+    @media only screen and (min-width: $gen-sm) {
+      @content;
+    }
+  } @else if $media == md {
+    @media only screen and (min-width: $gen-md) {
+      @content;
+    }
+  } @else if $media == lg {
+    @media only screen and (min-width: $gen-lg) {
+      @content;
+    }
+  } @else if $media == xl {
+    @media only screen and (min-width: $gen-xl) {
+      @content;
+    }
+  }
+}
+
+// display
+.d-inline {
+  display: inline-block !important;
+}
+.d-inline-block {
+  display: inline-block !important;
+}
+.d-block {
+  display: block !important;
+}
+.d-flex {
+  display: flex !important;
+}
+.d-none {
+  display: none !important;
+}
+
+.d-sm-none {
+  @include gen-smaller-than('sm') {
+    display: none !important;
+  }
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.long-name-wrap {
+  display: inline-block;
+  max-width: 200px;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.t-flip-horizontal {
+  transform: scale(-1, 1);
+}
+
+.width-full {
+  width: 100%;
+}
+
+.text-danger {
+  color: $ui-color-danger;
+}
+.error-sub {
+  font-size: 1.2rem;
+  position: relative;
+  top: -1.2rem;
+}

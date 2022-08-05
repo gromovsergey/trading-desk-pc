@@ -1,0 +1,37 @@
+<ng-template #showPreloader>
+  <ui-loading></ui-loading>
+</ng-template>
+
+<h1 class="main-title">{{'report.publisherReport' | translate}}</h1>
+
+<ng-container *ngIf="modeById, else byList">
+  <ng-container *ngIf="account$ | async as account, else showPreloader">
+    <h2 class="main-title">
+      <i class="material-icons" appDisplayStatus [displayStatus]="account.displayStatus">lens</i>
+      {{account.name}}
+    </h2>
+    <ui-report *ngIf="meta$ | async as meta, else showPreloader"
+               [meta]="meta"
+               [reportParameters]="reportParameters"
+               [reportService]="reportService"
+               downloadNamePrefix="Publisher Report for {{accountName}}"></ui-report>
+  </ng-container>
+</ng-container>
+
+<ng-template #byList>
+  <ng-container *ngIf="accounts$ | async as accounts, else showPreloader">
+    <ui-report *ngIf="meta$ | async as meta, else showPreloader"
+               [meta]="meta"
+               [reportParameters]="reportParameters"
+               [reportService]="reportService"
+               downloadNamePrefix="Publisher Report for {{accountName}}">
+      <mat-form-field class="mat-form-field-max">
+        <mat-label>{{'report.publisherReport.account' | translate}}</mat-label>
+        <mat-select [formControl]="accountCtrl">
+          <mat-option *ngFor="let item of accounts"
+                      [value]="item">{{item.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ui-report>
+  </ng-container>
+</ng-template>

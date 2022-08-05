@@ -1,0 +1,144 @@
+<div class="form-group" [ngClass]="{'has-error':errors.name}">
+    <label>_L10N_(blockName.name)</label>
+    <div>
+        <input name="name" #mName="ngModel" [(ngModel)]="flight.name" type="text" placeholder="_L10N_(blockName.name)" class="form-control">
+    </div>
+    <p *ngFor="let error of errors.name" class="help-block">{{error}}</p>
+</div>
+
+<div class="form-group" [ngClass]="{'has-error':errors.budget}">
+    <label>
+        _L10N_(blockName.budget)
+        <a *ngIf="resetableFields && resetableFields.includes('budget')" href="#" (click)="onReset($event, 'budget')">
+            <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+        </a>
+        <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+    </label>
+    <div class="input-group">
+        <input type="text" name="budget" class="form-control" placeholder="_L10N_(blockName.budget)" [(ngModel)]="flight.budget">
+        <span class="input-group-addon">{{0 | currency:advCurrency:'symbol':'1.0-0' | replace:'&nbsp;':'' | replace:'&nbsp;|[0 ]+':''}}</span>
+    </div>
+    <p *ngFor="let error of errors.budget" class="help-block">{{error}}</p>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group" [ngClass]="{'has-error':errors.dateStart}">
+            <label class="h-label__cnb">
+                _L10N_(flight.blockName.startDate)
+                <a *ngIf="resetableFields && resetableFields.includes('dateStart')" href="#" (click)="onReset($event, 'dateStart')">
+                    <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+                </a>
+                <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+            </label>
+            <div class="input-group">
+                <input type="text" class="form-control" #dateStart name="dateStart" placeholder="_L10N_(flight.blockName.startDate)"
+                       [datetimeShort]="true" [datetime]="flight.dateStart" (change)="dateChange($event, 'dateStart')">
+                <span class="input-group-addon"><ui-icon [icon]="'calendar'"></ui-icon></span>
+            </div>
+            <p *ngFor="let error of errors.dateStart" class="help-block">{{error}}</p>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group" [ngClass]="{'has-error':errors.dateEnd}">
+            <label class="h-label__cnb">
+                <input type="checkbox" (click)="toggleDateEnd($event)" [checked]="flight.dateEnd">&nbsp;_L10N_(flight.blockName.endDate)
+                <a *ngIf="resetableFields && resetableFields.includes('dateEnd')" href="#" (click)="onReset($event, 'dateEnd')">
+                    <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+                </a>
+                <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+            </label>
+            <div class="input-group" *ngIf="flight.dateEnd">
+                <input type="text" class="form-control" #dateEnd name="dateEnd" placeholder="_L10N_(flight.blockName.endDate)"
+                       [datetimeShort]="true" [datetime]="flight.dateEnd" (change)="dateChange($event, 'dateEnd')">
+                <span class="input-group-addon"><ui-icon [icon]="'calendar'"></ui-icon></span>
+            </div>
+            <div class="form-control" disabled *ngIf="!flight.dateEnd">
+                _L10N_(flight.message.unlimited)
+            </div>
+            <p *ngFor="let error of errors.dateEnd" class="help-block">{{error}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="form-group with-radio" [ngClass]="{'has-error':errors.dailyBudget}">
+    <label>
+        _L10N_(flight.blockName.deliveryPacing)
+        <a *ngIf="resetableFields && resetableFields.includes('deliveryPacing')" href="#" (click)="onReset($event, 'deliveryPacing')">
+            <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+        </a>
+        <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+    </label>
+    <div class="radio">
+        <label>
+            <input type="radio" name="deliveryp" (click)="setDeliveryPacingType('U')" [checked]="flight.deliveryPacing === 'U'">
+            _L10N_(flight.blockName.deliveryPacing.unrestricted)
+            <ui-hint [text]="'_L10N_(flight.notification.noDailyTarget)'"></ui-hint>
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="deliveryp" (click)="setDeliveryPacingType('F')" [checked]="flight.deliveryPacing === 'F'">
+            _L10N_(flight.blockName.deliveryPacing.fixed)
+
+            <a *ngIf="resetableFields && resetableFields.includes('dailyBudget')" href="#" (click)="onReset($event, 'dailyBudget')">
+                <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+            </a>
+            <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+
+            <ui-hint [text]="'_L10N_(flight.notification.fixedDailyTarget)'"></ui-hint>
+
+            <div class="input-group" [ngClass]="{hidden: flight.deliveryPacing !== 'F'}">
+                <input type="text" class="form-control" placeholder="_L10N_(flight.blockName.deliveryPacing.fixed)" name="dailyBudget" [(ngModel)]="flight.dailyBudget">
+                <div class="input-group-addon">{{0 | currency:advCurrency:'symbol':'1.0-0' | replace:'&nbsp;':'' | replace:'&nbsp;|[0 ]+':''}}</div>
+            </div>
+        </label>
+        <div *ngIf="errors.dailyBudget">
+            <p *ngFor="let error of errors.dailyBudget" class="help-block">{{error}}</p>
+        </div>
+    </div>
+    <div class="radio" *ngIf="flight.dateEnd">
+        <label>
+            <input type="radio" name="deliveryp" (click)="setDeliveryPacingType('D')" [checked]="flight.deliveryPacing === 'D'">
+            _L10N_(flight.blockName.deliveryPacing.dynamic)
+            <ui-hint [size]="'md'" [text]="'_L10N_(flight.notification.dynamicDailyTarget)'"></ui-hint>
+        </label>
+        <p *ngIf="flight.deliveryPacing === 'D'" class="help-block">
+            _L10N_(flight.notification.dynamicDailyTarget.info1)
+            {{getDynamicBudget() | currency:advCurrency:'symbol':'1.2-2'}}
+            _L10N_(flight.notification.dynamicDailyTarget.info2)
+            {{getDynamicDate()}}
+        </p>
+    </div>
+</div>
+<div [ngClass]="{'has-error':errors.deliveryPacing}">
+    <div *ngIf="errors.deliveryPacing">
+        <p *ngFor="let error of errors.deliveryPacing" class="help-block">{{error}}</p>
+    </div>
+</div>
+
+<div class="form-group with-radio" [ngClass]="{'has-error':errors.rateValue}">
+    <label>
+        {{L10nFlightRateTypes[flight.rateType]}}
+        <a *ngIf="resetableFields && (resetableFields.includes('rateType') || resetableFields.includes('rateValue'))"
+                href="#" (click)="onReset($event, 'rateType')">
+            <ui-hint [icon]="'refresh'" [text]="'_L10N_(hint.resetField)'"></ui-hint>
+        </a>
+        <i class="fa fa-spin fa-spinner" *ngIf="isLineItem && resetableFields === null"></i>
+    </label>
+    <div class="form-inline">
+        <div class="input-group">
+            <input type="text" class="form-control" maxlength="20" name="rateValueCpc" [(ngModel)]="flight.rateValue">
+        </div>
+        <div class="input-group">
+            <div class="h-inptbtn" (click)="toggleRateType($event)">
+                <span [ngClass]="{'passive': flight.rateType !== 'CPC'}">CPC</span>
+                <i class="fa fa-toggle-on" [ngClass]="{'fa-flip-horizontal': flight.rateType === 'CPC'}"></i>
+                <span [ngClass]="{'passive': flight.rateType !== 'CPM'}">CPM</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="errors.rateValue">
+        <p *ngFor="let error of errors.rateValue" class="help-block">{{error}}</p>
+    </div>
+</div>

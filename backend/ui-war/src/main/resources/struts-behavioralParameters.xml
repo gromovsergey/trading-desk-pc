@@ -1,0 +1,62 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="behavioralParameters" extends="foros-default" namespace="/">
+
+        <action name="admin/behavioralParameters/main" class="com.foros.action.admin.behavioralParameters.ListBehavioralParamsListAction" method="list">
+            <result name="success" type="tiles">admin.behavioralParameters.list</result>
+        </action>
+
+        <action name="admin/behavioralParameters/view" class="com.foros.action.admin.behavioralParameters.ViewBehavioralParamsListAction" method="view">
+            <result name="success" type="tiles">admin.behavioralParameters.view</result>
+        </action>
+
+        <action name="admin/behavioralParameters/get" class="com.foros.action.admin.behavioralParameters.ViewBehavioralParamsListAction" method="get">
+            <result name="success">/admin/behavioralParameters/behavioralParamsGet.jsp</result>
+        </action>
+
+        <action name="admin/behavioralParameters/edit" class="com.foros.action.admin.behavioralParameters.EditBehavioralParamsListAction" method="edit">
+            <result name="success" type="tiles">admin.behavioralParameters.edit</result>
+        </action>
+
+        <action name="admin/behavioralParameters/new" class="com.foros.action.admin.behavioralParameters.EditBehavioralParamsListAction" method="create">
+            <result name="success" type="tiles">admin.behavioralParameters.new</result>
+        </action>
+
+        <action name="admin/behavioralParameters/update" class="com.foros.action.admin.behavioralParameters.SaveBehavioralParamsListAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/behavioralParameters/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.behavioralParameters.edit</result>
+            <result name="version">
+                <param name="location">/admin/behavioralParameters/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/behavioralParameters/create" class="com.foros.action.admin.behavioralParameters.SaveBehavioralParamsListAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/behavioralParameters/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">admin.behavioralParameters.new</result>
+        </action>
+
+
+        <action name="admin/behavioralParameters/delete" class="com.foros.action.admin.behavioralParameters.StatusBehavioralParamsListAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/behavioralParameters/main</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/behavioralParameters/view.action</param>
+            </result>
+            <result name="input">
+                <param name="location">/admin/behavioralParameters/view.action</param>
+            </result>
+        </action>
+    </package>
+</struts>

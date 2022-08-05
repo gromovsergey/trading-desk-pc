@@ -1,0 +1,489 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="campaign" extends="foros-default" namespace="/">
+        <action name="admin/campaign/view" class="com.foros.action.campaign.ViewCampaignAction" method="view">
+            <result name="success" type="tiles">campaign.view</result>
+        </action>
+
+        <action name="admin/campaign/popupAffectedCCGs" class="com.foros.action.campaign.SaveCampaignAction"  method="viewAffectedCCGSs">
+            <result name="success">/campaign/ccgListPopUp.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/popupAffectedCCGs" class="com.foros.action.campaign.SaveCampaignAction" method="viewAffectedCCGSs">
+            <result name="success">/campaign/ccgListPopUp.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/view" class="com.foros.action.campaign.ViewCampaignAction" method="view">
+            <result name="success" type="tiles">campaign.view</result>
+        </action>
+
+        <action name="admin/campaign/groupStats" class="com.foros.action.campaign.ViewCampaignAction" method="groupStats">
+            <result name="success">/campaign/groupStats.jsp</result>
+        </action>
+
+        <action name="advertiser/campaign/groupStats" class="com.foros.action.campaign.ViewCampaignAction" method="groupStats">
+            <result name="success">/campaign/groupStats.jsp</result>
+        </action>
+
+        <action name="admin/campaign/edit" class="com.foros.action.campaign.EditCampaignAction" method="edit">
+            <result name="success" type="tiles">campaign.edit</result>
+        </action>
+
+        <action name="advertiser/campaign/edit" class="com.foros.action.campaign.EditCampaignAction" method="edit">
+            <result name="success" type="tiles">campaign.edit</result>
+        </action>
+
+        <action name="admin/campaign/new" class="com.foros.action.campaign.EditCampaignAction" method="create">
+            <result name="success" type="tiles">campaign.new</result>
+            <result name="error" type="httperror">
+                <param name="errorCode">404</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/new" class="com.foros.action.campaign.EditCampaignAction" method="create">
+            <result name="success" type="tiles">campaign.new</result>
+            <result name="error" type="httperror">
+                <param name="errorCode">404</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/update" class="com.foros.action.campaign.SaveCampaignAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">campaign.edit</result>
+            <result name="version">
+                <param name="location">/admin/campaign/edit.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/update" class="com.foros.action.campaign.SaveCampaignAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">campaign.edit</result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/create" class="com.foros.action.campaign.SaveCampaignAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">campaign.new</result>
+        </action>
+
+        <action name="advertiser/campaign/create" class="com.foros.action.campaign.SaveCampaignAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">campaign.new</result>
+        </action>
+
+        <action name="admin/campaign/createCopy" class="com.foros.action.campaign.CreateCopyCampaignAction" method="createCopy">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/edit</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input">
+                <param name="location">/admin/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/createCopy" class="com.foros.action.campaign.CreateCopyCampaignAction" method="createCopy">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/edit</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input">
+                <param name="location">/advertiser/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/activateGroups" class="com.foros.action.campaign.BulkStatusCreativeGroupsAction" method="activateGroups">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${id}</param>
+                <param name="anchor">groupsSection</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/inactivateGroups" class="com.foros.action.campaign.BulkStatusCreativeGroupsAction" method="inactivateGroups">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${id}</param>
+                <param name="anchor">groupsSection</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/approveGroups" class="com.foros.action.campaign.BulkStatusCreativeGroupsAction" method="approveGroups">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${id}</param>
+                <param name="anchor">groupsSection</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/declineGroups" class="com.foros.action.campaign.BulkStatusCreativeGroupsAction" method="declineGroups">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${id}</param>
+                <param name="anchor">groupsSection</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/activateGroups" class="com.foros.action.campaign.BulkStatusCreativeGroupsAction" method="activateGroups">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/view</param>
+                <param name="id">${id}</param>
+                <param name="anchor">groupsSection</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/inactivateGroups" class="com.foros.action.campaign.BulkStatusCreativeGroupsAction" method="inactivateGroups">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/view</param>
+                <param name="id">${id}</param>
+                <param name="anchor">groupsSection</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/activate" class="com.foros.action.campaign.StatusCampaignAction" method="activate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/inactivate" class="com.foros.action.campaign.StatusCampaignAction" method="inactivate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/delete" class="com.foros.action.campaign.StatusCampaignAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/undelete" class="com.foros.action.campaign.StatusCampaignAction" method="undelete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/campaign/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/admin/campaign/view.action</param>
+            </result>
+            <result name="input" type="forosChain">
+                <param name="actionName">admin/campaign/view</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/activate" class="com.foros.action.campaign.StatusCampaignAction" method="activate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/inactivate" class="com.foros.action.campaign.StatusCampaignAction" method="inactivate">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/delete" class="com.foros.action.campaign.StatusCampaignAction" method="delete">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">advertiser/campaign/main</param>
+                <param name="suppressEmptyParameters">true</param>
+                <param name="advertiserId">${advertiserId}</param>
+            </result>
+            <result name="version">
+                <param name="location">/advertiser/campaign/view.action</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/bulkactivate" class="com.foros.action.campaign.BulkStatusCampaignsAction" method="activateCampaigns">
+            <result name="success" type="empty-result"/>
+        </action>
+
+        <action name="admin/campaign/bulkactivate" class="com.foros.action.campaign.BulkStatusCampaignsAction" method="activateCampaigns">
+            <result name="success" type="empty-result"/>
+        </action>
+
+        <action name="advertiser/campaign/bulkinactivate" class="com.foros.action.campaign.BulkStatusCampaignsAction" method="deactivateCampaigns">
+            <result name="success" type="empty-result"/>
+        </action>
+
+        <action name="admin/campaign/bulkinactivate" class="com.foros.action.campaign.BulkStatusCampaignsAction" method="deactivateCampaigns">
+            <result name="success" type="empty-result"/>
+        </action>
+
+        <action name="advertiser/campaign/bulkdelete" class="com.foros.action.campaign.BulkStatusCampaignsAction" method="deleteCampaigns">
+            <result name="success" type="empty-result"/>
+        </action>
+
+        <action name="admin/campaign/bulkdelete" class="com.foros.action.campaign.BulkStatusCampaignsAction" method="deleteCampaigns">
+            <result name="success" type="empty-result"/>
+        </action>
+
+        <action name="admin/campaign/main" class="com.foros.action.campaign.MainAdvertiserDashboardAction" method="main">
+            <result name="dashboard.advertisers" type="redirectAction">
+                <param name="actionName">admin/campaign/advertisers</param>
+                <param name="advertiserId">${#parameters.agencyId}</param>
+            </result>
+
+            <result name="dashboard.campaigns" type="redirectAction">
+                <param name="actionName">admin/campaign/campaigns</param>
+                <param name="advertiserId">${#parameters.advertiserId}</param>
+            </result>
+            <result name="dashboard.advertiserAccount" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/agencyAdvertiserView</param>
+                <param name="id">${#parameters.advertiserId}</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/main" class="com.foros.action.campaign.MainAdvertiserDashboardAction" method="main">
+            <result name="dashboard.advertisers" type="redirectAction">
+                <param name="actionName">advertiser/campaign/advertisers</param>
+                <param name="advertiserId">${#parameters.agencyId}</param>
+            </result>
+
+            <result name="dashboard.campaigns" type="redirectAction">
+                <param name="actionName">advertiser/campaign/campaigns</param>
+                <param name="suppressEmptyParameters">true</param>
+                <param name="advertiserId">${#parameters.advertiserId}</param>
+            </result>
+
+            <result name="dashboard.advertiserAccount" type="redirectAction">
+                <param name="actionName">advertiser/myAccount/agencyAdvertiserView</param>
+                <param name="id">${#parameters.advertiserId}</param>
+            </result>
+        </action>
+
+        <action name="admin/campaign/switch" class="com.foros.action.campaign.MainAdvertiserDashboardAction" method="switchTo">
+            <result name="dashboard.campaigns" type="redirectAction">
+                <param name="actionName">admin/campaign/campaigns</param>
+                <param name="suppressEmptyParameters">true</param>
+                <param name="advertiserId">${#parameters.advertiserId}</param>
+                <param name="fastChangeId">${#parameters.fastChangeId}</param>
+                <param name="dateRange.begin">${#parameters['dateRange.begin']}</param>
+                <param name="dateRange.end">${#parameters['dateRange.end']}</param>
+                <param name="withActivityOnly">${#parameters.withActivityOnly}</param>
+                <param name="showZeroStat">${#parameters.showZeroStat}</param>
+            </result>
+            <result name="dashboard.advertiserAccount" type="redirectAction">
+                <param name="actionName">admin/advertiser/account/agencyAdvertiserView</param>
+                <param name="id">${#parameters.advertiserId}</param>
+            </result>
+        </action>
+
+        <action name="advertiser/campaign/switch" class="com.foros.action.campaign.MainAdvertiserDashboardAction" method="switchTo">
+            <result name="dashboard.campaigns" type="redirectAction">
+                <param name="actionName">advertiser/campaign/campaigns</param>
+                <param name="suppressEmptyParameters">true</param>
+                <param name="advertiserId">${#parameters.advertiserId}</param>
+                <param name="fastChangeId">${#parameters.fastChangeId}</param>
+                <param name="dateRange.begin">${#parameters['dateRange.begin']}</param>
+                <param name="dateRange.end">${#parameters['dateRange.end']}</param>
+                <param name="withActivityOnly">${#parameters.withActivityOnly}</param>
+                <param name="showZeroStat">${#parameters.showZeroStat}</param>
+            </result>
+            <result name="dashboard.advertiserAccount" type="redirectAction">
+                <param name="actionName">advertiser/myAccount/agencyAdvertiserView</param>
+                <param name="id">${#parameters.advertiserId}</param>
+            </result>
+        </action>
+
+        <!-- Snapshot by Advertiser -->
+        <action name="admin/campaign/advertisers" class="com.foros.action.reporting.dashboard.AdvertiserDashboardAction" method="execute">
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.dashboard</result>
+        </action>
+
+        <action name="advertiser/campaign/advertisers" class="com.foros.action.reporting.dashboard.AdvertiserDashboardAction" method="execute">
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">advertiser.dashboard</result>
+        </action>
+        
+        <action name="admin/dashboard/advertiserStats" class="com.foros.action.reporting.dashboard.AdvertiserDashboardAction" method="execute">
+            <result name="success">/dashboard/advertiserStats.jsp</result>
+        </action>
+        
+        <action name="advertiser/dashboard/advertiserStats" class="com.foros.action.reporting.dashboard.AdvertiserDashboardAction" method="execute">
+           <result name="success">/dashboard/advertiserStats.jsp</result>
+        </action>
+
+        <!-- Snapshot by Campaign -->
+        <action name="admin/campaign/campaigns" class="com.foros.action.reporting.dashboard.CampaignDashboardAction" method="execute">
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">admin.dashboard.bycampaign</result>
+        </action>
+
+        <action name="advertiser/campaign/campaigns" class="com.foros.action.reporting.dashboard.CampaignDashboardAction" method="execute">
+            <interceptor-ref name="defaultForosStack"/>
+            <result name="success" type="tiles">advertiser.dashboard.bycampaign</result>
+        </action>
+        
+        <action name="admin/dashboard/campaignStats" class="com.foros.action.reporting.dashboard.CampaignDashboardAction" method="execute">
+            <result name="success">/dashboard/campaignStats.jsp</result>
+        </action>
+        <action name="advertiser/dashboard/campaignStats" class="com.foros.action.reporting.dashboard.CampaignDashboardAction" method="execute">
+            <result name="success">/dashboard/campaignStats.jsp</result>
+        </action>
+
+        <action name="admin/campaign/campaignsList" class="com.foros.action.campaign.ListCampaignsAction" method="list">
+            <result name="success" type="tiles">campaign.main</result>
+        </action>
+
+        <action name="advertiser/campaign/campaignsList" class="com.foros.action.campaign.ListCampaignsAction" method="list">
+            <result name="success" type="tiles">campaign.main</result>
+        </action>
+
+        <!-- Bulk campaign export/upload -->
+
+        <action name="*/campaign/export"
+                class="com.foros.action.campaign.bulk.CampaignExportAction"
+                method="export">
+            <interceptor-ref name="defaultForosStack">
+                <param name="params.excludeParams">dateRange\..*</param>
+            </interceptor-ref>
+            <result name="input">
+                <param name="location">/{1}/campaign/campaigns.action</param>
+            </result>
+        </action>
+
+        <action name="*/campaign/upload/main" class="com.foros.action.campaign.bulk.MainUploadCampaignAction"
+                method="main">
+            <result name="success" type="tiles">campaign.upload</result>
+        </action>
+
+        <action name="*/campaign/upload/validate" class="com.foros.action.campaign.bulk.ValidateUploadCampaignAction"
+                method="validateBulk">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">31457280</param>
+            </interceptor-ref>
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">campaign.upload</result>
+        </action>
+
+        <action name="*/campaign/upload/export" class="com.foros.action.campaign.bulk.DownloadCampaignAction"
+                method="export"/>
+
+        <action name="*/campaign/upload/template" class="com.foros.action.campaign.bulk.DownloadCampaignAction"
+                method="template"/>
+
+        <action name="*/campaign/upload/submit" class="com.foros.action.campaign.bulk.SubmitUploadCampaignAction"
+                method="submit">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">campaign.upload</result>
+        </action>
+
+        <action name="*/campaign/viewSchedule" class="com.foros.action.campaign.ViewDeliveryScheduleAction" method="viewCampaign">
+            <result name="success">
+                <param name="location">/campaign/viewDeliverySchedule.jsp</param>
+
+            </result>
+        </action>
+
+    </package>
+
+    <!-- Campaign allocations -->
+    <package name="campaignAllocation" abstract="true" extends="foros-default">
+
+        <action name="edit" class="com.foros.action.campaign.EditAllocationsAction" method="edit">
+            <result name="success" type="tiles">campaign.editCampaignAllocations</result>
+        </action>
+
+        <action name="update" class="com.foros.action.campaign.SaveAllocationsAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">../view</param>
+                <param name="id">${id}</param>
+                <param name="anchor">campaignAllocation</param>
+            </result>
+            <result name="input" type="tiles">campaign.editCampaignAllocations</result>
+            <result name="version">
+                <param name="location">edit.action</param>
+            </result>
+        </action>
+
+        <action name="add" class="com.foros.action.campaign.EditAllocationsAction" method="addAllocation">
+            <result name="success" type="tiles">campaign.allCampaignAllocations</result>
+        </action>
+
+        <action name="delete" class="com.foros.action.campaign.EditAllocationsAction" method="deleteAllocation">
+            <result name="success" type="tiles">campaign.allCampaignAllocations</result>
+        </action>
+
+        <action name="changeOpportunity" class="com.foros.action.campaign.EditAllocationsAction" method="changeOpportunity">
+            <result name="success" type="tiles">campaign.singleCampaignAllocation</result>
+        </action>
+    </package>
+
+    <package name="campaignAllocation-admin" extends="campaignAllocation" namespace="/admin/campaign/allocation"/>
+</struts>

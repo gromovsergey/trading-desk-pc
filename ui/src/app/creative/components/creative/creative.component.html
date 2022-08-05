@@ -1,0 +1,17 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <div class="page-header page-header-first">
+    <h2 class="c-pagetitle">
+      <i class="material-icons" appDisplayStatus [displayStatus]="creative.displayStatus">lens</i>
+      {{title}}
+
+      <div class="btn-group">
+        <button [routerLink]="['/advertiser', advertiser.id, 'creative', creative.id, 'edit']"
+                class="btn btn-default">{{'button.edit' | translate}}</button>
+      </div>
+    </h2>
+  </div>
+
+  <div class="h-pretext">{{creative|json}}</div>
+</ng-template>

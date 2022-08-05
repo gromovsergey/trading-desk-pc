@@ -1,0 +1,67 @@
+<ui-loading class="overlay" *ngIf="wait"></ui-loading>
+
+<ui-info-panel type="info" *ngIf="!wait && !lineChartData?.length">
+  {{'chart.noPlotData' | translate}}
+</ui-info-panel>
+
+<button *ngIf="lineChartZoomed"
+        class="restore-zoom"
+        (click)="lineChartZoomed = false; lineChartResetZoom()"
+        mat-icon-button>
+  <i class="material-icons">restore</i>
+</button>
+
+<div *ngIf="lineChartData?.length" class="chart-container">
+  <canvas baseChart
+          class="chart"
+          legend="legend"
+          [height]="450"
+          [plugins]="lineChartPlugins"
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          chartType="line"></canvas>
+</div>
+
+<div class="option-container">
+  <mat-form-field class="option-field">
+    <mat-label>{{'chart.object' | translate}}</mat-label>
+    <mat-select [(value)]="params.chartObject"
+                (valueChange)="paramsChange()">
+      <mat-option *ngFor="let item of chartObjects" [value]="item">
+        {{L10nChartObjects[item] | translate}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="option-field">
+    <mat-label>{{'chart.metrics' | translate}}</mat-label>
+    <mat-select [(value)]="params.chartMetric"
+                (valueChange)="paramsChange()">
+      <mat-option *ngFor="let item of chartMetrics" [value]="item">
+        {{L10nChartMetrics[item] | translate}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="option-field">
+    <mat-label>{{'chart.period' | translate}}</mat-label>
+    <mat-select [(value)]="params.selectedPeriod"
+                (valueChange)="paramsChange()">
+      <mat-option *ngFor="let item of chartPeriods" [value]="item">
+        {{L10nChartPeriods[item] | translate}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="option-field">
+    <mat-label>{{'chart.type' | translate}}</mat-label>
+    <mat-select [(value)]="params.chartType"
+                (valueChange)="paramsChange()">
+      <mat-option *ngFor="let item of chartTypes" [value]="item">
+        {{L10nChartTypes[item] | translate}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

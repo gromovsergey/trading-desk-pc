@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name=".Invoice" extends=".mainLayout">
+    </definition>
+
+    <definition name=".InvoiceView" extends=".Invoice">
+        <put-attribute name="body" value="/account/invoiceView.jsp"/>
+        <put-attribute name="title" value="/account/invoiceViewTitle.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name=".InvoiceEdit" extends=".Invoice">
+        <put-attribute name="body" value="/account/invoiceEdit.jsp"/>
+        <put-attribute name="entityName" value="account.headers.invoice"/>
+    </definition>
+
+    <definition name="admin.account.invoice.view" extends=".InvoiceView">
+        <put-attribute name="moduleName" value="admin/advertiser/account"/>
+        <put-attribute name="activeMenuItemKey" value="global.submenu.account"/>
+    </definition>
+
+    <definition name="admin.campaign.invoice.view" extends=".InvoiceView">
+        <put-attribute name="moduleName" value="admin/campaign"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.campaigns"/>
+    </definition>
+
+    <definition name="advertiser.campaign.invoice.view" extends=".InvoiceView">
+        <put-attribute name="moduleName" value="advertiser/campaign"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.campaigns"/>
+    </definition>
+
+    <definition name="advertiser.invoice.view" extends=".InvoiceView">
+        <put-attribute name="moduleName" value="advertiser/myAccount"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.myAccount"/>
+    </definition>
+    
+    <definition name="admin.account.invoice.edit" extends=".InvoiceEdit">
+        <put-attribute name="moduleName" value="admin/advertiser/account"/>
+        <put-attribute name="activeMenuItemKey" value="global.submenu.account"/>
+    </definition>
+
+    <definition name="admin.campaign.invoice.edit" extends=".InvoiceEdit">
+        <put-attribute name="moduleName" value="admin/campaign"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.campaigns"/>
+    </definition>
+
+</tiles-definitions>

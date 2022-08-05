@@ -1,0 +1,30 @@
+<ui-popup [visible]="true" [blocked]="wait" [options]="options" (close)="onClose($event)" [closeBtnTitle]="'_L10N_(button.close)'">
+    <div #modal>
+        <div *ngIf="!readonly">
+            <ui-flight-attachment-upload [flightId]="flightId" (onUpload)="loadList()"
+                                         [title]="'_L10N_(scanIo.button.upoaldAttachment)'"
+                                         [hint]="'_L10N_(scanIo.notification.allowedFileTypes)'"></ui-flight-attachment-upload>
+        </div>
+        <p>&nbsp;</p>
+        <div class="help-block" *ngIf="errors">
+            <p *ngFor="let error of errors" class="text-danger">{{error}}</p>
+        </div>
+        <div class="form-group" *ngIf="attachments && attachments.length">
+            <p>&nbsp;</p>
+            <label>_L10N_(scanIo.notification.listOfAttachments)</label>
+
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let item of attachments">
+                    <div class="btn-group btn-badge">
+                        <button title="_L10N_(button.download)" (click)="downloadItem($event, item)" class="btn btn-md btn-default"><ui-icon [icon]="'download'"></ui-icon> _L10N_(button.download)</button>
+                        <button title="_L10N_(button.delete)" *ngIf="!readonly" (click)="deleteItem($event, item)" class="btn btn-md btn-default"><ui-icon [icon]="'trash'"></ui-icon> _L10N_(button.delete)</button>
+                    </div>
+                    {{item}}
+                </li>
+            </ul>
+        </div>
+        <p *ngIf="!wait && !(attachments && attachments.length)">_L10N_(flight.notification.attachmentListEmpty)</p>
+    </div>
+</ui-popup>
+
+<a class="hidden" #downloadBtn [href]="downloadUrl" target="_blank" [download]="downloadName">{{downloadName}}</a>

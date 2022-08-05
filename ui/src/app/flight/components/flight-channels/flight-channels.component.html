@@ -1,0 +1,151 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+
+  <div class="mb-2" *ngIf="!readonly">
+    <ui-dropdown-btn *ngIf="channels && channels.data.length > 0"
+                     class="mr-1"
+                     title="{{'button.bulk' | translate}}"
+                     [menu]="bulkMenu"></ui-dropdown-btn>
+    <button mat-raised-button
+            class="mr-1"
+            (click)="showChannelTree()">
+      {{'button.searchInCatalog' | translate}}
+    </button>
+
+    <button *ngIf="canSearchChannelsByName"
+            mat-raised-button
+            (click)="showSearchByName($event)">
+      {{'button.searchByName' | translate}}
+    </button>
+
+  </div>
+
+  <ui-info-panel class="mb-2" type="danger" *ngIf="expressionError">
+    <p *ngFor="let error of expressionError">{{error}}</p>
+  </ui-info-panel>
+
+  <ng-content></ng-content>
+
+  <div class="table-responsive">
+    <div #channelsNotifications></div>
+  </div>
+
+  <div *ngIf="channels?.data?.length, else noChannels" class="table-container mb-2">
+    <table mat-table [dataSource]="channels">
+
+      <!-- Checkbox Column -->
+      <ng-container *ngIf="!readonly" matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        [disabled]="row.displayStatus === 'DELETED'"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="channel">
+        <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.channel' | translate}}</th>
+        <td mat-cell *matCellDef="let channel">
+          <i class="material-icons" appDisplayStatus [displayStatus]="channel.displayStatus">lens</i>
+          {{channel.name}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="localization">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let channel">
+          <button *ngIf="canLocalize"
+                  [disabled]="channel.displayStatus === 'DELETED'"
+                  mat-icon-button
+                  color="primary"
+                  title="{{'channel.blockName.channel.localization' | translate}}"
+                  (click)="showDynamicLocalizationsPopup(channel.id)">
+            <i class="material-icons">public</i>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="channelType">
+        <th mat-header-cell *matHeaderCellDef>{{'channel.blockName.channelType' | translate}}</th>
+        <td mat-cell *matCellDef="let channel">{{L10nChannelTypes[channel.type.replace(' ', '')] | translate}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="imps">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.imps' | translate}}</th>
+        <td mat-cell *matCellDef="let channel">{{channel.imps}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="clicks">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.clicks' | translate}}</th>
+        <td mat-cell *matCellDef="let channel">{{channel.clicks}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ctr">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.ctr' | translate}}</th>
+        <td mat-cell *matCellDef="let channel">{{channel.ctr | number: "1.1-2"}}%</td>
+      </ng-container>
+
+      <ng-container matColumnDef="dailyAudience">
+        <th mat-header-cell *matHeaderCellDef>
+          {{'blockName.dailyAudience' | translate}}
+          <ui-hint text="{{'channel.message.dailyAudienceHint' | translate}}"></ui-hint>
+        </th>
+        <td mat-cell *matCellDef="let channel">{{channel.uniqueUsers}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td class="text-right" mat-cell *matCellDef="let channel">
+          <ui-display-status-toggle
+            *ngIf="channel.statusChangeable && !short"
+            (statusChange)="changeStatus($event)"
+            [status]="channel.displayStatus"
+            [statusObject]="channel"></ui-display-status-toggle>
+
+          <button *ngIf="canUpdateChannels"
+                  [disabled]="channel.displayStatus === 'DELETED'"
+                  mat-icon-button
+                  color="primary"
+                  title="{{'button.edit' | translate}}"
+                  [routerLink]="['/channel', (channel.type === 'B' ? 'behavioral' : 'expression'), channel.id, 'edit']"
+                  [queryParams]="{backUrl: flightId ? '/flight/'+flightId : '/lineitem/'+lineItemId}">
+            <i class="material-icons">edit</i>
+          </button>
+          <button mat-icon-button
+                  color="primary"
+                  title="{{'blockName.stats' | translate}}"
+                  (click)="channel.type  === 'Behavioral Channel' ? showBehavioralStats(channel.id) : showExpressionStats(channel.id)">
+            <i class="material-icons">zoom_in</i>
+          </button>
+          <button *ngIf="!readonly"
+                  mat-icon-button
+                  color="accent"
+                  (click)="deleteChannels($event, channel.id)"
+                  title="{{'button.unlink' | translate}}"
+                  [disabled]="channel.displayStatus === 'DELETED'">
+            <i class="material-icons">link_off</i>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <ng-template #noChannels>
+    <ui-info-panel type="info">
+      {{'flight.notification.channelListEmpty' | translate}}
+    </ui-info-panel>
+  </ng-template>
+</ng-template>

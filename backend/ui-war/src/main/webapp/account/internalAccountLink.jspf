@@ -1,0 +1,16 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="ui" tagdir="/WEB-INF/tags"%>
+
+<s:if test="internalAccount != null">
+	<c:choose>
+		<c:when test="${ad:isPermitted('Account.view', internalAccount)}">
+			<ui:field labelKey="account.intAccountId">
+				<a href="/admin/internal/account/view.action?id=${internalAccount.id}"><c:out value="${internalAccount.name}"/></a>
+			</ui:field>
+		</c:when>
+		<c:otherwise>
+			<ui:simpleField labelKey="account.intAccountId" value="${internalAccount.name}" />
+		</c:otherwise>
+	</c:choose>
+</s:if>

@@ -1,0 +1,174 @@
+<ui-loading *ngIf="waitChannels"></ui-loading>
+
+<ng-template [ngIf]="!waitChannels">
+    <div class="table-responsive" *ngIf="channels && channels.length > 0">
+        <div class="has-warning" *ngIf="truncated">
+            <p>_L10N_(channel.list.truncated)</p>
+        </div>
+        <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <th *ngIf="showAccountColumn">
+                    _L10N_(channel.blockName.account)
+                </th>
+                <th>
+                    _L10N_(channel.blockName.channel)
+                </th>
+                <th>
+                    _L10N_(channel.blockName.channelType)
+                </th>
+                <th *ngIf="showVisibilityColumn">
+                    _L10N_(channel.blockName.visibility)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let channel of channels">
+                <td *ngIf="showAccountColumn"><ui-icon [displayStatus]="channel.accountDisplayStatus"></ui-icon>&nbsp;{{channel.accountName}}</td>
+                <td><ui-icon [displayStatus]="channel.displayStatus"></ui-icon>&nbsp;{{channel.name}}
+                    <button *ngIf="canLocalize"
+                            class="btn btn-default"
+                            title="_L10N_(channel.blockName.channel.localization)"
+                            (click)="showDynamicLocalizationsPopup($event, channel.id)">
+                        <ui-icon [icon]="'globe'"></ui-icon>
+                    </button>
+                </td>
+                <td>{{L10nChannelTypes[channel.type]}}</td>
+                <td *ngIf="showVisibilityColumn">{{L10nChannelVisibilities[channel.visibility]}}</td>
+                <td class="text-right">
+                    <ui-display-status-toggle *ngIf="canUpdateChannels" (onStatusChange)="statusChange($event)"
+                                              [status]="channel.displayStatus"
+                                              [statusObject]="channel"></ui-display-status-toggle>
+                    <button class="btn btn-default" title="_L10N_(channel.blockName.channel.statistics)"
+                            (click)="channel.type  === 'B' ? showBehavioralStats($event, channel.id) : showExpressionStats($event, channel.id)">
+                        <ui-icon [icon]="'search-plus'"></ui-icon>
+                    </button>
+                    <button class="btn btn-default"
+                            [disabled]="!canUpdateChannels"
+                            title="_L10N_(button.edit)"
+                            [routerLink]="['/channel/'+(channel.type === 'B' ? 'behavioral/' : 'expression/')+channel.id+'/edit']">
+                            <ui-icon [icon]="'pencil-square-o'"></ui-icon>
+                    </button>
+                    <button *ngIf="canUpdateChannels" class="btn btn-default"
+                            (click)="deleteChannels($event, channel)" title="_L10N_(button.delete)">
+                        <ui-icon [icon]="'trash'"></ui-icon>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p *ngIf="showChannels && !waitChannels && (!channels || channels.length == 0)">_L10N_(flight.notification.channelListEmpty)</p>
+
+    <ui-popup [visible]="showStats"
+              [options]="statsPopup"
+              [blocked]="waitStats"
+              (close)="hideStatsPopup()"
+              [closeBtnTitle]="'_L10N_(button.close)'">
+        <div #modal class="modal-body-scroll">
+            <ng-template [ngIf]="!waitStats && showStats === 'behavioral'">
+                <h4>_L10N_(channel.blockName.keywords.statistics)</h4>
+                <div class="table-responsive" *ngIf="behavioralStats && behavioralStats.keywordHitsStat && behavioralStats.keywordHitsStat.length">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>
+                                _L10N_(channel.blockName.keywords.keyword)
+                            </th>
+                            <th>
+                                _L10N_(channel.blockName.keywords.hits)
+                            </th>
+                            <th>
+                                _L10N_(channel.blockName.keywords.type)
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let stat of behavioralStats.keywordHitsStat">
+                            <td>{{stat.keyword}}</td>
+                            <td>{{stat.hits}}</td>
+                            <td>{{stat.type}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p *ngIf="!(behavioralStats && behavioralStats.keywordHitsStat && behavioralStats.keywordHitsStat.length)">
+                    _L10N_(channel.notification.keywords.statEmpty)
+                </p>
+
+                <h4>_L10N_(channel.blockName.channel.statistics)</h4>
+                <div class="table-responsive" *ngIf="behavioralStats && behavioralStats.keywordTypeHitsStat && behavioralStats.keywordTypeHitsStat.length">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>_L10N_(blockName.date)</th>
+                            <th>_L10N_(channel.blockName.channel.pageHits)</th>
+                            <th>_L10N_(channel.blockName.channel.searchHits)</th>
+                            <th>_L10N_(channel.blockName.channel.urlHits)</th>
+                            <th>_L10N_(channel.blockName.channel.urlKeywordsHits)</th>
+                            <th>_L10N_(channel.blockName.channel.totalHits)</th>
+                            <th>_L10N_(channel.blockName.channel.totalUniques)</th>
+                            <th>_L10N_(channel.blockName.channel.activeDailyUniques)</th>
+                            <th>_L10N_(channel.blockName.bids)</th>
+                            <th>_L10N_(blockName.clicks)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let stat of behavioralStats.keywordTypeHitsStat">
+                            <td>{{moment(stat.date).format(dateFormatShort)}}</td>
+                            <td>{{stat.pageKeywordHits.hits}}&nbsp;({{stat.pageKeywordHits.percent}}%)</td>
+                            <td>{{stat.searchKeywordHits.hits}}&nbsp;({{stat.searchKeywordHits.percent}}%)</td>
+                            <td>{{stat.urlHits.hits}}&nbsp;({{stat.urlHits.percent}}%)</td>
+                            <td>{{stat.urlKeywordHits.hits}}&nbsp;({{stat.urlKeywordHits.percent}}%)</td>
+                            <td>{{stat.totalHits}}</td>
+                            <td>{{stat.totalUniques}}</td>
+                            <td>{{stat.activeDailyUniques}}</td>
+                            <td>{{stat.imps}}</td>
+                            <td>{{stat.clicks}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p *ngIf="!(behavioralStats && behavioralStats.keywordTypeHitsStat && behavioralStats.keywordTypeHitsStat.length)">
+                    _L10N_(channel.notification.channel.statEmpty)
+                </p>
+            </ng-template>
+            <ng-template [ngIf]="!waitStats && showStats === 'expression'">
+                <div class="table-responsive" *ngIf="expressionStats && expressionStats.channelStat && expressionStats.channelStat.length">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>_L10N_(blockName.date)</th>
+                            <th>_L10N_(channel.blockName.channel.totalUniques)</th>
+                            <th>_L10N_(channel.blockName.channel.activeDailyUniques)</th>
+                            <th>_L10N_(channel.blockName.bids)</th>
+                            <th>_L10N_(blockName.clicks)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let stat of expressionStats.channelStat">
+                            <td>{{moment(stat.date).format(dateFormatShort)}}</td>
+                            <td>{{stat.totalUniques}}</td>
+                            <td>{{stat.activeDailyUniques}}</td>
+                            <td>{{stat.imps}}</td>
+                            <td>{{stat.clicks}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p *ngIf="!(expressionStats && expressionStats.channelStat && expressionStats.channelStat.length)">
+                    _L10N_(channel.notification.keywords.statEmpty)
+                </p>
+            </ng-template>
+        </div>
+    </ui-popup>
+
+    <ui-channel-dynamic-localization *ngIf="dynamicLocalizationsChannelId"
+                                     [channelId]="dynamicLocalizationsChannelId"
+                                     (close)="onDynamicLocalizationsClose()"
+                                     (save)="onDynamicLocalizationsSave($event)">
+    </ui-channel-dynamic-localization>
+
+</ng-template>

@@ -1,0 +1,60 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="deviceChannel" extends="foros-default" namespace="/">
+        <action name="admin/DeviceChannel/main" class="com.foros.action.admin.deviceChannel.MainDeviceChannelAction"
+                method="main">
+            <result name="success" type="tiles">DeviceChannel.main</result>
+        </action>
+        <action name="admin/DeviceChannel/view" class="com.foros.action.admin.deviceChannel.ViewDeviceChannelAction"
+                method="view">
+            <result name="success" type="tiles">DeviceChannel.view</result>
+        </action>
+        <action name="admin/DeviceChannel/searchAssociatedCampaigns" class="com.foros.action.admin.deviceChannel.ViewDeviceChannelAction"
+                method="searchAssociatedCampaigns">
+            <result name="success" type="tiles">DeviceChannel.campaigns</result>
+        </action>
+        <action name="admin/DeviceChannel/edit" class="com.foros.action.admin.deviceChannel.EditDeviceChannelAction"
+                method="edit">
+            <result name="success" type="tiles">DeviceChannel.edit</result>
+        </action>
+        <action name="admin/DeviceChannel/new" class="com.foros.action.admin.deviceChannel.EditDeviceChannelAction"
+                method="create">
+            <result name="success" type="tiles">DeviceChannel.create</result>
+        </action>
+        <action name="admin/DeviceChannel/create" class="com.foros.action.admin.deviceChannel.SaveDeviceChannelAction"
+                method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/DeviceChannel/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">DeviceChannel.create</result>
+        </action>
+        <action name="admin/DeviceChannel/update" class="com.foros.action.admin.deviceChannel.SaveDeviceChannelAction"
+                method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/DeviceChannel/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">DeviceChannel.edit</result>
+            <result name="version">
+                <param name="location">/admin/DeviceChannel/edit.action</param>
+            </result>
+        </action>
+        <action name="admin/DeviceChannel/*" class="com.foros.action.admin.deviceChannel.StatusDeviceChannelAction"
+                method="{1}">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/DeviceChannel/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="chain">
+                <param name="actionName">admin/DeviceChannel/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+    </package>
+</struts>

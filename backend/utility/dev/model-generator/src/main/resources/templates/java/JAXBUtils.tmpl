@@ -1,0 +1,26 @@
+package ${packageName};
+
+import com.foros.rs.client.RsException;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+<%util.resolveImports(packageName, rootPackage, types).each { str -> %>import ${str};
+<%} %>
+
+public class JAXBUtils {
+    private static final JAXBContext CONTEXT = newInstance();
+
+    public static JAXBContext getContext() {
+        return CONTEXT;
+    }
+
+    private static JAXBContext newInstance() {
+        try {
+            return JAXBContext.newInstance(
+            <% types.eachWithIndex { t, i -> %>    ${t.name}.class${(i == types.size() - 1) ? "" : ","}
+            <%} %>);
+        } catch (JAXBException e) {
+            throw new RsException("Can't configure JAXB context", e);
+        }
+    }
+}

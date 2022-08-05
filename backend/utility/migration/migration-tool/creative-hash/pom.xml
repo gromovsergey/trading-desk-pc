@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.foros.ui</groupId>
+        <artifactId>migration-tool</artifactId>
+        <version>trunk</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>creative-hash</artifactId>
+    <version>trunk</version>
+    <packaging>jar</packaging>
+
+    <name>creative-hash</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.foros.ui</groupId>
+            <artifactId>migration-base</artifactId>
+            <version>trunk</version>
+        </dependency>
+    </dependencies>
+
+</project>

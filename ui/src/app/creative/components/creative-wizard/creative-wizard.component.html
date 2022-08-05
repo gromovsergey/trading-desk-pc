@@ -1,0 +1,62 @@
+<ng-container *ngIf="template, else noTemplate">
+  <h2 mat-dialog-title>{{'creative.chooseSize' | translate}}</h2>
+
+  <mat-dialog-content class="mat-typography">
+    <ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+    <ng-template #showContent>
+
+      <div class="list" *ngIf="sizeList && sizeList.length > 0, else noSizes">
+        <button (click)="selectSize(item)"
+                class="list-item"
+                type="button"
+                *ngFor="let item of sizeList">
+          {{item.name}}
+        </button>
+      </div>
+
+      <ng-template #noSizes>
+        <ui-info-panel type="info">
+          {{'creative.notification.sizeListEmpty' | translate}}
+        </ui-info-panel>
+      </ng-template>
+    </ng-template>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button color="accent" (click)="template = null">{{'button.back' | translate}}</button>
+    <button mat-button mat-dialog-close>{{'button.close' | translate}}</button>
+  </mat-dialog-actions>
+</ng-container>
+
+<ng-template #noTemplate>
+  <h2 mat-dialog-title>{{'creative.chooseTemplate' | translate}}</h2>
+
+  <mat-dialog-content class="mat-typography">
+    <ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+    <ng-template #showContent>
+
+      <div class="list" *ngIf="templateList && templateList.length > 0, else noTemplates">
+        <button (click)="selectTemplate(item)"
+                class="list-item"
+                type="button"
+                *ngFor="let item of templateList">
+          {{item.name}}
+        </button>
+      </div>
+
+      <ng-template #noTemplates>
+        <ui-info-panel type="info">
+          {{'creative.notification.templateListEmpty' | translate}}
+        </ui-info-panel>
+      </ng-template>
+    </ng-template>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{'button.close' | translate}}</button>
+  </mat-dialog-actions>
+</ng-template>
+
+

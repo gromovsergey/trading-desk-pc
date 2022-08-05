@@ -1,0 +1,13 @@
+<ui-popup [visible]="true"
+          [blocked]="false"
+          (close)="popupClose($event)"
+          (save)="popupSave($event)"
+          [options]="options"
+          [closeBtnTitle]="'_L10N_(button.close)'">
+    <div class="dropdown" #modal>
+        <div #customContent></div>
+        <div #tree>
+            <ui-loading></ui-loading>
+        </div>
+    </div>
+</ui-popup>

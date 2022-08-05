@@ -1,0 +1,101 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1 class="main-title">
+    {{'advertiserAccount.accountCreatives' | translate}}
+
+    <div *ngIf="canCreateCreative">
+      <button mat-raised-button
+              (click)="showWizardTemplates()">
+        {{'creative.createNewCreative' | translate}}
+      </button>
+      <button (click)="selectFile($event)"
+              mat-raised-button
+              [disabled]="btnDisable">
+        <mat-spinner *ngIf="wait" class="d-inline-block mr-1" diameter="20"></mat-spinner>
+        {{'button.upload' | translate}}
+      </button>
+    </div>
+  </h1>
+
+  <ui-info-panel type="danger" *ngIf="errors && errors.length">
+    <p *ngFor="let error of errors" class="text-danger">{{error}}</p>
+  </ui-info-panel>
+  <input type="file" (change)="uploadZip()" #fileUpload class="hidden">
+
+  <ui-loading *ngIf="waitCreatives"></ui-loading>
+
+  <div class="table-container" *ngIf="!waitCreatives && creativeList?.length > 0, else noCreatives">
+    <table mat-table [dataSource]="creativeList">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.name' | translate}}</th>
+        <td mat-cell *matCellDef="let creative">
+          <i class="material-icons" appDisplayStatus [displayStatus]="creative.displayStatus">lens</i>
+          {{creative.name}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef>{{'creative.blockName.size' | translate}}</th>
+        <td mat-cell *matCellDef="let creative">{{creative.sizeName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="template">
+        <th mat-header-cell *matHeaderCellDef>{{'creative.blockName.template' | translate}}</th>
+        <td mat-cell *matCellDef="let creative">{{creative.templateName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell class="text-right" *matCellDef="let creative">
+          <ui-display-status-toggle *ngIf="canUpdateCreative"
+                                    (statusChange)="changeStatus($event)"
+                                    [status]="creative.displayStatus"
+                                    [statusObject]="creative"></ui-display-status-toggle>
+
+          <button mat-icon-button
+                  color="primary"
+                  type="button"
+                  title="{{'button.preview' | translate}}"
+                  (click)="preview(creative)">
+            <i class="material-icons">zoom_in</i>
+          </button>
+
+          <ng-container *ngIf="canUpdateCreative">
+            <button mat-icon-button
+                    color="primary"
+                    type="button"
+                    title="{{'button.edit' | translate}}"
+                    [routerLink]="['/advertiser', advertiser.id, 'creative', creative.id, 'edit']">
+              <i class="material-icons">edit</i>
+            </button>
+
+            <button mat-icon-button
+                    color="primary"
+                    type="button"
+                    title="{{'button.copy' | translate}}"
+                    (click)="copyCreative(creative)">
+              <span class="material-icons">content_copy</span>
+            </button>
+
+            <button mat-icon-button
+                    type="button"
+                    title="{{'button.delete' | translate}}"
+                    (click)="deleteCreative(creative)">
+              <i class="material-icons">delete</i>
+            </button>
+          </ng-container>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let creative; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <ng-template #noCreatives>
+    <ui-info-panel type="info">
+      {{'flight.notification.creativeListEmpty' | translate}}
+    </ui-info-panel>
+  </ng-template>
+</ng-template>

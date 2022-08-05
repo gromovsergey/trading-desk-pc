@@ -1,0 +1,28 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            {{title}}
+        </h2>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ui-audience-research-chart *ngFor="let channel of channels" [audienceResearchId]="audienceResearch.id"
+                                        [inOneRow]="true" [canEdit]="canUpdateResearch"
+                                        [yesterdayComment]="channel.yesterdayComment" [totalComment]="channel.totalComment"
+                                        (updateYesterdayComment)="updateYesterdayComment($event, channel.id)"
+                                        (updateTotalComment)="updateTotalComment($event, channel.id)"
+                                        [template]="channel.chartType" [channelId]="channel.channel.id">
+            </ui-audience-research-chart>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" *ngIf="!!channelStack.length" (click)="nextPage()">
+      _L10N_(button.next)
+    </button>
+    <a class="btn btn-default" [routerLink]="backUrl">
+      _L10N_(button.cancel)
+    </a>
+</section>

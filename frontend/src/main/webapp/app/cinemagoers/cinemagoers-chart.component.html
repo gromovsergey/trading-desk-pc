@@ -1,0 +1,24 @@
+<div class="cinemagoers-chart-container">
+  <ui-loading *ngIf="wait"></ui-loading>
+  <div [id]="containerId" class="cinemagoers-chart {{config?.template}}" oncontextmenu="return false">
+    <div *ngIf="!!error" class="cinemagoers-chart-error">{{error.message || 'Ошибка'}}</div>
+  </div>
+  <a id="comments-{{containerId}}" [routerLink]="['./']"
+    fragment="comments-{{containerId}}" class="cinemagoers-chart-comments active"
+    (click)="toggleComments($event)">
+    Комментарии
+  </a>
+  <span class="cinemagoers-chart-comments-control">
+    <i class="fa fa-pencil cinemagoers-image-link" aria-hidden="true"
+      title="Включить/выключить редактирование комментариев"
+      (click)="editComments($event)"></i>
+  </span>
+  <div class="cinemagoers-chart-comments">
+    <textarea [(ngModel)]="comments" (change)="onCommentsChange($event)" readonly></textarea>
+  </div>
+  <a class="cinemagoers-image-link cinemagoers-chart-photo" [ngClass]="{'hidden': wait || !!error}"
+    href="about:blank" #imageLink [attr.download]="chartName + '.png'"
+    title="Сохранить диаграмму как картинку" (click)="chart.toImage($event)">
+    <i class="fa fa-camera" aria-hidden="true"></i>
+  </a>
+</div>

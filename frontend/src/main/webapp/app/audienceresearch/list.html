@@ -1,0 +1,54 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<ng-template [ngIf]="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            {{title}}
+            <div class="btn-group" *ngIf="canUpdateResearch">
+            <a class="btn btn-default" [routerLink]="['/audienceresearch/add']">_L10N_(button.createNew)</a>
+            </div>
+        </h2>
+    </div>
+
+    <p *ngIf="audienceResearchList && audienceResearchList.length === 0">
+        _L10N_(audienceResearch.listIsEmpty)
+    </p>
+
+    <div class="table-responsive" *ngIf="audienceResearchList && audienceResearchList.length > 0">
+        <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <th>_L10N_(audienceResearch.targetChannel)</th>
+                <th>_L10N_(audienceResearch.startDate)</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let audienceResearch of audienceResearchList">
+                <td>
+                    <ui-icon [fw]="true" [displayStatus]="audienceResearch.displayStatus"></ui-icon>&nbsp;
+                    {{audienceResearch.channelName}}
+                </td>
+                <td>{{moment(audienceResearch.startDate).format(dateFormatShort)}}</td>
+                <td class="text-right">
+                    <button *ngIf="moment().startOf('day').diff(moment(audienceResearch.startDate).startOf('day'), 'days') > 0"
+                            class="btn btn-default" title="_L10N_(button.preview)"
+                            [routerLink]="['/audienceresearch/'+audienceResearch.id+'/view']">
+                        <ui-icon [icon]="'search-plus'"></ui-icon>
+                    </button>
+
+                    <a *ngIf="canUpdateResearch" class="btn btn-default" title="_L10N_(button.edit)"
+                       [routerLink]="['/audienceresearch/'+audienceResearch.id+'/edit']">
+                        <ui-icon [icon]="'pencil-square-o'"></ui-icon>
+                    </a>
+
+                    <button *ngIf="canUpdateResearch" class="btn btn-default" title="_L10N_(button.delete)"
+                            (click)="delete($event, audienceResearch.id)">
+                        <ui-icon [icon]="'trash'"></ui-icon>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>

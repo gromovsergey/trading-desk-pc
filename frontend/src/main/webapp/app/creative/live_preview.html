@@ -1,0 +1,16 @@
+<div #overlay>
+    <ui-loading [overlay]="true" *ngIf="wait"></ui-loading>
+
+    <div class="text-left" *ngIf="!wait && preview && preview.url">
+        <div class="table-responsive"><iframe class="e2e-trusted-url c-frame" [src]="preview.secureUrl" [width]="preview.width" [height]="preview.height"></iframe></div>
+    </div>
+    <iframe *ngIf="!wait && preview && !preview.url && preview.width && preview.height"
+            class="e2e-trusted-url c-frame"
+            [width]="preview.width"
+            [height]="preview.height"
+            srcdoc="&lt;div style=&quot;color: #ea3a45;font-size: 12px;&quot;&gt;_L10N_(advertiserAccount.conversion.cantShowPreview)&lt;/div&gt;"></iframe>
+    <div class="text-danger" *ngIf="!wait && !preview">
+        _L10N_(advertiserAccount.conversion.cantShowPreview)
+    </div>
+</div>
+

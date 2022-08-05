@@ -1,0 +1,13 @@
+<ui:field labelKey="account.cmpContactDetails">
+    <c:if test="${not empty cmpContact.id}">
+        <c:set var="cmp" value="${cmpContact}"/>
+        <ui:text text="${cmp.fullName}"/>
+        <a href="mailto:${cmp.email}">${cmp.email}</a>
+        <c:if test="${cmpContactShowPhone}">
+            <ui:text text="${cmp.phone}"/>
+        </c:if>
+    </c:if>
+    <c:if test="${empty cmpContact.id}">
+        <ui:text textKey="cmpAccount.noContactDetailsAreShown"/>
+    </c:if>
+</ui:field>

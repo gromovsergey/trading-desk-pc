@@ -1,0 +1,102 @@
+.creativePreview  {
+    width: 234px;
+    height:60px;
+    float:left;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.impression {
+    overflow:hidden; 
+    background-color:#fff; 
+    border:1px solid gray; 
+    width:232px; 
+    height:58px;
+}
+.impression a {
+    text-decoration:none; 
+    cursor:pointer;
+}
+.creative {
+    float:left; 
+    width:100%; 
+    height:100%; 
+    font-size:10px;
+}
+.creative table {
+    width:100%; 
+    height:100%; 
+    border-collapse:collapse; 
+    margin:0; 
+    padding:0; 
+    font:normal 10px serif; 
+    color:black;
+}
+.creative td {
+    padding:5px;
+}
+.creative div {
+    overflow:hidden;
+}
+.HEADLINE {
+    font-weight:bold; 
+    color:blue; 
+    text-decoration:underline;
+}
+.DESCRIPTION {
+    font-weight:bold; 
+    color:black;
+}
+.DISPLAY_URL {
+    color:#008000;
+}
+.creative td  {
+    padding-top:1px; 
+    vertical-align:top;
+}
+.b-creative__approval {
+    float:left;
+    border:1px solid #ccc;
+    margin:0 1em 1em 0;
+    padding:1em;
+    max-width:100%;
+}
+.b-creative__approval-panel {
+    overflow: hidden;
+}
+.b-creative__approval-buttons {
+    float:left;
+    height:24px;
+    margin-top:.5em;
+}
+    .b-creative__approval-buttons input {
+        margin-right:.5em;
+    }
+.b-creative__approval-panel > a {
+    float:left;
+    margin-right:1em;
+    padding-top:5px;
+    height:19px;
+    margin-top:.5em;
+}
+.b-creative__approval-panel > span {
+    float:left;
+    margin-right:1em;
+    padding-top:5px;
+    height:19px;
+    margin-top:.5em;
+}
+.b-creative__approval-list {
+    overflow:hidden;
+    margin-bottom:1.5em;
+}
+.b-creative__approval-fix {
+    height:1em;
+    clear:both;
+    float:left;
+    width:100%;
+}
+.b-creative__approval-rejecttext {
+    margin-top:5px;
+}
+

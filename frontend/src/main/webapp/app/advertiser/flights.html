@@ -1,0 +1,48 @@
+<ui-loading *ngIf="_wait"></ui-loading>
+
+<ng-template [ngIf]="!_wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [fw]="true" [displayStatus]="advertiser.displayStatus"></ui-icon> {{title}}
+            <div class="btn-group" *ngIf="canCreateFlight">
+                <a class="btn btn-default" [routerLink]="['/flight/add']">_L10N_(advertiserAccount.createFlight)</a>
+            </div>
+        </h2>
+    </div>
+
+    <ui-date-range [dateRange]="dateRange" options="TOT Y T WTD MTD QTD YTD LW LM LQ LY"
+                   defaultValue="TOT" (onChange)="loadFlights($event)"></ui-date-range>
+
+    <ui-loading *ngIf="!flightList"></ui-loading>
+
+    <p *ngIf="flightList && flightList.length === 0">
+        _L10N_(advertiserAccount.flightListIsEmpty)
+    </p>
+
+    <div *ngIf="flightList && flightList.length > 0" class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>_L10N_(flight.object)</th>
+                <th>_L10N_(blockName.imps)</th>
+                <th>_L10N_(blockName.clicks)</th>
+                <th>_L10N_(blockName.ctr)</th>
+                <th>_L10N_(blockName.totalCost)</th>
+                <th>_L10N_(blockName.ecpm)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let flight of flightList">
+                <td>
+                    <ui-icon [fw]="true" [displayStatus]="flight.displayStatus"></ui-icon>&nbsp;<a [routerLink]="['/flight/'+flight.id]">{{flight.name}}</a>
+                </td>
+                <td>{{flight.impressions}}</td>
+                <td>{{flight.clicks}}</td>
+                <td>{{flight.ctr.toFixed(2)}}%</td>
+                <td>{{flight.totalCost | currency:advertiserSession.currencyCode:'symbol':'1.2-2'}}</td>
+                <td>{{flight.ecpm | currency:advertiserSession.currencyCode:'symbol':'1.2-2'}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>

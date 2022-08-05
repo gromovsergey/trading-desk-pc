@@ -1,0 +1,26 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:choose>
+<c:when test="${channel.from > 0}">
+  ${channel.from}
+</c:when>
+<c:otherwise>
+  <fmt:message key="channel.params.now"/>
+</c:otherwise>
+</c:choose>
+<fmt:message key="channel.params.and"/>
+<c:choose>
+<c:when test="${channel.to > 0}">
+  ${channel.to}
+</c:when>
+<c:otherwise>
+  <fmt:message key="channel.params.now"/>
+</c:otherwise>
+</c:choose>
+<c:if test="${channel.from > 0 or channel.to > 0}">
+<c:choose>
+    <c:when test="${channel.to > 1}"><fmt:message key="channel.params.${channel.units}.plural"/></c:when>
+    <c:otherwise><fmt:message key="channel.params.${channel.units}"/></c:otherwise>
+</c:choose>
+<fmt:message key="channel.params.ago"/>
+</c:if>

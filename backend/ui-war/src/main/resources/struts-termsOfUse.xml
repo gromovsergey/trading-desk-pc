@@ -1,0 +1,33 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="termsOfUse" extends="foros-default" namespace="/">
+
+        <action name="admin/TermsOfUse/main" class="com.foros.action.admin.account.ListClobParamsAction" method="terms">
+            <result name="success" type="tiles">TermsOfUse.main</result>
+        </action>
+
+        <action name="admin/TermsOfUse/edit" class="com.foros.action.admin.account.EditClobParamAction" method="edit">
+            <result name="success" type="tiles">TermsOfUse.edit</result>
+        </action>
+
+        <action name="admin/TermsOfUse/save" class="com.foros.action.admin.account.SaveClobParamAction" method="save">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/TermsOfUse/main</param>
+                <param name="accountId">${accountId}</param>
+            </result>
+            <result name="input" type="tiles">TermsOfUse.edit</result>
+            <result name="version">
+                <param name="location">/admin/TermsOfUse/edit.action</param>
+            </result>
+        </action>
+
+        <action name="*/TermsOfUse" class="com.foros.action.admin.account.ViewTermsAction" method="view">
+            <result name="success" type="tiles">TermsOfUse.view</result>
+        </action>
+
+    </package>
+</struts>

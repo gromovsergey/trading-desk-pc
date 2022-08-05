@@ -1,0 +1,62 @@
+<mat-form-field class="width-full">
+  <mat-label>{{'blockName.country' | translate}}</mat-label>
+  <input matInput readonly value="{{L10nCountries[countryCode] | translate}}">
+</mat-form-field>
+
+<div class="form-group mb-2" >
+  <label>{{'flight.blockName.addedLocations' | translate}}</label>
+
+  <div *ngIf="!waitGeoData && (locations?.length || addresses?.length)" class="geo-list-group">
+    <div class="geo-list-group-item" *ngFor="let location of locations" >
+      <div class="geo-place">{{location.name}}</div>
+    </div>
+
+    <div class="geo-list-group-item" *ngFor="let address of addresses">
+      <div class="geo-place">
+        {{'flight.notification.address.withinRadius' | translate}}
+        {{address.radius}}
+        {{L10nDistanceUnits[address.radiusUnits] | translate}}
+        {{'flight.notification.address.of' | translate}}
+        {{address.address}}
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="!waitGeoData && !locations.length && !addresses.length">
+    {{'flight.notification.noLocationsAdded' | translate}}
+  </p>
+
+  <ui-info-panel type="danger" *ngIf="!waitGeoData && locationsError !== null">
+    {{locationsError}}
+  </ui-info-panel>
+</div>
+
+<div class="form-group">
+  <label>{{'flight.blockName.excludedLocations' | translate}}</label>
+
+  <div *ngIf="!waitExcludedGeoData && (excludedLocations?.length || excludedAddresses?.length)" class="geo-list-group">
+    <div class="geo-list-group-item" *ngFor="let location of excludedLocations">
+      <div class="geo-place">{{location.name}}</div>
+    </div>
+
+    <div class="geo-list-group-item" *ngFor="let address of excludedAddresses">
+      <div class="geo-place">
+        {{'flight.notification.address.withinRadius' | translate}}
+        {{address.radius}}
+        {{L10nDistanceUnits[address.radiusUnits] | translate}}
+        {{'flight.notification.address.of' | translate}}
+        {{address.address}}
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="!waitExcludedGeoData && !excludedLocations.length && !excludedAddresses.length">
+    {{'flight.notification.noLocationsExcluded' | translate}}
+  </p>
+
+  <ui-info-panel type="danger" *ngIf="!waitExcludedGeoData && excludedLocationsError !== null">
+    {{excludedLocationsError}}
+  </ui-info-panel>
+</div>
+
+<ui-loading *ngIf="waitGeoData" [overlay]="true"></ui-loading>

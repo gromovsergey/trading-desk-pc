@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+       default-lazy-init="true">
+
+    <!--<context:annotation-config/>
+    <context:component-scan base-package="com.foros.test" />-->
+
+    <bean class="com.foros.session.campaign.CampaignServiceBean"/>
+    <bean class="com.foros.session.campaign.BulkCampaignToolsServiceBean"/>
+    <bean class="com.foros.session.campaign.AdvertiserDashboardServiceBean"/>
+    <bean class="com.foros.session.channel.BulkChannelToolsServiceBean"/>
+    <bean class="com.foros.session.creative.CreativeServiceBean"/>
+    <bean class="com.foros.session.creative.DisplayCreativeServiceBean"/>
+    <bean class="com.foros.session.creative.CreativeSizeServiceBean"/>
+    <bean class="com.foros.session.template.OptionServiceBean"/>
+    <bean class="com.foros.session.template.ApplicationFormatServiceBean"/>
+    <bean class="com.foros.session.template.OptionGroupServiceBean"/>
+    <bean class="com.foros.session.template.TemplateServiceBean"/>
+    <bean class="com.foros.session.admin.accountType.AccountTypeServiceBean"/>
+    <bean class="com.foros.session.reporting.ReportsServiceBean"/>
+    <bean class="com.foros.reporting.serializer.xlsx.ExcelStylesRegistry"/>
+    <bean class="com.foros.session.birt.BirtReportServiceBean"/>
+    <bean class="com.foros.session.campaign.CampaignCreativeGroupServiceBean"/>
+    <bean class="com.foros.session.campaign.CtrServiceBean"/>
+    <bean class="com.foros.session.account.AccountServiceBean"/>
+    <bean class="com.foros.session.account.yandex.advertiser.YandexTnsAdvertiserServiceBean"/>
+    <bean class="com.foros.session.account.yandex.brand.YandexTnsBrandServiceBean"/>
+    <bean class="com.foros.session.colocation.ColocationServiceBean"/>
+    <bean class="com.foros.session.security.UserServiceBean"/>
+    <bean class="com.foros.session.security.UserCredentialServiceBean"/>
+    <bean class="com.foros.session.site.SiteServiceBean"/>
+    <bean class="com.foros.session.site.TagsServiceBean"/>
+    <bean class="com.foros.session.site.MockTagsPreviewServiceBean"/>
+    <bean class="com.foros.session.admin.userRole.UserRoleServiceBean"/>
+    <bean class="com.foros.session.admin.currency.CurrencyServiceBean"/>
+    <bean class="com.foros.session.admin.country.CountryServiceBean"/>
+    <bean class="com.foros.session.UtilityServiceBean"/>
+    <bean class="com.foros.session.campaign.CampaignCreativeServiceBean"/>
+    <bean class="com.foros.session.creative.CreativeCategoryServiceBean"/>
+    <bean class="com.foros.session.campaign.CCGKeywordServiceBean"/>
+    <bean class="com.foros.session.site.SiteUploadServiceBean"/>
+    <bean class="com.foros.session.site.creativeApproval.SiteCreativeApprovalServiceBean"/>
+    <bean class="com.foros.audit.changes.DatabaseChangeAdapterBean"/>
+    <bean class="com.foros.audit.changes.DatabaseChangesServiceBean"/>
+    <bean class="com.foros.session.action.ActionServiceBean"/>
+    <bean class="com.foros.service.mock.ChannelSearchBean"/>
+    <bean class="com.foros.session.channel.TriggerServiceBean"/>
+    <bean class="com.foros.session.creative.MockCreativePreviewServiceBean"/>
+    <bean class="com.foros.session.cache.CacheServiceBean"/>
+    <bean class="com.foros.session.admin.currencyExchange.CurrencyExchangeServiceBean"/>
+    <bean class="com.foros.session.admin.globalParams.GlobalParamsServiceBean"/>
+    <bean class="com.foros.session.admin.walledGarden.WalledGardenServiceBean"/>
+    <bean name="JBossChangePublisherServiceBean" class="com.foros.session.cache.changes.JBossChangePublisherServiceBean"/>
+    <bean class="com.foros.session.workflow.WorkflowServiceBean"/>
+    <bean class="com.foros.cache.MapCacheManager"/>
+    <bean class="com.foros.session.status.ApprovalServiceBean"/>
+    <bean class="com.foros.session.status.DisplayStatusServiceBean"/>
+    <bean class="com.foros.session.status.StatusServiceBean"/>
+    <bean class="com.foros.session.channel.service.AudienceChannelServiceBean"/>
+    <bean class="com.foros.session.channel.service.BehavioralChannelServiceBean"/>
+    <bean class="com.foros.session.channel.service.ExpressionChannelServiceBean"/>
+    <bean class="com.foros.session.channel.service.ExpressionServiceBean"/>
+    <bean class="com.foros.session.channel.service.DiscoverChannelServiceBean"/>
+    <bean class="com.foros.session.channel.service.SearchChannelServiceBean"/>
+    <bean class="com.foros.session.channel.service.KeywordChannelServiceBean"/>
+    <bean name="auditService" class="com.foros.session.security.AuditServiceBeanStub"/>
+    <bean class="com.foros.session.security.auditLog.SearchAuditServiceBean"/>
+    <bean class="com.foros.security.AuthenticationServiceBean"/>
+    <bean class="com.foros.security.UserAuthenticationValidations"/>
+    <bean class="com.foros.security.AccessStampService"/>
+    <bean class="com.foros.session.site.WDTagServiceBean"/>
+    <bean class="com.foros.service.mock.WDTagPreviewServiceBeanMock"/>
+    <bean class="com.foros.session.admin.categoryChannel.CategoryChannelServiceBean"/>
+    <bean class="com.foros.session.finance.AccountsPayableFinanceServiceBean"/>
+    <bean class="com.foros.util.command.executor.HibernateWorkExecutorServiceBean"/>
+    <bean class="com.foros.session.query.QueryExecutorServiceBean" />
+    <bean class="com.foros.changes.ChangesServiceBean"/>
+    <bean name="changesService" class="com.foros.session.security.changes.ChangeServiceBeanMock"/>
+    <bean class="com.foros.config.MockConfigService"/>
+    <bean class="com.foros.session.admin.behavioralParameters.BehavioralParamsListServiceBean"/>
+    <bean class="com.foros.session.channel.service.DiscoverChannelListServiceBean"/>
+    <bean class="com.foros.session.GenericEntityServiceBean"/>
+    <bean class="com.foros.service.mock.CurrentUserServiceMock">
+        <property name="currentUserServiceBean">
+            <bean class="com.foros.session.CurrentUserServiceBean"/>
+        </property>
+    </bean>
+    <bean class="com.foros.session.admin.bannedChannel.BannedChannelServiceBean"/>
+    <bean class="com.foros.session.admin.fraudConditions.FraudConditionsServiceBean"/>
+    <bean class="com.foros.session.channel.triggerQA.TriggerQAServiceBean"/>
+    <bean class="com.foros.session.channel.service.ChannelMessagingServiceBean"/>
+    <bean class="com.foros.tx.TransactionSupportServiceMock"/>
+    <bean class="com.foros.session.channel.geo.GeoChannelServiceBean"/>
+    <bean class="com.foros.session.opportunity.OpportunityServiceBean"/>
+    <bean class="com.foros.session.campaignAllocation.CampaignAllocationServiceBean"/>
+    <bean class="com.foros.session.channel.service.DeviceChannelServiceBean"/>
+    <bean class="com.foros.session.campaignCredit.CampaignCreditServiceBean"/>
+    <bean class="com.foros.session.campaignCredit.CampaignCreditAllocationServiceBean"/>
+    <bean class="com.foros.session.regularchecks.RegularReviewServiceBean"/>
+    <bean class="com.foros.session.channel.targeting.TargetingChannelService"/>
+    <bean class="com.foros.session.channel.service.BulkChannelServiceBean"/>
+    <bean class="com.foros.session.QuickReferenceHolderService"/>
+    <bean class="com.foros.session.TestLoggingJdbcTemplate"/>
+    <bean class="com.foros.session.creative.SizeTypeServiceBean"/>
+
+    <!-- Report services -->
+    <bean class="com.foros.session.reporting.custom.olap.CustomPredefinedOlapReportService"/>
+    <bean class="com.foros.session.reporting.advertiser.olap.OlapTextAdvertiserReportService"/>
+    <bean class="com.foros.session.reporting.advertiser.olap.OlapDisplayAdvertiserReportService"/>
+    <bean class="com.foros.session.reporting.channeltriggers.ChannelTriggerReportService"/>
+    <bean class="com.foros.session.reporting.channel.ChannelReportService"/>
+    <bean class="com.foros.session.reporting.referrer.ReferrerReportService"/>
+    <bean class="com.foros.session.reporting.siteChannels.SiteChannelsReportService"/>
+    <bean class="com.foros.session.reporting.channelSites.ChannelSitesReportService"/>
+    <bean class="com.foros.session.reporting.publisher.PublisherReportService"/>
+    <bean class="com.foros.session.reporting.campaignAllocationHistory.CampaignAllocationHistoryReportService"/>
+    <bean class="com.foros.session.reporting.dashboard.PublisherDashboardService"/>
+    <bean class="com.foros.session.reporting.isp.ISPReportService"/>
+    <bean class="com.foros.session.reporting.activeAdvertisers.ActiveAdvertisersReportService"/>
+    <bean class="com.foros.session.reporting.campaignOverview.CampaignOverviewReportService"/>
+    <bean class="com.foros.session.reporting.publisherOverview.PublisherOverviewReportService"/>
+    <bean class="com.foros.session.reporting.profiling.ProfilingReportService"/>
+    <bean class="com.foros.session.reporting.conversions.ConversionsReportService"/>
+    <bean class="com.foros.session.reporting.invitations.InvitationsReportService"/>
+    <bean class="com.foros.session.reporting.webwise.WebwiseReportService"/>
+    <bean class="com.foros.session.reporting.channelInventoryForecast.ChannelInventoryForecastReportService"/>
+    <bean class="com.foros.session.reporting.inventoryEstimation.InventoryEstimationReportService"/>
+    <bean class="com.foros.session.reporting.waterfall.WaterfallReportService"/>
+    <bean class="com.foros.session.reporting.waterfall.SelectionFailuresReportService"/>
+    <bean class="com.foros.session.reporting.waterfall.SelectionFailuresTrendReportService"/>
+    <bean class="com.foros.session.reporting.conversionPixels.ConversionPixelsReportService"/>
+    <bean class="com.foros.session.ImpalaJdbcTemplate"/>
+
+    <bean class="com.foros.session.RestrictionTestServiceBean"/>
+
+    <!-- Security framework -->
+    <bean class="com.foros.aspect.el.OgnlServiceBean"/>
+    <bean class="com.foros.restriction.RestrictionServiceBean"/>
+    <bean name="realPermissionService" class="com.foros.restriction.permission.PermissionServiceBean"/>
+    <bean class="com.foros.restriction.invocation.RestrictionInvocationServiceBean"/>
+    <bean class="com.foros.aspect.registry.ElFunctionRegistryServiceBean"/>
+    <bean class="com.foros.restriction.registry.PermissionRegistryServiceBean"/>
+    <bean class="com.foros.aspect.registry.GlobalAspectDeclarationRegistry"/>
+    <bean class="com.foros.aspect.registry.GlobalAspectRegistry"/>
+    <bean class="com.foros.session.restriction.TestEntityRestrictions"/>
+    <bean class="com.foros.aspect.registry.AspectDescriptorFactoryServiceBean"/>
+    <bean class="com.foros.session.auctionSettings.AuctionSettingsServiceBean"/>
+
+    <!-- Validation framework -->
+    <bean class="com.foros.validation.ValidationServiceBean"/>
+    <bean class="com.foros.service.mock.MockValidationServiceBean" name="validationService"/>
+    <bean class="com.foros.validation.bean.BeansValidationServiceBean"/>
+    <bean class="com.foros.validation.ValidationInvocationServiceBean"/>
+    <bean class="com.foros.session.BeanValidations"/>
+    <bean class="com.foros.session.admin.currency.CurrencyValidations"/>
+    <bean class="com.foros.session.admin.accountType.AccountTypeValidations"/>
+    <bean class="com.foros.session.admin.bannedChannel.BannedChannelValidations"/>
+    <bean class="com.foros.session.campaign.CampaignValidations"/>
+    <bean class="com.foros.session.campaign.CampaignCreativeGroupValidations"/>
+    <bean class="com.foros.session.campaign.CampaignCreativeValidations"/>
+    <bean class="com.foros.session.template.OptionValidations"/>
+    <bean class="com.foros.session.template.OptionValueValidations"/>
+    <bean class="com.foros.session.account.AccountValidations"/>
+    <bean class="com.foros.session.finance.AdvertisingAccountValidations"/>
+    <bean class="com.foros.session.finance.AccountsPayableAccountValidations"/>
+    <bean class="com.foros.session.site.SiteValidations"/>
+    <bean class="com.foros.session.site.TagValidations"/>
+    <bean class="com.foros.session.site.WDTagValidations"/>
+    <bean class="com.foros.session.security.UserValidations" />
+    <bean class="com.foros.session.bulk.OperationsValidations"/>
+    <bean class="com.foros.session.template.TemplateValidations"/>
+    <bean class="com.foros.session.template.TemplateFileValidations"/>
+    <bean class="com.foros.session.creative.CreativeValidations"/>
+    <bean class="com.foros.session.BaseValidations"/>
+    <bean class="com.foros.session.creative.CreativeCategoryValidations"/>
+    <bean class="com.foros.session.creative.CreativeSizeValidations"/>
+    <bean class="com.foros.session.campaign.CCGKeywordValidations"/>
+    <bean class="com.foros.session.admin.behavioralParameters.BehavioralParamsListValidations"/>
+    <bean class="com.foros.session.admin.fraudConditions.FraudConditionValidations"/>
+    <bean class="com.foros.session.channel.AdvertisingChannelValidations"/>
+    <bean class="com.foros.session.channel.ExpressionChannelValidations"/>
+    <bean class="com.foros.session.channel.BehavioralChannelValidations"/>
+    <bean class="com.foros.session.channel.AudienceChannelValidations"/>
+    <bean class="com.foros.session.channel.DiscoverChannelValidations"/>
+    <bean class="com.foros.session.channel.BaseTriggerListValidations"/>
+    <bean class="com.foros.session.channel.BehavioralParametersValidations"/>
+    <bean class="com.foros.session.channel.BaseDiscoverChannelValidations"/>
+    <bean class="com.foros.session.channel.DiscoverChannelListValidations"/>
+    <bean class="com.foros.session.channel.KeywordChannelValidations"/>
+    <bean class="com.foros.session.channel.BulkChannelValidations"/>
+    <bean class="com.foros.session.admin.categoryChannel.CategoryChannelValidations"/>
+    <bean class="com.foros.session.frequencyCap.FrequencyCapValidations"/>
+    <bean class="com.foros.session.admin.userRole.UserRoleValidations"/>
+    <bean class="com.foros.session.opportunity.OpportunityValidations"/>
+    <bean class="com.foros.session.campaignAllocation.CampaignAllocationsValidations"/>
+    <bean class="com.foros.session.campaignCredit.CampaignCreditValidations"/>
+    <bean class="com.foros.session.campaignCredit.CampaignCreditAllocationValidations"/>
+    <bean class="com.foros.session.UrlValidations"/>
+    <bean class="com.foros.session.finance.InvoiceValidations"/>
+    <bean class="com.foros.session.reporting.ReportingValidations"/>
+    <bean class="com.foros.session.regularchecks.RegularReviewValidations"/>
+    <bean class="com.foros.session.channel.LanguageChannelValidations"/>
+    <bean class="com.foros.session.auctionSettings.AuctionSettingsValidations"/>
+    <bean class="com.foros.session.action.ActionValidations"/>
+    <bean class="com.foros.session.creative.SizeTypeValidations"/>
+    <bean class="com.foros.cache.local.LocalizedResourcesLocalCacheImpl"/>
+    <bean class="com.foros.cache.local.DynamicResourcesLocalCacheImpl"/>
+
+    <!-- Common restrictions -->
+    <bean class="com.foros.session.restriction.EntityRestrictions"/>
+
+    <!-- Report's restrictions -->
+    <bean class="com.foros.session.reporting.ReportRestrictions"/>
+    <bean class="com.foros.session.birt.BirtReportRestrictions"/>
+
+    <!-- Campaign's, CCG's etc restrictions -->
+    <bean class="com.foros.session.campaign.AdvertiserEntityRestrictions"/>
+    <bean class="com.foros.session.campaign.CreativeGroupRestrictions"/>
+    <bean class="com.foros.session.campaign.BulkTextCampaignUploadRestrictions"/>
+    <bean class="com.foros.session.campaignAllocation.CampaignAllocationRestrictions"/>
+    <bean class="com.foros.session.campaignCredit.CampaignCreditRestrictions"/>
+
+    <!-- Site's, Tag's WDTag's restrictions -->
+    <bean class="com.foros.session.site.PublisherEntityRestrictions"/>
+
+    <!-- Colocation's etc restrictions -->
+    <bean class="com.foros.session.colocation.ColocationRestrictions"/>
+
+    <!-- Channel's etc restrictions -->
+    <bean class="com.foros.session.channel.service.AdvertisingChannelRestrictions"/>
+    <bean class="com.foros.session.channel.service.ChannelMatchTestRestrictions"/>
+    <bean class="com.foros.session.channel.service.ChannelRestrictions"/>
+    <bean class="com.foros.session.channel.service.KeywordChannelRestrictions"/>
+    <bean class="com.foros.session.channel.service.BehavioralParamsRestrictions"/>
+
+    <!-- Account's restrictions -->
+    <bean class="com.foros.session.account.AccountRestrictions"/>
+    <bean class="com.foros.session.account.AccountsPayableAccountRestrictions"/>
+    <bean class="com.foros.session.account.AdvertisingAccountRestrictions"/>
+    <bean class="com.foros.session.account.AgencyAdvertiserAccountRestrictions"/>
+    <bean class="com.foros.session.security.UserRestrictions"/>
+    <bean class="com.foros.session.finance.InvoiceRestrictions"/>
+    <bean class="com.foros.session.security.ContextRestrictions"/>
+    <bean class="com.foros.session.auctionSettings.AuctionSettingsRestrictions"/>
+
+    <!-- Admin's restrictions -->
+    <bean class="com.foros.session.admin.accountType.AccountTypeRestrictions"/>
+    <bean class="com.foros.session.admin.country.CountryRestrictions"/>
+    <bean class="com.foros.session.admin.currency.CurrencyRestrictions"/>
+    <bean class="com.foros.session.admin.currencyExchange.CurrencyExchangeRestrictions"/>
+
+    <bean class="com.foros.session.admin.FileManagerRestrictions"/>
+    <bean class="com.foros.session.admin.globalParams.GlobalParamsRestrictions"/>
+    <bean class="com.foros.session.admin.WDFrequencyCapsRestrictions"/>
+    <bean class="com.foros.session.admin.wdRequestMapping.WDRequestMappingRestrictions"/>
+
+    <bean class="com.foros.session.admin.bannedChannel.BannedChannelRestrictions"/>
+
+    <bean class="com.foros.session.admin.fraudConditions.FraudConditionsRestrictions"/>
+    <bean class="com.foros.session.admin.AdopsDashboardRestrictions"/>
+    <bean class="com.foros.session.admin.searchEngine.SearchEngineRestrictions"/>
+    <!-- Creative's restrictions -->
+    <bean class="com.foros.session.creative.CreativeCategoryRestrictions"/>
+    <bean class="com.foros.session.creative.CreativeSizeRestrictions"/>
+    <bean class="com.foros.session.template.OptionRestrictions"/>
+    <bean class="com.foros.session.template.OptionGroupRestrictions"/>
+    <bean class="com.foros.session.template.TemplateRestrictions"/>
+    <bean class="com.foros.session.template.ApplicationFormatRestrictions"/>
+
+    <!-- Channel's restrictions -->
+    <bean class="com.foros.session.admin.categoryChannel.CategoryChannelRestrictions"/>
+    <bean class="com.foros.session.channel.service.DiscoverChannelRestrictions"/>
+    <bean class="com.foros.session.channel.service.DeviceChannelRestrictions"/>
+
+    <!--  KWM Tool's restrictions -->
+    <bean class="com.foros.session.admin.kwmTool.KWMToolRestrictions"/>
+
+    <bean class="com.foros.session.security.AuditLogRestrictions"/>
+
+    <bean class="com.foros.session.admin.userRole.UserRoleRestrictions"/>
+
+    <bean class="com.foros.session.admin.walledGarden.WalledGardenRestrictions"/>
+    <bean class="com.foros.session.channel.triggerQA.TriggerQARestrictions"/>
+	<bean class="com.foros.session.channel.geo.GeoChannelRestrictions"/>
+
+    <!-- Opportunities restrictions -->
+    <bean class="com.foros.session.opportunity.OpportunityRestrictions"/>
+
+    <!-- API Restrictions -->
+    <bean class="com.foros.session.security.APIRestrictions"/>
+
+    <!-- Placements Blacklist Restrictions -->
+    <bean class="com.foros.session.channel.service.PlacementsBlacklistRestrictions"/>
+
+    <bean class="com.foros.session.fileman.PathProviderServiceBean"/>
+    <bean class="com.foros.service.mock.AdvertisingFinanceServiceMock"/>
+
+    <bean class="com.foros.service.mock.MockFactory"><property name="clazz" value="javax.ejb.SessionContext"/></bean>
+    <bean class="com.foros.service.mock.MockFactory"><property name="clazz" value="com.foros.session.MailService"/></bean>
+    <bean class="com.foros.service.mock.MockFactory"><property name="clazz" value="com.foros.session.security.LdapService"/></bean>
+    <bean name="permissionService" class="com.foros.service.mock.MockFactory"><property name="clazz" value="com.foros.restriction.permission.PermissionService"/></bean>
+
+    <!-- Test Factories -->
+    <bean class="com.foros.test.factory.InternalAccountTypeTestFactory"/>
+    <bean class="com.foros.test.factory.AgencyAccountTypeTestFactory"/>
+    <bean class="com.foros.test.factory.AdvertiserAccountTypeTestFactory"/>
+    <bean class="com.foros.test.factory.PublisherAccountTypeTestFactory"/>
+    <bean class="com.foros.test.factory.IspAccountTypeTestFactory"/>
+    <bean class="com.foros.test.factory.CmpAccountTypeTestFactory"/>
+
+    <bean class="com.foros.test.factory.InternalAccountTestFactory"/>
+    <bean class="com.foros.test.factory.AdvertiserAccountTestFactory"/>
+    <bean class="com.foros.test.factory.PublisherAccountTestFactory"/>
+    <bean class="com.foros.test.factory.IspAccountTestFactory"/>
+    <bean class="com.foros.test.factory.AgencyAccountTestFactory"/>
+    <bean class="com.foros.test.factory.CmpAccountTestFactory"/>
+
+    <bean class="com.foros.test.factory.CountryTestFactory"/>
+    <bean class="com.foros.test.factory.CurrencyTestFactory"/>
+    <bean class="com.foros.test.factory.CreativeCategoryTestFactory"/>
+
+    <bean class="com.foros.test.factory.TextCampaignTestFactory"/>
+    <bean class="com.foros.test.factory.DisplayCampaignTestFactory"/>
+    <bean class="com.foros.test.factory.TextCCGTestFactory"/>
+    <bean class="com.foros.test.factory.DisplayCCGTestFactory"/>
+    <bean class="com.foros.test.factory.DisplayCreativeLinkTestFactory"/>
+    <bean class="com.foros.test.factory.TextCreativeLinkTestFactory"/>
+    <bean class="com.foros.test.factory.CampaignCreditTestFactory"/>
+    <bean class="com.foros.test.factory.CampaignCreditAllocationTestFactory"/>
+    <bean class="com.foros.test.factory.CampaignAllocationTestFactory"/>
+
+    <bean class="com.foros.test.factory.DisplayCreativeTestFactory"/>
+    <bean class="com.foros.test.factory.TextCreativeTestFactory"/>
+
+    <bean class="com.foros.test.factory.OptionTestFactory"/>
+    <bean class="com.foros.test.factory.OptionGroupTestFactory"/>
+    <bean class="com.foros.test.factory.CreativeTemplateTestFactory"/>
+    <bean class="com.foros.test.factory.DisplayCreativeTemplateTestFactory"/>
+    <bean class="com.foros.test.factory.TextCreativeTemplateTestFactory"/>
+    <bean class="com.foros.test.factory.DiscoverTemplateTestFactory"/>
+    <bean class="com.foros.test.factory.CreativeSizeTestFactory"/>
+    <bean class="com.foros.test.factory.ApplicationFormatTestFactory"/>
+
+    <bean class="com.foros.test.factory.BehavioralChannelTestFactory"/>
+    <bean class="com.foros.test.factory.ExpressionChannelTestFactory"/>
+    <bean class="com.foros.test.factory.AudienceChannelTestFactory"/>
+    <bean class="com.foros.test.factory.DeviceChannelTestFactory"/>
+    <bean class="com.foros.test.factory.DiscoverChannelTestFactory"/>
+    <bean class="com.foros.test.factory.CategoryChannelTestFactory"/>
+    <bean class="com.foros.test.factory.BehavioralParamsTestFactory"/>
+    <bean class="com.foros.test.factory.DiscoverChannelListTestFactory"/>
+
+    <bean class="com.foros.test.factory.ActionTestFactory"/>
+    <bean class="com.foros.test.factory.BirtReportTestFactory"/>
+
+    <bean class="com.foros.test.factory.ColocationTestFactory"/>
+
+    <bean class="com.foros.test.factory.SiteTestFactory"/>
+    <bean class="com.foros.test.factory.TagsTestFactory"/>
+    <bean class="com.foros.test.factory.WDTagTestFactory"/>    
+
+    <bean id="userTestFactory" class="com.foros.test.factory.UserTestFactory"/>
+    <bean class="com.foros.test.factory.UserRoleTestFactory"/>
+    <bean class="com.foros.test.factory.TnsAdvertiserTestFactory"/>
+    <bean class="com.foros.test.factory.TnsBrandTestFactory"/>
+
+    <bean class="com.foros.test.factory.InvoiceTestFactory"/>
+    <bean class="com.foros.test.factory.WalledGardenTestFactory"/>
+    <bean class="com.foros.test.factory.FraudConditionTestFactory"/>
+    <bean class="com.foros.test.factory.OpportunityTestFactory"/>
+
+    <bean class="com.foros.test.factory.SizeTypeTestFactory"/>
+
+    <bean class="com.foros.test.TestUtilityService"/>
+    <bean class="com.foros.test.UserDefinitionFactory"/>
+    <bean class="com.foros.session.admin.country.ctra.CTRAlgorithmServiceBean"/>
+
+    <bean class="com.foros.reporting.mock.OlapQueryProviderMock"/>
+
+    <bean class="com.foros.test.factory.GeoChannelTestFactory"/>
+
+    <bean class="com.foros.session.channel.geo.GeoChannelValidations"/>
+
+    <bean class="com.foros.test.factory.StatisticTestFactory"/>
+</beans>

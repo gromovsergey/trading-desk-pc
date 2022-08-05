@@ -1,0 +1,101 @@
+<ng-container *ngIf="showOption && option">
+  <ng-container [ngSwitch]="option.type.toUpperCase()">
+
+    <mat-form-field class="width-full" *ngSwitchCase="'TEXT'">
+      <mat-label>{{option.defaultName}}</mat-label>
+      <textarea [(ngModel)]="option.value"
+                [name]="option.type.toUpperCase()"
+                rows="10" matInput
+                (ngModelChange)="changed()"></textarea>
+      <ui-hint *ngIf="option.defaultLabel" matSuffix [text]="option.defaultLabel"></ui-hint>
+    </mat-form-field>
+
+    <mat-form-field class="width-full" *ngSwitchCase="'HTML'">
+      <mat-label>{{option.defaultName}}</mat-label>
+      <textarea [(ngModel)]="option.value"
+                [name]="option.type.toUpperCase()"
+                rows="10" matInput
+                (ngModelChange)="changed()"></textarea>
+      <ui-hint *ngIf="option.defaultLabel" matSuffix [text]="option.defaultLabel"></ui-hint>
+    </mat-form-field>
+
+    <mat-form-field class="width-full" *ngSwitchCase="'INTEGER'">
+      <mat-label>{{option.defaultName}}</mat-label>
+      <input type="number" matInput
+             [name]="option.type.toUpperCase()"
+             [required]="option.required"
+             [(ngModel)]="option.value"
+             (ngModelChange)="changed()"
+             min="-99999999999999"
+             max="99999999999999">
+      <ui-hint *ngIf="option.defaultLabel" matSuffix [text]="option.defaultLabel"></ui-hint>
+    </mat-form-field>
+
+    <mat-form-field class="width-full" *ngSwitchCase="'ENUM'">
+      <mat-label>{{option.defaultName}}</mat-label>
+      <mat-select [(ngModel)]="option.value"
+                  (ngModelChange)="changed()">
+        <mat-option *ngFor="let enum of option.enumValues"
+                    [value]="enum.value">{{enum.name}}</mat-option>
+      </mat-select>
+      <ui-hint *ngIf="option.defaultLabel" matSuffix [text]="option.defaultLabel"></ui-hint>
+    </mat-form-field>
+
+    <div class="mb-2" *ngSwitchCase="'FILE'">
+      <label>{{option.defaultName}}</label>
+      <ui-file-upload
+        [accountId]="accountId"
+        [value]="option.value"
+        (beginUpload)="fileUploaded($event)"
+        title="{{'button.upload' | translate}}"
+        clearBtnTitle="{{'button.clear' | translate}}"></ui-file-upload>
+    </div>
+
+    <div class="mb-2" *ngSwitchCase="'DYNAMIC_FILE'">
+      <label>{{option.defaultName}}</label>
+      <ui-file-upload
+        [accountId]="accountId"
+        [value]="option.value"
+        (beginUpload)="fileUploaded($event)"
+        title="{{'button.upload' | translate}}"
+        clearBtnTitle="{{'button.clear' | translate}}"></ui-file-upload>
+    </div>
+
+    <div class="mb-2" *ngSwitchCase="'FILE_URL'">
+      <label>{{option.defaultName}}</label>
+      <ui-file-upload
+        [accountId]="accountId"
+        [value]="option.value"
+        (beginUpload)="fileUploaded($event)"
+        title="{{'button.upload' | translate}}"
+        clearBtnTitle="{{'button.clear' | translate}}"></ui-file-upload>
+    </div>
+
+    <mat-form-field class="width-full" *ngSwitchCase="'COLOR'">
+      <mat-label>{{option.defaultName}}</mat-label>
+      <input matInput
+             [ngxMatColorPicker]="picker"
+             [name]="option.type.toUpperCase()"
+             [required]="option.required"
+             [(ngModel)]="option.value"
+             (ngModelChange)="changed()">
+      <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+      <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+    </mat-form-field>
+
+    <mat-form-field class="width-full" *ngSwitchDefault>
+      <mat-label>{{option.defaultName}}</mat-label>
+      <input type="text" matInput
+             [name]="option.type.toUpperCase()"
+             [required]="option.required"
+             [(ngModel)]="option.value"
+             (ngModelChange)="changed()"
+             maxlength="2000">
+      <ui-hint *ngIf="option.defaultLabel" matSuffix [text]="option.defaultLabel"></ui-hint>
+    </mat-form-field>
+  </ng-container>
+
+  <ui-info-panel *ngIf="errors" type="danger">
+    <p *ngFor="let err of errors">{{err}}</p>
+  </ui-info-panel>
+</ng-container>

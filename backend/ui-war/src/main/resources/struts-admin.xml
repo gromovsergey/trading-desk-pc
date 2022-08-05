@@ -1,0 +1,32 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="admin" extends="foros-default" namespace="/">
+
+        <action name="admin/auditLog/view" class="com.foros.action.security.auditLog.ViewAuditLogAction" method="view">
+            <result name="success" type="tiles">AuditLog.view</result>
+        </action>
+
+        <action name="admin/auditLog/viewLogRecords" class="com.foros.action.security.auditLog.ViewAuditLogAction" method="viewRecords">
+            <result name="success" type="tiles">AuditLog.viewRecords</result>
+        </action>
+
+        <action name="admin/auditLog/viewTriggers" class="com.foros.action.security.auditLog.ViewTriggersAuditLog" method="view">
+            <result name="success">/auditLog/viewTriggers.jsp</result>
+        </action>
+
+        <action name="admin/admin" class="com.foros.action.BaseActionSupport" method="execute">
+            <interceptor-ref name="defaultForosStack">
+                <param name="csrf.readOnly">true</param>
+            </interceptor-ref>
+            <result name="success" type="tiles">admin.Admin</result>
+        </action>
+
+        <action name="*/Contacts" class="com.foros.action.admin.ContactsAction" method="view">
+            <result name="success" type="tiles">Contacts.view</result>
+        </action>
+
+    </package>
+</struts>

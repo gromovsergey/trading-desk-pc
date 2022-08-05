@@ -1,0 +1,208 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <package abstract="true" name="advertisingChannels" extends="foros-default">
+
+        <action name="contextMain" class="com.foros.action.channel.ListExternalChannelAction" method="list">
+            <result name="success" type="tiles">external.channel.main</result>
+        </action>
+
+        <action name="view" class="com.foros.action.channel.ViewChannelAction" method="redirect">
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+        </action>
+
+        <action name="redirect" class="com.foros.action.channel.RedirectChannelAction">
+            <result name="ExpressionChannel" type="redirectAction">
+                <param name="actionName">ExpressionChannel/view</param>
+                <param name="id">${id}</param>
+                <param name="exceedsLimit">${#parameters.exceedsLimit}</param>
+                <param name="sentSuccessfully">${#parameters.sentSuccessfully}</param>
+                <param name="sentSuccessfullyToMe">${#parameters.sentSuccessfullyToMe}</param>
+                <param name="suppressEmptyParameters">true</param>
+            </result>
+            <result name="BehavioralChannel" type="redirectAction">
+                <param name="actionName">BehavioralChannel/view</param>
+                <param name="id">${id}</param>
+                <param name="exceedsLimit">${#parameters.exceedsLimit}</param>
+                <param name="sentSuccessfully">${#parameters.sentSuccessfully}</param>
+                <param name="sentSuccessfullyToMe">${#parameters.sentSuccessfullyToMe}</param>
+                <param name="suppressEmptyParameters">true</param>
+            </result>
+            <result name="AudienceChannel" type="redirectAction">
+                <param name="actionName">AudienceChannel/view</param>
+                <param name="id">${id}</param>
+                <param name="exceedsLimit">${#parameters.exceedsLimit}</param>
+                <param name="sentSuccessfully">${#parameters.sentSuccessfully}</param>
+                <param name="sentSuccessfullyToMe">${#parameters.sentSuccessfullyToMe}</param>
+                <param name="suppressEmptyParameters">true</param>
+            </result>
+            <result name="DiscoverChannel" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="namespace">/admin/DiscoverChannel</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="DiscoverChannelList" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="namespace">/admin/DiscoverChannelList</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="KeywordChannel" type="redirectAction">
+                <param name="actionName">admin/KeywordChannel/view</param>
+                <param name="namespace">/</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="CategoryChannel" type="redirectAction">
+                <param name="actionName">admin/CategoryChannel/view</param>
+                <param name="namespace">/</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="DeviceChannel" type="redirectAction">
+                <param name="actionName">admin/DeviceChannel/view</param>
+                <param name="namespace">/</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="GeoChannel" type="redirectAction">
+                <param name="actionName">admin/GeoChannel/view</param>
+                <param name="namespace">/</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="channelStats" class="com.foros.action.channel.ShowChannelStatsAction" method="loadChannelStats">
+            <result name="success">/channel/channelStatsView.jsp</result>
+        </action>
+
+        <action name="campaignAssociations" class="com.foros.action.channel.ChannelCampaignAssociationsAction" method="loadCampaignAssociations">
+            <result name="success">/channel/campaignAssociationsDiv.jsp</result>
+        </action>
+
+        <!-- Bulk channel export/upload -->
+
+        <action name="export"
+                class="com.foros.action.channel.bulk.ChannelExportAction"
+                method="export">
+            <result name="input">
+                <param name="location">contextMain.action</param>
+            </result>
+        </action>
+
+        <action name="exportInternal"
+                class="com.foros.action.channel.bulk.ChannelExportInternalAction"
+                method="export">
+            <result name="input">
+                <param name="location">main.action</param>
+            </result>
+        </action>
+
+        <action name="upload/main" class="com.foros.action.channel.bulk.MainUploadChannelAction"
+                method="main">
+            <result name="success" type="tiles">channel.upload</result>
+        </action>
+
+        <action name="*upload/validate" class="com.foros.action.channel.bulk.ValidateUploadChannelAction"
+                method="validateCsv">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">31457280</param>
+            </interceptor-ref>
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">channel.upload</result>
+        </action>
+
+        <action name="upload/export" class="com.foros.action.channel.bulk.DownloadChannelAction"
+                method="export"/>
+
+        <action name="upload/template" class="com.foros.action.channel.bulk.DownloadChannelAction"
+                method="template"/>
+
+        <action name="upload/submit" class="com.foros.action.channel.bulk.SubmitUploadChannelAction"
+                method="submit">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">channel.upload</result>
+        </action>
+
+        <action name="uploadInternal/main" class="com.foros.action.channel.bulk.MainUploadInternalChannelAction"
+                method="main">
+            <result name="success" type="tiles">channel.uploadInternal</result>
+        </action>
+
+        <action name="*uploadInternal/validate" class="com.foros.action.channel.bulk.ValidateUploadChannelInternalAction"
+                method="validateCsv">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">31457280</param>
+            </interceptor-ref>
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">channel.uploadInternal</result>
+        </action>
+
+        <action name="uploadInternal/export" class="com.foros.action.channel.bulk.DownloadChannelAction"
+                method="exportInternal"/>
+
+        <action name="uploadInternal/template" class="com.foros.action.channel.bulk.DownloadChannelAction"
+                method="templateInternal"/>
+
+        <action name="uploadInternal/submit" class="com.foros.action.channel.bulk.SubmitUploadChannelInternalAction"
+                method="submit">
+            <interceptor-ref name="saveStack"/>
+            <result name="input" type="tiles">channel.uploadInternal</result>
+        </action>
+        
+    </package>
+
+    <package namespace="/admin/channel" name="advertisingChannelsAdmin" extends="advertisingChannels">
+
+        <action name="main" class="com.foros.action.admin.channel.SearchChannelsAction" method="main">
+            <result name="success" type="tiles">admin.channel.main</result>
+        </action>
+
+        <action name="search" class="com.foros.action.admin.channel.SearchChannelsAction" method="search">
+            <result name="success">/admin/channel/channelsSearchResult.jsp</result>
+        </action>
+
+        <action name="Categories/edit" class="com.foros.action.channel.EditChannelCategoriesAction"
+                method="edit">
+            <result name="input" type="tiles">channel.Categories.edit</result>
+        </action>
+
+        <action name="Categories/update" class="com.foros.action.channel.SaveChannelCategoriesAction" method="save">
+            <interceptor-ref name="saveStack"/>
+
+            <result name="success" type="chain">
+                <param name="actionName">redirect</param>
+            </result>
+            <result name="input" type="tiles">channel.Categories.edit</result>
+            <result name="version" type="chain">
+                <param name="actionName">Categories/edit</param>
+            </result>
+        </action>
+
+        <action name="channelMatch" class="com.foros.action.channel.ChannelMatchAction" method="run">
+            <result name="success" type="tiles">channelMatch.list</result>
+        </action>
+
+        <action name="channelMatch/main" class="com.foros.action.channel.ChannelMatchAction" method="main">
+            <result name="success" type="tiles">channelMatch.list</result>
+        </action>
+    </package>
+
+    <package name="externalChannels" abstract="true" extends="advertisingChannels">
+        <action name="main">
+            <result name="success" type="chain">
+                <param name="actionName">contextMain</param>
+            </result>
+        </action>
+    </package>
+
+    <package namespace="/advertiser/channel" name="advertisingChannelsAdvertiser" extends="externalChannels"/>
+    <package namespace="/cmp/channel" name="advertisingChannelsCmp" extends="externalChannels"/>
+
+    <include file="struts-behavioralChannel.xml"/>
+    <include file="struts-expressionChannel.xml"/>
+    <include file="struts-audienceChannel.xml"/>
+    <include file="struts-contactChannelUsers.xml"/>
+
+</struts>

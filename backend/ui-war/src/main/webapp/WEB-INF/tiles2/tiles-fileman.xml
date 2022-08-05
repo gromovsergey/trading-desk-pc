@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name=".FileManager" extends=".mainLayout">
+        <put-attribute name="taskTitle" value="page.title.fileManager" type="string"/>
+    </definition>
+
+    <definition name="admin.fileManager" template="/fileManager/fileManager.jsp">
+        <put-attribute name="moduleName" value="admin/fileman"/>
+    </definition>
+
+    <definition name="advertiser.fileManager" template="/fileManager/fileManager.jsp">
+        <put-attribute name="moduleName" value="advertiser/fileman"/>
+    </definition>
+
+    <definition name="publisher.fileManager" template="/fileManager/fileManager.jsp">
+        <put-attribute name="moduleName" value="publisher/fileman"/>
+    </definition>
+</tiles-definitions>

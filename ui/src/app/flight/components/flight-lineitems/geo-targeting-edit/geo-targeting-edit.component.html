@@ -1,0 +1,27 @@
+<header class="m5-bottom">
+    <mat-tab-group
+            dynamicHeight
+            mat-align-tabs="center"
+            animationDuration="{{animationDuration}}ms"
+            (selectedTabChange)="setActiveItem($event)">
+        <mat-tab *ngFor="let tab of tabSettings" [label]="tab.label | translate"></mat-tab>
+    </mat-tab-group>
+</header>
+
+<ui-info-panel
+        *ngIf="operationDone"
+        [type]="operationResult"
+        (close)="destroyInfoPanel()">
+    {{operationText | translate}}
+</ui-info-panel>
+
+<section class="main-content_container">
+    <div class="render-wrapper">
+        <ui-render #uiRender [component]="component.component" [updater]="component.initializer"></ui-render>
+    </div>
+</section>
+
+<footer class="custom-style f-wrapper">
+    <button mat-stroked-button (click)="onClose()" class="m5-right">{{'button.close' | translate}}</button>
+    <button mat-stroked-button [disabled]="disabled" (click)="onSubmit()" color="primary" class="m5-left submit-button">{{'button.save' | translate}}</button>
+</footer>

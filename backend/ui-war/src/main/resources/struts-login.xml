@@ -1,0 +1,17 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="login" extends="foros-default" namespace="/">
+        <action name="login" class="com.foros.action.security.LoginAction" method="loginPage">
+            <result name="success">/fragments/login.jsp</result>
+        </action>
+        <action name="loginerror"  class="com.foros.action.security.LoginAction" method="loginError">
+            <result name="success">/fragments/login.jsp</result>
+        </action>
+        <action name="*/logout" class="com.foros.action.security.LoginAction" method="logout">
+            <result name="success">/logout.jsp</result>
+        </action>
+    </package>
+</struts>

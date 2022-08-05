@@ -1,0 +1,16 @@
+@import "~src/scss/variables";
+
+.main-title {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: $gen-spacing;
+
+  & > * {
+    margin-left: 1rem;
+  }
+}
+.search-form {
+  margin-bottom: $gen-spacing;
+}

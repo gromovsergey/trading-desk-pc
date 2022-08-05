@@ -1,0 +1,13 @@
+<div class="page-header page-header-first">
+    <h2 class="c-pagetitle">{{title}}</h2>
+</div>
+
+<p>
+    <a class="btn btn-default" [routerLink]="['/dashboard/test']">Bootstrap Test Page</a>
+    <a class="btn btn-default" [routerLink]="['/login']">Login</a>
+    <a class="btn btn-default" [routerLink]="['/logout']">Logout</a>
+    <a class="btn btn-default" [routerLink]="['/error']">Error Page</a>
+</p>
+<p class="form-group">Auth Token:  <input readonly class="form-control" value="{{user.token}}:{{user.key}}" /></p>
+
+<p>FileUpload Component Sample: <ui-file-upload [title]="'Upload Image'" [accountId]="348733"></ui-file-upload></p>

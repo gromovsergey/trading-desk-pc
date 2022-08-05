@@ -1,0 +1,46 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="WDRequestMapping" extends="foros-default" namespace="/">
+
+        <action name="admin/WDRequestMapping/main" class="com.foros.action.admin.wdRequestMapping.ListWDRequestMappingAction" method="list">
+            <result name="success" type="tiles">WDRequestMapping.main</result>
+        </action>
+
+        <action name="admin/WDRequestMapping/new" class="com.foros.action.admin.wdRequestMapping.EditWDRequestMappingAction" method="create">
+            <result name="success" type="tiles">WDRequestMapping.create</result>
+        </action>
+
+        <action name="admin/WDRequestMapping/edit" class="com.foros.action.admin.wdRequestMapping.EditWDRequestMappingAction" method="edit">
+            <result name="success" type="tiles">WDRequestMapping.edit</result>
+        </action>
+
+        <action name="admin/WDRequestMapping/create" class="com.foros.action.admin.wdRequestMapping.SaveWDRequestMappingAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+              <param name="actionName">admin/WDRequestMapping/main</param>
+            </result>
+            <result name="input" type="tiles">WDRequestMapping.create</result>
+        </action>
+
+        <action name="admin/WDRequestMapping/delete" class="com.foros.action.admin.wdRequestMapping.DeleteWDRequestMappingAction" method="delete">
+            <result name="success" type="redirectAction">
+              <param name="actionName">admin/WDRequestMapping/main</param>
+            </result>
+        </action>
+
+        <action name="admin/WDRequestMapping/update" class="com.foros.action.admin.wdRequestMapping.SaveWDRequestMappingAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/WDRequestMapping/main</param>
+            </result>
+            <result name="input" type="tiles">WDRequestMapping.edit</result>
+            <result name="version">
+                <param name="location">/admin/WDRequestMapping/edit.action</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+       
+<tiles-definitions>
+    <definition name=".Action" extends=".mainLayout">
+        <put-attribute name="entityName" value="Action"/>
+    </definition>
+
+    <!-- Admin -->
+    <definition name=".AdminAction" extends=".Action">
+        <put-attribute name="moduleName" value="admin"/>
+        <put-attribute name="activeMenuItemKey" value="global.submenu.actions"/>
+    </definition>
+
+    <definition name="admin.action.create" extends=".AdminAction">
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="body" value="/action/actionEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.action.edit" extends=".AdminAction">
+        <put-attribute name="body" value="/action/actionEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.action.view" extends=".AdminAction">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/action/actionView.jsp"/>
+    </definition>
+
+    <definition name="admin.action.main" extends=".AdminAction">
+        <put-attribute name="titleProperty" value="Action.plural"/>
+        <put-attribute name="body" value="/action/actionMain.jsp"/>
+    </definition>
+
+    <!-- Advertiser -->
+
+    <definition name=".AdvertiserAction" extends=".Action">
+        <put-attribute name="moduleName" value="advertiser"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.actions"/>
+    </definition>
+
+    <definition name="advertiser.action.create" extends=".AdvertiserAction">
+        <put-attribute name="isCreatePage" value="true"/>
+        <put-attribute name="body" value="/action/actionEdit.jsp"/>
+    </definition>
+
+    <definition name="advertiser.action.edit" extends=".AdvertiserAction">
+        <put-attribute name="body" value="/action/actionEdit.jsp"/>
+    </definition>
+
+    <definition name="advertiser.action.view" extends=".AdvertiserAction">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="body" value="/action/actionView.jsp"/>
+    </definition>
+
+    <definition name="advertiser.action.main" extends=".AdvertiserAction">
+        <put-attribute name="titleProperty" value="Action.plural"/>
+        <put-attribute name="body" value="/action/actionMain.jsp"/>
+    </definition>
+
+</tiles-definitions>

@@ -1,0 +1,62 @@
+<ui-loading *ngIf="_wait"></ui-loading>
+
+<ng-template [ngIf]="!_wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [fw]="true" [displayStatus]="advertiser.displayStatus"></ui-icon> {{title}}
+            <div class="btn-group" *ngIf="canCreateConversion">
+                <a class="btn btn-default" [routerLink]="['/conversion/add']">_L10N_(advertiserAccount.createConversion)</a>
+            </div>
+        </h2>
+    </div>
+
+    <ui-loading *ngIf="!conversionList"></ui-loading>
+
+    <p *ngIf="conversionList && conversionList.length === 0">
+        _L10N_(advertiserAccount.conversionListIsEmpty)
+    </p>
+
+    <div class="table-responsive" *ngIf="conversionList && conversionList.length > 0">
+        <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <th>_L10N_(blockName.name)</th>
+                <th>_L10N_(advertiserAccount.conversion.category)</th>
+                <th>_L10N_(advertiserAccount.conversion.pageURL)</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let conversion of conversionList">
+                <td><ui-icon [fw]="true" [displayStatus]="conversion.displayStatus"></ui-icon>&nbsp;{{conversion.conversion.name}}</td>
+                <td>{{L10nConversionTypes[conversion.conversion.conversionCategory]}}</td>
+                <td>{{conversion.conversion.url}}</td>
+                <td class="text-right">
+                    <button class="btn btn-default" title="_L10N_(button.preview)" (click)="preview($event, conversion)">
+                        <ui-icon [icon]="'search-plus'"></ui-icon>
+                    </button>
+
+                    <a *ngIf="canUpdateConversions" class="btn btn-default" title="_L10N_(button.edit)"
+                       [routerLink]="['/conversion/'+conversion._id+'/edit']">
+                        <ui-icon [icon]="'pencil-square-o'"></ui-icon>
+                    </a>
+
+                    <button *ngIf="canUpdateConversions" class="btn btn-default" title="_L10N_(button.delete)"
+                            (click)="deleteConversion($event, conversion.conversion)">
+                        <ui-icon [icon]="'trash'"></ui-icon>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ui-conversion-preview [conversion]="conversionPreview"
+                           [show]="(conversionPreview)"
+                           (onClose)="onPreviewClose()"
+                           [title]="'_L10N_(advertiserAccount.conversion.conversionPixelCode)'"
+                           [absencePreviewMsg]="'_L10N_(advertiserAccount.conversion.cantShowPreview)'"
+                           [closeBtnTitle]="'_L10N_(button.close)'">
+    </ui-conversion-preview>
+
+</ng-template>

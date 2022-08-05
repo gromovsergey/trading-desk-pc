@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd"
+    default-lazy-init="true" >
+
+    <bean id="this" class="com.foros.test.ApplicationContextBeanFactory"/>
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor">
+        <property name="jndiFactory" ref="this"/>
+    </bean>
+    <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+
+    <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+
+    <bean name="systemPropertyInitializer" class="com.foros.SystemPropertyInitializerBean">
+        <property name="properties">
+            <props>
+                <prop key="creativesFolder">Creatives</prop>
+                <prop key="java.naming.factory.initial">org.jboss.cache.transaction.DummyContextFactory</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="statsDataSource" class="com.foros.datasource.PostgreDriverManagerDataSource">
+        <property name="driverClassName" value="${stats.jdbc.driverClassName}"/>
+        <property name="url" value="${stats.jdbc.url}"/>
+        <property name="username" value="${stats.jdbc.username}" />
+        <property name="password" value="${stats.jdbc.password}"/>
+        <qualifier value="stats"/>
+    </bean>
+    
+    <alias name="statsDataSource" alias="jdbc/stats"/>
+
+    <bean id="impalaDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${impala.jdbc.driverClassName}"/>
+        <property name="url" value="${impala.jdbc.url}"/>
+        <qualifier value="impala"/>
+    </bean>
+
+    <alias name="impalaDataSource" alias="jdbc/impala"/>
+
+    <bean name="StatsDbQueryProvider" class="com.foros.session.StatsDbQueryProvider"/>
+
+    <bean name="ImpalaDbQueryProvider" class="com.foros.session.ImpalaDbQueryProvider"/>
+
+    <bean name="cancelQueryService" class="com.foros.reporting.tools.CancelQueryService"/>
+
+    <bean class="com.foros.cache.generic.CacheProviderServiceBean"/>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="statsDataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="false"/>
+                <property name="generateDdl" value="false"/>
+                <property name="databasePlatform" value="com.foros.persistence.hibernate.ForosPostgreSQLDialect" />
+            </bean>
+        </property>
+        <property name="persistenceUnitPostProcessors">
+            <list>
+                <bean class="com.foros.TransactionTypePUPostProcessor"/>
+            </list>
+        </property><property name="jpaProperties">
+        <props>
+            <prop key="hibernate.ejb.cfgfile">/test-hibernate.cfg.xml</prop>
+            <prop key="hibernate.ejb.interceptor.session_scoped">com.foros.persistence.hibernate.HibernateInterceptor</prop>
+        </props>
+    </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+        <property name="dataSource" ref="statsDataSource"/>
+    </bean>
+
+</beans>

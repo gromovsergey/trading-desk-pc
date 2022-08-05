@@ -1,0 +1,68 @@
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <!--Admin tiles-->
+    <definition name=".Tag" extends=".mainLayout">
+        <put-attribute name="entityName" value="Tag"/>
+    </definition>
+
+    <definition name=".AdminTag" extends=".Tag">
+        <put-attribute name="moduleName" value="admin/tag"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.sites"/>
+    </definition>
+
+    <definition name="admin.tag.view" extends=".AdminTag">
+        <put-attribute name="body" value="/site/tagsView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.tag.edit" extends=".AdminTag">
+        <put-attribute name="body" value="/site/tagsEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.tag.editCreativeCustomization" extends=".AdminTag">
+        <put-attribute name="body" value="/site/tagsEditCreativeCustomization.jsp"/>
+        <put-attribute name="titleProperty" value="site.edittag.editCreativeCustomization"/>
+    </definition>
+
+    <definition name="admin.tag.editAuctionSettings" extends=".AdminTag">
+        <put-attribute name="body" value="/site/tagAuctionSettingsEdit.jsp"/>
+        <put-attribute name="titleProperty" value="AuctionSettings.title"/>
+    </definition>
+
+    <definition name="admin.preview" extends=".unauthorizedLayout">
+        <put-attribute name="moduleName" value="admin/tag"/>
+        <put-attribute name="body" value="/site/tagsPreview.jsp"/>
+        <put-attribute name="titleProperty" value="site.tagsPreview"/>
+        <put-attribute name="isTagPreview" value="true"/>
+    </definition>
+
+    <!--External tiles-->
+    <definition name=".PublisherTag" extends=".Tag">
+        <put-attribute name="moduleName" value="publisher/tag"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.sites"/>
+    </definition>
+
+    <definition name="publisher.tag.view" extends=".PublisherTag">
+        <put-attribute name="body" value="/site/tagsView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="publisher.tag.edit" extends=".PublisherTag">
+        <put-attribute name="body" value="/site/tagsEdit.jsp"/>
+    </definition>
+
+    <definition name="publisher.tag.editCreativeCustomization" extends=".PublisherTag">
+        <put-attribute name="body" value="/site/tagsEditCreativeCustomization.jsp"/>
+        <put-attribute name="titleProperty" value="site.edittag.editCreativeCustomization"/>
+    </definition>
+
+    <definition name="publisher.preview" extends=".unauthorizedLayout">
+        <put-attribute name="moduleName" value="publisher/tag"/>
+        <put-attribute name="body" value="/site/tagsPreview.jsp"/>
+        <put-attribute name="titleProperty" value="site.tagsPreview"/>
+        <put-attribute name="isTagPreview" value="true"/>
+    </definition>
+
+</tiles-definitions>

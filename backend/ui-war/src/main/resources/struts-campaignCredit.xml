@@ -1,0 +1,83 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="campaignCredit" extends="foros-default" abstract="true">
+        <action name="new" class="com.foros.action.campaign.campaignCredit.EditCampaignCreditAction" method="create">
+            <result name="success" type="tiles">campaignCredit.new</result>
+        </action>
+
+        <action name="edit" class="com.foros.action.campaign.campaignCredit.EditCampaignCreditAction" method="edit">
+            <result name="success" type="tiles">campaignCredit.edit</result>
+        </action>
+
+        <action name="create" class="com.foros.action.campaign.campaignCredit.SaveCampaignCreditAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">../advertiser/account/advertiserView</param>
+                <param name="id">${account.id}</param>
+            </result>
+            <result name="input" type="tiles">campaignCredit.new</result>
+        </action>
+
+        <action name="update" class="com.foros.action.campaign.campaignCredit.SaveCampaignCreditAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">../advertiser/account/advertiserView</param>
+                <param name="id">${account.id}</param>
+            </result>
+            <result name="input" type="tiles">campaignCredit.edit</result>
+            <result name="version">
+                <param name="location">edit.action</param>
+            </result>
+        </action>
+
+        <action name="delete" class="com.foros.action.campaign.campaignCredit.DeleteCampaignCreditAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">../advertiser/account/advertiserView</param>
+                <param name="id">${accountId}</param>
+            </result>
+        </action>
+
+        <action  name="view" class="com.foros.action.campaign.campaignCredit.ViewCampaignCreditAction" method="view">
+            <result name="success" type="tiles">campaignCredit.view</result>
+        </action>
+    </package>
+
+    <package name="campaignCredit-admin" extends="campaignCredit" namespace="/admin/campaignCredit"/>
+    <package name="campaignCredit-advertiser" extends="campaignCredit" namespace="/advertiser/campaignCredit"/>
+
+    <package name="campaignCreditAllocation" extends="foros-default" abstract="true">
+        <action name="new" class="com.foros.action.campaign.campaignCredit.EditCampaignCreditAllocationAction" method="create">
+            <result name="success" type="tiles">campaignCreditAllocation.new</result>
+        </action>
+
+        <action name="edit" class="com.foros.action.campaign.campaignCredit.EditCampaignCreditAllocationAction" method="edit">
+            <result name="success" type="tiles">campaignCreditAllocation.edit</result>
+        </action>
+
+        <action name="create" class="com.foros.action.campaign.campaignCredit.SaveCampaignCreditAllocationAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">../campaignCredit/view</param>
+                <param name="id">${campaignCredit.id}</param>
+            </result>
+            <result name="input" type="tiles">campaignCreditAllocation.new</result>
+        </action>
+
+        <action name="update" class="com.foros.action.campaign.campaignCredit.SaveCampaignCreditAllocationAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">../campaignCredit/view</param>
+                <param name="id">${campaignCredit.id}</param>
+            </result>
+            <result name="input" type="tiles">campaignCreditAllocation.edit</result>
+            <result name="version">
+                <param name="location">edit.action</param>
+            </result>
+        </action>
+    </package>
+    <package name="campaignCreditAllocation-admin" extends="campaignCreditAllocation" namespace="/admin/campaignCreditAllocation"/>
+    <package name="campaignCreditAllocation-advertiser" extends="campaignCreditAllocation" namespace="/advertiser/campaignCreditAllocation"/>
+</struts>

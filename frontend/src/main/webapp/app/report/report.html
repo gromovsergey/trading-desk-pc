@@ -1,0 +1,121 @@
+<form (submit)="onSubmit($event)">
+    <div class="row">
+        <div class="col-lg-8">
+            <ui-panel [title]="'_L10N_(report.reportSettings)'" [collapsible]="true" [collapsed]="settingsCollapsed"
+                      (onToggle)="settingsToggle($event)">
+                <div #body>
+                    <div #params></div>
+                    <ui-date-range [dateRange]="dateRange" [options]="dateRangeOptions" defaultValue="Y"></ui-date-range>
+                    <div *ngIf="canSelectColumns">
+                        <div class="form-group">
+                            <label>_L10N_(report.settingsColumns)</label>
+                            <div>
+                                <div class="btn-group tabset">
+                                    <button class="btn btn-white" [ngClass]="{active: isActive(item)}"
+                                            (click)="toggleColumn($event, item)" *ngFor="let item of settingsColumns">
+                                        {{getColumnName(item)}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="statColumns.length" class="form-group">
+                            <label>_L10N_(report.statisticColumns)</label>
+                            <div>
+                                <div class="btn-group tabset">
+                                    <button class="btn btn-white" [ngClass]="{active: isActive(item)}"
+                                            (click)="toggleColumn($event, item)" *ngFor="let item of statColumns">
+                                        {{getColumnName(item)}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="videoStatColumns.length" class="form-group">
+                            <p><input type="checkbox" (click)="toggleVideoColumns($event)" [checked]="showVideoColumns">&nbsp;_L10N_(report.videoAdvertisingColumns)</p>
+                            <div *ngIf="showVideoColumns">
+                                <div class="btn-group tabset">
+                                    <button class="btn btn-white" [ngClass]="{active: isActive(item)}"
+                                            (click)="toggleColumn($event, item)" *ngFor="let item of videoStatColumns">
+                                        {{getColumnName(item)}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="timeStatColumns.length" class="form-group">
+                            <p><input type="checkbox" (click)="toggleTimeColumns($event)" [checked]="showTimeColumns">&nbsp;_L10N_(report.timeStatColumns)</p>
+                            <div *ngIf="showTimeColumns">
+                                <div class="btn-group tabset">
+                                    <button class="btn btn-white" [ngClass]="{active: isActive(item)}"
+                                            (click)="toggleColumn($event, item)" *ngFor="let item of timeStatColumns">
+                                        {{getColumnName(item)}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="reportParameters.selectedColumns.length">
+                            <label>_L10N_(report.selectedColumns)</label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th *ngFor="let item of reportParameters.selectedColumns">{{getColumnName(item)}}</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui-panel>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="btn-group">
+                <button [disabled]="waitSubmit"
+                        #btnSubmit type="submit" class="btn btn-primary">
+                    <ui-icon *ngIf="waitSubmit" [fw]="true" [spin]="true" [icon]="'spinner'"></ui-icon>
+                    _L10N_(report.generateReport)
+                </button>
+                <ui-dropdown-btn [menu]="dlMenu" [isInline]="true" [title]="'_L10N_(button.download)'"
+                                 *ngIf="!waitDl && report && report['rows'].length"></ui-dropdown-btn>
+                <button class="btn btn-default" [disabled]="true" *ngIf="waitDl && report && report.length">
+                    <ui-icon [icon]="'spinner'" [spin]="true"></ui-icon>
+                    _L10N_(report.downloading)...
+                </button>
+            </p>
+        </div>
+    </div>
+</form>
+
+<div class="has-error" *ngIf="actionErrors">
+    <p *ngFor="let error of actionErrors" class="text-danger">{{error}}</p>
+</div>
+<div class="has-error" *ngIf="errors?.dateStart">
+    <p class="text-danger">_L10N_(flight.blockName.startDate): {{errors.dateStart}}</p>
+</div>
+<div class="has-error" *ngIf="errors?.dateEnd">
+    <p class="text-danger">_L10N_(flight.blockName.endDate): {{errors.dateEnd}}</p>
+</div>
+
+<div class="table-responsive" *ngIf="report">
+    <div class="has-warning" *ngIf="report['truncated']">
+        <p>_L10N_(report.truncated)</p>
+    </div>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th *ngFor="let header of report['headers']">{{header}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of report['rows']">
+                <td *ngFor="let column of row">{{column}}</td>
+            </tr>
+            <tr>
+                <td *ngFor="let column of report['total']">{{column}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<a class="hidden" #downloadBtn [href]="downloadUrl" target="_blank" [download]="downloadName">{{downloadName}}</a>

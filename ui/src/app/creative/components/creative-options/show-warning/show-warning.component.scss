@@ -1,0 +1,19 @@
+::ng-deep {
+  .custom-dialog-container .mat-dialog-container { padding: 0 !important; }
+}
+
+.warning {
+  display: flex;
+  padding: 0 10px;
+  align-items: center;
+  color: #9F6000;
+  background-color: #FEEFB3;
+  border: 1px solid #db8400;
+  min-height: 45px;
+  .optionally {
+    color: #ff0000;
+  }
+  i {
+    cursor: pointer;
+  }
+}

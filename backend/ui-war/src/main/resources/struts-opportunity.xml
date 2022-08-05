@@ -1,0 +1,63 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="opportunity" extends="foros-default" namespace="/admin/opportunity">
+
+        <action name="main" class="com.foros.action.opportunity.ListOpportunityAction" method="list">
+            <result name="success" type="tiles">opportunity.main</result>
+        </action>
+
+        <action name="new" class="com.foros.action.opportunity.EditOpportunityAction" method="create">
+            <result name="success" type="tiles">opportunity.edit</result>
+        </action>
+
+        <action name="edit" class="com.foros.action.opportunity.EditOpportunityAction" method="edit">
+            <result name="success" type="tiles">opportunity.edit</result>
+        </action>
+
+        <action name="view" class="com.foros.action.opportunity.ViewOpportunityAction" method="view">
+            <result name="success" type="tiles">opportunity.view</result>
+        </action>
+
+        <action name="viewFile" class="com.foros.action.opportunity.ViewIOFileAction" method="download">
+            <result name="success" type="content-result">
+                <param name="contentType">${contentType}</param>
+            </result>
+       </action>
+
+        <action name="create"  class="com.foros.action.opportunity.SaveOpportunityAction" method="create">
+            <interceptor-ref name="fileUpload"/>
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">opportunity.edit</result>
+        </action>
+
+        <action name="update" class="com.foros.action.opportunity.SaveOpportunityAction" method="update">
+            <interceptor-ref name="fileUpload"/>
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">opportunity.edit</result>
+            <result name="version">
+                <param name="location">edit.action</param>
+            </result>
+        </action>
+    </package>
+
+    <package name="insertionOrder" extends="foros-default" namespace="/">
+        <action name="admin/insertionOrder/view" class="com.foros.action.opportunity.ViewOpportunityAction" method="viewIO">
+            <result name="success" type="tiles">admin.insertionOrder.view</result>
+        </action>
+
+        <action name="advertiser/insertionOrder/view" class="com.foros.action.opportunity.ViewOpportunityAction" method="viewIO">
+            <result name="success" type="tiles">advertiser.insertionOrder.view</result>
+        </action>
+    </package>
+</struts>

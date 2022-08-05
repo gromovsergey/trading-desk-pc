@@ -1,0 +1,48 @@
+<ui-loading *ngIf="wait || waitStats, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <h1>{{'agencyAccount.dashboard' | translate}}</h1>
+  <h2>{{'agencyAccount.flightsAlerts' | translate}}</h2>
+
+  <div *ngIf="dashboardStats && dashboardStats.length, else noStats" class="table-container">
+
+    <table mat-table [dataSource]="dashboardStats">
+      <ng-container *ngIf="isInternalView()" matColumnDef="agency">
+        <th mat-header-cell *matHeaderCellDef>{{'agencyAccount.agency' | translate}}</th>
+        <td mat-cell *matCellDef="let flightStat">
+          <a class="long-name-wrap" *ngIf="flightStat.agencyId"
+             [routerLink]="['/agency', flightStat.agencyId, 'advertisers']">{{flightStat.agencyName}}</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="advertiser">
+        <th mat-header-cell *matHeaderCellDef>{{'advertiserAccount.advertiser' | translate}}</th>
+        <td mat-cell *matCellDef="let flightStat">
+          <a class="long-name-wrap"
+             [routerLink]="['/advertiser', flightStat.advertiserId, 'flights']">{{flightStat.advertiserName}}</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="object">
+        <th mat-header-cell *matHeaderCellDef>{{'flight.object' | translate}}</th>
+        <td mat-cell *matCellDef="let flightStat">
+          <i class="material-icons" appDisplayStatus [displayStatus]="flightStat.displayStatus">lens</i>
+          <a [routerLink]="[flightStat.flight ? '/flight' : '/lineitem', flightStat.flightId]">{{flightStat.flightName}}</a>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="version">
+        <th mat-header-cell *matHeaderCellDef>{{'flight.blockName.version' | translate}}</th>
+        <td mat-cell *matCellDef="let flightStat">
+          {{flightStat.version | date: 'dd.MM.yyyy hh:mm'}}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <ng-template #noStats>
+    <h2>{{'agencyAccount.dashboard.alertListIsEmpty' | translate}}</h2>
+  </ng-template>
+</ng-template>

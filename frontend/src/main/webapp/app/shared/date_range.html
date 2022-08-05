@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-sm-4">
+        <div class="form-group">
+            <label>
+                _L10N_(report.dateRange)
+            </label>
+            <div>
+                <select class="form-control" #daterange (change)="onDateRangeChange($event)">
+                    <option *ngFor="let option of optionsList" [value]="option" [selected]="option === defaultValue">{{L10nDateRanges[option]}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="optionsList.includes('R')" class="col-sm-4">
+        <div class="form-group">
+            <label>
+                _L10N_(flight.blockName.startDate)
+            </label>
+            <div class="input-group">
+                <input type="text" class="form-control" #datestart placeholder="_L10N_(flight.blockName.startDate)"
+                       [datetimeShort]="true" [datetime]="dateRange.dateStart"
+                       (change)="dateChange($event, 'dateStart')">
+                <span class="input-group-addon"><ui-icon [icon]="'calendar'"></ui-icon></span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="optionsList.includes('R')" class="col-sm-4">
+        <div class="form-group">
+            <label>
+                _L10N_(flight.blockName.endDate)
+            </label>
+            <div class="input-group">
+                <input type="text" class="form-control" #dateend placeholder="_L10N_(flight.blockName.startDate)"
+                       [datetimeShort]="true" [datetime]="dateRange.dateEnd" [datetimeMax]="tmpToday"
+                       (change)="dateChange($event, 'dateEnd')">
+                <span class="input-group-addon"><ui-icon [icon]="'calendar'"></ui-icon></span>
+            </div>
+        </div>
+    </div>
+</div>

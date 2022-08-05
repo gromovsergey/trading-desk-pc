@@ -1,0 +1,917 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.22" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 3.7.1.v20110905 Build &lt;3.7.1.v20110905-1820></property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="rp_Country" id="239">
+            <property name="valueType">dynamic</property>
+            <property name="dataSetName">ds_Country</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["country_code"]</expression>
+            <expression name="labelExpr" type="javascript">dataSetRow["country_name"]</expression>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">RU</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source" id="7">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://spostdb0:5432/stat</property>
+            <property name="odaUser">oix</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">YWRzZXJ2ZXI=</encrypted-property>
+            <property name="odaJndiName">jdbc/birt</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="ds_Country" id="9">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">country_code</property>
+                    <text-property name="displayName">country_code</text-property>
+                    <text-property name="heading">country_code</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">country_name</property>
+                    <text-property name="displayName">country_name</text-property>
+                    <text-property name="heading">country_name</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">country_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">country_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">country_code</property>
+                    <property name="nativeName">country_code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">country_name</property>
+                    <property name="nativeName">country_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select * from (select code country_code, en country_name
+from (
+    select 'AD' code, 'Andorra' en union
+    select 'AE' code, 'United Arab Emirates' en union
+    select 'AF' code, 'Afghanistan' en union
+    select 'AG' code, 'Antigua and Barbuda' en union
+    select 'AI' code, 'Anguilla' en union
+    select 'AL' code, 'Albania' en union
+    select 'AM' code, 'Armenia' en union
+    select 'AN' code, 'Netherlands Antilles' en union
+    select 'AO' code, 'Angola' en union
+    select 'AQ' code, 'Antarctica' en union
+    select 'AR' code, 'Argentina' en union
+    select 'AS' code, 'American Samoa' en union
+    select 'AT' code, 'Austria' en union
+    select 'AU' code, 'Australia' en union
+    select 'AW' code, 'Aruba' en union
+    select 'AX' code, 'Aland Islands' en union
+    select 'AZ' code, 'Azerbaijan' en union
+    select 'BA' code, 'Bosnia and Herzegovina' en union
+    select 'BB' code, 'Barbados' en union
+    select 'BD' code, 'Bangladesh' en union
+    select 'BE' code, 'Belgium' en union
+    select 'BF' code, 'Burkina Faso' en union
+    select 'BG' code, 'Bulgaria' en union
+    select 'BH' code, 'Bahrain' en union
+    select 'BI' code, 'Burundi' en union
+    select 'BJ' code, 'Benin' en union
+    select 'BM' code, 'Bermuda' en union
+    select 'BN' code, 'Brunei' en union
+    select 'BO' code, 'Bolivia' en union
+    select 'BR' code, 'Brazil' en union
+    select 'BS' code, 'Bahamas' en union
+    select 'BT' code, 'Bhutan' en union
+    select 'BV' code, 'Bouvet Island' en union
+    select 'BW' code, 'Botswana' en union
+    select 'BY' code, 'Belarus' en union
+    select 'BZ' code, 'Belize' en union
+    select 'CA' code, 'Canada' en union
+    select 'CC' code, 'Cocos Islands' en union
+    select 'CD' code, 'The Democratic Republic Of Congo' en union
+    select 'CF' code, 'Central African Republic' en union
+    select 'CG' code, 'Congo' en union
+    select 'CH' code, 'Switzerland' en union
+    select 'CI' code, 'Cote d''Ivoire' en union
+    select 'CK' code, 'Cook Islands' en union
+    select 'CL' code, 'Chile' en union
+    select 'CM' code, 'Cameroon' en union
+    select 'CN' code, 'China' en union
+    select 'CO' code, 'Colombia' en union
+    select 'CR' code, 'Costa Rica' en union
+    select 'CS' code, 'Serbia and Montenegro' en union
+    select 'CU' code, 'Cuba' en union
+    select 'CV' code, 'Cape Verde' en union
+    select 'CX' code, 'Christmas Island' en union
+    select 'CY' code, 'Cyprus' en union
+    select 'CZ' code, 'Czech Republic' en union
+    select 'DE' code, 'Germany' en union
+    select 'DJ' code, 'Djibouti' en union
+    select 'DK' code, 'Denmark' en union
+    select 'DM' code, 'Dominica' en union
+    select 'DO' code, 'Dominican Republic' en union
+    select 'DZ' code, 'Algeria' en union
+    select 'EC' code, 'Ecuador' en union
+    select 'EE' code, 'Estonia' en union
+    select 'EG' code, 'Egypt' en union
+    select 'EH' code, 'Western Sahara' en union
+    select 'ER' code, 'Eritrea' en union
+    select 'ES' code, 'Spain' en union
+    select 'ET' code, 'Ethiopia' en union
+    select 'FI' code, 'Finland' en union
+    select 'FJ' code, 'Fiji' en union
+    select 'FK' code, 'Falkland Islands' en union
+    select 'FM' code, 'Micronesia' en union
+    select 'FO' code, 'Faroe Islands' en union
+    select 'FR' code, 'France' en union
+    select 'GA' code, 'Gabon' en union
+    select 'GB' code, 'United Kingdom' en union
+    select 'GD' code, 'Grenada' en union
+    select 'GE' code, 'Georgia' en union
+    select 'GF' code, 'French Guiana' en union
+    select 'GG' code, 'North Gabon' en union
+    select 'GH' code, 'Ghana' en union
+    select 'GI' code, 'Gibraltar' en union
+    select 'GL' code, 'Greenland' en union
+    select 'GM' code, 'Gambia' en union
+    select 'GN' code, 'Guinea' en union
+    select 'GP' code, 'Guadeloupe' en union
+    select 'GQ' code, 'Equatorial Guinea' en union
+    select 'GR' code, 'Greece' en union
+    select 'GS' code, 'South Georgia And The South Sandwich Islands' en union
+    select 'GT' code, 'Guatemala' en union
+    select 'GU' code, 'Guam' en union
+    select 'GW' code, 'Guinea-Bissau' en union
+    select 'GY' code, 'Guyana' en union
+    select 'HK' code, 'Hong Kong' en union
+    select 'HM' code, 'Heard Island And McDonald Islands' en union
+    select 'HN' code, 'Honduras' en union
+    select 'HR' code, 'Croatia' en union
+    select 'HT' code, 'Haiti' en union
+    select 'HU' code, 'Hungary' en union
+    select 'ID' code, 'Indonesia' en union
+    select 'IE' code, 'Ireland' en union
+    select 'IL' code, 'Israel' en union
+    select 'IN' code, 'India' en union
+    select 'IO' code, 'British Indian Ocean Territory' en union
+    select 'IQ' code, 'Iraq' en union
+    select 'IR' code, 'Iran' en union
+    select 'IS' code, 'Iceland' en union
+    select 'IT' code, 'Italy' en union
+    select 'JM' code, 'Jamaica' en union
+    select 'JO' code, 'Jordan' en union
+    select 'JP' code, 'Japan' en union
+    select 'KE' code, 'Kenya' en union
+    select 'KG' code, 'Kyrgyzstan' en union
+    select 'KH' code, 'Cambodia' en union
+    select 'KI' code, 'Kiribati' en union
+    select 'KM' code, 'Comoros' en union
+    select 'KN' code, 'Saint Kitts And Nevis' en union
+    select 'KP' code, 'North Korea' en union
+    select 'KR' code, 'South Korea' en union
+    select 'KW' code, 'Kuwait' en union
+    select 'KY' code, 'Cayman Islands' en union
+    select 'KZ' code, 'Kazakhstan' en union
+    select 'LA' code, 'Laos' en union
+    select 'LB' code, 'Lebanon' en union
+    select 'LC' code, 'Saint Lucia' en union
+    select 'LI' code, 'Liechtenstein' en union
+    select 'LK' code, 'Sri Lanka' en union
+    select 'LR' code, 'Liberia' en union
+    select 'LS' code, 'Lesotho' en union
+    select 'LT' code, 'Lithuania' en union
+    select 'LU' code, 'Luxembourg' en union
+    select 'LV' code, 'Latvia' en union
+    select 'LY' code, 'Libya' en union
+    select 'MA' code, 'Morocco' en union
+    select 'MC' code, 'Monaco' en union
+    select 'MD' code, 'Moldova' en union
+    select 'MG' code, 'Madagascar' en union
+    select 'MH' code, 'Marshall Islands' en union
+    select 'MK' code, 'Macedonia' en union
+    select 'ML' code, 'Mali' en union
+    select 'MM' code, 'Myanmar' en union
+    select 'MN' code, 'Mongolia' en union
+    select 'MO' code, 'Macao' en union
+    select 'MP' code, 'Northern Mariana Islands' en union
+    select 'MQ' code, 'Martinique' en union
+    select 'MR' code, 'Mauritania' en union
+    select 'MS' code, 'Montserrat' en union
+    select 'MT' code, 'Malta' en union
+    select 'MU' code, 'Mauritius' en union
+    select 'MV' code, 'Maldives' en union
+    select 'MW' code, 'Malawi' en union
+    select 'MX' code, 'Mexico' en union
+    select 'MY' code, 'Malaysia' en union
+    select 'MZ' code, 'Mozambique' en union
+    select 'NA' code, 'Namibia' en union
+    select 'NC' code, 'New Caledonia' en union
+    select 'NE' code, 'Niger' en union
+    select 'NF' code, 'Norfolk Island' en union
+    select 'NG' code, 'Nigeria' en union
+    select 'NI' code, 'Nicaragua' en union
+    select 'NL' code, 'Netherlands' en union
+    select 'NO' code, 'Norway' en union
+    select 'NP' code, 'Nepal' en union
+    select 'NR' code, 'Nauru' en union
+    select 'NU' code, 'Niue' en union
+    select 'NZ' code, 'New Zealand' en union
+    select 'OM' code, 'Oman' en union
+    select 'PA' code, 'Panama' en union
+    select 'PE' code, 'Peru' en union
+    select 'PF' code, 'French Polynesia' en union
+    select 'PG' code, 'Papua New Guinea' en union
+    select 'PH' code, 'Philippines' en union
+    select 'PK' code, 'Pakistan' en union
+    select 'PL' code, 'Poland' en union
+    select 'PM' code, 'Saint Pierre And Miquelon' en union
+    select 'PN' code, 'Pitcairn' en union
+    select 'PR' code, 'Puerto Rico' en union
+    select 'PS' code, 'Palestine' en union
+    select 'PT' code, 'Portugal' en union
+    select 'PW' code, 'Palau' en union
+    select 'PY' code, 'Paraguay' en union
+    select 'QA' code, 'Qatar' en union
+    select 'RE' code, 'Reunion' en union
+    select 'RO' code, 'Romania' en union
+    select 'RU' code, 'Russia' en union
+    select 'RW' code, 'Rwanda' en union
+    select 'SA' code, 'Saudi Arabia' en union
+    select 'SB' code, 'Solomon Islands' en union
+    select 'SC' code, 'Seychelles' en union
+    select 'SD' code, 'Sudan' en union
+    select 'SE' code, 'Sweden' en union
+    select 'SG' code, 'Singapore' en union
+    select 'SH' code, 'Saint Helena' en union
+    select 'SI' code, 'Slovenia' en union
+    select 'SJ' code, 'Svalbard And Jan Mayen' en union
+    select 'SK' code, 'Slovakia' en union
+    select 'SL' code, 'Sierra Leone' en union
+    select 'SM' code, 'San Marino' en union
+    select 'SN' code, 'Senegal' en union
+    select 'SO' code, 'Somalia' en union
+    select 'SR' code, 'Suriname' en union
+    select 'ST' code, 'Sao Tome And Principe' en union
+    select 'SV' code, 'El Salvador' en union
+    select 'SY' code, 'Syria' en union
+    select 'SZ' code, 'Swaziland' en union
+    select 'TC' code, 'Turks And Caicos Islands' en union
+    select 'TD' code, 'Chad' en union
+    select 'TF' code, 'French Southern Territories' en union
+    select 'TG' code, 'Togo' en union
+    select 'TH' code, 'Thailand' en union
+    select 'TJ' code, 'Tajikistan' en union
+    select 'TK' code, 'Tokelau' en union
+    select 'TL' code, 'Timor-Leste' en union
+    select 'TM' code, 'Turkmenistan' en union
+    select 'TN' code, 'Tunisia' en union
+    select 'TO' code, 'Tonga' en union
+    select 'TR' code, 'Turkey' en union
+    select 'TT' code, 'Trinidad and Tobago' en union
+    select 'TV' code, 'Tuvalu' en union
+    select 'TW' code, 'Taiwan' en union
+    select 'TZ' code, 'Tanzania' en union
+    select 'UA' code, 'Ukraine' en union
+    select 'UG' code, 'Uganda' en union
+    select 'UM' code, 'United States Minor Outlying Islands' en union
+    select 'US' code, 'United States' en union
+    select 'UY' code, 'Uruguay' en union
+    select 'UZ' code, 'Uzbekistan' en union
+    select 'VA' code, 'Vatican' en union
+    select 'VC' code, 'Saint Vincent And The Grenadines' en union
+    select 'VE' code, 'Venezuela' en union
+    select 'VG' code, 'British Virgin Islands' en union
+    select 'VI' code, 'U.S. Virgin Islands' en union
+    select 'VN' code, 'Vietnam' en union
+    select 'VU' code, 'Vanuatu' en union
+    select 'WF' code, 'Wallis And Futuna' en union
+    select 'WS' code, 'Samoa' en union
+    select 'YE' code, 'Yemen' en union
+    select 'YT' code, 'Mayotte' en union
+    select 'ZA' code, 'South Africa' en union
+    select 'ZM' code, 'Zambia' en union
+    select 'ZW' code, 'Zimbabwe' en
+) foo order by 2) fooo
+]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>country_code</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2147483647</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>country_code</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>country_code</design:label>
+            <design:formattingHints>
+              <design:displaySize>2147483647</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>country_name</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>2147483647</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>country_name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>country_name</design:label>
+            <design:formattingHints>
+              <design:displaySize>2147483647</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Conversion Key Data Set" id="175">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">agency_account_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">agency_account_id</text-property>
+                    <text-property name="heading">agency_account_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">account_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">account_id</text-property>
+                    <text-property name="heading">account_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">campaign_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">campaign_id</text-property>
+                    <text-property name="heading">campaign_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ccg_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">ccg_id</text-property>
+                    <text-property name="heading">ccg_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">conv_id</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">conv_id</text-property>
+                    <text-property name="heading">conv_id</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">conv_name</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">conv_name</text-property>
+                    <text-property name="heading">conv_name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">conv_category</property>
+                    <property name="analysis">attribute</property>
+                    <text-property name="displayName">conv_category</text-property>
+                    <text-property name="heading">conv_category</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">param_1</property>
+                    <property name="paramName">rp_Country</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                    <property name="position">1</property>
+                    <property name="isOptional">false</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">agency_account_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">account_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">campaign_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">ccg_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">conv_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">conv_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">conv_category</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">agency_account_id</property>
+                    <property name="nativeName">agency_account_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">account_id</property>
+                    <property name="nativeName">account_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">campaign_id</property>
+                    <property name="nativeName">campaign_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">ccg_id</property>
+                    <property name="nativeName">ccg_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">conv_id</property>
+                    <property name="nativeName">conv_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">conv_name</property>
+                    <property name="nativeName">conv_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">conv_category</property>
+                    <property name="nativeName">conv_category</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select 
+  a.agency_account_id, 
+  a.account_id, 
+  c.campaign_id, 
+  ccg.ccg_id, 
+  act.action_id conv_id, 
+  act.name conv_name,
+  cc.name conv_category
+from 
+  account a join campaign c on a.account_id = c.account_id
+  join campaigncreativegroup ccg on c.campaign_id = ccg.campaign_id
+  join ccgaction ccga on ccga.ccg_id = ccg.ccg_id
+  join action act on act.action_id = ccga.action_id
+  join conversioncategory cc on act.conv_category_id = cc.conv_category_id
+  left join account agency on a.agency_account_id = agency.account_id
+where  
+  (a.agency_account_id is not null or a.flags &amp; 1 = 0)
+  and (a.status = 'A' or a.version > now() - interval '48 hours') 
+  and (c.status = 'A' or c.version > now() - interval '48 hours' or c.date_end > now()) 
+  and (ccg.status = 'A' or ccg.version > now() - interval '48 hours' or ccg.date_end > now()) 
+  and (act.status = 'A' or act.version > now() - interval '48 hours') 
+  and (a.agency_account_id is null or agency.flags &amp; 1 = 0 and (agency.status = 'A' or agency.version > now() - interval '48 hours')) 
+  and a.country_code = ?]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <DataSetParameters>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name></design:name>
+            <design:position>1</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+          <design:precision>0</design:precision>
+          <design:scale>0</design:scale>
+          <design:nullability>Unknown</design:nullability>
+        </design:attributes>
+      </design:ParameterDefinition>
+    </parameter>
+  </DataSetParameters>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>agency_account_id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>agency_account_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>agency_account_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>account_id</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>account_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>account_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>campaign_id</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>campaign_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>campaign_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ccg_id</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>ccg_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ccg_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>action_id</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>10</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>action_id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>action_id</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>name</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>50</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>name</design:label>
+            <design:formattingHints>
+              <design:displaySize>50</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">10pt</property>
+        </style>
+        <style name="crosstab" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab-cell" id="6">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="326">
+            <property name="numberAlign">center</property>
+            <property name="overflow">visible</property>
+            <property name="dataSet">Conversion Key Data Set</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">agency_account_id</property>
+                    <text-property name="displayName">agency_account_id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["agency_account_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">account_id</property>
+                    <text-property name="displayName">account_id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["account_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">campaign_id</property>
+                    <text-property name="displayName">campaign_id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["campaign_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">ccg_id</property>
+                    <text-property name="displayName">ccg_id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ccg_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">conv_id</property>
+                    <text-property name="displayName">conv_id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["conv_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">conv_name</property>
+                    <text-property name="displayName">conv_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["conv_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">conv_category</property>
+                    <text-property name="displayName">conv_category</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["conv_category"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="365"/>
+            <column id="366"/>
+            <column id="367"/>
+            <column id="368"/>
+            <column id="369"/>
+            <column id="370"/>
+            <column id="371"/>
+            <header>
+                <row id="327">
+                    <cell id="328">
+                        <label id="329">
+                            <text-property name="text">agency_account_id</text-property>
+                        </label>
+                    </cell>
+                    <cell id="330">
+                        <label id="331">
+                            <text-property name="text">account_id</text-property>
+                        </label>
+                    </cell>
+                    <cell id="332">
+                        <label id="333">
+                            <text-property name="text">campaign_id</text-property>
+                        </label>
+                    </cell>
+                    <cell id="334">
+                        <label id="335">
+                            <text-property name="text">ccg_id</text-property>
+                        </label>
+                    </cell>
+                    <cell id="336">
+                        <label id="337">
+                            <text-property name="text">conv_id</text-property>
+                        </label>
+                    </cell>
+                    <cell id="338">
+                        <label id="339">
+                            <text-property name="text">conv_name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="340">
+                        <label id="341">
+                            <text-property name="text">conv_category</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="342">
+                    <cell id="343">
+                        <data id="344">
+                            <property name="resultSetColumn">agency_account_id</property>
+                        </data>
+                    </cell>
+                    <cell id="345">
+                        <data id="346">
+                            <property name="resultSetColumn">account_id</property>
+                        </data>
+                    </cell>
+                    <cell id="347">
+                        <data id="348">
+                            <property name="resultSetColumn">campaign_id</property>
+                        </data>
+                    </cell>
+                    <cell id="349">
+                        <data id="350">
+                            <property name="resultSetColumn">ccg_id</property>
+                        </data>
+                    </cell>
+                    <cell id="351">
+                        <data id="352">
+                            <property name="resultSetColumn">conv_id</property>
+                        </data>
+                    </cell>
+                    <cell id="353">
+                        <data id="354">
+                            <property name="resultSetColumn">conv_name</property>
+                        </data>
+                    </cell>
+                    <cell id="355">
+                        <data id="356">
+                            <property name="resultSetColumn">conv_category</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="357">
+                    <cell id="358"/>
+                    <cell id="359"/>
+                    <cell id="360"/>
+                    <cell id="361"/>
+                    <cell id="362"/>
+                    <cell id="363"/>
+                    <cell id="364"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

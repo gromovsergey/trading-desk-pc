@@ -1,0 +1,118 @@
+<ui-loading *ngIf="wait, else showContent"></ui-loading>
+
+<ng-template #showContent>
+  <div class="mb-2" *ngIf="!readonly">
+    <ui-dropdown-btn *ngIf="creatives?.data?.length"
+                     class="mr-1"
+                     title="{{'button.bulk' | translate}}"
+                     [menu]="bulkMenu"></ui-dropdown-btn>
+    <button mat-raised-button
+            (click)="showPopup()">
+      {{'button.link' | translate}}
+    </button>
+  </div>
+
+  <ui-info-panel type="info"
+                 *ngIf="!creatives || creatives.data.length === 0">
+    {{'flight.notification.creativeListEmpty' | translate}}
+  </ui-info-panel>
+
+  <div class="table-container mb-2">
+    <table mat-table [dataSource]="creatives">
+
+      <!-- Checkbox Column -->
+      <ng-container *ngIf="!readonly" matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        [disabled]="row.displayStatus === 'DELETED'"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.name' | translate}}</th>
+        <td mat-cell *matCellDef="let row">
+          <i class="material-icons" appDisplayStatus [displayStatus]="row.displayStatus">lens</i>
+          {{row.creativeName}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef>{{'creative.blockName.size' | translate}}</th>
+        <td mat-cell *matCellDef="let row">
+          {{row.sizeName}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="template">
+        <th mat-header-cell *matHeaderCellDef>{{'creative.blockName.template' | translate}}</th>
+        <td mat-cell *matCellDef="let row">
+          {{row.templateName}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="imps">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.imps' | translate}}</th>
+        <td mat-cell *matCellDef="let row">{{row.imps}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="clicks">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.clicks' | translate}}</th>
+        <td mat-cell *matCellDef="let row">{{row.clicks}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ctr">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.ctr' | translate}}</th>
+        <td mat-cell *matCellDef="let row">{{row.ctr | number: "1.1-2"}}%</td>
+      </ng-container>
+
+      <ng-container matColumnDef="uniqueUsers">
+        <th mat-header-cell *matHeaderCellDef>{{'blockName.uniqueUsers' | translate}}</th>
+        <td mat-cell *matCellDef="let row">{{row.uniqueUsers || '0'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td class="text-right" mat-cell *matCellDef="let creative">
+          <ui-display-status-toggle *ngIf="!short && canUpdate && creative.creativeDisplayStatus !== 'DELETED'"
+                                    (statusChange)="changeStatus($event)"
+                                    [status]="creative.displayStatus"
+                                    [statusObject]="creative"></ui-display-status-toggle>
+          <button *ngIf="canUpdate"
+                  [disabled]="creative.creativeDisplayStatus === 'DELETED'"
+                  mat-icon-button
+                  color="primary"
+                  title="{{'button.edit' | translate}}"
+                  [routerLink]="['/advertiser', advertiser.id, 'creative', creative.creativeId, 'edit']">
+            <i class="material-icons">edit</i>
+          </button>
+          <button mat-icon-button
+                  color="primary"
+                  title="{{'button.preview' | translate}}"
+                  (click)="preview(creative)">
+            <i class="material-icons">zoom_in</i>
+          </button>
+          <button *ngIf="!readonly && creative.creativeDisplayStatus !== 'DELETED'"
+                  mat-icon-button
+                  color="accent"
+                  title="{{'button.unlink' | translate}}"
+                  (click)="deleteCreatives(creative.creativeId)">
+            <i class="material-icons">link_off</i>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+</ng-template>

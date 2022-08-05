@@ -1,0 +1,81 @@
+<mat-toolbar
+        class="nav-bar"
+        color="primary"
+        [ngClass]= "{
+              'Default': hostName === 'Default',
+              'Genius': hostName === 'Genius',
+              'Pharmatic': hostName === 'Pharmatic'
+              }">
+  <button mat-icon-button (click)="menuClick.emit($event)" aria-label="Main menu toggle button">
+    <i class="material-icons">menu</i>
+  </button>
+  <button class="logo" mat-button routerLink="/">
+   <div *ngIf="hostName === 'Default'">
+         <img class="logo-img d-sm-none" src="/assets/logo-big.png" alt="Target RTB">
+         Target RTB
+   </div>
+    <div *ngIf="hostName === 'Genius'">
+      <img class="" src="/assets/genius/newGenius/logo_pin.png" alt="Genius Group" style="width: 150px">
+    </div>
+    <div *ngIf="hostName === 'Pharmatic'">
+      <img class="" src="/assets/pharmatic/Pharmatic_logo_white_notext.png" alt="Pharmatic" style="width: 150px">
+    </div>
+
+  </button>
+  <span class="nav-bar-spacer"></span>
+  <form class="search-form d-sm-none"
+        [class.search-visible]="showSearchField">
+    <label>
+      <input placeholder="{{'blockName.search' | translate}}"
+             [(ngModel)]="quickSearch"
+             name="quick_search"
+             class="search-input"
+             id="quick-search"
+             (focus)="showQuickSearchData = true"
+             (ngModelChange)="quickSearchChange$.next($event)"
+             autocomplete="off" type="text">
+    </label>
+    <button class="search-toggle-btn"
+            mat-button mat-icon-button aria-label="Search"
+            (click)="showSearchField = !showSearchField">
+      <mat-spinner *ngIf="wait" class="button-spinner" color="accent" [diameter]="20"></mat-spinner>
+      <i *ngIf="!wait" class="material-icons">search</i>
+    </button>
+    <div class="quick-search-menu" *ngIf="searchData && showQuickSearchData">
+      <div *ngFor="let row of searchData" class="quick-search-row">
+        <div class="quick-search-title">
+          {{getRowTitle(row.type) | translate}}
+        </div>
+        <div class="quick-search-items">
+          <a *ngFor="let link of row.items"
+             [routerLink]="getLink(link.type, link.id)"
+             class="quick-search-link">
+            <i class="icon material-icons mr-1" appDisplayStatus [displayStatus]="link.displayStatus">lens</i>{{link.name}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <button mat-icon-button class="d-sm-none"
+          [matMenuTriggerFor]="languageMenu"
+          aria-label="Language switch button">
+    <i class="material-icons">language</i>
+  </button>
+  <mat-menu #languageMenu="matMenu">
+    <button *ngIf="language !== 'ru'" mat-menu-item (click)="language = 'ru'">Переключить на русский</button>
+    <button *ngIf="language !== 'en'" mat-menu-item (click)="language = 'en'">Switch to English</button>
+  </mat-menu>
+  <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu button">
+    <i class="material-icons">person</i>
+  </button>
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item routerLink="/my">
+      {{'blockName.mySettings' | translate}}
+    </button>
+    <button mat-menu-item routerLink="/login/logout">
+      {{'blockName.logout' | translate}}
+      <hr>
+    </button>
+  </mat-menu>
+</mat-toolbar>

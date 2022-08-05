@@ -1,0 +1,39 @@
+#header table.categories a{
+    font-weight:normal;
+}
+
+table.formFields td.fieldName label{
+    font-size:16px;
+    position:relative;
+    top:-3px;
+}
+
+table.summary td.paramName{
+    font-size:16px;
+}
+table.summary td.simpleText{
+    padding-top:4px;
+}
+
+table.dataView th {
+    font-weight:normal;
+}
+
+#contextZone .context {
+    font-size:16px;
+}
+#contextZone .operations {
+    font-size:16px;
+}
+
+fieldset.withTabs .tabs .tab{
+    font-weight:normal;
+}
+
+div.sectionName{
+    font-size: 16px;
+}
+
+a.button{
+    font-weight:normal;
+}

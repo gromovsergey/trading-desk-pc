@@ -1,0 +1,62 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<ng-template [ngIf]="!wait && lineItems && lineItems.length > 1">
+    <div class="btn-group h-margin-td" *ngIf="canEditLineItems || canCreate">
+        <ui-dropdown-btn *ngIf="canEditLineItems" [class]="'pull-left br-right-none'" [title]="'_L10N_(button.bulk)'" [menu]="bulkMenu"></ui-dropdown-btn>
+        <button *ngIf="canCreate" [routerLink]="['/flight/' + flightId + '/lineitem/add']" class="btn btn-default">_L10N_(button.add)</button>
+    </div>
+    <ui-date-range [dateRange]="dateRange" options="TOT Y T WTD MTD QTD YTD LW LM LQ LY" defaultValue="TOT"
+                   (onChange)="reloadLineItems($event)"></ui-date-range>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th class="h-td__chbx" *ngIf="canEditLineItems">
+                            <input type="checkbox" (click)="toggleCheckedAll($event);">
+                        </th>
+                        <th>
+                            _L10N_(blockName.name)
+                        </th>
+                        <th>
+                            _L10N_(blockName.imps)
+                        </th>
+                        <th>
+                            _L10N_(blockName.clicks)
+                        </th>
+                        <th>
+                            _L10N_(blockName.ctr)
+                        </th>
+                        <th>
+                            _L10N_(blockName.totalCost)
+                        </th>
+                        <th>
+                            _L10N_(blockName.ecpm)
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let _li of lineItems">
+                        <td *ngIf="canEditLineItems"><input type="checkbox" [(ngModel)]="_li.checked"></td>
+                        <td>
+                            <ui-icon [fw]="true" [displayStatus]="_li.displayStatus"></ui-icon>
+                            <a [routerLink]="['/lineitem/'+_li.id]">{{_li.name}}</a>
+                        </td>
+                        <td [numFormat]="false">{{_li.impressions}}</td>
+                        <td [numFormat]="false">{{_li.clicks}}</td>
+                        <td><span [numFormat]="true">{{_li.ctr}}</span>%</td>
+                        <td>{{accountCurrency}}<span [numFormat]="true">{{_li.totalCost}}</span></td>
+                        <td>{{accountCurrency}}<span [numFormat]="true">{{_li.ecpm}}</span></td>
+                        <td>
+                            <ui-display-status-toggle *ngIf="canEditLineItems" (onStatusChange)="changeStatus($event)"
+                                                      [status]="_li.displayStatus" [statusObject]="_li"></ui-display-status-toggle>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</ng-template>

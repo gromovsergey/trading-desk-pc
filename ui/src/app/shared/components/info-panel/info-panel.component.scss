@@ -1,0 +1,40 @@
+@import "~src/scss/variables";
+
+.panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: $gen-gap;
+  position: relative;
+  justify-content: space-between;
+  .body {
+    flex-grow: 1;
+  }
+  &.info {
+    color: $ui-color-primary;
+    border: 1px solid $ui-color-primary;
+    background: lighten($ui-color-primary, 55%);
+  }
+  &.warning {
+    color: $ui-color-warning;
+    border: 1px solid $ui-color-warning;
+    background: lighten($ui-color-warning, 55%);
+  }
+  &.error {
+    color: $ui-color-danger;
+    border: 1px solid $ui-color-danger;
+    background: lighten($ui-color-danger, 50%);
+  }
+  &.check_circle {
+    color: darken($ui-color-success, 15%);
+    border: 1px solid $ui-color-success;
+    background: lighten($ui-color-success, 50%);
+  }
+  .dismiss {
+    opacity: .3;
+    cursor: pointer;
+  }
+  &:hover .dismiss {
+    opacity: 1;
+  }
+}

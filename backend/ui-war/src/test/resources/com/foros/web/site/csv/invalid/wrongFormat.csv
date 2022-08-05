@@ -1,0 +1,7 @@
+SiteName,SiteID,SiteStatus,SiteURL,TagName,TagID,Size Type,Tag Sizes,TagPricing,TagPassbackType,TagPassback,Accept Expandable Creative
+a1,5441,Active,http://apple.com,udaff,6780,728x90,728x90,default=15,HTML_URL,httP://udaff.com
+a6,,Active,http://apple.com,new-udaff,6780,728x90,728x90,default=15,HTML_URL,httP://udaff.com
+a4,5447,Active,http://apple.com
+a4,5447,Active,http://apple.com,udaff,6784,728x90,728x90,default=1;FR=3;GB=10;DE=5.5,HTML_CODE,"<a href=""stuff""><img></a>"
+a2,5443,Active,http://apple.com,udaff,6781,728x90,728x90,default=1;FR=3;GB=10;DE=5.5,HTML_CODE,"<a href=""stuff""><img></a>"
+a3,5446,Active,http://apple.com,udaff,6783,728x90,728x90,default=15,HTML_URL,httP://udaff.com

@@ -1,0 +1,102 @@
+ul.treeClickable{
+    position: relative;
+}
+
+/* Turn off list bullets */
+ul.treeClickable li { 
+    position:relative;
+    list-style: none; 
+}
+
+ul.treeClickable, ul.treeClickable ul, ul.treeClickable li {
+  margin: 0; 
+  padding: 0;
+  clear:both;
+  display:block;
+  zoom:1;
+}
+
+/* This controls the indent for each sublist */
+ul.treeClickable ul {
+  padding-left: 15px;
+}
+
+/* Provide space for our own "bullet" inside the link */
+ul.treeClickable li label {
+  font-weight:normal;
+}
+ul.treeClickable li label > span {
+  top:-2px;
+}
+
+ul.treeClickable .expand {
+  width: 20px;
+  height: 18px;
+  position:absolute;
+}
+
+/* Show "bullets" in the links, depending on the class of the
+   LI that the link's in */
+ul.treeClickable li.treeOpen div.expand {
+  background: url("/images/minus.gif") center left no-repeat;
+}
+
+ul.treeClickable li.treeClosed div.expand {
+  background: url("/images/plus.gif") center left no-repeat;
+}
+
+ul.treeClickable li.treeBullet div.expand {
+    visibility:hidden;
+  /*background: url("/images/bullet.gif") center left no-repeat;*/
+}
+
+/* Actually show and hide sublists */
+ul.treeClickable li.treeOpen ul {
+  display: block;
+}
+
+ul.treeClickable li.treeClosed ul {
+  display: none;
+}
+
+ul.treeClickable > li > label.withInput
+{ /* admin/channel/editCategories.do */
+    position:relative;
+    left: 20px;
+    margin-right:40px;
+    zoom:1;
+}
+
+.treeFilterContainer{
+    max-height:475px;
+    overflow:auto;
+    border: none;
+    position: relative;
+    margin-top:2px;
+}
+    .treeFilterContainer > .treeClickable {
+        overflow: hidden;
+    }
+#ccgDialog .treeFilterContainer {
+    max-height: 200px;
+}
+
+#treeFilterCollapsible {
+    max-height:500px;
+    border-bottom:1px solid #BFBFBF;
+    margin-bottom:-1px;
+}
+    #treeFilterCollapsible.collapsed {
+        border-bottom:none;
+    }
+
+.treeFilterContainer label input{
+    margin-left : 5px;
+}
+.treeFilterContainer label.withInput input{
+    margin-left : 0;
+}
+
+.treeFilterContainer table.grouping td.withInput{
+    width:17px;
+}

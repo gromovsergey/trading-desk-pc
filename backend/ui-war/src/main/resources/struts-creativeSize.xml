@@ -1,0 +1,74 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="creativeSize" extends="foros-default" namespace="/">
+
+        <action name="admin/CreativeSize/main" class="com.foros.action.admin.creativeSize.ListCreativeSizeAction" method="list">
+            <result name="success" type="tiles">CreativeSize.main</result>
+        </action>
+
+        <action name="admin/CreativeSize/view" class="com.foros.action.admin.creativeSize.ViewCreativeSizeAction" method="view">
+            <result name="success" type="tiles">CreativeSize.view</result>
+        </action>
+
+        <action name="admin/CreativeSize/edit" class="com.foros.action.admin.creativeSize.EditCreativeSizeAction" method="edit">
+            <result name="success" type="tiles">CreativeSize.edit</result>
+        </action>
+
+        <action name="admin/CreativeSize/new" class="com.foros.action.admin.creativeSize.EditCreativeSizeAction" method="create">
+            <result name="success" type="tiles">CreativeSize.create</result>
+        </action>
+        
+        <action name="admin/CreativeSize/changeSize" class="com.foros.action.admin.creativeSize.EditCreativeSizeAction" method="changeSize">
+            <result name="success">/admin/creativeSize/creativeSizeExpansions.jsp</result>
+        </action>
+
+        <action name="admin/CreativeSize/create" class="com.foros.action.admin.creativeSize.SaveCreativeSizeAction" method="create">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+              <param name="actionName">admin/CreativeSize/view</param>
+              <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">CreativeSize.create</result>
+        </action>
+
+        <action name="admin/CreativeSize/update" class="com.foros.action.admin.creativeSize.SaveCreativeSizeAction" method="update">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeSize/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="input" type="tiles">CreativeSize.edit</result>
+            <result name="version">
+                <param name="location">/admin/CreativeSize/edit.action</param>
+            </result>
+        </action>
+
+        <action name="admin/CreativeSize/createCopy" class="com.foros.action.admin.creativeSize.EditCreativeSizeAction" method="createCopy">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeSize/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <action name="admin/CreativeSize/delete" class="com.foros.action.admin.creativeSize.StatusCreativeSizeAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeSize/view</param>
+                <param name="id">${id}</param>
+            </result>
+            <result name="successExternal" type="redirect">
+                <param name="location">admin/CreativeSize/list.action${getAccountParam('?advertiserId')}</param>
+            </result>
+        </action>
+
+        <action name="admin/CreativeSize/undelete" class="com.foros.action.admin.creativeSize.StatusCreativeSizeAction" method="undelete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">admin/CreativeSize/view</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

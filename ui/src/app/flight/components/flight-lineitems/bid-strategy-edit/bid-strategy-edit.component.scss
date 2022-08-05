@@ -1,0 +1,60 @@
+section {
+  margin-top: 30px;
+  min-height: 60%;
+}
+
+i {
+  font-size: 17px;
+  color: rgb(48, 63, 159);
+}
+
+.custom-style {
+  padding: 10px;
+}
+
+.m5-left {
+  margin-left: 5px;
+}
+
+.m5-right {
+  margin-right: 5px;
+}
+
+.m5-top {
+  margin-top: 5px;
+}
+
+.m5-bottom {
+  margin-bottom: 5px;
+}
+
+.f-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-button {
+  background-color: rgb(48, 63, 159) !important;
+  color: white !important;
+}
+
+.render-wrapper {
+  padding: 10px 30px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.has-error {
+  opacity: 0.6;
+}

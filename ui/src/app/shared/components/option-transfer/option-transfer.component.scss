@@ -1,0 +1,64 @@
+@import "~src/scss/variables";
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.option-transfer {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  margin-bottom: $gen-spacing;
+  margin-top: 15px;
+
+  .option-column {
+    width: 50%;
+
+    .sort-up_button {
+      width: 40px;
+      height: 40px;
+      padding: 7px 0;
+    }
+
+    //for similar width and height with button.
+    .sort-down_button {
+      width: 40px;
+      height: 40px;
+      padding: 7px 0;
+    }
+
+    .a-active {
+      color: #3cc75c;
+    }
+
+    .s-active {
+      color: #3cc75c;
+    }
+
+    .option-container {
+      border-radius: 3px;
+      box-sizing: border-box;
+      padding: $gen-gap;
+      background: #fff;
+      height: 300px;
+      overflow-y: auto;
+      box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .15);
+    }
+  }
+
+  .buttons-column {
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .list-item {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    height: auto;
+    padding: 10px 5px;
+    border-bottom: 1px solid #0000002b;
+  }
+}

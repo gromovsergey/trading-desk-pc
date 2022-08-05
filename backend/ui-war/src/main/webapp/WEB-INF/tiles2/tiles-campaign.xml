@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name="campaign.upload" extends=".mainLayout">
+        <put-attribute name="isViewPage" value="true"/>
+        <put-attribute name="titleProperty" value="TextAd.upload.title"/>
+        <put-attribute name="moduleName" value="/campaign/upload"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.campaigns"/>
+        <put-attribute name="body" value="/textAd/textAdUpload.jsp"/>
+    </definition>
+
+    <definition name=".Campaign" extends=".mainLayout">
+        <put-attribute name="taskTitle" value="page.title.campaigns" type="string"/>
+        <put-attribute name="entityName" value="Campaign" type="string"/>
+        <put-attribute name="moduleName" value="/campaign"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.campaigns"/>
+    </definition>
+
+    <definition name="campaign.view" extends=".Campaign">
+        <put-attribute name="body" value="/campaign/campaignView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+
+    <definition name="campaign.edit" extends=".Campaign">
+        <put-attribute name="body" value="/campaign/campaignEdit.jsp"/>
+    </definition>
+
+    <definition name="campaign.new" extends=".Campaign">
+        <put-attribute name="body" value="/campaign/campaignEdit.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name=".AdvertiserDashboard" extends=".mainLayout">
+        <put-attribute name="taskTitle" value="page.title.campaigns" type="string"/>
+        <put-attribute name="isViewPage" value="false"/>
+        <put-attribute name="entityName" value="Campaign" type="string"/>
+        <put-attribute name="moduleName" value="/campaign"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.campaigns"/>
+   </definition>
+
+
+    <definition name="admin.dashboard" extends=".AdvertiserDashboard">
+        <put-attribute name="titleProperty" value="report.account.summary.advertiser"/>
+        <put-attribute name="contextPath" value="advertiser" type="string"/>
+        <put-attribute name="activeMenuItemKey" value="global.submenu.advertiser"/>
+        <put-attribute name="body" value="admin.SnapshotByAdvertiser.view"/>
+    </definition>
+
+    <definition name="admin.dashboard.bycampaign" extends=".AdvertiserDashboard">
+        <put-attribute name="titleProperty" value="report.summary.campaign"/>
+        <put-attribute name="contextPath" value="advertiser" type="string"/>
+        <put-attribute name="body" value="admin.SnapshotByCampaign.view"/>
+    </definition>
+
+    <definition name="advertiser.dashboard" extends=".AdvertiserDashboard">
+        <put-attribute name="titleProperty" value="report.account.summary.advertiser"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.advertiser"/>
+        <put-attribute name="body" value="advertiser.SnapshotByAdvertiser.view"/>
+    </definition>
+
+    <definition name="advertiser.dashboard.bycampaign" extends=".AdvertiserDashboard">
+        <put-attribute name="titleProperty" value="report.summary.campaign"/>
+        <put-attribute name="body" value="advertiser.SnapshotByCampaign.view"/>
+    </definition>
+
+    <definition name="campaign.main" extends=".Campaign">
+        <put-attribute name="isViewPage" value="false"/>
+        <put-attribute name="body" value="/campaign/campaignAdmin.jsp"/>
+        <put-attribute name="titleProperty" value="page.title.campaignsPendigApproval"/>
+   </definition>
+
+    <definition name="campaign.editCampaignAllocations" extends=".Campaign">
+        <put-attribute name="title" value="/campaign/campaignAllocation/campaignAllocationsTitle.jsp"/>
+        <put-attribute name="body" value="/campaign/campaignAllocation/campaignAllocationsEdit.jsp"/>
+    </definition>
+
+    <definition name="campaign.singleCampaignAllocation" template="/campaign/campaignAllocation/singleCampaignAllocation.jsp"/>
+
+    <definition name="campaign.allCampaignAllocations" template="/campaign/campaignAllocation/allCampaignAllocations.jsp"/>
+
+</tiles-definitions>

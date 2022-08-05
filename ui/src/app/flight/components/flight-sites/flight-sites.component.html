@@ -1,0 +1,91 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<div class="mb-2" *ngIf="!readonly">
+  <ui-dropdown-btn title="{{'button.bulk' | translate}}"
+                   class="mr-1"
+                   [menu]="bulkMenu"
+                   [disabled]="!sites"
+                   *ngIf="sites?.data?.length > 0"></ui-dropdown-btn>
+  <button mat-raised-button
+          class="mr-1"
+          type="button"
+          [disabled]="!sites"
+          (click)="showPopup()">
+    {{'button.link' | translate}}
+  </button>
+</div>
+
+<ui-info-panel type="danger" class="mb-2" *ngIf="errors.unchekedAll">
+  {{'site.notification.cantUnlinkAll' | translate}}
+</ui-info-panel>
+
+<div class="table-container mb-2">
+  <table mat-table [dataSource]="sites">
+
+    <!-- Checkbox Column -->
+    <ng-container *ngIf="!readonly" matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      [disabled]="row.displayStatus === 'DELETED'"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>{{'blockName.name' | translate}}</th>
+      <td mat-cell *matCellDef="let row">
+        <i class="material-icons" appDisplayStatus [displayStatus]="row.displayStatus">lens</i>
+        {{row.name}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="imps">
+      <th mat-header-cell *matHeaderCellDef>{{'blockName.imps' | translate}}</th>
+      <td mat-cell *matCellDef="let row">{{row.imps}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="clicks">
+      <th mat-header-cell *matHeaderCellDef>{{'blockName.clicks' | translate}}</th>
+      <td mat-cell *matCellDef="let row">{{row.clicks}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="ctr">
+      <th mat-header-cell *matHeaderCellDef>{{'blockName.ctr' | translate}}</th>
+      <td mat-cell *matCellDef="let row">{{row.ctr | number: "1.1-2"}}%</td>
+    </ng-container>
+
+    <ng-container matColumnDef="uniqueUsers">
+      <th mat-header-cell *matHeaderCellDef>{{'blockName.uniqueUsers' | translate}}</th>
+      <td mat-cell *matCellDef="let row">{{row.uniqueUsers}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td class="text-right" mat-cell *matCellDef="let row">
+        <button [disabled]="sites.data.length === 1"
+                (click)="deleteSites(row.siteId)"
+                mat-icon-button
+                color="accent"
+                title="{{'button.unlink' | translate}}">
+          <i class="material-icons">link_off</i>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
+<ui-info-panel *ngIf="!sites || sites.data.length === 0" type="info">
+  {{'flight.notification.sourceListEmpty' | translate}}
+</ui-info-panel>

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "lib": ["es2016", "dom"]
+  },
+
+  "include": [
+    "app/**/*"
+  ],
+
+  "exclude": [
+    "app/main-aot.ts"
+  ]
+}

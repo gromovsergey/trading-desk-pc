@@ -1,0 +1,28 @@
+@import "~src/scss/variables";
+
+:host {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.form-footer {
+  margin: $gen-spacing 0;
+  button {
+    margin-right: $gen-gap;
+  }
+}
+
+.report-table {
+  max-height: 600px;
+  overflow-y: auto;
+
+  td, th {
+    min-width: 100px;
+    &.name-cell {
+      text-align: right;
+      background: lighten($ui-color-primary, 55%);
+    }
+  }
+}

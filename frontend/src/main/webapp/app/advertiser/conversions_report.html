@@ -1,0 +1,79 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [fw]="true" [displayStatus]="advertiser.displayStatus"></ui-icon>
+            {{title}}
+        </h2>
+    </div>
+    <ui-report [meta]="meta"
+               [reportParameters]="reportParameters"
+               [reportService]="reportService"
+               [downloadNamePrefix]="'Report for ' + advertiser.name">
+
+        <div #params>
+
+            <div class="form-group">
+                <label>_L10N_(report.conversionsReport.flight)</label>
+                <div>
+                    <select name="flightId" class="form-control" (change)="onFlightChange($event)">
+                        <option value="-1">_L10N_(report.conversionsReport.flight.all)</option>
+                        <option *ngFor="let item of flights" [value]="item.id">{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="flightId">
+                <label>_L10N_(report.conversionsReport.lineItems)</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" (change)="switchLineItemType($event)" [checked]="!lineItemRadio">
+                        _L10N_(report.conversionsReport.lineItems.all)
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" (change)="switchLineItemType($event)" [checked]="lineItemRadio">
+                        _L10N_(report.conversionsReport.lineItems.specific)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" *ngIf="lineItemRadio && flightId">
+                <ui-option-transfer [options]="lineItemsAvailable" [selected]="lineItemsSelected"
+                                    (onChange)="onLineItemsChange($event)" [customSort]="sort"
+                                    [availableMsg]="'_L10N_(messages.optionTransfer.available)'"
+                                    [selectedMsg]="'_L10N_(messages.optionTransfer.selected)'"
+                                    [selectAllMsg]="'_L10N_(messages.optionTransfer.selectAll)'"
+                                    [deselectAllMsg]="'_L10N_(messages.optionTransfer.deselectAll)'">
+                </ui-option-transfer>
+            </div>
+
+            <div class="form-group">
+                <label>_L10N_(report.conversionsReport.conversions)</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" (change)="switchConversionType($event)" [checked]="!conversionRadio">
+                        _L10N_(report.conversionsReport.conversions.all)
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" (change)="switchConversionType($event)" [checked]="conversionRadio">
+                        _L10N_(report.conversionsReport.conversions.specific)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" *ngIf="conversionRadio">
+                <ui-option-transfer [options]="conversionsAvailable" [selected]="conversionsSelected"
+                                    (onChange)="onConversionsChange($event)" [customSort]="sort"
+                                    [availableMsg]="'_L10N_(messages.optionTransfer.available)'"
+                                    [selectedMsg]="'_L10N_(messages.optionTransfer.selected)'"
+                                    [selectAllMsg]="'_L10N_(messages.optionTransfer.selectAll)'"
+                                    [deselectAllMsg]="'_L10N_(messages.optionTransfer.deselectAll)'">
+                </ui-option-transfer>
+            </div>
+
+        </div>
+    </ui-report>
+</section>

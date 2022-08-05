@@ -1,0 +1,191 @@
+<div class="flex-row">
+    <mat-form-field class="mat-form-field-max">
+        <mat-label>
+            {{'flight.blockName.minCtrGoal' | translate}}
+        </mat-label>
+        <strong class="mr-1" matPrefix>
+            %:
+        </strong>
+        <input type="number"
+               name="fcPeriodValue" matInput
+               min="0" max="100"
+               (input)="inputChange('minCtrGoal')"
+               [(ngModel)]="flight.minCtrGoal"
+        >
+        <mat-error *ngFor="let error of errors?.minCtrGoal">
+            wefweg {{error}}
+        </mat-error>
+    </mat-form-field>
+    <ui-hint text="{{'flight.notification.minCtrGoal' | translate}}"></ui-hint>
+</div>
+
+<div class="flex-row">
+    <mat-form-field>
+        <mat-label>{{'flight.blockName.impressionsLimits' | translate}}</mat-label>
+        <mat-select [(value)]="flight.impressionsPacing">
+            <mat-option value="U">{{'flight.blockName.deliveryPacing.unrestricted' | translate}}</mat-option>
+            <mat-option value="F">{{'flight.blockName.deliveryPacing.fixed' | translate}}</mat-option>
+            <mat-option *ngIf="flight.dateEnd" value="D">{{'flight.blockName.deliveryPacing.dynamic' | translate}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="flight.impressionsPacing === 'F'">
+        <input
+                type="number"
+                matInput
+                [(ngModel)]="flight.impressionsDailyLimit"
+                [errorStateMatcher]="matcher(errors?.impressionsDailyLimit)"
+        >
+        <mat-error *ngFor="let error of errors?.impressionsDailyLimit">
+            {{error}}
+        </mat-error>
+    </mat-form-field>
+    <ng-container [ngSwitch]="flight.impressionsPacing">
+        <ui-hint *ngSwitchCase="'U'" text="{{'flight.notification.limit.noDailyTarget' | translate}}"></ui-hint>
+        <ui-hint *ngSwitchCase="'F'" text="{{'flight.notification.limit.fixedDailyTarget' | translate}}"></ui-hint>
+        <ui-hint *ngSwitchCase="'D'" text="{{'flight.notification.limit.dynamicDailyTarget' | translate}}"></ui-hint>
+    </ng-container>
+
+    <button *ngIf="resetableFields?.includes('impressionsPacing')"
+            type="button"
+            matTooltip="{{'hint.resetField' | translate}}"
+            mat-icon-button matSuffix
+            (click)="onReset($event, 'impressionsPacing')">
+        <i class="material-icons">refresh</i>
+    </button>
+    <div *ngIf="flight.impressionsPacing === 'D'">
+        {{'flight.notification.limit.info' | translate}}
+        {{impressionsTotalLimitAuto}}
+        {{'flight.notification.limit.info.shows' | translate}}
+
+    </div>
+</div>
+
+
+
+<mat-form-field class="mat-form-field-max">
+    <mat-label>
+        {{'flight.blockName.impressionsTotalLimit' | translate}}
+    </mat-label>
+    <input type="number"
+           name="fcPeriodValue" matInput
+           min="0" max="100"
+           (input)="inputChange('limits.impressionsTotalLimit')"
+           [(ngModel)]="flight.impressionsTotalLimit">
+</mat-form-field>
+
+
+<div class="flex-row">
+    <mat-form-field>
+        <mat-label>{{'flight.blockName.clicksLimits' | translate}}</mat-label>
+        <mat-select [(value)]="flight.clicksPacing">
+            <mat-option value="U">{{'flight.blockName.deliveryPacing.unrestricted' | translate}}</mat-option>
+            <mat-option value="F">{{'flight.blockName.deliveryPacing.fixed' | translate}}</mat-option>
+            <mat-option *ngIf="flight.dateEnd" value="D">{{'flight.blockName.deliveryPacing.dynamic' | translate}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="flight.clicksPacing === 'F'">
+        <input
+                type="number"
+                matInput
+                [(ngModel)]="flight.clicksDailyLimit"
+                [errorStateMatcher]="matcher(errors?.clicksDailyLimit)"
+        >
+        <mat-error *ngFor="let error of errors?.clicksDailyLimit">
+            {{error}}
+        </mat-error>
+    </mat-form-field>
+    <ng-container [ngSwitch]="flight.clicksPacing">
+        <ui-hint *ngSwitchCase="'U'" text="{{'flight.notification.limit.noDailyTarget' | translate}}"></ui-hint>
+        <ui-hint *ngSwitchCase="'F'" text="{{'flight.notification.limit.fixedDailyTarget' | translate}}"></ui-hint>
+        <ui-hint *ngSwitchCase="'D'" text="{{'flight.notification.limit.dynamicDailyTarget' | translate}}"></ui-hint>
+    </ng-container>
+
+    <button *ngIf="resetableFields?.includes('clicksPacing')"
+            type="button"
+            matTooltip="{{'hint.resetField' | translate}}"
+            mat-icon-button matSuffix
+            (click)="onReset($event, 'clicksPacing')">
+        <i class="material-icons">refresh</i>
+    </button>
+    <div *ngIf="flight.clicksPacing === 'D'">
+        {{'flight.notification.limit.info' | translate}}
+        {{clicksTotalLimitAuto}}
+        {{'flight.notification.limit.info.click' | translate}}
+
+    </div>
+</div>
+
+
+
+<mat-form-field class="mat-form-field-max">
+    <mat-label>
+        {{'flight.blockName.clicksTotalLimit' | translate}}
+    </mat-label>
+    <input type="number"
+           name="fcPeriodValue" matInput
+           min="0" max="100"
+           (input)="inputChange('limits.clicksTotalLimit')"
+           [(ngModel)]="flight.clicksTotalLimit">
+</mat-form-field>
+<!--<ui-info-panel type="danger" *ngIf="errors?.frequencyCap?.period">-->
+<!--  <p *ngFor="let error of errors.frequencyCap.period">{{error}}</p>-->
+<!--</ui-info-panel>-->
+<!--<ui-info-panel type="danger" *ngIf="errors?.frequencyCap?.period?.value">-->
+<!--  <p *ngFor="let error of errors.frequencyCap.period.value">{{error}}</p>-->
+<!--</ui-info-panel>-->
+<!--<div class="flex-row">-->
+
+<!--  <mat-form-field>-->
+<!--    <mat-select [(value)]="frequencyCaps.period.unit">-->
+<!--      <mat-option *ngFor="let time of timeOptions" [value]="time">{{('messages.' + time) | translate}}</mat-option>-->
+<!--    </mat-select>-->
+<!--  </mat-form-field>-->
+<!--</div>-->
+
+<!--<p>{{'flight.blockName.windowLimit.1' | translate}}</p>-->
+<!--<ui-info-panel type="danger" *ngIf="errors?.frequencyCap?.windowCount">-->
+<!--  <p *ngFor="let error of errors.frequencyCap.windowCount">{{error}}</p>-->
+<!--</ui-info-panel>-->
+<!--<ui-info-panel type="danger" *ngIf="errors?.frequencyCap?.windowLength && !errors.frequencyCap.windowLength?.value">-->
+<!--  <p *ngFor="let error of errors.frequencyCap.windowLength">{{error}}</p>-->
+<!--</ui-info-panel>-->
+<!--<ui-info-panel type="danger" *ngIf="errors?.frequencyCap?.windowLength?.value">-->
+<!--  <p *ngFor="let error of errors.frequencyCap.windowLength.value">{{error}}</p>-->
+<!--</ui-info-panel>-->
+<!--<div class="flex-row">-->
+<!--  <mat-form-field class="input-number">-->
+<!--    <input type="number"-->
+<!--           name="fcWindowCount" matInput-->
+<!--           min="0" max="99999"-->
+<!--           placeholder="{{'chart.metric.IMPS' | translate}}"-->
+<!--           (input)="inputChange('frequencyCap.windowCount')"-->
+<!--           [(ngModel)]="frequencyCaps.windowCount">-->
+<!--  </mat-form-field>-->
+<!--  <span >{{'flight.blockName.windowLimit.2' | translate}}:</span>-->
+<!--  <mat-form-field class="input-number">-->
+<!--    <input type="number"-->
+<!--           name="fcWindowValue" matInput-->
+<!--           min="0" max="99999"-->
+<!--           placeholder="{{'report.dateRange.R' | translate}}"-->
+<!--           (input)="inputChange('frequencyCap.windowLength')"-->
+<!--           [(ngModel)]="frequencyCaps.windowLength.value">-->
+<!--  </mat-form-field>-->
+<!--  <mat-form-field>-->
+<!--    <mat-select [(value)]="frequencyCaps.windowLength.unit">-->
+<!--      <mat-option *ngFor="let time of timeOptions" [value]="time">{{('messages.' + time) | translate}}</mat-option>-->
+<!--    </mat-select>-->
+<!--  </mat-form-field>-->
+<!--</div>-->
+
+<!--<p>{{'flight.blockName.lifeLimit' | translate}}</p>-->
+<!--<ui-info-panel type="danger" *ngIf="errors?.frequencyCap?.lifeCount">-->
+<!--  <p *ngFor="let error of errors.frequencyCap.lifeCount">{{error}}</p>-->
+<!--</ui-info-panel>-->
+<!--<mat-form-field>-->
+<!--  <input type="number"-->
+<!--         name="fcLifeCount" matInput-->
+<!--         min="0" max="99999"-->
+<!--         placeholder="{{'chart.metric.IMPS' | translate}}"-->
+<!--         (input)="inputChange('frequencyCap.lifeCount')"-->
+<!--         [(ngModel)]="frequencyCaps.lifeCount">-->
+<!--</mat-form-field>-->

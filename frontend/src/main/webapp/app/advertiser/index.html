@@ -1,0 +1,39 @@
+<ui-loading *ngIf="wait"></ui-loading>
+
+<section *ngIf="!wait">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            <ui-icon [fw]="true" [displayStatus]="advertiser.displayStatus"></ui-icon> {{title}}
+            <div *ngIf="documentsViewAllowed" class="btn-group">
+                <button *ngIf="!documentsExist" class="btn btn-default" (click)="showDocuments($event)">_L10N_(account.documents)</button>
+                <button *ngIf="documentsExist" class="btn btn-primary" (click)="showDocuments($event)">_L10N_(account.documents)</button>
+            </div>
+        </h2>
+    </div>
+
+    <ui-panel title="_L10N_(blockName.generalProperties)">
+        <div #body>
+            <ui-advertiser-properties [statusChangeable]="canUpdate"
+                                      [accountId]="advertiser.id"
+                                      [canViewFinance]="canViewFinance"></ui-advertiser-properties>
+        </div>
+    </ui-panel>
+
+    <section *ngIf="showUserList">
+        <div class="page-header">
+            <h3 class="c-pagetitle">
+                <ui-icon [icon]="'user'"></ui-icon> _L10N_(agencyAccount.users)
+                <div class="btn-group" *ngIf="canCreateUser">
+                    <a class="btn btn-default" [routerLink]="['/advertiser/'+advertiser.id+'/user/add']">_L10N_(button.createNew)</a>
+                </div>
+            </h3>
+        </div>
+        <ui-user-list  [accountId]="advertiser.id" [showAdvertisers]="false"></ui-user-list>
+    </section>
+
+    <ui-account-documents *ngIf="documents"
+                          [accountId]="advertiser.id"
+                          [accountName]="advertiser.name"
+                          (close)="onDocumentsClose($event)">
+    </ui-account-documents>
+</section>

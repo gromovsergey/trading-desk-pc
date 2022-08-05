@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <definition name=".CampaignCreative" extends=".mainLayout">
+        <put-attribute name="taskTitle" value="page.title.creative" type="string"/>
+        <put-attribute name="entityName" value="CampaignCreative" type="string"/>
+        <put-attribute name="title" value="/campaign/creative/campaignCreativeTitle.jsp" />
+        <put-attribute name="activeMenuItemKey" value="global.menu.campaigns"/>
+    </definition>
+
+    <!-- Admin -->
+    <definition name=".AdminCampaignCreative" extends=".CampaignCreative">
+        <put-attribute name="moduleName" value="admin/campaign/group/creative"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.campaigns"/>
+    </definition>
+
+    <definition name="admin.campaign.creative.view" extends=".AdminCampaignCreative">
+        <put-attribute name="body" value="/campaign/creative/campaignCreativeView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.campaign.creative.edit" extends=".AdminCampaignCreative">
+        <put-attribute name="body" value="/campaign/creative/campaignCreativeEdit.jsp"/>
+    </definition>
+
+    <definition name="admin.campaign.creative.create" extends=".AdminCampaignCreative">
+        <put-attribute name="body" value="/campaign/creative/campaignCreativeCreate.jsp"/>
+    </definition>
+
+    <!-- Advertiser -->
+    <definition name=".AdvertiserCampaignCreative" extends=".CampaignCreative">
+        <put-attribute name="moduleName" value="advertiser/campaign/group/creative"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.campaigns"/>
+    </definition>
+
+    <definition name="advertiser.campaign.creative.view" extends=".AdvertiserCampaignCreative">
+        <put-attribute name="body" value="/campaign/creative/campaignCreativeView.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="advertiser.campaign.creative.edit" extends=".AdvertiserCampaignCreative">
+        <put-attribute name="body" value="/campaign/creative/campaignCreativeEdit.jsp"/>
+    </definition>
+
+    <definition name="advertiser.campaign.creative.create" extends=".AdvertiserCampaignCreative">
+        <put-attribute name="body" value="/campaign/creative/campaignCreativeCreate.jsp"/>
+    </definition>
+
+</tiles-definitions>

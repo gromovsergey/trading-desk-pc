@@ -1,0 +1,47 @@
+<section class="main-content_container">
+    <p><strong>{{'button.bidStrategy' | translate}}:</strong></p>
+    <div class="render-wrapper">
+        <div class="flex-row">
+            <div>
+                <mat-radio-group class="radio-group"
+                                 [value]="type"
+                                 (change)="typeChange($event.value)">
+                    <mat-radio-button class="radio-button" [value]="true">
+                        Maximise Reach
+                        <i [matTooltip]="title('flight.blockName.maximiseReach')" class="material-icons">help</i>
+                    </mat-radio-button>
+                    <mat-radio-button class="radio-button" [value]="false">
+                        Minimum CTR Goal
+                        <i [matTooltip]="title('flight.blockName.minimumGoal')" class="material-icons">help</i>
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div *ngIf="!type">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>%</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            placeholder="10.432"
+                            (input)="onInput($event.target)"
+                            [formControl]="formControl">
+                    </mat-form-field>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="custom-style f-wrapper">
+    <button mat-stroked-button class="m5-right">{{'button.close' | translate}}</button>
+    <button
+            [ngClass]="{'has-error': valid}"
+            mat-stroked-button
+            color="primary"
+            [disabled]="valid"
+            class="m5-left submit-button">
+        {{'button.save' | translate}}
+    </button>
+</footer>

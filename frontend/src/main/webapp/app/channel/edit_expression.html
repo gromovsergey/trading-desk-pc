@@ -1,0 +1,139 @@
+<ui-loading *ngIf="wait || waitAccounts"></ui-loading>
+
+<section *ngIf="!wait && !waitAccounts">
+
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            {{title}}
+        </h2>
+    </div>
+
+	<form (submit)="submitForm()">
+        <div class="row">
+            <div class="col-lg-8">
+
+                <div *ngIf="errors.actionError" class="alert alert-danger has-error" role="alert">
+                    <p *ngFor="let error of errors.actionError">{{error}}</p>
+                </div>
+
+                <div class="form-group" *ngIf="accounts">
+                    <label>_L10N_(accountSearch.account)<sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup></label>
+                    <div>
+                        <select [(ngModel)]="channel.accountId" name="accountId" class="form-control">
+                            <option *ngFor="let item of accounts" [value]="item.id">{{item.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':errors.name}">
+                    <label>_L10N_(blockName.name)<sup class="h-required"><ui-icon [icon]="'asterisk'" [fw]="true"></ui-icon></sup></label>
+                    <div>
+                        <input #mName="ngModel" name="name" [(ngModel)]="channel.name" required type="text" placeholder="_L10N_(blockName.name)" class="form-control">
+                    </div>
+                    <p *ngFor="let error of errors.name" class="help-block">{{error}}</p>
+                </div>
+
+                <ui-panel title="_L10N_(blockName.expression)" [ngClass]="{'has-error':errors.expression}" [required]="true">
+                    <div #body>
+
+                        <p *ngIf="(!channel.includedChannels || channel.includedChannels.length === 0) && (!channel.excludedChannels || channel.excludedChannels.length === 0)">
+                            _L10N_(channel.expression.notification.noAudienceAdded)
+                        </p>
+
+                        <div *ngIf="channel.includedChannels && channel.includedChannels.length > 0">
+                            <div *ngFor="let audience of channel.includedChannels; let i = index">
+
+                                <label><ui-icon [icon]="'plus-circle'"></ui-icon> _L10N_(channel.expression.includeAudience)</label>
+                                <div class="btn-group">
+                                    <button class="btn btn-default" title="_L10N_(button.edit)" (click)="editAudience($event, i)">
+                                        <ui-icon [icon]="'pencil-square-o'"></ui-icon>
+                                    </button>
+                                    <button class="btn btn-default" title="_L10N_(button.delete)" (click)="deleteAudience($event, i)">
+                                        <ui-icon [icon]="'trash'"></ui-icon>
+                                    </button>
+                                </div>
+
+                                <ul *ngIf="audience && audience.length" class="list-group">
+                                    <li class="list-group-item" *ngFor="let item of audience">
+                                        <ui-icon [fw]="true" [displayStatus]="item.displayStatus"></ui-icon>&nbsp;{{getChannelName(item)}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div *ngIf="channel.excludedChannels && channel.excludedChannels.length > 0">
+                            <div *ngFor="let audience of channel.excludedChannels; let i = index">
+
+                                <label><ui-icon [icon]="'minus-circle'"></ui-icon> _L10N_(channel.expression.excludeAudience)<ui-icon [icon]="minus"></ui-icon></label>
+                                <div class="btn-group">
+                                    <button class="btn btn-default" title="_L10N_(button.edit)" (click)="editExcludedAudience($event, i)">
+                                        <ui-icon [icon]="'pencil-square-o'"></ui-icon>
+                                    </button>
+                                    <button class="btn btn-default" title="_L10N_(button.delete)" (click)="deleteExcludedAudience($event, i)">
+                                        <ui-icon [icon]="'trash'"></ui-icon>
+                                    </button>
+                                </div>
+
+                                <ul *ngIf="audience && audience.length" class="list-group">
+                                    <li class="list-group-item" *ngFor="let item of audience">
+                                        <ui-icon [fw]="true" [displayStatus]="item.displayStatus"></ui-icon>&nbsp;{{getChannelName(item)}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-default" (click)="addAudience($event)">_L10N_(channel.expression.includeAudience)</button>
+                        <button class="btn btn-default" (click)="addExcludedAudience($event)">_L10N_(channel.expression.excludeAudience)</button>
+
+                        <p *ngFor="let error of errors.expression" class="help-block">{{error}}</p>
+                    </div>
+                </ui-panel>
+            </div>
+        </div>
+
+        <div class="row">
+			<div class="col-sm-12">
+				<button [disabled]="waitSubmit" type="submit" class="btn btn-primary">
+                    <ui-icon *ngIf="waitSubmit" [fw]="true" [spin]="true" [icon]="'spinner'"></ui-icon>
+                    {{mode === 'add' ? '_L10N_(button.add)' : '_L10N_(button.save)'}}
+                </button>
+				<a *ngIf="!waitSubmit" [routerLink]="getBackUrl()" class="btn btn-default">_L10N_(button.cancel)</a>
+			</div>
+		</div>
+	</form>
+</section>
+
+<ui-popup [visible]="popupVisible"
+          [blocked]="popupWait"
+          (close)="popupHide($event)"
+          (save)="popupSave($event)"
+          [options]="popupOptions"
+          [closeBtnTitle]="'_L10N_(button.close)'">
+
+    <div class="dropdown" #modal>
+        <div class="form-control dropdown form-control-div clearfix">
+            <div class="form-control-container" *ngIf="channelsLink && channelsLink.length">
+                <div title="{{item.name}}" *ngFor="let item of channelsLink" class="badge badge-channel">{{item.name}}
+                    <div class="badge-channel__buttons">
+                        <i title="_L10N_(button.remove)" (click)="removeChannel($event, item.id)" class="fa fa-times"></i>
+                    </div>
+                </div>
+            </div>
+            <textarea #textInput [disabled]="popupWait" (click)="hideAutocomplete($event)" (keyup)="textInputChange($event)" (paste)="textInputChange($event)" class="form-control-clear"></textarea>
+            <ul class="dropdown-menu dropdown-menu-autocomplete show" *ngIf="autocomplete && autocomplete.length">
+                <li *ngFor="let item of autocomplete"><a (click)="addChannel($event, item)">{{item.name}}</a></li>
+            </ul>
+            <ul class="dropdown-menu dropdown-menu-autocomplete show" *ngIf="autocomplete && autocomplete.length === 0">
+                <li><a (click)="hideAutocomplete($event)"><i>_L10N_(messages.nothingFound)</i></a></li>
+            </ul>
+        </div>
+    </div>
+</ui-popup>
+
+<ui-channel-tree *ngIf="showChannelTreeFlag"
+                 [accountId]="accountId"
+                 [sources]="getChannelSources()"
+                 [selectedChannels]="getSelectedChannelIdNames()"
+                 (close)="onChannelTreeClose()"
+                 (save)="onChannelTreeSave($event)">
+</ui-channel-tree>

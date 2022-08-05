@@ -1,0 +1,56 @@
+{%extends "base.html" %}
+{% block title %}Gantt Diagram{% end %}
+{% block head %}
+    <link href="static/gantt.css" rel="stylesheet" type="text/css" />
+    <script src="static/gantt-chart-d3.js" charset="utf-8"></script>
+    <script src="static/gantt.js" charset="utf-8"></script>
+{% end %}
+
+{% block nav %}
+    <li><a href="/dtree" style="text-decoration: underline;" >Dependency Tree</a></li>
+    <li class="active"><a href="/gantt" onclick="$('#modal').modal('show'); return false;" style="text-decoration: underline;" >Gantt Diagram</a></li>
+{% end %}
+
+
+{% block body %}
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Select build plans</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <form role="form" action="javascript: return false;">
+                <div class="form-group col-sm-6">
+                  <label class="sr-only" for="left">Available</label>
+                  <select id="left" class="form-control" multiple size="16">
+                  </select>
+                </div>
+                <div class="form-group col-sm-1">
+                  <div class="hidden-xs" style="margin-left: -10px; margin-right: -15px;">
+                    <button type="submit" class="add btn" style="margin-top: 95px;"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                    <button type="submit" class="remove btn" style="margin-top: 5px;"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                  </div>
+                  <div class="visible-xs" style="margin-left: auto; margin-right: auto; width: 70%;">
+                    <button type="submit" class="add btn" style="margin-left: 50px;"><i class="glyphicon glyphicon-chevron-down"></i></button>
+                    <button type="submit" class="remove btn"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                  </div>
+                </div>
+                <div class="form-group col-sm-5">
+                  <label class="sr-only" for="right">Selected</label>
+                  <select id="right" class="form-control" multiple size="16">
+                  </select>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a class="btn" data-dismiss="modal">Close</button>
+            <a id="render" href="#" class="btn btn-primary">Render</a>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+{% end %}

@@ -1,0 +1,185 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.foros.service.adserver</groupId>
+    <artifactId>adserver-util</artifactId>
+    <packaging>jar</packaging>
+    <version>0.0.1</version>
+    <name>AdServer-dependend classes</name>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Internal Mirror of Central Repository</name>
+            <url>http://maven.ocslab.com/repository</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <name>Internal Mirror of Central Plugins Repository</name>
+            <url>http://maven.ocslab.com/repository</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>3.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>antlr3-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>antlr</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>src/main/resources/com/foros/util/expression</sourceDirectory>
+                            <outputDirectory>${project.build.directory}/generated-sources/antlr/com/foros/util/expression</outputDirectory>
+                            <grammars>HumanReadableCDML.g,CDML.g</grammars>
+                            <includes>
+                                <include>HumanReadableCDML.g</include>
+                                <include>CDML.g</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>idlj-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>main</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <compiler>idlj</compiler>
+                            <sourceDirectory>${basedir}/src/main/idl</sourceDirectory>
+                            <outputDirectory>${project.build.directory}/generated-sources/idlj</outputDirectory>
+                            <timestampDirectory>${project.build.directory}/idlj-timestamp/main</timestampDirectory>
+                            <sources>
+                                <source>
+                                    <includes>
+                                        <include>channel.idl</include>
+                                    </includes>
+                                    <compatible>false</compatible>
+                                    <emitStubs>true</emitStubs>
+                                    <emitSkeletons>false</emitSkeletons>
+                                    <packagePrefixes>
+                                        <packagePrefix>
+                                            <type>AdServer</type>
+                                            <prefix>com.foros.service</prefix>
+                                        </packagePrefix>
+                                    </packagePrefixes>
+                                </source>
+                            </sources>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>test</id>
+                        <goals>
+                            <goal>generate-test</goal>
+                        </goals>
+                        <configuration>
+                            <compiler>idlj</compiler>
+                            <sourceDirectory>${basedir}/src/main/idl</sourceDirectory>
+                            <outputDirectory>${project.build.directory}/generated-sources/idlj</outputDirectory>
+                            <timestampDirectory>${project.build.directory}/idlj-timestamp/test</timestampDirectory>
+                            <sources>
+                                <source>
+                                    <includes>
+                                        <include>channel.idl</include>
+                                    </includes>
+                                    <compatible>false</compatible>
+                                    <emitStubs>true</emitStubs>
+                                    <emitSkeletons>true</emitSkeletons>
+                                    <packagePrefixes>
+                                        <packagePrefix>
+                                            <type>AdServer</type>
+                                            <prefix>com.foros.service.mock</prefix>
+                                        </packagePrefix>
+                                    </packagePrefixes>
+                                </source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>RemoteInstall</id>
+            <activation>
+                <property>
+                    <name>remoteInstall</name>
+                </property>
+            </activation>
+
+            <distributionManagement>
+                <repository>
+                    <id>foros</id>
+                    <name>Foros Repository</name>
+                    <url>http://maven.ocslab.com/nexus/content/repositories/foros</url>
+                </repository>
+                <snapshotRepository>
+                    <id>foros-snapshots</id>
+                    <name>Foros Snapshots Repository</name>
+                    <url>http://maven.ocslab.com/nexus/content/repositories/foros-snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
+
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <archive>
+                                <manifest/>
+                                <manifestEntries>
+                                    <Package-Name>${artifactId}</Package-Name>
+                                    <Package-Version>${version}</Package-Version>
+                                    <Release-Date>${maven.build.timestamp}</Release-Date>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>2.8.2</version>
+                        <executions/>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

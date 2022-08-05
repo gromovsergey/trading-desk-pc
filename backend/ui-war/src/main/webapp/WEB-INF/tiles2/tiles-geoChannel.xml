@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <definition name=".GeoChannelMain" extends=".mainLayout">
+        <put-attribute name="moduleName" value="admin/geoChannel"/>
+        <put-attribute name="taskTitle" value="page.title.admin.channels" type="string"/>
+        <put-attribute name="activeMenuItemKey" value="global.menu.admin"/>
+        <put-attribute name="entityName" value="GeoChannel" type="string"/>
+        <put-attribute name="isViewPage" value="false"/>
+    </definition>
+
+    <definition name=".GeoChannel" extends=".GeoChannelMain">
+    </definition>
+
+    <definition name=".AdminGeoChannel" extends=".GeoChannel">
+        <put-attribute name="titleProperty" value="channel.searchGeoChannel"/>
+        <put-attribute name="body" value="/admin/geoChannel/geoChannelMain.jsp"/>
+    </definition>
+
+    <definition name="admin.geoChannel.main" extends=".AdminGeoChannel">
+    </definition>
+
+    <definition name="admin.geoChannel.list" template="/admin/geoChannel/geoChannelSearchList.jsp"/>
+
+    <definition name="admin.geoChannel.view" extends=".GeoChannel">
+        <put-attribute name="body" value="/admin/geoChannel/geoChannelView.jsp"/>
+        <put-attribute name="entityName" value="GeoChannel" type="string"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.geoChannel.edit" extends=".GeoChannel">
+        <put-attribute name="body" value="/admin/geoChannel/geoChannelEdit.jsp"/>
+    </definition>
+</tiles-definitions>

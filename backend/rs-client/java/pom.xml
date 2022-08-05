@@ -1,0 +1,221 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.foros.ui</groupId>
+        <artifactId>rs-client</artifactId>
+        <version>trunk</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>com.foros.ui</groupId>
+    <artifactId>rs-client-java</artifactId>
+    <version>trunk</version>
+    <packaging>jar</packaging>
+
+    <name>${artifactId}</name>
+
+    <properties>
+        <testResourceDirectory>${project.build.directory}/generated-test-sources/resources</testResourceDirectory>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.foros.ui</groupId>
+            <artifactId>rs-model</artifactId>
+            <version>${version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.foros.ui</groupId>
+            <artifactId>foros-api-sandbox-generator</artifactId>
+            <version>${version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.foros.ui</groupId>
+            <artifactId>foros-api-sandbox-generator</artifactId>
+            <version>${version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.5</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/java/</source>
+                            </sources>
+                        </configuration>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>add-resource</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/generated-sources/resources/</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>add-test-resource</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>add-test-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${testResourceDirectory}</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <tasks>
+                                <taskdef name="generateClient"
+                                    classname="com.foros.client.generator.ant.JavaGeneratorTask"
+                                    classpathref="maven.compile.classpath" />
+
+                                <generateClient sourcesDir="${project.build.directory}/generated-sources/java"
+                                    resourcesDir="${project.build.directory}/generated-sources/resources"
+                                    packageName="com.foros.rs.client" />
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>generate-test-properties</id>
+                        <phase>generate-test-resources</phase>
+                        <configuration>
+
+                            <tasks unless="maven.test.skip.exec">
+                                <property name="sourcePropertiesFilePath" value="${project.build.testSourceDirectory}/../resources/sandbox.properties" />
+                                <property name="targetPropertiesFilePath"
+                                    value="${testResourceDirectory}/test.properties" />
+                                <property name="testClasspath"
+                                    refid="maven.test.classpath" />
+
+                                <ant antfile="${basedir}/maven-ant.xml">
+                                    <target name="generate.test.properties" />
+                                </ant>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>RemoteInstall</id>
+            <activation>
+                <property>
+                    <name>remoteInstall</name>
+                </property>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>deploy-project</id>
+                                <phase>deploy</phase>
+                                <configuration>
+                                    <tasks>
+                                        <property name="jarFile" value="${project.build.directory}/${project.build.finalName}.jar"/>
+                                        <property name="sourcesFile" value="${project.build.directory}/${project.build.finalName}-sources.jar"/>
+                                        <property name="pomFile" value="${project.basedir}/deploy-pom.xml"/>
+                                        <property name="groupId" value="${project.groupId}"/>
+                                        <property name="artifactId" value="${project.artifactId}"/>
+                                        <property name="version" value="${deploy.version}"/>
+                                        <property name="repositoryId" value="${project.distributionManagement.repository.id}"/>
+                                        <property name="snapshotsRepositoryId" value="${project.distributionManagement.snapshotRepository.id}"/>
+                                        <property name="repositoryUrl" value="${project.distributionManagement.repository.url}"/>
+                                        <property name="snapshotsRepositoryUrl" value="${project.distributionManagement.snapshotRepository.url}"/>
+
+                                        <ant antfile="${basedir}/maven-ant.xml">
+                                            <target name="deploy.project" />
+                                        </ant>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+    </profiles>
+
+</project>

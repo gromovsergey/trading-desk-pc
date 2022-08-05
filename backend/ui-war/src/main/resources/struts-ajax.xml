@@ -1,0 +1,563 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="ajax" extends="foros-default" namespace="/">
+
+        <action name="xml/accounts" class="com.foros.action.xml.options.AccountsXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/displayStatusesForTriggerQA" class="com.foros.action.xml.options.DisplayStatusesForTriggerQAXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/idNameAccounts" class="com.foros.action.xml.options.IdNameAccountsXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/accMngrsList" class="com.foros.action.xml.options.AccountManagersXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/accountsFilter" class="com.foros.action.xml.options.AccountsFilterXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/advertisers" class="com.foros.action.xml.options.AdvertisersXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/campaigns" class="com.foros.action.xml.options.CampaignsXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/textCampaigns" class="com.foros.action.xml.options.TextCampaignsXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/colocations" class="com.foros.action.xml.options.ColocationsXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/colocationsById" class="com.foros.action.xml.options.ColocationsByIdXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/sites" class="com.foros.action.xml.options.SitesXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/sitesById" class="com.foros.action.xml.options.SitesByIdXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/sitesByName" class="com.foros.action.xml.options.SitesByNameXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/availableDns" class="com.foros.action.xml.options.AvailableDnsXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/users" class="com.foros.action.xml.options.UsersXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/creatives" class="com.foros.action.xml.options.CreativesXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/creativesForReport" class="com.foros.action.xml.options.CreativesForReportXMLAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/channels" class="com.foros.action.xml.options.ChannelsXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/discoverChannelListsByAccount" class="com.foros.action.xml.options.DiscoverChannelListsByAccountXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/discoverChannels" class="com.foros.action.xml.options.DiscoverChannelsXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/advertisingChannelsByAccount" class="com.foros.action.xml.options.AdvertisingChannelsByAccountXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/advertisingCmpChannelsByAccount" class="com.foros.action.xml.options.AdvertisingCmpChannelsByAccountXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/supersededChannelsByAccount"
+                class="com.foros.action.xml.options.SupersededChannelsByAccountXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/channelsByAccount" class="com.foros.action.xml.options.ChannelsByAccountXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/channelsByAccountForChannelReport" class="com.foros.action.xml.options.ChannelsByAccountForChannelReportXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/behavioralDiscoverChannels" class="com.foros.action.xml.options.BehavioralDiscoverChannelsXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/channelsByAccountAndStatus"
+                class="com.foros.action.xml.options.ChannelsByAccountAndStatusXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/paymentMethods" class="com.foros.action.xml.options.PaymentMethodsXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/groups" class="com.foros.action.xml.options.GroupsXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/actions" class="com.foros.action.xml.options.ActionsXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/tags" class="com.foros.action.xml.options.TagsXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/tagsById" class="com.foros.action.xml.options.TagsByIdXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/currency" class="com.foros.action.xml.sundry.CurrencyXmlAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.CurrencyGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/currencyInfo" class="com.foros.action.xml.sundry.CurrencyByCodeXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.CurrencyByCodeGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/excludeTags" class="com.foros.action.xml.sundry.CreativeExcludeTagXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.CreativeExcludeTagsGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/getTnsAdvertiser" class="com.foros.action.xml.sundry.GetTnsAdvertiserXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.TnsAdvertiserGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/getTnsBrand" class="com.foros.action.xml.sundry.GetTnsBrandXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.TnsBrandGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/countryInfo" class="com.foros.action.xml.sundry.CountryInfoXmlAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.CountryInfoGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/reportColumns" class="com.foros.action.xml.sundry.ReportColumnsXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.ReportColumnsGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/reportAvailableColumns" class="com.foros.action.xml.sundry.ReportAvailableColumnsXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.ReportColumnsGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <!-- TODO: Move to report -->
+        <action name="xml/publisher/reportColumns" class="com.foros.action.reporting.publisher.ColumnsPublisherReportAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.CustomReportColumnsGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/userData" class="com.foros.action.xml.sundry.UserDataXmlAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.UserDataGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/accountTypeFlags" class="com.foros.action.xml.sundry.AccountTypeFlagsXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.AccountTypeFlagsGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/accountRole" class="com.foros.action.xml.sundry.AccountRoleXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.AccountRoleGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/isFileUnique" class="com.foros.action.xml.sundry.FileUniqueXmlAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.FileUniqueGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+        </action>
+
+        <action name="xml/accountTimeZone" class="com.foros.action.xml.sundry.AccountTimeZoneXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.AccountTimeZoneGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+        </action>
+
+        <action name="xml/creativesTemplatesForSize" class="com.foros.action.xml.options.CreativeTemplateXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/accountCountry" class="com.foros.action.xml.sundry.AccountCountryXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.AccountCountryGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/dateInfo" class="com.foros.action.xml.sundry.DateTimeFormatXmlAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.DateInfoGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/campaignChart" class="com.foros.action.xml.sundry.CampaignStatsXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.StatsGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/CampaignCreativeBatchStatusActionCheck"
+                class="com.foros.action.xml.sundry.CampaignCreativeBatchStatusActionCheckXMLAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.BooleanGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/FinanceUserCheck"
+                class="com.foros.action.xml.sundry.FinanceUserCheckXMLAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.BooleanGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/creditLimitCheck"
+                class="com.foros.action.xml.sundry.CreditLimitCheckXMLAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.CreditLimitInfoGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/CCGBatchStatusActionCheck"
+                class="com.foros.action.xml.sundry.CCGBatchStatusActionCheckXMLAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.BooleanGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/CampaignBatchStatusActionCheckXMLAction"
+                class="com.foros.action.xml.sundry.CampaignBatchStatusActionCheckXMLAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.BooleanGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/CreativeBatchStatusActionCheck"
+                class="com.foros.action.xml.sundry.CreativeBatchStatusActionCheckXMLAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.BooleanGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/DiscoverChannelBatchStatusActionCheck"
+                class="com.foros.action.xml.sundry.DiscoverChannelBatchStatusActionCheckXMLAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.BooleanGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/ccgChart" class="com.foros.action.xml.sundry.CCGStatsXmlAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.StatsGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/walledGardenFlag" class="com.foros.action.xml.options.WalledGardenFlagXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.WalledGardenFlagGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/walledGardenFreeAccounts" class="com.foros.action.xml.options.WalledGardenFreeAccountsXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/advertisersByName" class="com.foros.action.xml.options.AdvertisersByNameXMLAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/advertiserIdByName" class="com.foros.action.xml.options.AdvertiserIdByNameXMLAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.SimpleResultGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/TriggerQACriterCheck"
+                class="com.foros.action.xml.sundry.TriggerQACriteriaCheckXMLAction" method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.TriggerQACriteriaValidationResultGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/stateList" class="com.foros.action.xml.options.StateXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+        <action name="xml/cityList" class="com.foros.action.xml.options.CityXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/previewInfo" class="com.foros.action.xml.options.PreviewInfoXmlAction"  method="process">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.PreviewInfoTOGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/tagPreview" class="com.foros.action.xml.options.LivePreviewTagAction"  method="process">
+            <interceptor-ref name="saveStack"/>
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.TagPreviewTOGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/affectedCCGForDelivery" class="com.foros.action.xml.sundry.AffectedCCGForDeliveryXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-result">
+                <param name="generator">com.foros.action.xml.generator.SimpleResultGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/advertiserReport/accounts" class="com.foros.action.reporting.advertiser.treeFilter.AgenciesAdvertisersXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/discoverChannelListsByDiscoverChannel" class="com.foros.action.xml.options.DiscoverChannelListsXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/campaignsForCreditAllocation" class="com.foros.action.xml.options.CampaignsForCreditAllocationXmlAction"
+                method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/ispColocations" class="com.foros.action.xml.options.ISPColocationsXmlAction" method="process">
+            <result name="success" type="ajax-xml-options-result"/>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="json/quickSearch" class="com.foros.action.json.action.QuickSearchJsonAction" method="process">
+            <result name="success" type="ajax-json-result">
+                <param name="generator">com.foros.action.json.generator.QuickSearchResultGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+        <action name="xml/coordinates" class="com.foros.action.campaign.campaignGroup.GeoCoordXmlAction" method="process">
+            <result name="success" type="ajax-json-result">
+                <param name="generator">com.foros.action.xml.generator.GeoCoordinatesGenerator</param>
+            </result>
+            <result name="error" type="ajax-xml-error-result"/>
+            <result name="input" type="ajax-xml-input-result"/>
+        </action>
+
+    </package>
+</struts>

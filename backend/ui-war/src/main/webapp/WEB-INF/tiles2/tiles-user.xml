@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name=".User" extends=".mainLayout">
+        <put-attribute name="moduleName" value="admin/account/user"/>
+        <put-attribute name="title" value="/account/userTitle.jsp" />
+        <put-attribute name="entityName" value="User"/>
+        <put-attribute name="taskTitle" value="page.title.users"/>
+        <put-attribute name="activeMenuItemKey" value="global.submenu.account"/>
+    </definition>
+
+    <!-- Advertisers -->
+    <definition name=".AdvertiserUser" extends=".User">
+    </definition>
+
+    <definition name="admin.user.advertiserView" extends=".AdvertiserUser">
+        <put-attribute name="body" value="/account/viewUser.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.user.advertiserEdit" extends=".AdvertiserUser">
+        <put-attribute name="body" value="/account/editUser.jsp"/>
+    </definition>
+
+    <definition name="admin.user.advertiserCreate" extends=".AdvertiserUser">
+        <put-attribute name="body" value="/account/editUser.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <definition name="admin.user.editAdvertisers" extends=".AdvertiserUser">
+     <put-attribute name="titleProperty" value="user.advertisers.editUserAdvertisers"/>
+     <put-attribute name="body" value="/account/userAdvertisers.jsp"/>
+   </definition>
+
+    <!-- ISPs -->
+    <definition name=".ISPUser" extends=".User">
+    </definition>
+
+    <definition name="admin.user.ispView" extends=".ISPUser">
+        <put-attribute name="body" value="/account/viewUser.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.user.ispEdit" extends=".ISPUser">
+        <put-attribute name="body" value="/account/editUser.jsp"/>
+    </definition>
+
+    <definition name="admin.user.ispCreate" extends=".ISPUser">
+        <put-attribute name="body" value="/account/editUser.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <!-- Publishers -->
+    <definition name=".PublisherUser" extends=".User">
+    </definition>
+
+    <definition name="admin.user.publisherView" extends=".PublisherUser">
+        <put-attribute name="body" value="/account/viewUser.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.user.publisherEdit" extends=".PublisherUser">
+        <put-attribute name="body" value="/account/editUser.jsp"/>
+    </definition>
+
+    <definition name="admin.user.publisherCreate" extends=".PublisherUser">
+        <put-attribute name="body" value="/account/editUser.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+    <!-- CMPs -->
+    <definition name=".CMPUser" extends=".User">
+    </definition>
+
+    <definition name="admin.user.cmpView" extends=".CMPUser">
+        <put-attribute name="body" value="/account/viewUser.jsp"/>
+        <put-attribute name="isViewPage" value="true"/>
+    </definition>
+
+    <definition name="admin.user.cmpEdit" extends=".CMPUser">
+        <put-attribute name="body" value="/account/editUser.jsp"/>
+    </definition>
+
+    <definition name="admin.user.cmpCreate" extends=".CMPUser">
+        <put-attribute name="body" value="/account/editUser.jsp"/>
+        <put-attribute name="isCreatePage" value="true"/>
+    </definition>
+
+</tiles-definitions>

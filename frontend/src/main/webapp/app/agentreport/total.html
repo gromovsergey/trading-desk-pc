@@ -1,0 +1,55 @@
+<ui-loading *ngIf="waitStats"></ui-loading>
+
+<ng-template [ngIf]="!waitStats">
+    <div class="page-header page-header-first">
+        <h2 class="c-pagetitle">
+            _L10N_(agentReport.total.title)
+        </h2>
+    </div>
+
+    <p *ngIf="totalStats && totalStats.length === 0">
+        _L10N_(agentReport.total.listIsEmpty)
+    </p>
+
+    <div *ngIf="totalStats && totalStats.length > 0" class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>_L10N_(agentReport.total.month)</th>
+                <th>_L10N_(agentReport.total.invoiceAmount)</th>
+                <th>_L10N_(agentReport.total.publisherAmount)</th>
+                <th>_L10N_(agentReport.total.agencyAmount)</th>
+                <th>_L10N_(agentReport.total.principalAmount)</th>
+                <th>_L10N_(agentReport.total.status)</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let stat of totalStats; let i = index">
+                <td *ngIf="stat.status !== 'READY'">
+                    <a [routerLink]="['/agentreport/monthly/'+stat.year+'/'+stat.month]">{{L10nMonths[stat.month] + ' ' + stat.year}}</a>
+                </td>
+                <td *ngIf="stat.status === 'READY'">
+                    {{L10nMonths[stat.month] + ' ' + stat.year}}
+                </td>
+
+                <td>{{stat.invoiceAmount}}</td>
+                <td>{{stat.publisherAmount}}</td>
+                <td>{{stat.agencyAmount}}</td>
+                <td>{{stat.principalAmount}}</td>
+                <td>{{L10nReportStatuses[stat.status]}}</td>
+                <td>
+                    <button *ngIf="stat.status === 'CLOSED'" (click)="downloadFile($event, stat.year, stat.month, i)" class="btn btn-primary" [disabled]="waitDl===i">
+                        _L10N_(agentReport.total.report)
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a class="hidden" #downloadBtn [href]="downloadUrl" target="_blank" [download]="downloadName">{{downloadName}}</a>
+        <div class="has-error" *ngIf="actionErrors">
+            <p *ngFor="let error of actionErrors" class="text-danger">{{error}}</p>
+        </div>
+    </div>
+
+</ng-template>

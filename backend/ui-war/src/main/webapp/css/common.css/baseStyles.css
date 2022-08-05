@@ -1,0 +1,45 @@
+body{
+    margin:9px 14px 0;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    background-color:#FFF;
+}
+a{
+    color:#0066CC;
+}
+a:hover{
+    color:black;
+}
+
+h1, 
+h2{
+    color:#333;
+    clear:both;
+    margin: 0 1em 0 0;
+}
+h1{
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+h2{
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+pageHeading h1, 
+pageHeading h2{
+    margin-bottom: 0;
+}
+
+label{
+    font-weight: bold;
+}
+
+.hide{
+    display:none;
+}
+.show{
+    display:block;
+}
+

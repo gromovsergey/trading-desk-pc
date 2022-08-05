@@ -1,0 +1,56 @@
+.timeRange {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.c-ds__phases,
+.c-ds__rows {
+  position: relative;
+  left: 50px;
+  display: flex;
+  max-width: 90%;
+  min-width: 400px;
+}
+.c-ds__slots {
+  display: flex;
+  margin-top: 4px;
+  width: 32px;
+
+  .c-ds__slot {
+    width: 50%;
+    background: #f0f0f0;
+    height: 30px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    &.c-ds__slot-even {
+      background: #ddd;
+    }
+    &.on {
+      background: #999;
+    }
+  }
+}
+
+.c-ds__phase-even {
+  background-color: #ddd;
+  border-radius: 3px;
+}
+.c-ds__phase {
+  text-align: center;
+  width: 32px;
+  height: 18px;
+  line-height: 18px;
+}
+.c-ds__weekday {
+  position: absolute;
+  left: -50px;
+  padding: 10px;
+  text-align: right;
+  font-size: 14px;
+  font-weight: 700;
+  width: 50px;
+}
+
+.radio-column {
+  display: flex;
+  flex-direction: column;
+}

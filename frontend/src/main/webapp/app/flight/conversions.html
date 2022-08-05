@@ -1,0 +1,19 @@
+<ui-loading [overlay]="true" *ngIf="wait"></ui-loading>
+
+<div class="form-group" *ngIf="!wait && !!conversions && !!conversions.length">
+    <div class="row" >
+        <div class="col-sm-6">
+            <div class="list-group">
+                <a class="list-group-item" href="#" (click)="selectConversion($event, item)" *ngFor="let item of conversions">
+                    <ui-icon *ngIf="!item.checked" [icon]="'square-o'" [fw]="true"></ui-icon>
+                    <ui-icon *ngIf="item.checked" [icon]="'check-square-o'" [fw]="true"></ui-icon>
+                    <ui-icon [displayStatus]="item.displayStatus"></ui-icon>&nbsp;{{item.conversion.name}}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!wait && conversions && conversions.length === 0">
+    _L10N_(advertiserAccount.conversionListIsEmpty)
+</div>
