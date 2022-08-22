@@ -1,6 +1,0 @@
-{
-  "port": 9000,
-  "watchOptions": {
-    "ignored": "*"
-  }
-}
